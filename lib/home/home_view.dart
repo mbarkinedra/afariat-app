@@ -5,7 +5,7 @@ import 'home_view_controller.dart';
 
 
 
-class Home extends GetWidget<HomeViwController>  {
+class Home extends GetWidget<HomeViewController>  {
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +27,12 @@ class Home extends GetWidget<HomeViwController>  {
     },
       child: SafeArea(
         child: Scaffold(
-          body: GetBuilder<HomeViwController>(builder: (logic) {
+          body: GetBuilder<HomeViewController>(builder: (logic) {
             return logic.currentScreen;
           }), //init: HomeViwController(),
           bottomNavigationBar:
 
-          GetBuilder<HomeViwController>(builder: (logic) {
+          GetBuilder<HomeViewController>(builder: (logic) {
             return BottomNavigationBar(
               items: const [
                 BottomNavigationBarItem(

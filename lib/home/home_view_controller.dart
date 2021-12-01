@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 
 
-class HomeViwController extends GetxController {
+class HomeViewController extends GetxController {
   // int _selectedIndex = 0;
   // getselectedIndex()=>_selectedIndex;
   // setSelectIndex(int index){

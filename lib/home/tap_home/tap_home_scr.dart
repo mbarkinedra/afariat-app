@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'tap1viewcontroller.dart';
+import 'tap_home_viewcontroller.dart';
 
-class Tap1Scr extends GetWidget<TapHomeViewController> {
+class TapHomeScr extends GetWidget<TapHomeViewController> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
