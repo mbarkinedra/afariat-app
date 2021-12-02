@@ -22,7 +22,7 @@ class CustomButton extends StatelessWidget {
             child: Text(
               label,
               style: TextStyle(
-                color: labcolor,fontSize: fontSize,fontWeight: fontWeight
+                  color: labcolor,fontSize: fontSize,fontWeight: fontWeight
               ),
             ),
           ),
@@ -46,8 +46,9 @@ class CustomButton extends StatelessWidget {
 
   CustomButton(
       {@required this.btcolor,@required this.function,
-   @  required this.labcolor,
-   @  required this.label,
-   @  required this.height,
-   @  required this.width,this.fontSize=16,this.fontWeight=FontWeight.normal});
+        @  required this.labcolor,
+        @  required this.label,
+        @  required this.height,
+        @  required this.width,this.fontSize=16,this.fontWeight=FontWeight.normal});
 }
+

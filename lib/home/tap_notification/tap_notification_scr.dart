@@ -1,23 +1,14 @@
 
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 import 'tap_notification_viewcontroller.dart';
 
-class Tap5 extends GetWidget<Tab5> {
-
-
+class TapNotificationScr extends GetWidget<TapNotificationViewController>{
   @override
   Widget build(BuildContext context) {
-    Size _size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: const [
-
-          ],
-        ),
-      ),
-    );
+    return Container();
   }
+
 }

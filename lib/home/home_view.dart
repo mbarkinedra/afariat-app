@@ -5,7 +5,7 @@ import 'home_view_controller.dart';
 
 
 
-class Home extends GetWidget<HomeViewController>  {
+class Home extends GetWidget<HomeViwController>  {
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class Home extends GetWidget<HomeViewController>  {
     return WillPopScope(onWillPop: ()async{
       final isFirstRouteInCurrentTab =
       !await controller.navigatorKeys[controller.currentPage].currentState.maybePop();
-   //   print(isFirstRouteInCurrentTab);
+      //   print(isFirstRouteInCurrentTab);
       if (isFirstRouteInCurrentTab) {
         if (controller.currentPage != "Page1") {
           controller.changeSelectedValue(  0 );
@@ -27,12 +27,12 @@ class Home extends GetWidget<HomeViewController>  {
     },
       child: SafeArea(
         child: Scaffold(
-          body: GetBuilder<HomeViewController>(builder: (logic) {
+          body: GetBuilder<HomeViwController>(builder: (logic) {
             return logic.currentScreen;
           }), //init: HomeViwController(),
           bottomNavigationBar:
 
-          GetBuilder<HomeViewController>(builder: (logic) {
+          GetBuilder<HomeViwController>(builder: (logic) {
             return BottomNavigationBar(
               items: const [
                 BottomNavigationBarItem(
@@ -79,3 +79,5 @@ class Home extends GetWidget<HomeViewController>  {
     );
   }
 }
+
+

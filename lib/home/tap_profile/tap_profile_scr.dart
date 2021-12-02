@@ -1,11 +1,11 @@
 
 
-
-import 'package:afariat/home/tap_profile/tap_profile_viewcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Tap4Profile extends GetWidget<Tab4> {
+import 'tap_profile_viewcontroller.dart';
+
+class TapProfileScr extends GetWidget<TapProfileViewController> {
 
 
   @override

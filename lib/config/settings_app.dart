@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 
 class SettingsApp {
   static const String baseUrl = 'https://afariat.com';
@@ -14,5 +13,7 @@ class SettingsApp {
 
   static const String town = baseApiUrl + '/simple/town';
   static const String categories = baseApiUrl + '/simple/categories-groupped';
-  static BaseOptions options = BaseOptions(baseUrl: baseApiUrl);
+  static const String price = baseApiUrl + '/simple/prices';
+
+
 }
