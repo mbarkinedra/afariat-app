@@ -1,13 +1,13 @@
 
-import 'package:afariat/networking/apis/get_cities_api.dart';
-import 'package:afariat/networking/apis/get_towns_api.dart';
+import 'package:afariat/networking/api/get_cities_api.dart';
+//import 'package:afariat/networking/api/get_towns_api.dart';
 
-import 'package:afariat/networking/jsonfile/cities_json.dart';
-import 'package:afariat/networking/jsonfile/towns_json.dart';
+import 'package:afariat/networking/json/cities_json.dart';
+//import 'package:afariat/networking/json/towns_json.dart';
 import 'package:get/get.dart';
 
 class LocController extends GetxController{
-  final GetCitiesApi _citiesApi=GetCitiesApi();
+/*  final GetCitiesApi _citiesApi=GetCitiesApi();
   final GetTownsApi _townsApi=GetTownsApi();
   List<Citie> cities;
   Citie citie;
@@ -15,7 +15,7 @@ class LocController extends GetxController{
   @override
   void onInit() {
     super.onInit();
-    _citiesApi.cities().then((value) {
+    _citiesApi.cityUrl().then((value) {
       cities=value.data;
       update();
     });
@@ -31,6 +31,6 @@ class LocController extends GetxController{
       data=value.data;
       update();
     });
-  }
+  }*/
 
 }

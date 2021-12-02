@@ -1,6 +1,6 @@
 import 'package:afariat/config/dio_singleton.dart';
 import 'package:afariat/config/settings_app.dart';
-import 'package:afariat/networking/jsonfile/cities_json.dart';
+import 'package:afariat/networking/json/cities_json.dart';
 
 class GetCitiesApi{
   final DioSingleton _dioSingleton=DioSingleton();
@@ -12,7 +12,7 @@ class GetCitiesApi{
       "apikey": SettingsApp.apiKey,
     };
 
-    await _dioSingleton.dio.get(SettingsApp.cities,queryParameters: formData).then((value) {
+    await _dioSingleton.dio.get(SettingsApp.cityUrl,queryParameters: formData).then((value) {
 
       data=value.data;
 

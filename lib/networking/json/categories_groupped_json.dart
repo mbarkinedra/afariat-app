@@ -32,7 +32,7 @@ class Categories {
     id = json['id'];
     name = json['name'];
     if (json['subcategories'] != null) {
-      subcategories = new List<Subcategories>();
+      subcategories = <Subcategories>[];
       json['subcategories'].forEach((v) {
         subcategories.add(new Subcategories.fromJson(v));
       });

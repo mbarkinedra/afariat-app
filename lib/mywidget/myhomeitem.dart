@@ -1,4 +1,4 @@
-import 'package:afariat/networking/jsonfile/adverts_json.dart';
+import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:flutter/material.dart';
 
 class MyHomeItem extends StatelessWidget {
@@ -7,7 +7,7 @@ class MyHomeItem extends StatelessWidget {
 
   MyHomeItem({this.size, this.adverts});
 
-  final Adverts adverts;
+  final AdvertJson adverts;
   @override
   Widget build(BuildContext context) {
     return Padding(

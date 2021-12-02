@@ -1,6 +1,6 @@
 import 'package:afariat/mywidget/bottom_sheet_filter.dart';
 import 'package:afariat/mywidget/myhomeitem.dart';
-import 'package:afariat/networking/jsonfile/adverts_json.dart';
+import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';

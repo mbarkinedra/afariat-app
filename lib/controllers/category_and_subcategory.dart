@@ -1,5 +1,5 @@
-import 'package:afariat/networking/apis/categories_groupped_json.dart';
-import 'package:afariat/networking/jsonfile/categories_groupped_json.dart';
+import 'package:afariat/networking/api/categories_groupped_json.dart';
+import 'package:afariat/networking/json/categories_groupped_json.dart';
 import 'package:get/get.dart';
 class CategoryAndSubcategory extends GetxController{
   final GetCategoriesGrouppedApi _categoriesGrouppedApi=GetCategoriesGrouppedApi();
@@ -11,7 +11,7 @@ class CategoryAndSubcategory extends GetxController{
   @override
   void onInit() {
     super.onInit();
-    _categoriesGrouppedApi.categoriesGroupped().then((value) {
+    _categoriesGrouppedApi.getList().then((value) {
       categories = value.data;
       for (var element in categories) {
         sc[element.id] = element.subcategories;

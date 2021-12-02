@@ -2,8 +2,8 @@ import 'package:afariat/config/utilitie.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 
-import 'package:afariat/networking/jsonfile/categories_groupped_json.dart';
-import 'package:afariat/networking/jsonfile/prices_json.dart';
+import 'package:afariat/networking/json/categories_groupped_json.dart';
+import 'package:afariat/networking/json/prices_json.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
