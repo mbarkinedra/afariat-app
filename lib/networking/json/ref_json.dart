@@ -4,13 +4,13 @@ import 'package:afariat/networking/json/abstract_json_resource.dart';
 /// Used to model a json list result with referential apis with attributes {id, name}
 /// Used for: Cities, Towns, prices,...
 class RefListJson extends AbstractJsonResource {
-  List<dynamic> data;
+  List<RefJson> data;
 
   RefListJson({this.data});
 
   RefListJson.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <dynamic>[];
+      data = <RefJson>[];
       json['data'].forEach((v) {
         data.add(new RefJson.fromJson(v));
       });

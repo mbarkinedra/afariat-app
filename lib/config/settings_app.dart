@@ -10,7 +10,7 @@ class SettingsApp {
   static const String advertUrl = baseApiUrl + '/adverts';
   static const String cityUrl = baseApiUrl + '/simple/cities';
 
-  static const String townUrl = baseApiUrl + '/simple/town';
+  static const String townUrl = baseApiUrl + '/simple/towns/';
   static const String grouppedCategoriesUrl = baseApiUrl + '/simple/categories-groupped';
   static const String priceUrl = baseApiUrl + '/simple/prices';
 

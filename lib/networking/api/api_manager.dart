@@ -10,10 +10,11 @@ abstract class ApiManager {
   AbstractJsonResource fromJson(data);
 
   /// Get a list of json resource from remote API. E.g: Adverts or cities
-  Future<dynamic> getList() async {
+  Future<dynamic> getList({id}) async {
+
     AbstractJsonResource jsonList;
     var data;
-    await dioSingleton.dio.get(apiUrl()).then((value) {
+    await dioSingleton.dio.get(id==null?apiUrl():apiUrl()+id).then((value) {
       data = value.data;
     });
     jsonList = fromJson(data);

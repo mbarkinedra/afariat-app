@@ -39,6 +39,7 @@ class TapHomeViewController extends GetxController {
       minValue = prices[0].id;
       maxValue = prices[prices.length-1].id;
       values = SfRangeValues(minValue, maxValue);
+      print(prices[prices.length-1].id);
     });
     update();
   }

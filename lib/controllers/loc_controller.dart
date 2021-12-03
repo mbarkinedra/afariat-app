@@ -1,35 +1,42 @@
 
-//import 'package:afariat/networking/api/get_cities_api.dart';
-//import 'package:afariat/networking/api/get_towns_api.dart';
 
-//import 'package:afariat/networking/json/towns_json.dart';
 import 'package:get/get.dart';
+import 'package:afariat/networking/api/ref_api.dart';
+import 'package:afariat/networking/json/ref_json.dart';
 
 class LocController extends GetxController{
-/*  final GetCitiesApi _citiesApi=GetCitiesApi();
-  final GetTownsApi _townsApi=GetTownsApi();
-  List<Citie> cities;
-  Citie citie;
-  List<Town> data;
+  final CityApi _cityApi=CityApi();
+  final TownApi _townsApi=TownApi();
+  List<RefJson> cities=[];
+  RefJson citie;
+  List<RefJson> towns=[];
+  RefJson town;
   @override
   void onInit() {
     super.onInit();
-    _citiesApi.cityUrl().then((value) {
-      cities=value.data;
+    _cityApi.getList().then((value) {
+
+      cities=value.data  ;
       update();
     });
   }
-  updatecitie(Citie ci){
+  updatecitie(RefJson ci){
     citie=ci;
-    updateTowns( ci.id);
+    town=null;
+    updateTowns( ci.id.toString());
     update();
   }
+  updatetown(RefJson tow){
+    town=tow;
 
+    update();
+  }
   updateTowns(id){
-    _townsApi.towns(id).then((value) {
-      data=value.data;
+
+    _townsApi.getList( id: id ).then((value) {
+      towns=value.data;
       update();
     });
-  }*/
+  }
 
 }
