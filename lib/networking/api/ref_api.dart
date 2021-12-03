@@ -10,6 +10,7 @@ abstract class RefApi extends ApiManager {
   }
 }
 
+//Geoloc
 class CityApi extends RefApi {
   @override
   String apiUrl() => SettingsApp.cityUrl;
@@ -18,4 +19,10 @@ class CityApi extends RefApi {
 class TownApi extends RefApi {
   @override
   String apiUrl() => SettingsApp.townUrl;
+}
+
+//Refs
+class PriceApi extends RefApi {
+  @override
+  String apiUrl() => SettingsApp.priceUrl;
 }

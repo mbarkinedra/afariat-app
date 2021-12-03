@@ -1,8 +1,7 @@
 
-import 'package:afariat/networking/api/get_cities_api.dart';
+//import 'package:afariat/networking/api/get_cities_api.dart';
 //import 'package:afariat/networking/api/get_towns_api.dart';
 
-import 'package:afariat/networking/json/cities_json.dart';
 //import 'package:afariat/networking/json/towns_json.dart';
 import 'package:get/get.dart';
 

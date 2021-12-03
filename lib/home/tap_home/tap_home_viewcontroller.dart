@@ -1,28 +1,26 @@
-
 import 'package:afariat/networking/api/advert_api.dart';
-import 'package:afariat/networking/api/get_prices_api.dart';
+import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
-import 'package:afariat/networking/json/prices_json.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class TapHomeViewController extends GetxController {
   AdvertApi _advertApi = AdvertApi();
-  GetPricesApi _pricesApi=GetPricesApi();
+  PriceApi _pricesApi = PriceApi();
   var box = GetStorage();
   bool getdatafromweb = true;
-  List<AdvertJson> adverts=[];
-  List<Prices> prices=[];
-  double  maxValue=100000;
-  double  minValue=0.0;
-  SfRangeValues  values = SfRangeValues(0, 100000);
+  List<AdvertJson> adverts = [];
+  List<dynamic> prices = [];
+  int maxValue = 20;
+  int minValue = 0;
+  SfRangeValues values = SfRangeValues(0, 100000);
+
   @override
   void onInit() {
     super.onInit();
     updatedata();
     getPriceList();
-
   }
 
   updatedata() async {
@@ -32,36 +30,21 @@ class TapHomeViewController extends GetxController {
     });
     update();
   }
-  filterupdate(){
 
-  }
-  getPriceList()async {
-    await _pricesApi.prices().then((value) {
-      prices=value.data;
-      gethighprice();
+  filterupdate() {}
+
+  getPriceList() async {
+    await _pricesApi.getList().then((value) {
+      prices = value.data;
+      minValue = prices[0].id;
+      maxValue = prices[prices.length-1].id;
+      values = SfRangeValues(minValue, maxValue);
     });
     update();
   }
-  // updatdropdownMaxValue(Prices val){
-  //    dropdownMaxValue=val;
-  //    update();
-  // }
-  // updatdropdownminValue(Prices val){
-  //   dropdownminValue=val;
-  //   update();
-  // }
-  updateslidval(value){
 
-    values =value;
+  updateslidval(value) {
+    values = value;
     update();
   }
-
-  gethighprice(){
-    for(Prices price in prices){
-      if(maxValue<double.tryParse(price.name)){
-        maxValue=double.parse(price.name);
-      }
-    }
-    values = SfRangeValues(minValue, maxValue);
-    update(); }
 }
