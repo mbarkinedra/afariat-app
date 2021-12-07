@@ -3,6 +3,7 @@ import 'package:afariat/config/utilitie.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
+import 'package:afariat/mywidget/custom_text_filed.dart';
 
 import 'package:afariat/networking/json/categories_grouped_json.dart';
 
@@ -31,6 +32,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             const Padding(
               padding: EdgeInsets.all(16.0),
               child: Text(
@@ -40,13 +42,13 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(border: Border.all(color: Colors.orange)),
-                child: GetBuilder<CategoryAndSubcategory>(builder: (logic) {
-                  return Column(
-                    children: [
-                      DropdownButton<CategoryGroupedJson>(
+              child: GetBuilder<CategoryAndSubcategory>(builder: (logic) {
+                return Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(border: Border.all(color: Colors.orange),borderRadius: BorderRadius.circular(10)),
+                      child: DropdownButton<CategoryGroupedJson>(
                         isExpanded: true,
                         value: logic.categoryGroupedJson,
                         iconSize: 24,
@@ -61,7 +63,12 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                               );
                             }).toList(),
                       ),
-                      DropdownButton<SubcategoryJson>(
+                    ),
+                   const SizedBox(height: 8,),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(border: Border.all(color: Colors.orange),borderRadius: BorderRadius.circular(10)),
+                      child: DropdownButton<SubcategoryJson>(
                         isExpanded: true,
                         value: logic.subcategories1,
                         iconSize: 24,
@@ -75,11 +82,11 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                                 child: Text(value.name),
                               );
                             }).toList(),
-                      )
-                    ],
-                  );
-                }),
-              ),
+                      ),
+                    )
+                  ],
+                );
+              }),
             ),
             const Padding(
               padding: EdgeInsets.all(16.0),
@@ -121,49 +128,50 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(border: Border.all(color: Colors.orange)),
-                child: GetBuilder<LocController>(builder: (logic) {
-                  return Column(
-                    children: [
-                      DropdownButton<RefJson>(
-                        isExpanded: true,
-                        value: logic.citie,
+            GetBuilder<LocController>(builder: (logic) {
+              return Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(border: Border.all(color: Colors.orange),borderRadius: BorderRadius.circular(10)),
+                    child: DropdownButton<RefJson>(
+                      isExpanded: true,
+                      value: logic.citie,
 
-                        iconSize: 24,
-                        elevation: 16,
-                        onChanged: logic.updatecitie,
-                        items: logic.cities
-                            .map<DropdownMenuItem<RefJson>>((RefJson value) {
+                      iconSize: 24,
+                      elevation: 16,
+                      onChanged: logic.updatecitie,
+                      items: logic.cities
+                          .map<DropdownMenuItem<RefJson>>((RefJson value) {
+                        return DropdownMenuItem<RefJson>(
+                          value: value,
+                          child: Text(value.name),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+              const SizedBox(height: 8,),
+              Container(
+              width: double.infinity,
+              decoration: BoxDecoration(border: Border.all(color: Colors.orange),borderRadius: BorderRadius.circular(10)),
+                child:  DropdownButton<RefJson>(
+                    isExpanded: true,
+                    value: logic.town,
+                    iconSize: 24,
+                    elevation: 16,
+                    onChanged: logic.updatetown,
+                    items: logic.towns
+                        .map<DropdownMenuItem<RefJson>>(
+                            (RefJson value) {
                           return DropdownMenuItem<RefJson>(
                             value: value,
                             child: Text(value.name),
                           );
                         }).toList(),
-                      ),
-                      DropdownButton<RefJson>(
-                        isExpanded: true,
-                        value: logic.town,
-                        iconSize: 24,
-                        elevation: 16,
-                        onChanged: logic.updatetown,
-                        items: logic.towns
-                            .map<DropdownMenuItem<RefJson>>(
-                                (RefJson value) {
-                              return DropdownMenuItem<RefJson>(
-                                value: value,
-                                child: Text(value.name),
-                              );
-                            }).toList(),
-                      )
-                    ],
-                  );
-                }),
-              ),
-            ),
+                  )
+              )],
+              );
+            }),
 
 
             Row(
@@ -171,15 +179,17 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                 CustomButton(
                   height: 50,
                   width: _size.width * .4,
-                  function: () {},
+                  function: () {
+                    tap1ViewController.filterupdate();
+                  },
                   labcolor: textbuttonColor,
-                  label: "Appliquer",
+                  label: "rechercher",
                   btcolor: buttonColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
               ],
-            )
+            ),
           ],
         ));
   }

@@ -17,6 +17,6 @@ class SettingsApp {
   static const apiKey =
       '850f2303a496c53746d52ba751efcdbe8ce9636d27eb805455ad5e0c02cb5750';
   static const moneySymbol = 'DT';
-
+  static const String SearchUrl= baseApiUrl + '/adverts';
 
 }

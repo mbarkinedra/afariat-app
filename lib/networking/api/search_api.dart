@@ -1,0 +1,29 @@
+import 'package:afariat/config/filter.dart';
+import 'package:afariat/config/settings_app.dart';
+import 'package:afariat/networking/json/abstract_json_resource.dart';
+import 'package:afariat/networking/json/adverts_json.dart';
+
+import 'api_manager.dart';
+
+class SearchApi extends ApiManager {
+  Map<String, dynamic> map = {};
+
+  SearchApi(this.map) {
+    Filter.m = map;
+  }
+
+  @override
+  String apiUrl() {
+    return SettingsApp.advertUrl;
+  }
+
+  @override
+  AbstractJsonResource fromJson(data) {
+    return AdvertListJson.fromJson(data);
+  }
+
+  @override
+  Map<String, dynamic> queryParameters() {
+    return map;
+  }
+}

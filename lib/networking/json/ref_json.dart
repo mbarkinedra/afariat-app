@@ -1,4 +1,3 @@
-
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 
 /// Used to model a json list result with referential apis with attributes {id, name}
@@ -27,7 +26,7 @@ class RefListJson extends AbstractJsonResource {
 }
 
 /// Used to model a signle refrential json object. E.g: City, Region, Price,...
-class RefJson extends AbstractJsonResource{
+class RefJson extends AbstractJsonResource {
   int id;
   String name;
 

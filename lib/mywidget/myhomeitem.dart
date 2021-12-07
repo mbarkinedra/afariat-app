@@ -37,7 +37,7 @@ class MyHomeItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container( height: size.height * .25,
-              width: size.width * .4,
+              width: size.width * .3,
               child: Image.network(  adverts.photo,
 
                 fit: BoxFit.fill,

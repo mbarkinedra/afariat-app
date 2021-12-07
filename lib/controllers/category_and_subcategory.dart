@@ -1,8 +1,10 @@
+import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/networking/api/categories_groupped_api.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
 import 'package:get/get.dart';
 class CategoryAndSubcategory extends GetxController{
   final CategoriesGrouppedApi _categoriesGrouppedApi=CategoriesGrouppedApi();
+  final tapHomeViewController=Get.find<TapHomeViewController>();
   Map<int, List<SubcategoryJson>> sc = {};
   List<SubcategoryJson> listSubcategories = [];
   SubcategoryJson subcategories1;
@@ -23,6 +25,7 @@ class CategoryAndSubcategory extends GetxController{
 
   updateCategorie(CategoryGroupedJson cat){
     categoryGroupedJson=cat;
+
     subcategories1 = null;
     listSubcategories=  sc[cat.id];
 
@@ -30,7 +33,7 @@ class CategoryAndSubcategory extends GetxController{
   }
   updateSupCategorie(SubcategoryJson cat){
     subcategories1=cat;
-
+    tapHomeViewController.setsearch("category", cat.id);
     update();
 
   }
