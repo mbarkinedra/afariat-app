@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class Tab4 extends GetxController {
+class TapProfileViewController extends GetxController {
 
   var box = GetStorage();
   TextEditingController name = TextEditingController();

@@ -1,10 +1,11 @@
 
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'tap5viewcontroller.dart';
+import 'tap_profile_viewcontroller.dart';
 
-class Tap5 extends GetWidget<Tab5> {
+class TapProfileScr extends GetWidget<TapProfileViewController> {
 
 
   @override

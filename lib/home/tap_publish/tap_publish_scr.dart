@@ -1,11 +1,9 @@
-
-
-
-import 'package:afariat/home/tap4/tap4viewcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Tap4Profile extends GetWidget<Tab4> {
+import 'tap_publish_viewcontroller.dart';
+
+class TapPublishScr extends GetWidget<TapPublishViewController> {
 
 
   @override

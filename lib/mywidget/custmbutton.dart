@@ -9,10 +9,11 @@ class CustomButton extends StatelessWidget {
   final double fontSize;
   final FontWeight fontWeight;
   final Function function;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         function();
       },
       child: Padding(
@@ -22,8 +23,7 @@ class CustomButton extends StatelessWidget {
             child: Text(
               label,
               style: TextStyle(
-                color: labcolor,fontSize: fontSize,fontWeight: fontWeight
-              ),
+                  color: labcolor, fontSize: fontSize, fontWeight: fontWeight),
             ),
           ),
           width: width,
@@ -45,9 +45,12 @@ class CustomButton extends StatelessWidget {
   }
 
   CustomButton(
-      {@required this.btcolor,@required this.function,
-   @  required this.labcolor,
-   @  required this.label,
-   @  required this.height,
-   @  required this.width,this.fontSize=16,this.fontWeight=FontWeight.normal});
+      {@required this.btcolor,
+      @required this.function,
+      @required this.labcolor,
+      @required this.label,
+      @required this.height,
+      @required this.width,
+      this.fontSize = 16,
+      this.fontWeight = FontWeight.normal});
 }

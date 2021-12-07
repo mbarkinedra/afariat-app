@@ -13,7 +13,7 @@ class Home extends GetWidget<HomeViwController>  {
     return WillPopScope(onWillPop: ()async{
       final isFirstRouteInCurrentTab =
       !await controller.navigatorKeys[controller.currentPage].currentState.maybePop();
-   //   print(isFirstRouteInCurrentTab);
+      //   print(isFirstRouteInCurrentTab);
       if (isFirstRouteInCurrentTab) {
         if (controller.currentPage != "Page1") {
           controller.changeSelectedValue(  0 );
@@ -79,3 +79,5 @@ class Home extends GetWidget<HomeViwController>  {
     );
   }
 }
+
+

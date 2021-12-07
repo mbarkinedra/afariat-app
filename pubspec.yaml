@@ -26,6 +26,10 @@ dependencies:
 
   get: ^4.5.1
   get_storage: ^2.0.3
+  dio: ^4.0.4
+  syncfusion_flutter_sliders: ^19.3.56
+
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -36,7 +40,7 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
+  flutter_lints: ^1.0.0
 # The following section is specific to Flutter.
 flutter:
 
