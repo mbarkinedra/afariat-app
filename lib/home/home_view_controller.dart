@@ -1,6 +1,8 @@
 
 
+
 import 'package:afariat/home/tap_home/tap_home_scr.dart';
+import 'package:afariat/sign_in/sign_in_scr.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -118,7 +120,7 @@ class PageToView extends StatelessWidget {
       case 'Page5':
         {
 
-          currentScreen = TapProfileScr();
+          currentScreen = SignInScr();//TapProfileScr();
           break;
         }
     }
@@ -131,3 +133,4 @@ class PageToView extends StatelessWidget {
     );
   }
 }
+

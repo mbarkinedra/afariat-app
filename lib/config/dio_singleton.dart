@@ -5,7 +5,7 @@ class DioSingleton {
   Dio dio = Dio(BaseOptions(
       headers: {
         'apikey': SettingsApp.apiKey,
-        'Content-Type': 'application/json; charset=UTF-8'
+        'Content-Type': 'application/json'
       }
       ));
   static final DioSingleton _singleton = DioSingleton._internal();
