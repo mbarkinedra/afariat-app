@@ -11,26 +11,36 @@ abstract class ApiManager {
 
   /// Returns the API URL of current API ressource
   String apiUrl();
+
   AbstractJsonResource fromJson(data);
 
-
-  Future<dynamic> getList( ) async {
+  Future<dynamic> getList() async {
     print(Filter.m.toString());
     AbstractJsonResource jsonList;
     var data;
-    await dioSingleton.dio.get(Filter.Id==null?apiUrl():apiUrl()+Filter.Id,queryParameters:Filter.m).then((value) {
+    await dioSingleton.dio
+        .get(Filter.Id == null ? apiUrl() : apiUrl() + Filter.Id,
+            queryParameters: Filter.m)
+        .then((value) {
       data = value.data;
     });
     jsonList = fromJson(data);
 
     return jsonList;
   }
-  Future<dynamic> post(Map<String, dynamic> dataToPost)async{
 
-    print(jsonEncode(dataToPost) );
-    var data;
+  Future post(Map<String, dynamic> dataToPost) async {
+    return dioSingleton.dio.post(apiUrl(), data: dataToPost);
+  }
+  Future get(Map<String, dynamic> dataToPost) async {
+    Options options=  Options(
+        headers: {
+          'apikey': SettingsApp.apiKey,
+          'Content-Type': 'application/json',
+          'X-WSSE': dataToPost['X-WSSE'],
 
-    return dioSingleton.dio.post(apiUrl(),data: dataToPost) ;
-       }
-
+        }
+    );
+    return dioSingleton.dio.get(apiUrl(), options: options);
+  }
 }

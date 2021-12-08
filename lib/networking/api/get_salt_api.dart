@@ -2,10 +2,10 @@ import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/api/api_manager.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 
-class SignInApi extends ApiManager {
+class GetSalt extends ApiManager{
   @override
   String apiUrl() {
-    return SettingsApp.loginUrl;
+    return SettingsApp.getSaltUrl;
   }
 
   @override
@@ -13,4 +13,5 @@ class SignInApi extends ApiManager {
     // TODO: implement fromJson
     throw UnimplementedError();
   }
+
 }
