@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/model/type_register.dart';
 import 'package:afariat/model/user.dart';
@@ -54,9 +56,11 @@ class SignUpViewController extends GetxController {
       switch (value.statusCode) {
         case 201:
         //Affichage success
+        //Map<String,dynamic> data=jsonDecode(value.data);
+        print("Message à écrire: ${value.data['message']}");
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SignUpSucces()),
+            MaterialPageRoute(builder: (context) => SignUpSucces(value.data['message'])),
           );
           break;
         case 400:
