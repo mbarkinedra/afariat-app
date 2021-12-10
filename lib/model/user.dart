@@ -4,7 +4,8 @@ class User {
   int type;
   String phone;
   String email;
-  String plainPassword;
+  String first;
+  String second;
 
   User(
       {this.name,
@@ -12,7 +13,9 @@ class User {
       this.type,
       this.phone,
       this.email,
-      this.plainPassword});
+      this.first,
+      this.second});
+
 /*  Map<String, dynamic> toMap() {
     return {
       'name': this.name,
@@ -26,12 +29,11 @@ class User {
 
   @override
   Map<String, dynamic> toJson() => {
-        'email': email,
-        'plainPassword': {'first': plainPassword, 'second': plainPassword},
-        'name': name,
-        'type': type,
-        'phone': phone,
-        'city': city,
+        "email": email,
+        "plainPassword": {'first': first, 'second': second},
+        "name": name,
+        "type": type,
+        "phone": phone,
+        "city": city,
       };
-
 }

@@ -2,7 +2,7 @@ import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/api/api_manager.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 
-class GetSalt extends ApiManager{
+class GetSaltApi extends ApiManager{
   @override
   String apiUrl() {
     return SettingsApp.getSaltUrl;

@@ -1,5 +1,6 @@
 import 'package:afariat/config/utilitie.dart';
 import 'package:afariat/controllers/loc_controller.dart';
+import 'package:afariat/model/type_register.dart';
 import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:afariat/mywidget/log_in_item.dart';
 import 'package:afariat/networking/json/ref_json.dart';
@@ -48,6 +49,36 @@ class SignUpScr extends GetWidget<SignUpViewController>  {
                             icon: Icons.add_call,
                           ),
                           SizedBox(height: _size.height*.05,),
+                    GetBuilder<SignUpViewController>(builder: (logic) {
+                      return Column(
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            // decoration: BoxDecoration(border: Border.all(color: Colors.orange),borderRadius: BorderRadius.circular(10)),
+                            child: DropdownButton<TypeRegister>(
+
+                              hint: Text("Type"),
+
+                              isExpanded: true,
+                              value: logic.type,
+
+                              iconSize: 24,
+                              elevation: 16,
+                              onChanged: logic.updateTypeRegister,
+                              items: logic.typeList
+                                  .map<DropdownMenuItem<TypeRegister>>((TypeRegister value) {
+                                return DropdownMenuItem<TypeRegister>(
+                                  value: value,
+                                  child: Text(value.name),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          const SizedBox(height: 8,),
+                        ],
+                      );
+                    }),
+                          SizedBox(height: _size.height*.05,),
                           GetBuilder<LocController>(builder: (logic) {
                             return Column(
                               children: [
@@ -90,7 +121,7 @@ class SignUpScr extends GetWidget<SignUpViewController>  {
 
                           SizedBox(height: _size.height*.05,),
                           Center(child: CustomButton(height: 50,width: _size.width*.8,btcolor: buttonColor,icon: Icons.login,label: "REGISTER",labcolor: textbuttonColor,fontWeight: FontWeight.bold,fontSize: 20,function: (){
-                            controller.post();
+                            controller.postRegister(context);
                           },))
 
                           ,SizedBox(height: _size.height*.05,),Center(
