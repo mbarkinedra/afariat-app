@@ -27,7 +27,8 @@ class CustomButton extends StatelessWidget {
                   style: TextStyle(
                       color: labcolor, fontSize: fontSize, fontWeight: fontWeight),
                 ),SizedBox(width: 50,),
-                if(icon!=null)Icon(icon,color: Colors.white,)
+               if(icon!=null)Icon(
+                 icon,color: Colors.white,)
 
               ],
             ),

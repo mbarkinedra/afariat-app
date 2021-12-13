@@ -1,3 +1,5 @@
+import 'package:afariat/advert_details/advert_details_scr.dart';
+import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
 import 'package:afariat/assets/style.dart';
 import 'package:afariat/config/filter.dart';
 import 'package:afariat/mywidget/bottom_sheet_filter.dart';
@@ -84,9 +86,20 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                           if (logic.adverts[pos].title
                               .toLowerCase()
                               .contains(logic.searchWord.text.toLowerCase())) {
-                            return MyHomeItem(
-                              size: _size,
-                              adverts: logic.adverts[pos],
+                            return InkWell(onTap: (){
+                             Filter.Id=logic.adverts[pos].id.toString();
+                             Get.find<AdvertDetailsViewcontroller>().loading=true;
+                             Get.find<AdvertDetailsViewcontroller>().getAdvertDetails();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => AdvertDetatilsScr() ),
+                              );
+
+                            },
+                              child: MyHomeItem(
+                                size: _size,
+                                adverts: logic.adverts[pos],
+                              ),
                             );
                           } else {
                             return const SizedBox();
