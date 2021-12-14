@@ -1,10 +1,13 @@
-import 'package:afariat/advert_details/contact_email.dart';
 import 'package:afariat/config/utilitie.dart';
-import 'package:afariat/mywidget/custmbutton.dart';
+
+import 'package:afariat/mywidget/custom_button_icon.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
+import 'package:email_launcher/email_launcher.dart'as mail;
+import 'package:url_launcher/url_launcher.dart';
 import 'advert_details_viewcontroller.dart';
 
 class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
@@ -22,22 +25,19 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'title ',
-                          style: DefaultTextStyle.of(context).style,
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: logic.advert.title.toString(),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ],
+                  children: [ SizedBox(height: 10),
+                    Row(
+                      children: [
+                        InkWell(onTap: (){
+                          Navigator.pop(context);
+                        },child: Icon(Icons.arrow_back_ios,)),
+                        SizedBox(
+                          width: 8,
                         ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
+                        Text("Annonce détaillée",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+
+                      ],
+                    ), SizedBox(height: 20),
                     CarouselSlider(
                       options: CarouselOptions(
                         height: _size.height * .3,
@@ -59,163 +59,85 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                           .toList(),
                     ),
                     SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Prix ',
-                          style: DefaultTextStyle.of(context).style,
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: logic.advert.price.toString(),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ],
+                    Row(
+                      children: [
+                        Container(width: _size.width*.5,
+                          child: Text(logic.advert.title.toString(),overflow:   TextOverflow.ellipsis,
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Annonceur ',
-                          style: DefaultTextStyle.of(context).style,
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: logic.advert.price.toString(),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ],
+                        Spacer(),
+                        Icon(Icons.add_location),
+                        SizedBox(
+                          width: 4,
                         ),
-                      ),
+                        Text(
+                            "${logic.advert.town.name} ${logic.advert.city.name}")
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Catégorie ',
-                          style: DefaultTextStyle.of(context).style,
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: logic.advert.category.name,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      ),
+                    SizedBox(
+                      height: 8,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Ville ',
-                          style: DefaultTextStyle.of(context).style,
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: logic.advert.city.name,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      ),
+                    Text("${logic.advert.price} DT",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 25)),
+                    SizedBox(
+                      height: 8,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Adresse ',
-                          style: DefaultTextStyle.of(context).style,
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: logic.advert.region.name,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      ),
+                    Text("Ajouter description",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16)),
+                    SizedBox(
+                      height: 8,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Nombre de piece ',
-                          style: DefaultTextStyle.of(context).style,
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: logic.advert.id.toString(),
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      ),
-                    ),
-
-
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'description ',
-                          style: DefaultTextStyle.of(context).style,
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: logic.advert.description,
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      ),
-                    ),
-
+                    Text(logic.advert.description,
+                        style: TextStyle(fontSize: 16)),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CustomButton(
-                                    btcolor: buttonColor,
-                                    labcolor: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    function: () {},
-                                    height: 40,
-                                    width: _size.width * .2,
-                                    label: "",
-                                    icon: Icons.add_call,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 5),
-                              CustomButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (logic.havephonenumber())
+                              CustomButtonIcon(
                                 btcolor: buttonColor,
-                                labcolor: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                function: () {},
-                                height: 40,
-                                width: _size.width * .2,
-                                label: "",
-
-                                icon: Icons.message,
-                              ),
-                              SizedBox(height: 5),
-                              CustomButton(
-                                btcolor: buttonColor,
-                                labcolor: Colors.white,
-                                fontWeight: FontWeight.bold,
                                 function: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => ContactEmail()),
-                                  );
+                                  logic.makePhoneCall(
+                                      logic.advert.mobilePhoneNumber);
                                 },
                                 height: 40,
                                 width: _size.width * .2,
-                                label: "",
-                                icon: Icons.markunread,
+                                icon: Icons.add_call,
                               ),
-                            ],
-                          ),
+                            if (logic.havephonenumber())
+                              CustomButtonIcon(
+                                btcolor: buttonColor,
+                                function: () {
+                                  logic.makesms(logic.advert.mobilePhoneNumber);
+                                },
+                                height: 40,
+                                width: _size.width * .2,
+                                icon: Icons.message,
+                              ),
+                            CustomButtonIcon(
+                              btcolor: buttonColor,
+                              function: ()async {
+
+
+                                final Uri launchUri = Uri(
+                                  scheme: 'mail',
+                                  path: "afariat@gmail.com",
+                                );
+                                await launch(launchUri.toString());
+
+                              },
+                              height: 40,
+                              width: _size.width * .2,
+                              icon: Icons.markunread,
+                            ),
+                          ],
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ),

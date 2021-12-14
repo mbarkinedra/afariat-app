@@ -87,6 +87,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                               .toLowerCase()
                               .contains(logic.searchWord.text.toLowerCase())) {
                             return InkWell(onTap: (){
+                              print(logic.adverts[pos].id);
                              Filter.Id=logic.adverts[pos].id.toString();
                              Get.find<AdvertDetailsViewcontroller>().loading=true;
                              Get.find<AdvertDetailsViewcontroller>().getAdvertDetails();
