@@ -6,7 +6,7 @@ import 'package:afariat/networking/json/adverts_json.dart';
 class AdvertDetailsApi extends ApiManager {
   @override
   String apiUrl() {
-    return SettingsApp.advertDeatils;
+    return SettingsApp.advertDeatilsUrl;
   }
 
   @override

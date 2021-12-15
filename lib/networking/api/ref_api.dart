@@ -26,3 +26,28 @@ class PriceApi extends RefApi {
   @override
   String apiUrl() => SettingsApp.priceUrl;
 }
+
+class VehicleBrands extends RefApi {
+  @override
+  String apiUrl() => SettingsApp.vehicleBrandsUrl;
+}
+
+class MotoBrandsApi extends RefApi {
+  @override
+  String apiUrl() => SettingsApp.motoBrandsUrl;
+}
+
+class MileagesApi extends RefApi {
+  @override
+  String apiUrl() => SettingsApp.mileagesUrl;
+}
+
+class YearsModelsApi extends RefApi {
+  @override
+  String apiUrl() => SettingsApp.yearsModelsUrl;
+}
+
+class RoomsNumberApi extends RefApi {
+  @override
+  String apiUrl() => SettingsApp.roomsNumberUrl;
+}

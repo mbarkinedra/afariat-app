@@ -30,10 +30,10 @@ class CustomTextFiled extends StatelessWidget {
             obscureText: obscureText,keyboardType: keyboardType,
             controller: textEditingController,
             decoration: InputDecoration(border: InputBorder.none,
-                icon: Icon(icon),hintText: hintText
+                icon: Icon(icon),hintText: hintText,
             ),
           ),
-          decoration: BoxDecoration(border: Border.all(color: blackcolore),borderRadius: BorderRadius.circular(10)),
+          decoration: BoxDecoration(border: Border.all(color: color),borderRadius: BorderRadius.circular(10)),
         ),
       ),
     );
