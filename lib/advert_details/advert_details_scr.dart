@@ -1,4 +1,5 @@
 import 'package:afariat/config/utilitie.dart';
+import 'package:afariat/model/error_register.dart';
 
 import 'package:afariat/mywidget/custom_button_icon.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -123,11 +124,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                               function: ()async {
 
 
-                                final Uri launchUri = Uri(
-                                  scheme: 'mail',
-                                  path: "afariat@gmail.com",
-                                );
-                                await launch(launchUri.toString());
+logic.showd(context);
 
                               },
                               height: 40,
