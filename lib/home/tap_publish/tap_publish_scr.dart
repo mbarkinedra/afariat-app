@@ -3,6 +3,8 @@ import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
+import 'package:afariat/mywidget/widget_publish.dart';
+import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,7 +36,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<CategoryGroupedJson>(
                           isExpanded: true,
-                          hint: Text("catégorie"),
+                          // hint: Text("catégorie"),
                           value: logic.categoryGroupedJson,
                           iconSize: 24,
                           elevation: 16,
@@ -48,9 +50,6 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             );
                           }).toList(),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 8,
                       ),
                       Container(
                         width: double.infinity,
@@ -71,30 +70,80 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                               value: value,
                               child: Text(value.name),
                             );
-                          }).toList(),
+                          }).
+                          toList(),
+
                         ),
                       )
                     ],
                   );
                 }),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Type d'annonce",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+              GetBuilder<TapPublishViewController>(builder: (logic) {
+                return Column(
+                  children: logic.valus.map((e) {
+                    return RadioListTile(
+                        title: Text(e.name),
+                        value: e.name,
+                        groupValue: logic.advertType,
+                        onChanged: logic.updateRadioButton);
+                  }).toList(),
+                );
+
+              }),
+              //if (subcategories1 != null) getview(getOption),
+              GetBuilder<TapPublishViewController>(builder: (logic) {
+               return  WidgetPublish(
+                 logic.meliage.name,
+               );
+
+              }),
               const SizedBox(
                 height: 10,
               ),
-              CustomTextFiled(color: framColor,
-
-                hintText: "title",
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "title",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+              CustomTextFiled(
+                color: framColor,
+                hintText: "",
                 textEditingController: controller.title,
               ),
               const SizedBox(
                 height: 10,
               ),
-              CustomTextFiled(color: framColor,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Description",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+              CustomTextFiled(
+                color: framColor,
                 hintText: "description",
                 textEditingController: controller.description,
               ),
               const SizedBox(
                 height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "price",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,13 +163,19 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                   ),
                   Text(
                     "DT",
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   )
                 ],
               ),
               const SizedBox(
                 height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "City",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ),
               GetBuilder<LocController>(builder: (logic) {
                 return Column(
@@ -184,7 +239,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                         trailing: CupertinoSwitch(
                           value: logic.lights,
                           activeColor: Colors.orange,
-                          onChanged: logic.updatLight,
+                          onChanged: logic.updateLight,
                         ),
                         onTap: () {
                           logic.lights = !logic.lights;
@@ -206,16 +261,9 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   CustomButton(
-                    width: MediaQuery.of(context).size.width * .35,
-                    height: 50,
-                    label: "Edit",
-                    btcolor: buttonColor,
-                    function: () {},
-                  ),
-                  CustomButton(
                       width: MediaQuery.of(context).size.width * .35,
                       height: 50,
-                      label: "Publish",
+                      label: "Next",
                       btcolor: buttonColor,
                       function: () {
                         //postAdvert(cities1,town1,advertType,price,description,title,photo)
@@ -233,4 +281,6 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
       ),
     );
   }
+
+
 }

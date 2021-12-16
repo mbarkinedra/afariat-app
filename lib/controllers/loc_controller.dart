@@ -41,7 +41,7 @@ class LocController extends GetxController {
     _townsApi.getList().then((value) {
       towns = value.data;
       update();
-      Filter.Id=null;
+      Filter.Id = null;
     });
   }
 }

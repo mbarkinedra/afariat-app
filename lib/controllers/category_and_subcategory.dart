@@ -1,15 +1,23 @@
+import 'package:afariat/config/filter.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
+import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/networking/api/categories_groupped_api.dart';
+import 'package:afariat/networking/api/ref_api.dart';
+import 'package:afariat/networking/json/advert_details_json.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
+import 'package:afariat/networking/json/ref_json.dart';
 import 'package:get/get.dart';
-class CategoryAndSubcategory extends GetxController{
-  final CategoriesGrouppedApi _categoriesGrouppedApi=CategoriesGrouppedApi();
-  final tapHomeViewController=Get.find<TapHomeViewController>();
+
+class CategoryAndSubcategory extends GetxController {
+  final CategoriesGrouppedApi _categoriesGrouppedApi = CategoriesGrouppedApi();
+  final tapHomeViewController = Get.find<TapHomeViewController>();
   Map<int, List<SubcategoryJson>> sc = {};
   List<SubcategoryJson> listSubcategories = [];
   SubcategoryJson subcategories1;
   List<CategoryGroupedJson> categoryGroupList = [];
   CategoryGroupedJson categoryGroupedJson;
+  AdvertTypesApi _refApi = AdvertTypesApi();
+
   @override
   void onInit() {
     super.onInit();
@@ -22,19 +30,22 @@ class CategoryAndSubcategory extends GetxController{
     });
   }
 
-
-  updateCategorie(CategoryGroupedJson cat){
-    categoryGroupedJson=cat;
+  updateCategorie(CategoryGroupedJson cat) {
+    categoryGroupedJson = cat;
 
     subcategories1 = null;
-    listSubcategories=  sc[cat.id];
+    listSubcategories = sc[cat.id];
 
     update();
   }
-  updateSupCategorie(SubcategoryJson cat){
-    subcategories1=cat;
-    tapHomeViewController.setsearch("category", cat.id);
-    update();
 
+  updateSupCategorie(SubcategoryJson cat) {
+    subcategories1 = cat;
+    tapHomeViewController.setsearch("category", cat.id);
+    Filter.Id = cat.id.toString();
+    _refApi.getList().then((value) {
+      Get.find<TapPublishViewController>().updateadvertTypes(value);
+    });
+    update();
   }
 }
