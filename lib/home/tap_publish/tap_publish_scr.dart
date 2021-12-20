@@ -1,6 +1,7 @@
 import 'package:afariat/config/utilitie.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
+import 'package:afariat/home/tap_publish/publish_ads_image.dart';
 import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
 import 'package:afariat/mywidget/widget_publish.dart';
@@ -70,9 +71,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                               value: value,
                               child: Text(value.name),
                             );
-                          }).
-                          toList(),
-
+                          }).toList(),
                         ),
                       )
                     ],
@@ -96,15 +95,14 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                         onChanged: logic.updateRadioButton);
                   }).toList(),
                 );
-
               }),
               //if (subcategories1 != null) getview(getOption),
-              GetBuilder<TapPublishViewController>(builder: (logic) {
-               return  WidgetPublish(
-                 logic.meliage.name,
-               );
 
-              }),
+                GetBuilder<TapPublishViewController>(builder: (logic) {
+                  return logic.getview != null? WidgetPublish(
+                    logic.getview.name,
+                  ): SizedBox();
+                }),
               const SizedBox(
                 height: 10,
               ),
@@ -267,11 +265,11 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                       btcolor: buttonColor,
                       function: () {
                         //postAdvert(cities1,town1,advertType,price,description,title,photo)
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (
-                        //         context,
-                        //         ) =>
-                        //         PublishAdsImage()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                     builder: (
+                             context,
+                         ) =>
+                    PublishAdsImage()));
                       }),
                 ],
               ),
@@ -281,6 +279,4 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
       ),
     );
   }
-
-
 }

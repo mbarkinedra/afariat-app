@@ -10,9 +10,10 @@ class CustomTextFiled extends StatelessWidget {
   final TextInputType keyboardType;
   final String hintText;
   Function onchange;
+  double padding;
   CustomTextFiled(
       {@required this.textEditingController,@required this.hintText,this.onchange,
-        @   required this.color,
+        @   required this.color,this.padding=4.0,
         @   required this.width,
         this.icon,
         this.obscureText = false,
@@ -22,7 +23,7 @@ class CustomTextFiled extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(4.0),
+        padding:   EdgeInsets.all(padding),
         child: Container(
           width: width,height: 50,
 

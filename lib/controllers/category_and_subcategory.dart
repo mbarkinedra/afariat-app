@@ -39,12 +39,18 @@ class CategoryAndSubcategory extends GetxController {
     update();
   }
 
-  updateSupCategorie(SubcategoryJson cat) {
-    subcategories1 = cat;
-    tapHomeViewController.setsearch("category", cat.id);
-    Filter.Id = cat.id.toString();
+  updateSupCategorie(SubcategoryJson subCat) {
+    subcategories1 = subCat;
+    tapHomeViewController.setsearch("category", subCat.id);
+
+    Get.find<TapPublishViewController>().updategetview(RefJson(id: subCat.id,name: subCat.name));
+   Filter.Id = subCat.id.toString();
+
     _refApi.getList().then((value) {
+      print(value.data);
+     // Get.find<TapPublishViewController>(). getMotosBrand()  ;
       Get.find<TapPublishViewController>().updateadvertTypes(value);
+      Filter.Id = null;
     });
     update();
   }

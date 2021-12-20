@@ -1,8 +1,10 @@
-/*
 import 'dart:io';
 
+import 'package:afariat/config/utilitie.dart';
+import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'publishadsImage_viewcontroller.dart';
 
@@ -28,10 +30,10 @@ class PublishAdsImage extends GetView<PublishadsImageViewController> {
                     child: Container(
                       width: size.width * .8,
                       height: size.height * .3,
-                      child: _image == null
+                      child: controller.image == null
                           ? Image.asset("assets/images/img_placeholder.jpg")
                           : Image.file(
-                              _image,
+                              controller.image,
                               fit: BoxFit.fill,
                             ),
                     ),
@@ -46,37 +48,38 @@ class PublishAdsImage extends GetView<PublishadsImageViewController> {
                     child: Container(
                       width: size.width * .8,
                       height: size.height * .3,
-                      child: _image2 == null
-                          ? Image.asset("assets/images/img_placeholder.jpg")
-                          : Image.file(_image2),
+                      child: controller.image2 == null
+                          ? Text("pppppppppp")//Image.asset("assets/images/img_placeholder.jpg")
+                          : Image.file(controller.image2),
                     ),
                   ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    DesignForm(
+                    CustomButton(
                       width: MediaQuery.of(context).size.width * .4,
-                      hight: 50,
-                      label: "Next",
-                      backcolor: OrColor,
-                      onpress: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (
-                          context,
-                        ) =>
-                                PublishSucces()));
-                      },
-                    ),
-                    DesignForm(
-                      width: MediaQuery.of(context).size.width * .4,
-                      hight: 50,
+                      height: 50,
                       label: "Previous",
-                      backcolor: OrColor,
-                      onpress: () {
+                      btcolor: buttonColor,
+                      function: () {
                         Navigator.of(context).pop();
                       },
                     ),
+                    CustomButton(
+                      width: MediaQuery.of(context).size.width * .4,
+                      height: 50,
+                      label: "Next",
+                      btcolor: buttonColor,
+                      function: () {
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (
+                        //   context,
+                        // ) =>
+                        //         PublishSucces()));
+                      },
+                    ),
+
                   ],
                 ),
               ],
@@ -97,15 +100,21 @@ class PublishAdsImage extends GetView<PublishadsImageViewController> {
                   GestureDetector(
                     child: Text("Capture Image From Camera"),
                     onTap: () {
-                      openCamera(image);
+                   //   controller.openCamera(image);
                     },
                   ),
                   Padding(padding: EdgeInsets.all(10)),
                   GestureDetector(
                     child: Text("Take Image From Gallery"),
-                    onTap: () {
-                      openGallery(image);
-                    },
+                    onTap: () async {
+                     // controller.openGallery(image);
+                    // var imgCamera = await  ImagePicker.pickImage(source: ImageSource.gallery);
+
+    var imgGallery = await  ImagePicker.pickImage(source: ImageSource.gallery);
+
+     // image = File(imgGallery.path);
+ // controller.  updateImage (controller.image ,imgGallery);
+  },
                   ),
                 ],
               ),
@@ -113,33 +122,4 @@ class PublishAdsImage extends GetView<PublishadsImageViewController> {
           );
         });
   }
-
-  void openCamera(int image) async {
-    var imgCamera = await picker.getImage(source: ImageSource.camera);
-    if (image == 1) {
-      setState(() {
-        _image = File(imgCamera.path);
-      });
-    } else {
-      setState(() {
-        _image = File(imgCamera.path);
-      });
-    }
-  }
-
-  void openGallery(int image) async {
-    var imgGallery = await picker.getImage(source: ImageSource.gallery);
-    if (image == 1) {
-      setState(() {
-        _image = File(imgGallery.path);
-      });
-    } else {
-      setState(() {
-        _image2 = File(imgGallery.path);
-      });
-    }
-
-    // Navigator.of(context).pop();
-  }
 }
-*/

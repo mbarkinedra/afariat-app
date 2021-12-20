@@ -41,13 +41,13 @@ class  VehicleBrands  extends GetView<TapPublishViewController>  {
                     border: Border.all(color: Colors.orange)
                 ),
                 child: DropdownButton<RefJson>(  underline: SizedBox(),isExpanded: true,
-                  value: logic.dropdownValue,
+                  value: logic.vehiculebrands,
 
                   iconSize: 24,
                   elevation: 16,
 
 
-                  onChanged: logic.updateMarque,
+                  onChanged: logic.updateMarque ,
                   items: logic.vehiculeBrands.map<DropdownMenuItem<RefJson>>((RefJson value) {
                     return DropdownMenuItem<RefJson>(
                       value: value,
@@ -101,9 +101,7 @@ class  VehicleBrands  extends GetView<TapPublishViewController>  {
                   iconSize: 24,
                   elevation: 16,
 
-                  onChanged: (String newValue) {
-
-                  },
+                  onChanged: logic.updateEnergie ,
                   items: logic.energies
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
@@ -126,7 +124,7 @@ class  VehicleBrands  extends GetView<TapPublishViewController>  {
                     border: Border.all(color: Colors.orange)
                 ),
                 child: DropdownButton<RefJson>(underline: SizedBox(),isExpanded: true,
-                  value:logic. meliage,
+                  value:logic. kelometrage,
 
                   iconSize: 24,
                   elevation: 16,
