@@ -3,43 +3,54 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+
 class PublishadsImageViewController extends GetxController{
-  File image;
-  File   image2;
+ File image;
+   File  image2;
 
-
+ final picker = ImagePicker();
 
 
   void openCamera(int i ) async {
-    var imgCamera = await  ImagePicker.pickImage(source: ImageSource.camera);
+
+    var imgCamera =     await picker.getImage(source:ImageSource.camera);
     if (i  == 1) {
 
-      //  image = File(imgCamera.path);
-        updateImage (image ,imgCamera);
+        image = File(imgCamera.path);
+        update();
     } else {
 
-       //image = File(imgCamera.path);
-       updateImage (image2,imgCamera);
+      image2 = File(imgCamera.path);
+      update();
+
     }
   }
 
-  void openGallery(int i ) async {
-    var imgGallery = await  ImagePicker.pickImage(source: ImageSource.gallery);
+  void openGallery( int i ) async {
+  //  final picker = ImagePicker();
+    final pickedFile =     await picker.getImage(source: ImageSource.gallery);
     if (i  == 1) {
 
-      updateImage (image,imgGallery);
 
+      if (pickedFile != null) {
+        print(' image selected.');
+        image = File(pickedFile.path);
+        update();
+      } else {
+        print('No image selected.');
+      }
     } else {
 
-        // image2 = File(imgGallery.path);
-         updateImage (image2,imgGallery);
+      if (pickedFile != null) {
+        print(' image selected.');
+        image2 = File(pickedFile.path);
+        update();
+      } else {
+        print('No image selected.');
+      }
     }
 
-    // Navigator.of(context).pop();
   }
-  updateImage(image,imgGallery){
-    image = File(imgGallery.path);
-    update();
-  }
+
 
 }

@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:afariat/config/filter.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
+import 'package:afariat/networking/api/publish_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/advert_details_json.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class TapPublishViewController extends GetxController {
   final categoryAndSubcategory = Get.find<CategoryAndSubcategory>();
@@ -59,7 +63,52 @@ class TapPublishViewController extends GetxController {
   ];
 
   List<String> energies = ['Diesel', 'Essence', 'Electrique', 'LPG'];
+  File image;
+  File  image2;
 
+  final picker = ImagePicker();
+
+
+  void openCamera(int i ) async {
+
+    var imgCamera =     await picker.getImage(source:ImageSource.camera);
+    if (i  == 1) {
+
+      image = File(imgCamera.path);
+      update();
+    } else {
+
+      image2 = File(imgCamera.path);
+      update();
+
+    }
+  }
+
+  void openGallery( int i ) async {
+    //  final picker = ImagePicker();
+    final pickedFile =     await picker.getImage(source: ImageSource.gallery);
+    if (i  == 1) {
+
+
+      if (pickedFile != null) {
+        print(' image selected.');
+        image = File(pickedFile.path);
+        update();
+      } else {
+        print('No image selected.');
+      }
+    } else {
+
+      if (pickedFile != null) {
+        print(' image selected.');
+        image2 = File(pickedFile.path);
+        update();
+      } else {
+        print('No image selected.');
+      }
+    }
+
+  }
   @override
   void onInit() {
     super.onInit();
@@ -198,4 +247,11 @@ Filter.Id=null;
     advertType = v;
     update();
   }
+/*  postdata( ) {
+    PublishApi publishApi=PublishApi();
+
+    publishApi.post().then((value) {
+      print(value);
+    });
+  }*/
 }

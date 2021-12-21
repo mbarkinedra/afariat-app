@@ -30,15 +30,22 @@ abstract class ApiManager {
   }
 
   Future<Response<dynamic>> post(dataToPost) async {
+    Options options = Options(headers: {
+      'apikey': SettingsApp.apiKey,
+      'Content-Type': 'application/json',
+      'X-WSSE': dataToPost['X-WSSE'],
+    });
     return dioSingleton.dio
         .post(
       apiUrl(),
       data: jsonEncode(dataToPost),
-      options: Options(
-          followRedirects: false,
-          validateStatus: (status) {
-            return status < 500;
-          }),
+      options: options
+
+      // Options(
+      //     followRedirects: false,
+      //     validateStatus: (status) {
+      //       return status < 500;
+      //     }),
     )
         .then((value) {
           return value;

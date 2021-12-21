@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:afariat/config/utilitie.dart';
+import 'package:afariat/home/tap_publish/apercu_publich.dart';
+import 'package:afariat/home/tap_publish/publish_succes.dart';
+import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +11,7 @@ import 'package:image_picker/image_picker.dart';
 
 import 'publishadsImage_viewcontroller.dart';
 
-class PublishAdsImage extends GetView<PublishadsImageViewController> {
+class PublishAdsImage extends GetView<TapPublishViewController> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -21,39 +24,53 @@ class PublishAdsImage extends GetView<PublishadsImageViewController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                    onTap: () async {
-                      showOptionsDialog(context, 1);
-                    },
-                    child: Container(
-                      width: size.width * .8,
-                      height: size.height * .3,
-                      child: controller.image == null
-                          ? Image.asset("assets/images/img_placeholder.jpg")
-                          : Image.file(
+                GetBuilder<TapPublishViewController>(builder: (logic) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () async {
+                          showOptionsDialog(context, 1);
+                        },
+                        child:
+                           Container(
+                            width: size.width * .8,
+                            height: size.height * .3,
+                            child: controller.image == null
+                                ?Image.asset("assets/img_placeholder.jpg")
+                                :
+
+                                   Image.file(
                               controller.image,
                               fit: BoxFit.fill,
                             ),
-                    ),
-                  ),
+                            ),
+
+
+                       ),
+                      );
+                  }
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                    onTap: () {
-                      showOptionsDialog(context, 2);
-                    },
-                    child: Container(
-                      width: size.width * .8,
-                      height: size.height * .3,
-                      child: controller.image2 == null
-                          ? Text("pppppppppp")//Image.asset("assets/images/img_placeholder.jpg")
-                          : Image.file(controller.image2),
-                    ),
-                  ),
+
+                GetBuilder<TapPublishViewController>(builder: (logic) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          showOptionsDialog(context, 2);
+                        },
+                        child: Container(
+                              width: size.width * .8,
+                              height: size.height * .3,
+                              child: controller.image2 == null
+                                  ? Image.asset("assets/img_placeholder.jpg")
+                                  : Image.file(controller.image2 , fit: BoxFit.fill, ),
+                            )
+
+                        ),
+                      );
+                  }
                 ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -72,11 +89,11 @@ class PublishAdsImage extends GetView<PublishadsImageViewController> {
                       label: "Next",
                       btcolor: buttonColor,
                       function: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (
-                        //   context,
-                        // ) =>
-                        //         PublishSucces()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                         builder: (
+                         context,
+                        ) =>
+                             ApercuPublich()));
                       },
                     ),
 
@@ -99,21 +116,21 @@ class PublishAdsImage extends GetView<PublishadsImageViewController> {
                 children: [
                   GestureDetector(
                     child: Text("Capture Image From Camera"),
-                    onTap: () {
-                   //   controller.openCamera(image);
+                    onTap: () async{
+
+                      // var imgGallery = await  ImagePicker.pickImage(source: ImageSource.camera);
+                      //
+                      // // image = File(imgGallery.path);
+                      // Get.find<PublishadsImageViewController>().  updateImage ( Get.find<PublishadsImageViewController>().image ,imgGallery);
+                      controller.openCamera(image);
                     },
                   ),
                   Padding(padding: EdgeInsets.all(10)),
                   GestureDetector(
                     child: Text("Take Image From Gallery"),
                     onTap: () async {
-                     // controller.openGallery(image);
-                    // var imgCamera = await  ImagePicker.pickImage(source: ImageSource.gallery);
-
-    var imgGallery = await  ImagePicker.pickImage(source: ImageSource.gallery);
-
-     // image = File(imgGallery.path);
- // controller.  updateImage (controller.image ,imgGallery);
+                    controller.openGallery( image);
+              //Get.find<PublishadsImageViewController>().  updateImage ( Get.find<PublishadsImageViewController>().image ,imgGallery);
   },
                   ),
                 ],
