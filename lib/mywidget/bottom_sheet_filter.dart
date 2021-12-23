@@ -19,7 +19,6 @@ class BottomSheetFilter extends StatefulWidget {
 }
 
 class _BottomSheetFilterState extends State<BottomSheetFilter> {
-  String dropdownValue = 'One';
 
   final tap1ViewController = Get.find<TapHomeViewController>();
 
@@ -96,6 +95,8 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
               ),
             ),
             GetBuilder<TapHomeViewController>(builder: (logic) {
+              print(logic.maxValue);
+              print(logic.minValue);
               return SfRangeSlider(
                 min: logic.minValue,
                 max: logic.maxValue,

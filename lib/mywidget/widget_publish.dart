@@ -1,16 +1,18 @@
-import 'package:afariat/publish_ads_model/motos.dart';
-import 'package:afariat/publish_ads_model/rooms.dart';
-import 'package:afariat/publish_ads_model/vehicle-brands.dart';
+import 'package:afariat/home/tap_publish/publish_ads_model/motos.dart';
+import 'package:afariat/home/tap_publish/publish_ads_model/rooms.dart';
+import 'package:afariat/home/tap_publish/publish_ads_model/vehicle-brands.dart';
+
 import 'package:flutter/material.dart';
 
 class WidgetPublish extends StatelessWidget {
-  String cat;
+  String categorie;
 
-  WidgetPublish(this.cat);
+  WidgetPublish(this.categorie);
 
   @override
   Widget build(BuildContext context) {
-    switch (cat) {
+    print("bbbbbbbbbbbbbbbbbbbbb  $categorie");
+    switch (categorie) {
       case "Voitures":
         {
           return VehicleBrands();

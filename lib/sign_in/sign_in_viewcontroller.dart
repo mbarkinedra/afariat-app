@@ -28,6 +28,8 @@ class SignInViewController extends GetxController {
       storge.writeSecureData( storge.key_wsse,wsse);
       _signInApi.get({'X-WSSE': wsse}).then((value) {
         print(value.data);
+        print(value.data["user_id"]);
+        storge.writeSecureData( storge.user_id, value.data["user_id"].toString());
         Get.find<HomeViwController>().changeSelectedValue(0);
       });
     });

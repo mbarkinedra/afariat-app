@@ -2,13 +2,13 @@
 
 
 import 'package:afariat/config/storage.dart';
+import 'package:afariat/home/tap_chat/tap_chat_scr.dart';
 import 'package:afariat/home/tap_home/tap_home_scr.dart';
 import 'package:afariat/sign_in/sign_in_scr.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'tap_myads/tap_myads_scr.dart';
-import 'tap_notification/tap_notification_scr.dart';
 import 'tap_profile/tap_profile_scr.dart';
 import 'tap_publish/tap_publish_scr.dart';
 
@@ -104,18 +104,18 @@ class PageToView extends StatelessWidget {
         }
       case 'Page2':
         {
-          currentScreen = TapPublishScr();
+          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_wsse) ==null?SignInScr(): TapPublishScr();
           break;
         }
       case 'Page3':
         {
-          currentScreen = TapMyadsScr();
+          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_wsse) ==null?SignInScr(): TapMyadsScr();
           break;
         }
       case 'Page4':
         {
 
-          currentScreen = TapNotificationScr();
+          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_wsse) ==null?SignInScr(): TapChatScr();
           break;
         }
       case 'Page5':

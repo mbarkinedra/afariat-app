@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 
-class PublishadsImageViewController extends GetxController{
+class PublishImageViewController extends GetxController{
  File image;
    File  image2;
 

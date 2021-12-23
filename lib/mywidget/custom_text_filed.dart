@@ -27,7 +27,7 @@ class CustomTextFiled extends StatelessWidget {
         child: Container(
           width: width,height: 50,
 
-          child: TextField(textAlign: TextAlign.end,onChanged: onchange,
+          child: TextField( onChanged: onchange,
             obscureText: obscureText,keyboardType: keyboardType,
             controller: textEditingController,
             decoration: InputDecoration(border: InputBorder.none,

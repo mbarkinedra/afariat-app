@@ -52,7 +52,7 @@ class Home extends GetWidget<HomeViwController>  {
                   label: 'Ads',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.add_alert_sharp),
+                  icon: Icon(Icons.article_rounded),
 
                   label: 'Notification',
                 ),

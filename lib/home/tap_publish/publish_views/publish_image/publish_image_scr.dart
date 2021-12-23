@@ -1,17 +1,17 @@
 import 'dart:io';
 
 import 'package:afariat/config/utilitie.dart';
-import 'package:afariat/home/tap_publish/apercu_publich.dart';
-import 'package:afariat/home/tap_publish/publish_succes.dart';
+import 'package:afariat/home/tap_publish/publish_views/apercu_publich.dart';
+import 'package:afariat/home/tap_publish/publish_views/publish_succes.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'publishadsImage_viewcontroller.dart';
+import 'publish_image_viewcontroller.dart';
 
-class PublishAdsImage extends GetView<TapPublishViewController> {
+class PublishImageScr extends GetView<TapPublishViewController> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

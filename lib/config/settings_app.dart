@@ -7,6 +7,8 @@ class SettingsApp {
   static const String forgotPasswordUrl = baseApiUrl + '/users/reset-password';
   static const String getSaltUrl = baseApiUrl + '/users/get-salt';
   static const String advertUrl = baseApiUrl + '/adverts';
+  static const String myAdsUrl = baseApiUrl + '/adverts?user=';
+
   static const String cityUrl = baseApiUrl + '/simple/cities';
 
   static const String townUrl = baseApiUrl + '/simple/towns/';

@@ -1,6 +1,7 @@
 import 'package:afariat/config/filter.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
+
 import 'package:afariat/networking/api/categories_groupped_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/advert_details_json.dart';
@@ -17,7 +18,7 @@ class CategoryAndSubcategory extends GetxController {
   List<CategoryGroupedJson> categoryGroupList = [];
   CategoryGroupedJson categoryGroupedJson;
   AdvertTypesApi _refApi = AdvertTypesApi();
-
+final tapPublishViewController = Get.find<TapPublishViewController>();
   @override
   void onInit() {
     super.onInit();
@@ -32,7 +33,7 @@ class CategoryAndSubcategory extends GetxController {
 
   updateCategorie(CategoryGroupedJson cat) {
     categoryGroupedJson = cat;
-
+    tapPublishViewController.updatecategory(cat);
     subcategories1 = null;
     listSubcategories = sc[cat.id];
 
@@ -43,7 +44,10 @@ class CategoryAndSubcategory extends GetxController {
     subcategories1 = subCat;
     tapHomeViewController.setsearch("category", subCat.id);
 
-    Get.find<TapPublishViewController>().updategetview(RefJson(id: subCat.id,name: subCat.name));
+    tapPublishViewController.updateSubcategoryJson(subCat);
+    tapPublishViewController.updategetview(RefJson(id: subCat.id,name: subCat.name));
+    tapPublishViewController.myAds["category"] =  subCat.id;
+    tapPublishViewController.myAdsview["category"] =  subCat.name;
    Filter.Id = subCat.id.toString();
 
     _refApi.getList().then((value) {

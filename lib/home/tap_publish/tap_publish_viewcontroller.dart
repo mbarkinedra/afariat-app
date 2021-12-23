@@ -1,21 +1,22 @@
 import 'dart:io';
 
 import 'package:afariat/config/filter.dart';
-import 'package:afariat/controllers/category_and_subcategory.dart';
-import 'package:afariat/controllers/loc_controller.dart';
+import 'package:afariat/config/storage.dart';
+
 import 'package:afariat/networking/api/publish_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
-import 'package:afariat/networking/json/advert_details_json.dart';
+import 'package:afariat/networking/json/categories_grouped_json.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TapPublishViewController extends GetxController {
-  final categoryAndSubcategory = Get.find<CategoryAndSubcategory>();
+  CategoryGroupedJson category;
+  SubcategoryJson subcategories;
 
-  // final locController = Get.find<LocController>();
-
+  Map<String, dynamic> myAds = {};
+  Map<String, String> myAdsview = {};
   TextEditingController title = TextEditingController();
   TextEditingController description = TextEditingController();
   TextEditingController price = TextEditingController();
@@ -27,7 +28,8 @@ class TapPublishViewController extends GetxController {
     RefJson(name: "Demande", id: 2),
     RefJson(name: "Offre de location", id: 3)
   ];
-  String advertType ;
+  String advertType;
+
   List<RefJson> vehiculeBrands = [];
   List<RefJson> motosBrands = [];
   List<RefJson> vehiculeModels = [];
@@ -36,7 +38,7 @@ class TapPublishViewController extends GetxController {
   RefJson yersmodele;
   RefJson getview;
   RefJson vehiculebrands;
-   RefJson  motosBrand;
+  RefJson motosBrand;
   RefJson vehiculeModel;
   String energie;
   RefJson kelometrage;
@@ -46,7 +48,9 @@ class TapPublishViewController extends GetxController {
   MileagesApi _mileagesApi = MileagesApi();
   YearsModelsApi _yearsModelsApi = YearsModelsApi();
   List<RefJson> rooms = [];
+  RefJson citie;
 
+  RefJson town;
   String pieces;
   List<String> Nombredepieces = [
     '1',
@@ -64,32 +68,25 @@ class TapPublishViewController extends GetxController {
 
   List<String> energies = ['Diesel', 'Essence', 'Electrique', 'LPG'];
   File image;
-  File  image2;
+  File image2;
 
   final picker = ImagePicker();
 
-
-  void openCamera(int i ) async {
-
-    var imgCamera =     await picker.getImage(source:ImageSource.camera);
-    if (i  == 1) {
-
+  void openCamera(int i) async {
+    var imgCamera = await picker.getImage(source: ImageSource.camera);
+    if (i == 1) {
       image = File(imgCamera.path);
       update();
     } else {
-
       image2 = File(imgCamera.path);
       update();
-
     }
   }
 
-  void openGallery( int i ) async {
+  void openGallery(int i) async {
     //  final picker = ImagePicker();
-    final pickedFile =     await picker.getImage(source: ImageSource.gallery);
-    if (i  == 1) {
-
-
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    if (i == 1) {
       if (pickedFile != null) {
         print(' image selected.');
         image = File(pickedFile.path);
@@ -98,7 +95,6 @@ class TapPublishViewController extends GetxController {
         print('No image selected.');
       }
     } else {
-
       if (pickedFile != null) {
         print(' image selected.');
         image2 = File(pickedFile.path);
@@ -107,24 +103,32 @@ class TapPublishViewController extends GetxController {
         print('No image selected.');
       }
     }
-
   }
+
+  updatecategory(CategoryGroupedJson cat) {
+    category = cat;
+  }
+
+  updateSubcategoryJson(SubcategoryJson sub) {
+    subcategories = sub;
+  }
+
   @override
   void onInit() {
     super.onInit();
-    advertType=valus[0].name;
+    advertType = valus[0].name;
+    myAds["advertType"] = valus[0].name;
+    myAdsview["advertType"] = valus[0].name;
     getmeliages();
     getyearsmodels();
   }
 
   getvehicleBrand() {
-
     _vehicleBrandsApi.getList().then((value) {
-
-      vehiculeModel=null;
+      vehiculeModel = null;
 
       vehiculeBrands = value.data;
-        
+
       update();
     });
   }
@@ -132,7 +136,7 @@ class TapPublishViewController extends GetxController {
   getvehicleModel() {
     _vehicleModelApi.getList().then((value) {
       vehiculeModels = value.data;
-Filter.Id=null;
+      Filter.Id = null;
       update();
     });
   }
@@ -151,10 +155,10 @@ Filter.Id=null;
     _motoBrandsApi.getList().then((value) {
       motosBrands = value.data;
 
-
       update();
     });
   }
+
   getyearsmodels() {
     _yearsModelsApi.getList().then((value) {
       yersmodeles = value.data;
@@ -163,23 +167,24 @@ Filter.Id=null;
     });
   }
 
-
   updategetview(RefJson data) async {
     getview = data;
-    vehiculebrands= null;
+    vehiculebrands = null;
     vehiculeModel = null;
-    motosBrand= null;
-    yersmodele= null;
-    kelometrage= null;
+    motosBrand = null;
+    yersmodele = null;
+    kelometrage = null;
     getvehicleBrand();
-   getMotosBrand();
+    getMotosBrand();
     //  getvehicleModel();
-   // getmeliages();
+    // getmeliages();
     update();
   }
 
   updateModele(RefJson newValue) {
     vehiculeModel = newValue;
+    myAds["vehicleModel"] = newValue.id;
+    myAdsview["vehicleModel"] = newValue.name;
     update();
   }
 
@@ -189,9 +194,9 @@ Filter.Id=null;
   }
 
   updateMarque(RefJson newValue) {
-
-
     Filter.Id = newValue.id.toString();
+    myAds["vehiclebrand"] = newValue.id;
+    myAdsview["vehiclebrand"] = newValue.name;
     vehiculebrands = newValue;
 
     //getvehicleBrand();
@@ -202,56 +207,71 @@ Filter.Id=null;
   updateKilomtrage(RefJson newValue) {
     kelometrage = newValue;
     //getmeliages();
+    myAds["mileage"] = newValue.id;
+    myAdsview["mileage"] = newValue.name;
     update();
   }
 
   updateAnnee(RefJson newValue) {
     yersmodele = newValue;
+    myAds["yearModel"] = newValue.id;
+    myAdsview["yearModel"] = newValue.name;
     //getyearsmodels();
     update();
   }
 
   updateNombredepieces(newValue) {
     pieces = newValue;
-
+    myAds["roomsNumber"] = newValue;
+    myAdsview["roomsNumber"] = newValue;
     update();
   }
 
-  // void init () {
-  //
-  //   .mileages().then((value) {
-  //     meliages = value.data;
-  //
-  //     print(value.data);
-  //   });
-  //   _publishAPIs.yearmodels().then((value) {
-  //     yersmodeles = value.data;
-  //     setState(() {});
-  //     print(value.data);
-  //   });
-  //   super.initState();
-  // }
-
   updateLight(v) {
     lights = v;
+    myAds["showPhoneNumber"] = v ? "yes" : "no";
+    myAdsview["showPhoneNumber"] = v ? "yes" : "no";
     update();
   }
 
   updateadvertTypes(v) {
     valus = v.data;
-    advertType=valus[0].name;
+    advertType = valus[0].name;
     update();
   }
 
   updateRadioButton(v) {
     advertType = v;
+
+    myAds["advertType"] = v;
+    myAdsview["advertType"] = v;
     update();
   }
-/*  postdata( ) {
-    PublishApi publishApi=PublishApi();
 
-    publishApi.post().then((value) {
+  postdata() {
+    final storge = Get.find<SecureStorage>();
+    print(storge.readSecureData(storge.key_wsse));
+    PublishApi publishApi = PublishApi();
+
+    publishApi.post(myAds).then((value) {
       print(value);
     });
-  }*/
+    /* AdvertModel advertModel = AdvertModel(
+      //category:Get.find<CategoryAndSubcategory>().subcategories1 ,
+      price: price.text,
+      description: description.text,
+      title: title.text,
+      town: town.id,
+      advertType: advertType,
+      showPhoneNumber: lights ? "yes" : "no",
+      city: citie.id,
+      mileage: kelometrage.id ?? 0,
+      motoBrand: 0,
+      // motosBrand.id?? 0,
+      roomsNumber: pieces ?? 0.toString(),
+      vehicleModel: vehiculeModel.id ?? 0,
+      vehicleBrand: vehiculebrands.id ?? 0,
+      yearModel: yersmodele.id ?? 0,
+    );*/
+  }
 }
