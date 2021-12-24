@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'dart:convert';
 import 'package:afariat/config/filter.dart';
 import 'package:afariat/config/storage.dart';
+import 'package:afariat/config/wsse.dart';
+import 'package:afariat/networking/api/get_salt_api.dart';
 
 import 'package:afariat/networking/api/publish_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
@@ -29,19 +32,19 @@ class TapPublishViewController extends GetxController {
     RefJson(name: "Offre de location", id: 3)
   ];
   String advertType;
-
+  GetSaltApi _getSalt = GetSaltApi();
   List<RefJson> vehiculeBrands = [];
   List<RefJson> motosBrands = [];
   List<RefJson> vehiculeModels = [];
   List<RefJson> meliages = [];
   List<RefJson> yersmodeles = [];
-  RefJson yersmodele;
+  RefJson yearsmodele;
   RefJson getview;
   RefJson vehiculebrands;
   RefJson motosBrand;
   RefJson vehiculeModel;
   String energie;
-  RefJson kelometrage;
+  RefJson kilometrage;
   VehicleBrandsApi _vehicleBrandsApi = VehicleBrandsApi();
   MotoBrandsApi _motoBrandsApi = MotoBrandsApi();
   VehicleModelApi _vehicleModelApi = VehicleModelApi();
@@ -49,7 +52,7 @@ class TapPublishViewController extends GetxController {
   YearsModelsApi _yearsModelsApi = YearsModelsApi();
   List<RefJson> rooms = [];
   RefJson citie;
-
+  final storge = Get.find<SecureStorage>();
   RefJson town;
   String pieces;
   List<String> Nombredepieces = [
@@ -69,9 +72,13 @@ class TapPublishViewController extends GetxController {
   List<String> energies = ['Diesel', 'Essence', 'Electrique', 'LPG'];
   File image;
   File image2;
-
+List<String >photos=[];
   final picker = ImagePicker();
-
+photobase64Encode(im){
+  final bytes = File(im.path).readAsBytesSync();
+  String img64 = base64Encode(bytes);
+  photos.add(img64);
+}
   void openCamera(int i) async {
     var imgCamera = await picker.getImage(source: ImageSource.camera);
     if (i == 1) {
@@ -172,8 +179,8 @@ class TapPublishViewController extends GetxController {
     vehiculebrands = null;
     vehiculeModel = null;
     motosBrand = null;
-    yersmodele = null;
-    kelometrage = null;
+    yearsmodele = null;
+    kilometrage = null;
     getvehicleBrand();
     getMotosBrand();
     //  getvehicleModel();
@@ -205,18 +212,18 @@ class TapPublishViewController extends GetxController {
   }
 
   updateKilomtrage(RefJson newValue) {
-    kelometrage = newValue;
-    //getmeliages();
+    kilometrage = newValue;
+ 
     myAds["mileage"] = newValue.id;
     myAdsview["mileage"] = newValue.name;
     update();
   }
-
+  
   updateAnnee(RefJson newValue) {
-    yersmodele = newValue;
+    yearsmodele = newValue;
     myAds["yearModel"] = newValue.id;
     myAdsview["yearModel"] = newValue.name;
-    //getyearsmodels();
+  
     update();
   }
 
@@ -249,13 +256,34 @@ class TapPublishViewController extends GetxController {
   }
 
   postdata() {
-    final storge = Get.find<SecureStorage>();
-    print(storge.readSecureData(storge.key_wsse));
-    PublishApi publishApi = PublishApi();
+    print(" key_email    ${storge.readSecureData(storge.key_email)} ");
+    if(image!=null){
+      photobase64Encode(image);
+    }
+    if(image2!=null){
+      photobase64Encode(image2);
+    }
 
-    publishApi.post(myAds).then((value) {
-      print(value);
+    _getSalt.post({"login": "${storge.readSecureData(storge.key_email)}"}).then(
+        (value) {
+      print(value.data);
+      String hashedPassword = hashPassword(
+          storge.readSecureData(storge.key_password), value.data["salt"]);
+      String wsse = generateWsseHeader(
+          storge.readSecureData(storge.key_email), hashedPassword);
+      print(wsse);
+      myAds["X-WSSE"] = wsse;
+       myAds["photos"] =photos;
+      print("44444444444444444444444444444444444444444444444444");
+print(photos.length);
+      print("44444444444444444444444444444444444444444444444444");
+      PublishApi publishApi = PublishApi();
+
+      publishApi.post(myAds).then((value) {
+        print(value);
+      });
     });
+
     /* AdvertModel advertModel = AdvertModel(
       //category:Get.find<CategoryAndSubcategory>().subcategories1 ,
       price: price.text,

@@ -37,7 +37,7 @@ abstract class ApiManager {
     Options options = Options(headers: {
       'apikey': SettingsApp.apiKey,
       'Content-Type': 'application/json',
-      'X-WSSE': storge.readSecureData( storge.key_wsse)//; dataToPost['X-WSSE'],
+      'X-WSSE':  dataToPost['X-WSSE'],
     });
     return dioSingleton.dio
         .post(

@@ -45,7 +45,7 @@ class Motos extends GetView<TapPublishViewController> {
                   border: Border.all(color: Colors.orange)
               ),
               child: DropdownButton<RefJson>(underline: SizedBox(),isExpanded: true,
-                value:logic. kelometrage,
+                value:logic. kilometrage,
 
                 iconSize: 24,
                 elevation: 16,
@@ -71,7 +71,7 @@ class Motos extends GetView<TapPublishViewController> {
                   border: Border.all(color: Colors.orange)
               ),
               child: DropdownButton<RefJson>(underline: SizedBox(),isExpanded: true,
-                value: logic.yersmodele,
+                value: logic.yearsmodele,
 
                 iconSize: 24,
                 elevation: 16,

@@ -17,8 +17,8 @@ class SignInViewController extends GetxController {
 
   getwsse() {
     _getSalt.post({"login": "${email.text}"}).then((value) {
-      //value.data["salt"];
-
+   value.data["salt"];
+      storge.writeSecureData( storge.key_password, password.text);
       String hashedPassword = hashPassword(password.text, value.data["salt"]);
       print(hashedPassword);
       String wsse = generateWsseHeader(email.text, hashedPassword);
