@@ -9,7 +9,7 @@ class CustomButton extends StatelessWidget {
   final double fontSize;
   final FontWeight fontWeight;
   final Function function;
-
+  final IconData icon;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -20,10 +20,16 @@ class CustomButton extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Container(
           child: Center(
-            child: Text(
-              label,
-              style: TextStyle(
-                  color: labcolor, fontSize: fontSize, fontWeight: fontWeight),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                      color: labcolor, fontSize: fontSize, fontWeight: fontWeight),
+                ),SizedBox(width: 50,),
+                if(icon!=null)Icon(icon,color: Colors.white,)
+
+              ],
             ),
           ),
           width: width,
@@ -45,12 +51,12 @@ class CustomButton extends StatelessWidget {
   }
 
   CustomButton(
-      {@required this.btcolor,
-      @required this.function,
-      @required this.labcolor,
-      @required this.label,
-      @required this.height,
-      @required this.width,
-      this.fontSize = 16,
-      this.fontWeight = FontWeight.normal});
+      {@required this.btcolor,this.icon,
+        @required this.function,
+        @required this.labcolor,
+        @required this.label,
+        @required this.height,
+        @required this.width,
+        this.fontSize = 16,
+        this.fontWeight = FontWeight.normal});
 }

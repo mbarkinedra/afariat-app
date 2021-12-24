@@ -106,14 +106,14 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                 enableTooltip: true,
                 tooltipTextFormatterCallback:
                     (dynamic actualValue, String formattedText) {
-                  return logic.prices[actualValue.toInt() - 1].name +
+                  return logic.prices[actualValue.toInt() - 1].email +
                       " " +
                       SettingsApp.moneySymbol;
                 },
                 labelFormatterCallback:
                     (dynamic actualValue, String formattedText) {
                   if (actualValue == 1 || actualValue == logic.prices.length) {
-                    return logic.prices[actualValue.toInt() - 1].name +
+                    return logic.prices[actualValue.toInt() - 1].email +
                         " " +
                         SettingsApp.moneySymbol;
                   }
