@@ -3,6 +3,8 @@ import 'package:uuid/uuid.dart';
 import 'dart:convert'; // for the utf8.encode method
 
 class Wsse {
+
+
   /// Hashs the given password with given salt.
   static String hashPassword(String password, String salt) {
     //combine plain password with salt
@@ -38,4 +40,11 @@ class Wsse {
 
     return wsse;
   }
+
+  // String generatewssfromstorage(){
+
+    //String   generatewsse = generateWsseHeader(username, hashedPassword);
+  //  return generatewsse ;
+
+ // }
 }

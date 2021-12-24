@@ -46,7 +46,7 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
               text: "Log Out",
             //  icon: "assets/icons/Log out.svg",
               press: () {
-                Get.find<SecureStorage>().deleteSecureData(Get.find<SecureStorage>().key_wsse);
+                Get.find<SecureStorage>().deleteSecureData(Get.find<SecureStorage>().key_hashPassword);
                 Get.find<HomeViwController>().changeSelectedValue(0);
 
               },

@@ -104,18 +104,18 @@ class PageToView extends StatelessWidget {
         }
       case 'Page2':
         {
-          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_wsse) ==null?SignInScr(): TapPublishScr();
+          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_hashPassword) ==null?SignInScr(): TapPublishScr();
           break;
         }
       case 'Page3':
         {
-          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_wsse) ==null?SignInScr(): TapMyadsScr();
+          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_hashPassword) ==null?SignInScr(): TapMyadsScr();
           break;
         }
       case 'Page4':
         {
 
-          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_wsse) ==null?SignInScr(): TapChatScr();
+          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_hashPassword) ==null?SignInScr(): TapChatScr();
           break;
         }
       case 'Page5':
@@ -125,7 +125,7 @@ class PageToView extends StatelessWidget {
 
 
 
-          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_wsse) ==null?SignInScr(): TapProfileScr();
+          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_hashPassword) ==null?SignInScr(): TapProfileScr();
           break;
         }
     }

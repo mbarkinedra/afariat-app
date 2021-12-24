@@ -257,12 +257,26 @@ photobase64Encode(im){
 
   postdata() {
     print(" key_email    ${storge.readSecureData(storge.key_email)} ");
+
+
+
     if(image!=null){
       photobase64Encode(image);
     }
     if(image2!=null){
       photobase64Encode(image2);
     }
+/*    Wsse wssee = Wsse();
+    wssee.generatewssfromstorage();
+    print(wssee.generatewssfromstorage);*/
+    myAds["photos"] =photos;
+    print(photos.length);
+    PublishApi publishApi = PublishApi();
+
+    publishApi.post(myAds).then((value) {
+      print(value);
+    });
+    /*
 
     _getSalt.post({"login": "${storge.readSecureData(storge.key_email)}"}).then(
         (value) {
@@ -273,16 +287,11 @@ photobase64Encode(im){
           storge.readSecureData(storge.key_email), hashedPassword);
       print(wsse);
       myAds["X-WSSE"] = wsse;
-       myAds["photos"] =photos;
       print("44444444444444444444444444444444444444444444444444");
-print(photos.length);
-      print("44444444444444444444444444444444444444444444444444");
-      PublishApi publishApi = PublishApi();
 
-      publishApi.post(myAds).then((value) {
-        print(value);
-      });
-    });
+      print("44444444444444444444444444444444444444444444444444");
+     */
+   // });
 
     /* AdvertModel advertModel = AdvertModel(
       //category:Get.find<CategoryAndSubcategory>().subcategories1 ,
