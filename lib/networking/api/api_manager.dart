@@ -31,13 +31,41 @@ abstract class ApiManager {
 
     return jsonList;
   }
-
+/// POST DATA TO SERVER
   Future<Response<dynamic>> post(dataToPost) async {
     print(jsonEncode(dataToPost));
-    Options options = Options(headers: {
+    Options options = Options(headers: { "Accept": "application/json",
       'apikey': SettingsApp.apiKey,
       'Content-Type': 'application/json',
       'X-WSSE':  dataToPost['X-WSSE'],
+    },);
+    return dioSingleton.dio
+        .post(
+      apiUrl(),
+      data: jsonEncode(dataToPost),
+      options: options
+
+      // Options(
+      //     followRedirects: false,
+      //     validateStatus: (status) {
+      //       return status < 500;
+      //     }),
+    )
+        .then((value) {
+          return value;
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
+  }
+
+  /// POST DATA TO SERVER
+  Future<Response<dynamic>> securePost({dataToPost ,wss}) async {
+    //generer le wsse
+    print(jsonEncode(dataToPost));
+    Options options = Options(headers: {"Accept": "application/json",
+      'apikey': SettingsApp.apiKey,
+      'Content-Type': 'application/json',
+      'X-WSSE':  wss,
     });
     return dioSingleton.dio
         .post(

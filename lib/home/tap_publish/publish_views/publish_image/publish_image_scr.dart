@@ -32,11 +32,15 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                           showOptionsDialog(context, 1);
                         },
                         child:
-                           Container(
+                           Container(decoration: BoxDecoration(border: Border.all(color: framColor),borderRadius: BorderRadius.circular(10)),
                             width: size.width * .8,
                             height: size.height * .3,
                             child: controller.image == null
-                                ?Image.asset("assets/img_placeholder.jpg")
+                                ?  Image.asset(
+                              'assets/images/placeholder.png',
+                              width: size.width,
+                              fit: BoxFit.fill,
+                            )
                                 :
 
                                    Image.file(
@@ -58,11 +62,15 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                         onTap: () {
                           showOptionsDialog(context, 2);
                         },
-                        child: Container(
+                        child: Container( decoration: BoxDecoration(border: Border.all(color: framColor),borderRadius: BorderRadius.circular(10)),
                               width: size.width * .8,
                               height: size.height * .3,
                               child: controller.image2 == null
-                                  ? Image.asset("assets/img_placeholder.jpg")
+                                  ? Image.asset(
+                                'assets/images/placeholder.png',
+                                width: size.width,
+                                fit: BoxFit.fill,
+                              )
                                   : Image.file(controller.image2 , fit: BoxFit.fill, ),
                             )
 
@@ -89,11 +97,16 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                       label: "Next",
                       btcolor: buttonColor,
                       function: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                         builder: (
-                         context,
-                        ) =>
-                             ApercuPublich()));
+                        if(controller.image!=null||controller.image2!=null){
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (
+                                  context,
+                                  ) =>
+                                  ApercuPublich()));
+                        }else{
+                          Get.snackbar("حطاء", "يجب ادخال صوره علي الاقل");
+                        }
+
                       },
                     ),
 

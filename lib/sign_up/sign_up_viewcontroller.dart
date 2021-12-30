@@ -32,6 +32,7 @@ class SignUpViewController extends GetxController {
     //1st validate the front entered fields, then validate the errors from server
     //
     String errorMessage = null;
+
     //validating server errors
     serverErrors.forEach((key, elementErrors) {
       if (field == key && elementErrors.containsKey('errors')) {
