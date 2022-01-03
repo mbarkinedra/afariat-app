@@ -36,44 +36,48 @@ class MyHomeItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container( height: size.height * .25,
-              width: size.width * .3,
-              child: Image.network(  adverts.photo,
+            Expanded(flex: 1,
+              child: Container( height: size.height * .25,
 
-                fit: BoxFit.fill,
+                child: Image.network(  adverts.photo,
+
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
+            Expanded(flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
 
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(  width: size.width * .4,
-                    child: Text( adverts.title ,
-                      softWrap: true,
-                      overflow: TextOverflow.fade,   ),
-                  ),
-                  const Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text( adverts.price.toString()
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Text( adverts.title ,
+                        softWrap: true,
+                        overflow: TextOverflow.fade,   ),
+                    ),
 
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text( adverts.price.toString()
+
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text( adverts.modifiedAt
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text( adverts.modifiedAt
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
             )
           ],

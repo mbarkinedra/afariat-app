@@ -8,3 +8,4 @@ const Color backmenubackground=Color(0xffffffff);
 const Color textcolor=Color(0xff1381CA);
 const Color appBarcolors=Color(0xff1381CA);
 const Color blackcolore=Color(0xff000000);
+const Color framColor=Color(0xffef7d25);

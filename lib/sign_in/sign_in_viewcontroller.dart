@@ -17,17 +17,19 @@ class SignInViewController extends GetxController {
 
   getwsse() {
     _getSalt.post({"login": "${email.text}"}).then((value) {
-      //value.data["salt"];
-
-      String hashedPassword = hashPassword(password.text, value.data["salt"]);
+   value.data["salt"];
+      storge.writeSecureData( storge.key_hashPassword, password.text);
+      String hashedPassword = Wsse.hashPassword(password.text, value.data["salt"]);
       print(hashedPassword);
-      String wsse = generateWsseHeader(email.text, hashedPassword);
+      String wsse = Wsse.generateWsseHeader(email.text, hashedPassword);
       print(wsse);
       storge.writeSecureData( storge.key_hashPassword, hashedPassword);
       storge.writeSecureData( storge.key_email, email.text);
-      storge.writeSecureData( storge.key_wsse,wsse);
+      storge.writeSecureData( storge.key_hashPassword,wsse);
       _signInApi.get({'X-WSSE': wsse}).then((value) {
         print(value.data);
+        print(value.data["user_id"]);
+        storge.writeSecureData( storge.user_id, value.data["user_id"].toString());
         Get.find<HomeViwController>().changeSelectedValue(0);
       });
     });
