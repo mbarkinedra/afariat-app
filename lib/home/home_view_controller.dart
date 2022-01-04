@@ -1,6 +1,3 @@
-
-
-
 import 'package:afariat/config/storage.dart';
 import 'package:afariat/home/tap_chat/tap_chat_scr.dart';
 import 'package:afariat/home/tap_home/tap_home_scr.dart';
@@ -11,9 +8,7 @@ import 'package:get/get.dart';
 import 'tap_myads/tap_myads_scr.dart';
 import 'tap_profile/tap_profile_scr.dart';
 import 'tap_publish/tap_publish_scr.dart';
-
-
-
+import 'package:afariat/config/AccountInfoStorage.dart';
 
 class HomeViwController extends GetxController {
   // int _selectedIndex = 0;
@@ -46,13 +41,13 @@ class HomeViwController extends GetxController {
     'Page5': GlobalKey<NavigatorState>(),
   };
 
-  Widget currentScreen=TapHomeScr();
+  Widget currentScreen = TapHomeScr();
 
   @override
   void onInit() {
     super.onInit();
     currentScreen = PageToView(
-      naigatorKey: _navigatorKeys[_pageKeys[0]] ,
+      naigatorKey: _navigatorKeys[_pageKeys[0]],
       tabItem: _pageKeys[0],
     ); //=HomeView();
   }
@@ -74,7 +69,7 @@ class HomeViwController extends GetxController {
     return Offstage(
       offstage: _currentPage != tabItem,
       child: PageToView(
-        naigatorKey: _navigatorKeys[tabItem] ,
+        naigatorKey: _navigatorKeys[tabItem],
         tabItem: tabItem,
       ),
     );
@@ -89,7 +84,7 @@ class PageToView extends StatelessWidget {
   final GlobalKey<NavigatorState> naigatorKey;
   final String tabItem;
 
-  const PageToView({  this.naigatorKey,   this.tabItem});
+  const PageToView({this.naigatorKey, this.tabItem});
 
   @override
   Widget build(BuildContext context) {
@@ -104,28 +99,26 @@ class PageToView extends StatelessWidget {
         }
       case 'Page2':
         {
-          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_hashPassword) ==null?SignInScr(): TapPublishScr();
+          currentScreen =
+              AccountInfoStorage.isLoggedIn() ? TapPublishScr() : SignInScr();
           break;
         }
       case 'Page3':
         {
-          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_hashPassword) ==null?SignInScr(): TapMyadsScr();
+          currentScreen =
+              AccountInfoStorage.isLoggedIn() ? TapMyadsScr() : SignInScr();
           break;
         }
       case 'Page4':
         {
-
-          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_hashPassword) ==null?SignInScr(): TapChatScr();
+          currentScreen =
+              AccountInfoStorage.isLoggedIn() ? TapChatScr() : SignInScr();
           break;
         }
       case 'Page5':
         {
-
-
-
-
-
-          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_hashPassword) ==null?SignInScr(): TapProfileScr();
+          currentScreen =
+              AccountInfoStorage.isLoggedIn() ? TapProfileScr() : SignInScr();
           break;
         }
     }
@@ -138,4 +131,3 @@ class PageToView extends StatelessWidget {
     );
   }
 }
-

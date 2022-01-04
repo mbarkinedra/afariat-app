@@ -1,6 +1,7 @@
-import 'package:afariat/config/utilitie.dart';
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
+import 'package:afariat/home/tap_publish/publish_views/apercu_publich.dart';
 import 'package:afariat/home/tap_publish/publish_views/publish_image/publish_image_scr.dart';
 import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
@@ -47,7 +48,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButton<CategoryGroupedJson>(
                         isExpanded: true,
-                        hint: Text("catégorie"),
+                        hint: Text("catÃ©gorie"),
                         value: logic.categoryGroupedJson,
                         iconSize: 24,
                         elevation: 16,
@@ -55,11 +56,11 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                         items: logic.categoryGroupList
                             .map<DropdownMenuItem<CategoryGroupedJson>>(
                                 (CategoryGroupedJson value) {
-                          return DropdownMenuItem<CategoryGroupedJson>(
-                            value: value,
-                            child: Text(value.name),
-                          );
-                        }).toList(),
+                              return DropdownMenuItem<CategoryGroupedJson>(
+                                value: value,
+                                child: Text(value.name),
+                              );
+                            }).toList(),
                       ),
                     ),
                     Container(
@@ -69,7 +70,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButton<SubcategoryJson>(
                         isExpanded: true,
-                        hint: Text("sub catégorie"),
+                        hint: Text("sub catÃ©gorie"),
                         value: logic.subcategories1,
                         iconSize: 24,
                         elevation: 16,
@@ -77,11 +78,11 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                         items: logic.listSubcategories
                             .map<DropdownMenuItem<SubcategoryJson>>(
                                 (SubcategoryJson value) {
-                          return DropdownMenuItem<SubcategoryJson>(
-                            value: value,
-                            child: Text(value.name),
-                          );
-                        }).toList(),
+                              return DropdownMenuItem<SubcategoryJson>(
+                                value: value,
+                                child: Text(value.name),
+                              );
+                            }).toList(),
                       ),
                     )
                   ],
@@ -111,8 +112,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
             GetBuilder<TapPublishViewController>(builder: (logic) {
               return logic.getview != null
                   ? WidgetPublish(
-                      logic.getview.name,
-                    )
+                logic.getview.name,
+              )
                   : SizedBox();
             }),
             const SizedBox(
@@ -280,37 +281,65 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
             //     },
             //   ),
             // ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                CustomButton(
-                    width: MediaQuery.of(context).size.width * .35,
-                    height: 50,
-                    label: "Next",
-                    btcolor: buttonColor,
-                    function: () {
-                      //postAdvert(cities1,town1,advertType,price,description,title,photo)
-                      controller.myAdsview["price"] = controller.price.text;
-                      controller.myAds["price"] = controller.price.text;
+            GetBuilder<TapPublishViewController>(builder: (logic) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CustomButton(
+                      width: MediaQuery.of(context).size.width * .35,
+                      height: 50,
+                      label: "Next",
+                      btcolor: buttonColor,
+                      function: () {
+                        //postAdvert(cities1,town1,advertType,price,description,title,photo)
+                        controller.myAdsview["price"] = controller.price.text;
+                        controller.myAds["price"] = controller.price.text;
 
-                      controller.myAdsview["title"] = controller.title.text;
-                      controller.myAds["title"] = controller.title.text;
+                        controller.myAdsview["title"] = controller.title.text;
+                        controller.myAds["title"] = controller.title.text;
 
-                      controller.myAdsview["description"] =
-                          controller.description.text;
-                      controller.myAds["description"] =
-                          controller.description.text;
-                      controller.myAds["showPhoneNumber"] =
-                          controller.lights ? "yes" : "no";
-                      controller.myAdsview["showPhoneNumber"] =
-                          controller.lights ? "yes" : "no";
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (
-                        context,
-                      ) =>
-                              PublishImageScr()));
-                    }),
-              ],
+                        controller.myAdsview["description"] =
+                            controller.description.text;
+                        controller.myAds["description"] =
+                            controller.description.text;
+                        controller.myAds["showPhoneNumber"] =
+                        controller.lights ? "yes" : "no";
+                        controller.myAdsview["showPhoneNumber"] =
+                        controller.lights ? "yes" : "no";
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (
+                                context,
+                                ) =>
+                                PublishImageScr()));
+                      }),
+                  if(logic.showvaled)CustomButton(
+                      width: MediaQuery.of(context).size.width * .35,
+                      height: 50,
+                      label: "metre a jour",
+                      btcolor: Colors.green,
+                      function: () {
+                        controller.myAdsview["price"] = controller.price.text;
+                        controller.myAds["price"] = controller.price.text;
+
+                        controller.myAdsview["title"] = controller.title.text;
+                        controller.myAds["title"] = controller.title.text;
+
+                        controller.myAdsview["description"] =
+                            controller.description.text;
+                        controller.myAds["description"] =
+                            controller.description.text;
+                        controller.myAds["showPhoneNumber"] =
+                        controller.lights ? "yes" : "no";
+                        controller.myAdsview["showPhoneNumber"] =
+                        controller.lights ? "yes" : "no";
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (
+                                context,
+                                ) =>
+                                ApercuPublich()));
+                      }), ],
+              );
+            }
             ),
           ],
         ),

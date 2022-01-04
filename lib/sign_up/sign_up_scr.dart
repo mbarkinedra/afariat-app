@@ -1,4 +1,4 @@
-import 'package:afariat/config/utilitie.dart';
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/model/type_register.dart';
 import 'package:afariat/mywidget/custmbutton.dart';
@@ -177,7 +177,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                     },
                     child: RichText(
                       text: TextSpan(
-                        text: " Have an account? ",
+                        text: "Vous avez déjà un compte ? ",
                         style: DefaultTextStyle.of(context).style,
                         children: const <TextSpan>[
                           TextSpan(

@@ -1,5 +1,4 @@
-
-import 'package:afariat/config/storage.dart';
+import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/wsse.dart';
 import 'package:afariat/home/home_view_controller.dart';
 import 'package:afariat/networking/api/get_salt_api.dart';
@@ -11,29 +10,31 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 class SignInViewController extends GetxController {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  final storge=Get.find<SecureStorage>();
   GetSaltApi _getSalt = GetSaltApi();
   SignInApi _signInApi = SignInApi();
 
-  getwsse() {
+  login() {
+    //GET the user SALT
     _getSalt.post({"login": "${email.text}"}).then((value) {
-   value.data["salt"];
-      storge.writeSecureData( storge.key_hashPassword, password.text);
-      String hashedPassword = Wsse.hashPassword(password.text, value.data["salt"]);
-      print(hashedPassword);
+      String hashedPassword =
+          Wsse.hashPassword(password.text, value.data["salt"]);
+      print("Hashed Password: $hashedPassword");
       String wsse = Wsse.generateWsseHeader(email.text, hashedPassword);
-      print(wsse);
-      storge.writeSecureData( storge.key_hashPassword, hashedPassword);
-      storge.writeSecureData( storge.key_email, email.text);
-      storge.writeSecureData( storge.key_hashPassword,wsse);
+      print("WSSE: $wsse");
+
+      //Try to login user
       _signInApi.get({'X-WSSE': wsse}).then((value) {
-        print(value.data);
-        print(value.data["user_id"]);
-        storge.writeSecureData( storge.user_id, value.data["user_id"].toString());
+        print("User ID: ${value.data["user_id"]}");
+        //save user info to local storage
+
+        AccountInfoStorage.saveEmail(email.text);
+        AccountInfoStorage.saveHashedPassword(hashedPassword);
+        AccountInfoStorage.saveUserId(value.data["user_id"].toString());
+
         Get.find<HomeViwController>().changeSelectedValue(0);
+
+        //TODO: Process error cases: bad salt, bad login/pwd
       });
     });
   }
-
-
 }

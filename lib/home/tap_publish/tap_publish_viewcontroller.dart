@@ -15,6 +15,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TapPublishViewController extends GetxController {
+  bool showvaled = false;
   CategoryGroupedJson category;
   SubcategoryJson subcategories;
 
@@ -72,13 +73,15 @@ class TapPublishViewController extends GetxController {
   List<String> energies = ['Diesel', 'Essence', 'Electrique', 'LPG'];
   File image;
   File image2;
-List<String >photos=[];
+  List<String> photos = [];
   final picker = ImagePicker();
-photobase64Encode(im){
-  final bytes = File(im.path).readAsBytesSync();
-  String img64 = base64Encode(bytes);
-  photos.add(img64);
-}
+
+  photobase64Encode(im) {
+    final bytes = File(im.path).readAsBytesSync();
+    String img64 = base64Encode(bytes);
+    photos.add(img64);
+  }
+
   void openCamera(int i) async {
     var imgCamera = await picker.getImage(source: ImageSource.camera);
     if (i == 1) {
@@ -200,6 +203,18 @@ photobase64Encode(im){
     update();
   }
 
+  editAd(context) {
+    int count = 0;
+    Navigator.popUntil(context, (route) {
+      return count++ == 2;
+    });
+  }
+
+  updateshowvaled(bool show) {
+    showvaled = show;
+    update();
+  }
+
   updateMarque(RefJson newValue) {
     Filter.Id = newValue.id.toString();
     myAds["vehiclebrand"] = newValue.id;
@@ -213,17 +228,17 @@ photobase64Encode(im){
 
   updateKilomtrage(RefJson newValue) {
     kilometrage = newValue;
- 
+
     myAds["mileage"] = newValue.id;
     myAdsview["mileage"] = newValue.name;
     update();
   }
-  
+
   updateAnnee(RefJson newValue) {
     yearsmodele = newValue;
     myAds["yearModel"] = newValue.id;
     myAdsview["yearModel"] = newValue.name;
-  
+
     update();
   }
 
@@ -256,42 +271,38 @@ photobase64Encode(im){
   }
 
   postdata() {
-    print(" key_email    ${storge.readSecureData(storge.key_email)} ");
-
-
-
-    if(image!=null){
-      photobase64Encode(image);
-    }
-    if(image2!=null){
-      photobase64Encode(image2);
-    }
-/*    Wsse wssee = Wsse();
-    wssee.generatewssfromstorage();
-    print(wssee.generatewssfromstorage);*/
-    myAds["photos"] =photos;
-    print(photos.length);
-    PublishApi publishApi = PublishApi();
-
-    publishApi.post(myAds).then((value) {
-      print(value);
-    });
-    /*
-
-    _getSalt.post({"login": "${storge.readSecureData(storge.key_email)}"}).then(
-        (value) {
-      print(value.data);
-      String hashedPassword = hashPassword(
-          storge.readSecureData(storge.key_password), value.data["salt"]);
-      String wsse = generateWsseHeader(
-          storge.readSecureData(storge.key_email), hashedPassword);
-      print(wsse);
-      myAds["X-WSSE"] = wsse;
-      print("44444444444444444444444444444444444444444444444444");
-
-      print("44444444444444444444444444444444444444444444444444");
-     */
-   // });
+    // TODO: Implement post data logic
+    // print(" key_email    ${storge.readSecureData(storge.key_email)} ");
+    // if (image != null) {
+    //   photobase64Encode(image);
+    // }
+    // if (image2 != null) {
+    //   photobase64Encode(image2);
+    // }
+    // if (_getSalt.post != null){
+    //   _getSalt.post({"login": "${storge.readSecureData(storge.key_email)}"})
+    //       .then(
+    //           (value) {
+    //         print(value.data);
+    //         String hashedPassword = hashPassword(
+    //             storge.readSecureData(storge.key_password), value.data["salt"]);
+    //         String wsse = generateWsseHeader(
+    //             storge.readSecureData(storge.key_email), hashedPassword);
+    //         print(wsse);
+    //         myAds["X-WSSE"] = wsse;
+    //         myAds["photos"] = photos;
+    //
+    //         print(photos.length);
+    //
+    //         PublishApi publishApi = PublishApi();
+    //         print (value.data);
+    //         print(value.statusMessage);
+    //         print(value.statusCode);
+    //         publishApi.post(myAds).then((value) {
+    //           print(value);
+    //         });
+    //       });
+    // }
 
     /* AdvertModel advertModel = AdvertModel(
       //category:Get.find<CategoryAndSubcategory>().subcategories1 ,

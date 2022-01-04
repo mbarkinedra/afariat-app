@@ -1,4 +1,4 @@
-import 'package:afariat/config/utilitie.dart';
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
@@ -123,7 +123,10 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                   height: 50,
                   label: "Edit",
                   btcolor: buttonColor,
-                  function: () {},
+                  function: () {
+                    controller.updateshowvaled(true);
+                    controller.editAd(context);
+                  },
                 ),
                 CustomButton(
                     width: MediaQuery.of(context).size.width * .4,

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:afariat/config/utilitie.dart';
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_publish/publish_views/apercu_publich.dart';
 import 'package:afariat/home/tap_publish/publish_views/publish_succes.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
