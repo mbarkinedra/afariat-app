@@ -1,4 +1,4 @@
-import 'package:afariat/config/utilitie.dart';
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:afariat/mywidget/log_in_item.dart';
 import 'package:afariat/sign_in/sign_in_viewcontroller.dart';
@@ -67,7 +67,7 @@ class SignInScr extends GetWidget<SignInViewController> {
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
                 function: () {
-                  controller.getwsse();
+                  controller.login();
                 },
               )),
               SizedBox(
@@ -83,11 +83,11 @@ class SignInScr extends GetWidget<SignInViewController> {
                   },
                   child: RichText(
                     text: TextSpan(
-                      text: " Don't Have an account? ",
+                      text: "Vous n'avez pas de compte ?",
                       style: DefaultTextStyle.of(context).style,
                       children: const <TextSpan>[
                         TextSpan(
-                            text: 'Register',
+                            text: 'Créer un compte',
                             style: TextStyle(fontWeight: FontWeight.bold))
                       ],
                     ),

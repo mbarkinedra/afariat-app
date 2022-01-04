@@ -1,4 +1,4 @@
-import 'package:afariat/config/utilitie.dart';
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/mywidget/ads_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

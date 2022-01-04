@@ -1,4 +1,4 @@
-import 'package:afariat/config/utilitie.dart';
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/model/error_register.dart';
 
 import 'package:afariat/mywidget/custom_button_icon.dart';

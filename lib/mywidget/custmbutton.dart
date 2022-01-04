@@ -10,6 +10,7 @@ class CustomButton extends StatelessWidget {
   final FontWeight fontWeight;
   final Function function;
   final IconData icon;
+  final Color iconcolor;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -28,7 +29,7 @@ class CustomButton extends StatelessWidget {
                       color: labcolor, fontSize: fontSize, fontWeight: fontWeight),
                 ),SizedBox(width: 50,),
                if(icon!=null)Icon(
-                 icon,color: Colors.white,)
+                 icon,color: iconcolor,)
 
               ],
             ),
@@ -52,7 +53,7 @@ class CustomButton extends StatelessWidget {
   }
 
   CustomButton(
-      {@required this.btcolor,this.icon,
+      {@required this.btcolor,this.icon,this.iconcolor=Colors.white,
         @required this.function,
         @required this.labcolor,
         @required this.label,
