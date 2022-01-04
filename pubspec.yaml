@@ -30,7 +30,7 @@ dependencies:
   http:
   persistent_bottom_nav_bar: ^4.0.2
   syncfusion_flutter_sliders: ^19.3.56
-
+  flutter_secure_storage: ^4.1.0
   flutter_svg: ^0.22.0
   uuid:
   carousel_slider: ^4.0.0
