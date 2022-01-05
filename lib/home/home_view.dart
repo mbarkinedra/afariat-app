@@ -71,7 +71,7 @@ class Home extends GetWidget<HomeViwController>  {
 
               type: BottomNavigationBarType.fixed,
               unselectedItemColor: Colors.grey,
-              selectedItemColor: Colors.orange,
+              selectedItemColor: Colors.deepOrangeAccent,
               elevation: 5,
             );
           }),

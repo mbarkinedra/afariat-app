@@ -10,6 +10,7 @@ class SignInScr extends GetWidget<SignInViewController> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
+    var _isLoading = false;
     return SafeArea(
         child: Scaffold(
       body: Padding(
@@ -20,19 +21,19 @@ class SignInScr extends GetWidget<SignInViewController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "let'S Sign You in",
+                "Connectez-vous",
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: _size.height * .05,
               ),
-              Text("Welcome back, you've been missed!"),
+              Text("Bon retour, Tu nous as manqué!"),
               SizedBox(
-                height: _size.height * .1,
+                height: _size.height * .05,
               ),
               LogInItem(
-                label: "Username or mail",
-                hint: "Username",
+                label: "Email",
+                hint: "Votre E-mail",
                 icon: Icons.email,
                 textEditingController: controller.email,
               ),
@@ -40,7 +41,7 @@ class SignInScr extends GetWidget<SignInViewController> {
                 height: _size.height * .05,
               ),
               LogInItem(
-                label: "Password",
+                label: "Mot de passe",
                 hint: "**********",
                 icon: Icons.lock_outline,
                 textEditingController: controller.password,
@@ -50,7 +51,7 @@ class SignInScr extends GetWidget<SignInViewController> {
                 height: _size.height * .05,
               ),
               Text(
-                "Forget password",
+                "Mot de passe oublié ?",
                 style: TextStyle(color: Colors.blue),
               ),
               SizedBox(
