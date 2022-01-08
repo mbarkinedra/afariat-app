@@ -6,6 +6,7 @@ import 'package:afariat/home/tap_publish/publish_views/publish_succes.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:afariat/mywidget/custom_apercu.dart';
+import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -118,20 +119,55 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                CustomButton(
-                  width: MediaQuery.of(context).size.width * .4,
+                CustomButtonWithoutIcon(
+                  width: MediaQuery.of(context).size.width * .25,
                   height: 50,
-                  label: "Edit",
+                  label: "Modifier",
                   btcolor: buttonColor,
                   function: () {
-                    controller.updateshowvaled(true);
-                    controller.editAd(context);
+                    int count = 0;
+
+                    Navigator.popUntil(context, (route) {
+                      return count++ == 2;
+                    });
                   },
                 ),
-                CustomButton(
-                    width: MediaQuery.of(context).size.width * .4,
+                CustomButtonWithoutIcon(
+                  width: MediaQuery.of(context).size.width * .25,
+                  height: 50,
+                  label: "Supprimer",
+                  btcolor: buttonColor,
+                  function: () {
+                    controller.image = null;
+                    controller.image2 = null;
+                    controller.updatecategoryToNull();
+                    controller.updateSubcategoryToNull();
+                    Get.find<LocController>().updatecitieAndTowen();
+                    controller.citie = null;
+                    controller.price.clear();
+                    controller.description.clear();
+                    controller.title.clear();
+                    controller.myAds = {};
+                    controller.category = null;
+                    controller.updatecategory(null);
+                    controller.energies = [];
+                    controller.energie = "";
+                    controller.kilometrage = null;
+                    controller.lights = false;
+                    controller.motosBrand = null;
+                    controller.vehiculebrands = null;
+
+                    int count = 0;
+
+                    Navigator.popUntil(context, (route) {
+                      return count++ == 2;
+                    });
+                  },
+                ),
+                CustomButtonWithoutIcon(
+                    width: MediaQuery.of(context).size.width * .25,
                     height: 50,
-                    label: "Publish",
+                    label: "Publier",
                     btcolor: buttonColor,
                     function: () {
                       controller.postdata();
@@ -153,74 +189,3 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
     );
   }
 }
-
-//
-//
-//
-// CustomApercu(
-// label: "Catégorie",
-// data: controller.category.name,
-// ),
-// CustomApercu(
-// label: "Subcategorie",
-// data: controller.subcategories.name,
-// ),
-// CustomApercu(
-// label: "Type d'annonce",
-// data: controller.advertType,
-// ),
-// CustomApercu(
-// label: "Marque",
-// data: controller.vehiculebrands.name,
-// ),
-// CustomApercu(
-// label: "Modéle",
-// data: controller.vehiculeModel.name,
-// ),
-// if (controller.motosBrand != null)
-// CustomApercu(
-// label: "Marque",
-// data: controller.motosBrand.name,
-// ),
-// CustomApercu(
-// label: "Kilométrage",
-// data: controller.kelometrage.name,
-// ),
-// CustomApercu(
-// label: "Année",
-// data: controller.yersmodele.name,
-// ),
-// if (controller.pieces != null)
-// CustomApercu(
-// label: "Nombre de piéce",
-// data: controller.pieces,
-// ),
-// if (controller.surface.text.isNotEmpty)
-// CustomApercu(
-// label: "Surface",
-// data: controller.surface.text,
-// ),
-// CustomApercu(
-// label: "Prix",
-// data: controller.price.text,
-// ),
-// CustomApercu(
-// label: "Gouvernorat",
-// data: locController.citie.name,
-// ),
-// CustomApercu(
-// label: "Ville",
-// data: locController.town.name,
-// ),
-// CustomApercu(
-// label: "Title",
-// data: controller.title.text,
-// ),
-// CustomApercu(
-// label: "Description",
-// data: controller.description.text,
-// ),
-// CustomApercu(
-// label: "Afficher Tel",
-// data: controller.lights ? "Yes" : "No",
-// ),

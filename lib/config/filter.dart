@@ -1,5 +1,5 @@
 class Filter {
-  static Map<String, dynamic>m = {};
+  static Map<String, dynamic>data = {};
 
-  static String Id;
+
 }

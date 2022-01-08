@@ -7,7 +7,7 @@ import 'package:afariat/networking/json/ref_json.dart';
 
 class LocController extends GetxController {
   final tapHomeViewController = Get.find<TapHomeViewController>();
-  final tapPublishViewController= Get.find<TapPublishViewController>();
+  final tapPublishViewController = Get.find<TapPublishViewController>();
   final CityApi _cityApi = CityApi();
   final TownApi _townsApi = TownApi();
   List<RefJson> cities = [];
@@ -29,27 +29,35 @@ class LocController extends GetxController {
     tapPublishViewController.citie = ci;
     town = null;
     tapHomeViewController.setsearch("city", ci.id);
- tapPublishViewController. myAds["city"] = ci.id;
-    tapPublishViewController. myAdsview["city"] = ci.name;
-    updateTowns(ci.id.toString());
+    tapPublishViewController.myAds["city"] = ci.id;
+    tapPublishViewController.myAdsview["city"] = ci.name;
+    updateTowns(ci.id);
     update();
   }
 
   updatetown(RefJson tow) {
     town = tow;
-  tapPublishViewController. town = tow;
+    tapPublishViewController.town = tow;
     tapHomeViewController.setsearch("town", tow.id);
-   tapPublishViewController.  myAds["town"] = tow.id;
-    tapPublishViewController.  myAdsview["town"] = tow.name;
+    tapPublishViewController.myAds["town"] = tow.id;
+    tapPublishViewController.myAdsview["town"] = tow.name;
     update();
   }
 
   updateTowns(id) {
-    Filter.Id = id.toString();
+    _townsApi.cityId = id.toString();
     _townsApi.getList().then((value) {
       towns = value.data;
       update();
-      Filter.Id = null;
     });
+  }
+
+  updatecitieAndTowen() {
+    citie = null;
+    tapPublishViewController.citie = null;
+    tapPublishViewController.town = null;
+    town = null;
+
+    update();
   }
 }

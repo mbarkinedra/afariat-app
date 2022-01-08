@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-import 'package:email_launcher/email_launcher.dart'as mail;
+import 'package:email_launcher/email_launcher.dart' as mail;
 import 'package:url_launcher/url_launcher.dart';
 import 'advert_details_viewcontroller.dart';
 
@@ -26,19 +26,28 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [ SizedBox(height: 10),
+                  children: [
+                    SizedBox(height: 10),
                     Row(
                       children: [
-                        InkWell(onTap: (){
-                          Navigator.pop(context);
-                        },child: Icon(Icons.arrow_back_ios,)),
+                        InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                            )),
                         SizedBox(
                           width: 8,
                         ),
-                        Text("Annonce détaillée",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-
+                        Text(
+                          "Annonce détaillée",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
                       ],
-                    ), SizedBox(height: 20),
+                    ),
+                    SizedBox(height: 20),
                     CarouselSlider(
                       options: CarouselOptions(
                         height: _size.height * .3,
@@ -62,22 +71,25 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                     SizedBox(height: 10),
                     Row(
                       children: [
-                        Container(width: _size.width*.5,
-                          child: Text(logic.advert.title.toString(),overflow:   TextOverflow.ellipsis,
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-                        ),
-                        Spacer(),
                         Icon(Icons.add_location),
                         SizedBox(
                           width: 4,
                         ),
                         Text(
-                            "${logic.advert.town.name} ${logic.advert.city.name}")
-                      ],
+                            "${logic.advert.town.name} ${logic.advert.city.name}"),
+                        SizedBox(
+                          height: 8,
+                        ),  ],
                     ),
-                    SizedBox(
-                      height: 8,
+                    SizedBox(height: 10),
+                    Container(
+                      width: _size.width * .5,
+                      child: Text(logic.advert.title.toString(),
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontWeight: FontWeight.bold)),
                     ),
+                    SizedBox(height: 10),
+
                     Text("${logic.advert.price} DT",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 25)),
@@ -121,11 +133,8 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                               ),
                             CustomButtonIcon(
                               btcolor: buttonColor,
-                              function: ()async {
-
-
-logic.showd(context);
-
+                              function: () async {
+                                logic.showd(context);
                               },
                               height: 40,
                               width: _size.width * .2,

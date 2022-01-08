@@ -1,25 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class TapProfileViewController extends GetxController {
+  String pic="";
+  var box = GetStorage();
   TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
+  RxBool arupdate = false.obs;
 
   @override
   void onInit() {
     super.onInit();
-    //TODO: Call the get user info ws to get user phone and name
-    // name.text = storge.readSecureData(storge.key_name);
-    // phone.text = storge.readSecureData(storge.key_phone);
+    name.text = box.read("name",);
+    phone.text = box.read("phone");
+    email.text = box.read("email");
+    box.read("phone");
+    print(box.read("phone"));
   }
 
-  updatname(v) {
-    //TODO: Call the webservice PUT user to update user info in server side
-    //storge.writeSecureData(storge.key_name, v);
-  }
 
-  updatphone(v) {
-    //TODO: Call the webservice PUT user to update user info in server side
-    //storge.writeSecureData(storge.key_phone, v);
-  }
+
+
 }
