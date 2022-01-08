@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 class MyHomeItem extends StatelessWidget {
   final Size size;
 
-
   MyHomeItem({this.size, this.adverts});
 
   final AdvertJson adverts;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,50 +32,48 @@ class MyHomeItem extends StatelessWidget {
         ),
         height: size.height * .3,
         child: Row(
-
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Expanded(flex: 1,
-              child: Container( height: size.height * .25,
-
-                child: Image.network(  adverts.photo,
-
+            Expanded(
+              flex: 1,
+              child: Container(
+                height: size.height * .25,
+                child: Image.network(
+                  adverts.photo,
                   fit: BoxFit.fill,
                 ),
               ),
             ),
-            Expanded(flex: 1,
+            Expanded(
+              flex: 1,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
-
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      child: Text( adverts.title ,
+                      child: Text(
+                        adverts.title,
                         softWrap: true,
-                        overflow: TextOverflow.fade,   ),
+                        overflow: TextOverflow.fade,
+                      ),
                     ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text( adverts.price.toString()
-
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text( adverts.modifiedAt
-                          ),
-                        ),
-                      ],
-                    )
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                     "${ adverts.price} DT" ,
+                      softWrap: true,
+                      overflow: TextOverflow.fade,
+                    ),
+                    Spacer(),
+                    Text(
+                      adverts.modifiedAt,
+                      softWrap: true,
+                      overflow: TextOverflow.fade,
+                    ),
                   ],
                 ),
               ),

@@ -1,9 +1,11 @@
+import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:crypto/crypto.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:convert'; // for the utf8.encode method
-import 'package:afariat/config/AccountInfoStorage.dart';
 
 class Wsse {
+
+
   /// Hashs the given password with given salt.
   static String hashPassword(String password, String salt) {
     //combine plain password with salt
@@ -21,7 +23,7 @@ class Wsse {
     // return the digest as bas64 encoded string
     return base64.encode(digest.bytes);
   }
-
+  AccountInfoStorage _accountInfoStorage=AccountInfoStorage();
   /// Generates the WSSE header based on [username] and the [hashedPassword]
   static String generateWsseHeader(String username, String hashedPassword) {
     var uuid = const Uuid();
@@ -39,11 +41,10 @@ class Wsse {
 
     return wsse;
   }
-
   /// It generates the WSSE based on the stored Username/Hash
-  static Future<String> generateWsseFromStorage() async {
-    var username = await AccountInfoStorage.readEmail();
-    var hashedPassword = await AccountInfoStorage.readHashedPassword();
+ String generateWsseFromStorage()  {
+    var username =  _accountInfoStorage.readEmail();
+    var hashedPassword =  _accountInfoStorage.readHashedPassword();
     //TODO: If username or hashedPassword are NULL or empty, throw an exception
     if (username?.isEmpty ?? true) {
       throw Exception(

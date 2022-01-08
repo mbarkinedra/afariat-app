@@ -30,4 +30,5 @@ class SettingsApp {
   static const String roomsNumberUrl = baseApiUrl + '/simple/rooms-number';
   static const String advertTypesUrl =
       baseApiUrl + '/simple/category/advert-types/';
+  static const String Delete = baseApiUrl + '/adverts/';
 }

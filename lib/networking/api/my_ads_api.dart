@@ -4,9 +4,11 @@ import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:afariat/networking/json/my_ads_json.dart';
 
 class MyAdsApi extends ApiManager {
+  String userId;
+
   @override
   String apiUrl() {
-    return SettingsApp.myAdsUrl;
+    return SettingsApp.myAdsUrl + userId;
   }
 
   @override

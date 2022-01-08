@@ -11,7 +11,7 @@ class WidgetPublish extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("bbbbbbbbbbbbbbbbbbbbb  $categorie");
+   // print("bbbbbbbbbbbbbbbbbbbbb  $categorie");
     switch (categorie) {
       case "Voitures":
         {

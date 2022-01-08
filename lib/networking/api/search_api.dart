@@ -9,7 +9,7 @@ class SearchApi extends ApiManager {
   Map<String, dynamic> map = {};
 
   SearchApi(this.map) {
-    Filter.m = map;
+    Filter.data = map;
   }
 
   @override

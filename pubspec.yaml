@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.2.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -28,6 +28,7 @@ dependencies:
   get_storage: ^2.0.3
   dio: ^4.0.4
   http:
+  animated_splash_screen: ^1.1.0
   persistent_bottom_nav_bar: ^4.0.2
   syncfusion_flutter_sliders: ^19.3.56
   flutter_secure_storage: ^4.1.0
@@ -41,6 +42,7 @@ dependencies:
   url_launcher: 6.0.0
   email_launcher: ^1.1.1
   image_picker: 0.8.0
+
 
 dev_dependencies:
   flutter_test:
@@ -58,9 +60,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #- assets/images/img_placeholder.jpg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/placeholder.png
+    - assets/images/Splash_1.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

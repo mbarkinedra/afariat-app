@@ -32,6 +32,7 @@ class SignUpViewController extends GetxController {
     //1st validate the front entered fields, then validate the errors from server
     //
     String errorMessage = null;
+
     //validating server errors
     serverErrors.forEach((key, elementErrors) {
       if (field == key && elementErrors.containsKey('errors')) {
@@ -57,19 +58,11 @@ class SignUpViewController extends GetxController {
     type = typeList[0];
   }
 
-
   updateTypeRegister(TypeRegister t) {
     type = t;
     update();
   }
 
-/*  validatorfun(String  v){
-    if (v == null || v.isEmpty) {
-
-      return 'Please enter some text';
-    }
-    return null;
-  }*/
   postRegister(context) async {
     User user = User(
         type: type.id,
@@ -99,11 +92,6 @@ class SignUpViewController extends GetxController {
             print('------------------------------');
           });
           registerFormKey.currentState.validate();
-
-          //validator('email');
-//           Error_Register errors= Error_Register.fromJson(  value.data);
-//           print(errors);
-// var a=value.data ;
 
           Get.snackbar(
             'Erreur',
