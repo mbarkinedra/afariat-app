@@ -1,3 +1,4 @@
+import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:crypto/crypto.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:convert'; // for the utf8.encode method
@@ -22,7 +23,7 @@ class Wsse {
     // return the digest as bas64 encoded string
     return base64.encode(digest.bytes);
   }
-
+  AccountInfoStorage _accountInfoStorage=AccountInfoStorage();
   /// Generates the WSSE header based on [username] and the [hashedPassword]
   static String generateWsseHeader(String username, String hashedPassword) {
     var uuid = const Uuid();
@@ -40,12 +41,21 @@ class Wsse {
 
     return wsse;
   }
-  static String generatewssfromstorage(  String username,
-  String hashedPassword){
-    // String username;
-    // String hashedPassword;
-    String   wsse = generateWsseHeader(username, hashedPassword);
-    return wsse ;
+  /// It generates the WSSE based on the stored Username/Hash
+ String generateWsseFromStorage()  {
+    var username =  _accountInfoStorage.readEmail();
+    var hashedPassword =  _accountInfoStorage.readHashedPassword();
+    //TODO: If username or hashedPassword are NULL or empty, throw an exception
+    if (username?.isEmpty ?? true) {
+      throw Exception(
+          'No username was found in secure storage. Could not generate WSSE');
+    }
+    if (hashedPassword?.isEmpty ?? true) {
+      throw Exception(
+          'No hashed password was found in secure storage. Could not generate WSSE');
+    }
+    String wsse = generateWsseHeader(username, hashedPassword);
 
+    return wsse;
   }
 }

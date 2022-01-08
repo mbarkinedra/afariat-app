@@ -16,9 +16,11 @@ class CityApi extends RefApi {
   String apiUrl() => SettingsApp.cityUrl;
 }
 
+
 class TownApi extends RefApi {
+  String cityId;
   @override
-  String apiUrl() => SettingsApp.townUrl;
+  String apiUrl() => SettingsApp.townUrl + cityId ;
 }
 
 //Refs
@@ -32,8 +34,9 @@ class VehicleBrandsApi extends RefApi {
   String apiUrl() => SettingsApp.vehicleBrandsUrl;
 }
 class VehicleModelApi extends RefApi {
+  int  vehicleModelId;
   @override
-  String apiUrl() => SettingsApp.vehiculeModelUrl;
+  String apiUrl() => SettingsApp.vehiculeModelUrl + "/" + vehicleModelId.toString();
 }
 
 
@@ -58,6 +61,7 @@ class RoomsNumberApi extends RefApi {
 }
 
 class AdvertTypesApi extends RefApi {
+  int  advertTypeId;
   @override
-  String apiUrl() => SettingsApp.advertTypesUrl;
+  String apiUrl() => SettingsApp.advertTypesUrl+  advertTypeId.toString();
 }

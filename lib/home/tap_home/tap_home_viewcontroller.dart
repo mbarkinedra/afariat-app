@@ -1,3 +1,4 @@
+import 'package:afariat/config/filter.dart';
 import 'package:afariat/networking/api/advert_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/api/search_api.dart';
@@ -20,6 +21,7 @@ class TapHomeViewController extends GetxController {
   int minValue = 0;
   SfRangeValues values = SfRangeValues(0, 100000);
   Map<String, dynamic> search = {};
+  bool loadprice = true;
 
   @override
   void onInit() {
@@ -41,13 +43,19 @@ class TapHomeViewController extends GetxController {
     update();
   }
 
+  filterclear() {
+    searchWord.clear();
+    update();
+  }
+
   filterupdate() {
     if (searchWord.text.isNotEmpty) {
       setsearch("search", searchWord.text.toString());
     }
     SearchApi a = SearchApi(search);
-    print(a.toString());
-    a.getList().then((value) {
+    print(Filter.data.toString());
+    a.getList(filters: Filter.data).then((value) {
+      adverts.clear();
       adverts = value.embedded.adverts;
       print(value.embedded.adverts.toString());
       update();
@@ -64,7 +72,8 @@ class TapHomeViewController extends GetxController {
       minValue = prices[0].id;
       maxValue = prices[prices.length - 1].id;
       values = SfRangeValues(minValue, maxValue);
-      print(prices[prices.length - 1].id);
+
+      loadprice = false;
     });
     update();
   }

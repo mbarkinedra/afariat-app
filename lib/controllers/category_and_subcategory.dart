@@ -18,7 +18,8 @@ class CategoryAndSubcategory extends GetxController {
   List<CategoryGroupedJson> categoryGroupList = [];
   CategoryGroupedJson categoryGroupedJson;
   AdvertTypesApi _refApi = AdvertTypesApi();
-final tapPublishViewController = Get.find<TapPublishViewController>();
+  final tapPublishViewController = Get.find<TapPublishViewController>();
+
   @override
   void onInit() {
     super.onInit();
@@ -45,16 +46,15 @@ final tapPublishViewController = Get.find<TapPublishViewController>();
     tapHomeViewController.setsearch("category", subCat.id);
 
     tapPublishViewController.updateSubcategoryJson(subCat);
-    tapPublishViewController.updategetview(RefJson(id: subCat.id,name: subCat.name));
-    tapPublishViewController.myAds["category"] =  subCat.id;
-    tapPublishViewController.myAdsview["category"] =  subCat.name;
-   Filter.Id = subCat.id.toString();
-
+    tapPublishViewController
+        .updategetview(RefJson(id: subCat.id, name: subCat.name));
+    tapPublishViewController.myAds["category"] = subCat.id;
+    tapPublishViewController.myAdsview["category"] = subCat.name;
+    _categoriesGrouppedApi.categoryId = subCat.id;
+    _refApi.advertTypeId = subCat.id;
     _refApi.getList().then((value) {
       print(value.data);
-     // Get.find<TapPublishViewController>(). getMotosBrand()  ;
       Get.find<TapPublishViewController>().updateadvertTypes(value);
-      Filter.Id = null;
     });
     update();
   }

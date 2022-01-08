@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'dart:convert';
+import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/storage.dart';
@@ -17,10 +18,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
 class TapPublishViewController extends GetxController {
-
-
-
-  final GlobalKey<FormState> globalKey=GlobalKey<FormState>();
+  final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   CategoryGroupedJson category;
   SubcategoryJson subcategories;
 
@@ -31,6 +29,8 @@ class TapPublishViewController extends GetxController {
   TextEditingController price = TextEditingController();
   TextEditingController surface = TextEditingController();
   bool lights = false;
+
+  //bool lights = false;
   List<Widget> radiolist = [];
   List<RefJson> valus = [
     RefJson(name: "Offer", id: 1),
@@ -59,6 +59,8 @@ class TapPublishViewController extends GetxController {
   List<RefJson> rooms = [];
   RefJson citie;
   final storge = Get.find<SecureStorage>();
+  final accountInfoStorage = Get.find<AccountInfoStorage>();
+
   RefJson town;
   String pieces;
   List<String> Nombredepieces = [
@@ -78,13 +80,15 @@ class TapPublishViewController extends GetxController {
   List<String> energies = ['Diesel', 'Essence', 'Electrique', 'LPG'];
   File image;
   File image2;
-List<String >photos=[];
+  List<String> photos = [];
   final picker = ImagePicker();
-photobase64Encode(im){
-  final bytes = File(im.path).readAsBytesSync();
-  String img64 = base64Encode(bytes);
-  photos.add(img64);
-}
+
+  photobase64Encode(im) {
+    final bytes = File(im.path).readAsBytesSync();
+    String img64 = base64Encode(bytes);
+    photos.add(img64);
+  }
+
   void openCamera(int i) async {
     var imgCamera = await picker.getImage(source: ImageSource.camera);
     if (i == 1) {
@@ -118,6 +122,16 @@ photobase64Encode(im){
     }
   }
 
+  updatecategoryToNull() {
+    category = null;
+    update();
+  }
+
+  updateSubcategoryToNull() {
+    subcategories = null;
+    update();
+  }
+
   updatecategory(CategoryGroupedJson cat) {
     category = cat;
   }
@@ -149,7 +163,7 @@ photobase64Encode(im){
   getvehicleModel() {
     _vehicleModelApi.getList().then((value) {
       vehiculeModels = value.data;
-      Filter.Id = null;
+
       update();
     });
   }
@@ -189,8 +203,7 @@ photobase64Encode(im){
     kilometrage = null;
     getvehicleBrand();
     getMotosBrand();
-    //  getvehicleModel();
-    // getmeliages();
+
     update();
   }
 
@@ -207,29 +220,28 @@ photobase64Encode(im){
   }
 
   updateMarque(RefJson newValue) {
-    Filter.Id = newValue.id.toString();
+    _vehicleModelApi.vehicleModelId = newValue.id;
     myAds["vehiclebrand"] = newValue.id;
     myAdsview["vehiclebrand"] = newValue.name;
     vehiculebrands = newValue;
 
-    //getvehicleBrand();
     getvehicleModel();
     update();
   }
 
   updateKilomtrage(RefJson newValue) {
     kilometrage = newValue;
- 
+
     myAds["mileage"] = newValue.id;
     myAdsview["mileage"] = newValue.name;
     update();
   }
-  
+
   updateAnnee(RefJson newValue) {
     yearsmodele = newValue;
     myAds["yearModel"] = newValue.id;
     myAdsview["yearModel"] = newValue.name;
-  
+
     update();
   }
 
@@ -263,132 +275,107 @@ photobase64Encode(im){
     update();
   }
 
-  postdata() async{
-    print(" key_email    ${storge.readSecureData(storge.key_email)} ");
-
-
-
-    if(image!=null){
+  postdata() async {
+    if (image != null) {
       photobase64Encode(image);
     }
-    if(image2!=null){
+    if (image2 != null) {
       photobase64Encode(image2);
     }
-    myAds["photos"] =photos;
+    myAds["photos"] = photos;
     print(photos.length);
     PublishApi publishApi = PublishApi();
 
+    // Map<String, dynamic> serverErrors;
 
-    Map<String, dynamic> serverErrors;
-    _getSalt.post({"login": "${storge.readSecureData(storge.key_email)}"}).then(
-        (value) async{
-     //     var url = Uri.parse('https://afariat.com/api/v1/adverts');
-
-      String hashedPassword = Wsse.hashPassword(
-       "123456",//   storge.readSecureData(storge.key_password),
-          value.data["salt"]);
-      String wsse = Wsse.generateWsseHeader(
-          storge.readSecureData(storge.key_email), hashedPassword);
-     //myAds["X-WSSE"] = wsse;
-
-          var vv=await  publishApi.securePost(dataToPost: myAds,wss:  wsse);
-          // var response = await http.post(url, body: jsonEncode(myAds),headers: {
-          //
-          //   "Accept": "application/json",
-          //   'apikey': SettingsApp.apiKey,
-          //   'Content-Type': 'application/json',
-          // 'X-WSSE': wsse,
-          // });
-
-          print('Response status: ${vv.statusCode}');
-          print('Response body: ${vv.data}');
-
-
-
-          // switch (value.statusCode) {
-          //   case 201:
-          //     Get.snackbar(
-          //       'hii',
-          //       'gggggggggggggggg.',
-          //       colorText: Colors.white,
-          //       backgroundColor: Colors.red,
-          //     );
-          //
-          //     break;
-          //   case 400:
-          //     serverErrors = value.data;
-          //     value.data.forEach((key, value) {
-          //       print('Key: $key');
-          //       print('------------------------------');
-          //     });
-          //
-          //
-          //
-          //     Get.snackbar(
-          //       'Erreur',
-          //       'Veuillez corriger les erreurs ci-dessous.',
-          //       colorText: Colors.white,
-          //       backgroundColor: Colors.red,
-          //     );
-          //     break;
-          //   default:
-          //     return;
-          // }
-          //
-
-  //  print(vv.toString());
-      print( "11111111111111111111111111111111111111111111111111111111111 9");
-
-
-
-
-
+    publishApi.securePost(dataToPost: myAds).then((value) {
+      if (value.statusCode == 201) {
+        Get.defaultDialog(
+          title: "Felécitation",
+          middleText: "Votre annonce a été  publiée avec succés!",
+          confirm: GestureDetector(
+            child: Text("ok"),
+            onTap: () {
+              Get.back();
+            },
+          ),
+          titleStyle: TextStyle(color: Colors.deepOrange),
+          middleTextStyle: TextStyle(color: Colors.deepOrange),
+        );
+      }
     });
+    // var response = await http.post(url, body: jsonEncode(myAds),headers: {
+    //
+    //   "Accept": "application/json",
+    //   'apikey': SettingsApp.apiKey,
+    //   'Content-Type': 'application/json',
+    // 'X-WSSE': wsse,
+    // });
 
-    /* AdvertModel advertModel = AdvertModel(
-      //category:Get.find<CategoryAndSubcategory>().subcategories1 ,
-      price: price.text,
-      description: description.text,
-      title: title.text,
-      town: town.id,
-      advertType: advertType,
-      showPhoneNumber: lights ? "yes" : "no",
-      city: citie.id,
-      mileage: kelometrage.id ?? 0,
-      motoBrand: 0,
-      // motosBrand.id?? 0,
-      roomsNumber: pieces ?? 0.toString(),
-      vehicleModel: vehiculeModel.id ?? 0,
-      vehicleBrand: vehiculebrands.id ?? 0,
-      yearModel: yersmodele.id ?? 0,
-    );*/
+    //     print('Response status: ${vv.statusCode}');
+    //    print('Response body: ${vv.data}');
+
+    // switch (value.statusCode) {
+    //   case 201:
+    //     Get.snackbar(
+    //       'hii',
+    //       'gggggggggggggggg.',
+    //       colorText: Colors.white,
+    //       backgroundColor: Colors.red,
+    //     );
+    //
+    //     break;
+    //   case 400:
+    //     serverErrors = value.data;
+    //     value.data.forEach((key, value) {
+    //       print('Key: $key');
+    //       print('------------------------------');
+    //     });
+    //
+    //
+    //
+    //     Get.snackbar(
+    //       'Erreur',
+    //       'Veuillez corriger les erreurs ci-dessous.',
+    //       colorText: Colors.white,
+    //       backgroundColor: Colors.red,
+    //     );
+    //     break;
+    //   default:
+    //     return;
+    // }
+    //
+
+    //  print(vv.toString());
+//    });
   }
-  String validatetital(String value){
-    if(value.length< 11 ||value.contains(new RegExp(r'[0-9]'))){
 
+  String validatetitle(String value) {
+    if (value.length < 11 || value.contains(new RegExp(r'[0-9]'))) {
       return "Le titre doit être renseigné";
     }
 
     return null;
   }
-  String validatestring(String value){
-  if(value.length<1){
 
-    return "Le prix n'est pas valide";
+  String validatePrice(String value) {
+    if (value.length < 1) {
+      return "Le prix n'est pas valide";
+    }
+
+    return null;
   }
 
-  return null;
-  }
-  String validatedes(String value){
-    if(value.length<50){
-
+  String validateDescription(String value) {
+    if (value.length < 50) {
       return "La description doit faire au moins 50 caractères";
     }
 
     return null;
   }
-  isvala(){
-  final isv= globalKey.currentState.validate();
-  print(isv);
+
+  isvala() {
+    final isv = globalKey.currentState.validate();
+    print(isv);
   }
 }

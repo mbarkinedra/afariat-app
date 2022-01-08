@@ -1,8 +1,9 @@
-import 'package:afariat/config/utilitie.dart';
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_publish/publish_views/publish_image/publish_image_scr.dart';
 import 'package:afariat/mywidget/custmbutton.dart';
+import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
 import 'package:afariat/mywidget/widget_publish.dart';
 import 'package:afariat/networking/api/ref_api.dart';
@@ -18,10 +19,14 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Deposer une annonce ")),
+      appBar: AppBar(
+        title: Text("Deposer une annonce "),
+        backgroundColor: Colors.deepOrangeAccent,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(25),
-        child: Form(key: controller.globalKey,
+        child: Form(
+          key: controller.globalKey,
           child: ListView(
             padding: EdgeInsets.all(4),
             children: <Widget>[
@@ -44,7 +49,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.orange),
+                            border: Border.all(color: Colors.deepOrangeAccent),
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<CategoryGroupedJson>(
                           isExpanded: true,
@@ -62,13 +67,14 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             );
                           }).toList(),
                         ),
-                      ),const SizedBox(
+                      ),
+                      const SizedBox(
                         height: 10,
                       ),
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.orange),
+                            border: Border.all(color: Colors.deepOrangeAccent),
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<SubcategoryJson>(
                           isExpanded: true,
@@ -102,8 +108,9 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                 return Column(
                   children: logic.valus.map((e) {
                     return RadioListTile(
+                        activeColor: Colors.deepOrangeAccent,
                         title: Text(e.name),
-                        value: e ,
+                        value: e,
                         groupValue: logic.advertType,
                         onChanged: logic.updateRadioButton);
                   }).toList(),
@@ -129,7 +136,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                 ),
               ),
               CustomTextFiled(
-                color: framColor,validator: controller.validatetital  ,
+                color: framColor,
+                validator: controller.validatetitle,
                 hintText: "",
                 textEditingController: controller.title,
               ),
@@ -143,8 +151,10 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
-              CustomTextFiled(maxLines: 5,
-                color: framColor,validator: controller.validatedes  ,
+              CustomTextFiled(
+                maxLines: 5,
+                color: framColor,
+                validator: controller.validateDescription,
                 hintText: "description",
                 textEditingController: controller.description,
               ),
@@ -164,8 +174,10 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                 children: [
                   Flexible(
                     flex: 1,
-                    child: CustomTextFiled( padding: 0,
-                      color: Colors.orange ,validator: controller.validatestring  ,
+                    child: CustomTextFiled(
+                      padding: 0,
+                      color: Colors.deepOrangeAccent,
+                      validator: controller.validatePrice,
                       hintText: "price",
                       textEditingController: controller.price,
                       keyboardType: TextInputType.number,
@@ -174,11 +186,12 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                   Container(
                     height: 50,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.orange),
+                        border: Border.all(color: Colors.deepOrangeAccent),
                         borderRadius: BorderRadius.circular(0)),
                     child: Text(
                       "DT",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                   )
                 ],
@@ -199,7 +212,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.orange),
+                          border: Border.all(color: Colors.deepOrangeAccent),
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButton<RefJson>(
                         isExpanded: true,
@@ -234,7 +247,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                     Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.orange),
+                            border: Border.all(color: Colors.deepOrangeAccent),
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<RefJson>(
                           isExpanded: true,
@@ -259,12 +272,13 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                   Icon(Icons.call),
                   Flexible(
                     flex: 1,
-                    child: GetBuilder<TapPublishViewController>(builder: (logic) {
+                    child:
+                        GetBuilder<TapPublishViewController>(builder: (logic) {
                       return ListTile(
-                        title: const Text('Show phone number'),
+                        title: const Text('Afficher votre numéro de Télephone'),
                         trailing: CupertinoSwitch(
                           value: logic.lights,
-                          activeColor: Colors.orange,
+                          activeColor: Colors.deepOrangeAccent,
                           onChanged: logic.updateLight,
                         ),
                         onTap: () {
@@ -286,7 +300,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  CustomButton(
+                  CustomButtonWithoutIcon(
                       width: MediaQuery.of(context).size.width * .35,
                       height: 50,
                       label: "Next",
@@ -294,33 +308,32 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                       function: () {
                         //postAdvert(cities1,town1,advertType,price,description,title,photo)
 
+                        if (controller.globalKey.currentState.validate() &&
+                            controller.subcategories != null &&
+                            controller.town != null) {
+                          controller.myAdsview["price"] = controller.price.text;
+                          controller.myAds["price"] = controller.price.text;
 
-if(controller.globalKey.currentState.validate()&&controller.subcategories!=null&&controller.town!=null){
-  controller.myAdsview["price"] = controller.price.text;
-  controller.myAds["price"] = controller.price.text;
+                          controller.myAdsview["title"] = controller.title.text;
+                          controller.myAds["title"] = controller.title.text;
 
-  controller.myAdsview["title"] = controller.title.text;
-  controller.myAds["title"] = controller.title.text;
+                          controller.myAdsview["description"] =
+                              controller.description.text;
+                          controller.myAds["description"] =
+                              controller.description.text;
+                          controller.myAds["showPhoneNumber"] =
+                              controller.lights ? "yes" : "no";
+                          controller.myAdsview["showPhoneNumber"] =
+                              controller.lights ? "yes" : "no";
 
-  controller.myAdsview["description"] =
-      controller.description.text;
-  controller.myAds["description"] =
-      controller.description.text;
-  controller.myAds["showPhoneNumber"] =
-  controller.lights ? "yes" : "no";
-  controller.myAdsview["showPhoneNumber"] =
-  controller.lights ? "yes" : "no";
-
-  Navigator.of(context).push(MaterialPageRoute(
-      builder: (
-          context,
-          ) =>
-          PublishImageScr()));
-}else{
-  Get.snackbar("o'h", "تاكد من ادخال البيانات");
-}
-
-
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (
+                            context,
+                          ) =>
+                                  PublishImageScr()));
+                        } else {
+                          Get.snackbar("o'h", "Vérifier vos coordonnées");
+                        }
                       }),
                 ],
               ),

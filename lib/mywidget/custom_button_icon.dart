@@ -7,9 +7,9 @@ class CustomButtonIcon extends StatelessWidget {
   final double height;
   final double width;
 
-
   final Function function;
   final IconData icon;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -20,9 +20,10 @@ class CustomButtonIcon extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Container(
           child: Center(
-            child: Icon(
-              icon,color: Colors.white,)
-          ),
+              child: Icon(
+            icon,
+            color: Colors.white,
+          )),
           width: width,
           height: height,
           decoration: BoxDecoration(
@@ -41,11 +42,12 @@ class CustomButtonIcon extends StatelessWidget {
     );
   }
 
-  CustomButtonIcon(
-      {@required this.btcolor,this.icon,
-        @required this.function,
-
-        @required this.height,
-        @required this.width, this.iconcolor=Colors.white,
-     });
+  CustomButtonIcon({
+    @required this.btcolor,
+    this.icon,
+    @required this.function,
+    @required this.height,
+    @required this.width,
+    this.iconcolor = Colors.white,
+  });
 }

@@ -16,6 +16,7 @@ class TapProfileViewController extends GetxController {
     name.text = box.read("name",);
     phone.text = box.read("phone");
     email.text = box.read("email");
+    box.read("phone");
     print(box.read("phone"));
   }
 

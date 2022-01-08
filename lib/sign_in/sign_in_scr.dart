@@ -1,4 +1,4 @@
-import 'package:afariat/config/utilitie.dart';
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:afariat/mywidget/log_in_item.dart';
 import 'package:afariat/sign_in/sign_in_viewcontroller.dart';
@@ -67,7 +67,7 @@ class SignInScr extends GetWidget<SignInViewController> {
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
                 function: () {
-                  controller.getwsse();
+                  controller.login();
                 },
               )),
               SizedBox(

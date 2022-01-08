@@ -1,12 +1,13 @@
 import 'package:afariat/networking/json/my_ads_json.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class AdsItem extends StatelessWidget {
   final Size size;
   Adverts adverts;
-
-  AdsItem({this.size, this.adverts});
+Function fun;
+  AdsItem({this.size, this.adverts,this.fun});
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +57,17 @@ class AdsItem extends StatelessWidget {
                     padding: const EdgeInsets.all(2.0),
                     child: Text(adverts.description,maxLines:6,),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Text(adverts.price.toString()),
+                  Align(alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Text( "${ adverts.price} DT",style: TextStyle(fontWeight: FontWeight.bold),),
+                    ),
                   ) ,
+                  Spacer(),
                   Padding(
                     padding: const EdgeInsets.all(2.0),
-                    child:  Row(
-                        children: [Icon(Icons.delete),Icon(Icons.edit)],
+                    child:  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [InkWell(onTap: fun,child: Icon(Icons.delete,color: Colors.deepOrange,)),Icon(Icons.edit,color: Colors.deepOrange,)],
                       ),
                   )
               ],

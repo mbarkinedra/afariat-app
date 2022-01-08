@@ -1,6 +1,7 @@
 
 
 
+import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/storage.dart';
 import 'package:afariat/home/tap_chat/tap_chat_scr.dart';
 import 'package:afariat/home/tap_home/tap_home_scr.dart';
@@ -104,18 +105,21 @@ class PageToView extends StatelessWidget {
         }
       case 'Page2':
         {
-          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_hashPassword) ==null?SignInScr(): TapPublishScr();
+
+         currentScreen = Get.find<AccountInfoStorage>().isLoggedIn()    ? TapMyadsScr():SignInScr();
+
           break;
         }
       case 'Page3':
         {
-          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_hashPassword) ==null?SignInScr(): TapMyadsScr();
+
+          currentScreen =     currentScreen = Get.find<AccountInfoStorage>().isLoggedIn()? TapPublishScr():SignInScr();
           break;
         }
       case 'Page4':
         {
 
-          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_hashPassword) ==null?SignInScr(): TapChatScr();
+          currentScreen =      currentScreen = Get.find<AccountInfoStorage>().isLoggedIn()?TapChatScr():SignInScr();
           break;
         }
       case 'Page5':
@@ -124,9 +128,11 @@ class PageToView extends StatelessWidget {
 
 
 
+         // currentScreen = AccountInfoStorage.isLoggedIn()?SignInScr(): TapProfileScr();
+   currentScreen =    currentScreen = Get.find<AccountInfoStorage>().isLoggedIn()? TapProfileScr():SignInScr();
 
-          currentScreen = Get.find<SecureStorage>().readSecureData(Get.find<SecureStorage>().key_hashPassword) ==null?SignInScr(): TapProfileScr();
           break;
+
         }
     }
 

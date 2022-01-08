@@ -1,38 +1,57 @@
-
 import 'package:afariat/config/storage.dart';
+import 'package:get/get.dart';
 
-class AccountInfoStorage {
-  static const String _key_email = 'username';
-  static const String _key_wsse = 'wsse';
-  static const String _key_hashPassword = 'hashedPassword';
+class AccountInfoStorage extends GetxController {
+  static const _key_email = 'username';
+  static const _key_hashedPassword = 'hashedPassword';
+  static const _key_user_id = 'user_id';
+  static const _key_name = 'name';
+  static const _key_phone = 'phone';
+  SecureStorage _secureStorage = SecureStorage();
 
-  final SecureStorage secureStorage = SecureStorage();
-
-  AccountInfoStorage saveEmail(String email) {
-    secureStorage.writeSecureData(_key_email, email);
-    return this;
+  saveEmail(String email) {
+    _secureStorage.writeSecureData(_key_email, email);
   }
 
-  AccountInfoStorage saveWsse(String wsse) {
-    secureStorage.writeSecureData(_key_wsse, wsse);
-    return this;
+  saveHashedPassword(String hashedPassword) {
+    _secureStorage.writeSecureData(_key_hashedPassword, hashedPassword);
   }
 
-  AccountInfoStorage saveHashPassword(String hashedPassword) {
-    secureStorage.writeSecureData(_key_hashPassword, hashedPassword);
-
-    return this;
+  saveUserId(String userId) {
+    _secureStorage.writeSecureData(_key_user_id, userId);
+  }
+  saveName(String name) {
+      _secureStorage.writeSecureData(_key_name,name);
+  }
+  savePhone(String phone) {
+      _secureStorage.writeSecureData(_key_phone,phone);
+  }
+  String readEmail() {
+    return _secureStorage.readSecureData(_key_email);
+  }
+  String readName() {
+    return _secureStorage.readSecureData(_key_name);
+  } String readPhone() {
+    return _secureStorage.readSecureData(_key_phone);
+  }
+  String readHashedPassword() {
+    return _secureStorage.readSecureData(_key_hashedPassword);
   }
 
-  Future<String> readEmail() async {
-    return await secureStorage.readSecureData(_key_email);
+  String readUserId() {
+    return _secureStorage.readSecureData(_key_user_id);
   }
 
-  Future<String> readhashedPassword() async {
-    return await secureStorage.readSecureData(_key_hashPassword);
+  /// Removes the hashed password from the secure storage, so user is no longer loggen in.
+  String removeHashedPassword() {
+    return _secureStorage.deleteSecureData(_key_hashedPassword);
   }
 
-  Future<String> readWsse() async {
-    return await secureStorage.readSecureData(_key_wsse);
+  bool isLoggedIn() {
+    var hashedPassword = _secureStorage.readImmediatlyData(_key_hashedPassword);
+    if ((hashedPassword ?? '') == '') {
+      return false;
+    }
+    return true;
   }
 }

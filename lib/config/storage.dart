@@ -1,29 +1,34 @@
-
-
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class SecureStorage extends GetxController{
-  String  key_email = 'username';
-  String key_hashPassword = 'hashedPassword';
-  String  user_id = 'user_id';
-  final box = GetStorage();
+class SecureStorage extends GetxController {
+  // static final SecureStorage _singleton = SecureStorage._internal();
+  //
+  // factory SecureStorage() {
+  //   return _singleton;
+  // }
+  //
+  // SecureStorage._internal();
 
-  Future writeSecureData(String key, String value)  async {
+    final box = GetStorage('secure');
 
-
-    var writeData = await box.write( key,value);
+      writeSecureData(String key, String value)   {
+    var writeData =   box.write(key, value);
     return writeData;
   }
-  String readSecureData(String key)   {
 
-    var readData =   box.read( key);
+    String   readSecureData(String key)  {
+    var readData =   box.read(key);
     return readData;
   }
-  Future deleteSecureData(String key) async{
 
-    var deleteData = await box.remove( key);
+      deleteSecureData(String key)  {
+    var deleteData =  box.remove(key);
     return deleteData;
+  }
+
+     String readImmediatlyData(String key)  {
+    String readData =   box.read(key);
+    return readData;
   }
 }

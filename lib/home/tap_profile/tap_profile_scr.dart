@@ -1,12 +1,16 @@
 
 
+import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/storage.dart';
 import 'package:afariat/mywidget/profile_menu.dart';
 import 'package:afariat/mywidget/profile_pic.dart';
+import 'package:afariat/sign_in/sign_in_scr.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../home_view_controller.dart';
+import 'account/account_scr.dart';
+import 'settings/setting_scr.dart';
 import 'tap_profile_viewcontroller.dart';
 
 class TapProfileScr extends GetWidget<TapProfileViewController> {
@@ -25,17 +29,24 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
               text: "My Account",
              // icon: "assets/icons/User Icon.svg",
               press: () => {
-                // Navigator.of(context).push(MaterialPageRoute(
-                // builder: (
-                // context,
-                // ) =>
-                //     SignForm())),
+                Navigator.of(context).push(MaterialPageRoute(
+                builder: (
+                context,
+                ) =>
+                    Account())),
               },
             ),
             ProfileMenu(
               text: "Settings",
               //icon: "assets/icons/Settings.svg",
-              press: () {},
+              press: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (
+                        context,
+                        ) =>
+                        Setting()));
+
+              },
             ),
             ProfileMenu(
               text: "Help Center",
@@ -46,10 +57,17 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
               text: "Log Out",
             //  icon: "assets/icons/Log out.svg",
               press: () {
-                Get.find<SecureStorage>().deleteSecureData(Get.find<SecureStorage>().key_hashPassword);
+                Get.find<AccountInfoStorage>().removeHashedPassword();
                 Get.find<HomeViwController>().changeSelectedValue(0);
 
-              },
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (
+                          context,
+                          ) =>
+                          SignInScr()));
+
+                },
+
             ),
           ],
         ),

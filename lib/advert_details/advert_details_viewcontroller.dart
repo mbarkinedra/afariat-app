@@ -12,7 +12,8 @@ class AdvertDetailsViewcontroller extends GetxController {
   bool loading = true;
   AdvertDetailsApi _advertDetailsApi = AdvertDetailsApi();
 
-  getAdvertDetails() {
+  getAdvertDetails(int id) {
+    _advertDetailsApi.advertTypeId=id;
     _advertDetailsApi.getList().then((value) {
       advert = value;
 
