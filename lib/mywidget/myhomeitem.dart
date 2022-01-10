@@ -67,8 +67,21 @@ class MyHomeItem extends StatelessWidget {
                      "${ adverts.price} DT" ,
                       softWrap: true,
                       overflow: TextOverflow.fade,
+                    ),     Spacer(),
+                    Row(
+                      children: [Icon(Icons.add_location,color: Colors.grey,),
+                        Container(width: size.width*.28,
+                          child: Text(
+                            "${ adverts.town.name } ${ adverts.city.name }" ,
+                            softWrap: true,style: TextStyle(color: Colors.grey),
+                            overflow: TextOverflow.ellipsis,maxLines: 4,
+                          ),
+                        ),
+                      ],
                     ),
-                    Spacer(),
+                    SizedBox(
+                      height: 4,
+                    ),
                     Text(
                       adverts.modifiedAt,
                       softWrap: true,
