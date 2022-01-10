@@ -20,7 +20,7 @@ class CityApi extends RefApi {
 class TownApi extends RefApi {
   String cityId;
   @override
-  String apiUrl() => SettingsApp.townUrl + cityId ;
+  String apiUrl() => SettingsApp.townUrl +"/"+ cityId ;
 }
 
 //Refs
