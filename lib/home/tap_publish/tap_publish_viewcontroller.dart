@@ -18,7 +18,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
 class TapPublishViewController extends GetxController {
-  final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+    GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   CategoryGroupedJson category;
   SubcategoryJson subcategories;
 

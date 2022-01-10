@@ -1,5 +1,3 @@
-
-
 import 'dart:developer';
 import 'dart:ffi';
 
@@ -20,31 +18,33 @@ import 'package:afariat/sign_in/sign_in_viewcontroller.dart';
 import 'package:afariat/sign_up/sign_up_viewcontroller.dart';
 import 'package:get/get.dart';
 
-
-class AllBindings extends Bindings{
+class AllBindings extends Bindings {
   @override
-  void dependencies()async {
+  void dependencies() async {
     // Get.put(() => Tab4Profile() );
 
-    Get.put( SettingViewController()  );
-    Get.lazyPut(() => AccountViewController()  );
-    Get.lazyPut(() => TapHomeViewController() ,fenix: true );
-    Get.lazyPut(() => HomeViwController() ,fenix: true);
+    Get.put(SettingViewController());
+    Get.lazyPut(() => AccountViewController());
+    Get.lazyPut(() => TapHomeViewController(), fenix: true);
+    Get.lazyPut(() => HomeViwController(), fenix: true);
     //Create Singleton AccountIntoStorage
+    Get.put(SecureStorage());
     Get.put(AccountInfoStorage());
-    Get.lazyPut(() => CategoryAndSubcategory() ,fenix: true );
-    Get.lazyPut(() => LocController() ,fenix: true );
-    Get.lazyPut(() => SignUpViewController() );
-    Get.lazyPut(() => SignInViewController() );
+    Get.put(TapPublishViewController());
 
-    Get.lazyPut(() => TapMyadsViewController() ,fenix: true);
-    Get.lazyPut(() => TapProfileViewController() );
-    Get.lazyPut(() => AdvertDetailsViewcontroller() );
-    Get.lazyPut(() => TapPublishViewController()  ,fenix: true);
-    Get.lazyPut(() =>   PublishImageViewController(),fenix: true);
-    Get.put(  SecureStorage(),permanent: true);
+    Get.put(CategoryAndSubcategory(), permanent: true);
+    Get.put(LocController());
+    // Get.lazyPut(() => CategoryAndSubcategory() ,fenix: true );
+    Get.lazyPut(() => LocController(), fenix: true);
+    Get.lazyPut(() => SignUpViewController());
+    Get.lazyPut(() => SignInViewController());
+
+    Get.lazyPut(() => TapMyadsViewController(), fenix: true);
+    Get.lazyPut(() => TapProfileViewController());
+    Get.lazyPut(() => AdvertDetailsViewcontroller());
+    Get.lazyPut(() => TapPublishViewController(), fenix: true);
+    Get.lazyPut(() => PublishImageViewController(), fenix: true);
+
     // Get.putAsync<SecureStorage>(()async => await SecureStorage());
-
   }
-
 }

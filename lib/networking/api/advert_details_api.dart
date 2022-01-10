@@ -7,7 +7,7 @@ class AdvertDetailsApi extends ApiManager {
   int advertTypeId;
   @override
   String apiUrl() {
-    return SettingsApp.advertDeatilsUrl + advertTypeId.toString();;
+    return SettingsApp.advertDeatilsUrl + "/"+advertTypeId.toString();
   }
 
   @override
