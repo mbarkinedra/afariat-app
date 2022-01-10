@@ -6,9 +6,11 @@ import 'package:afariat/config/utility.dart';
 import 'package:afariat/mywidget/bottom_sheet_filter.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
 import 'package:afariat/mywidget/myhomeitem.dart';
+import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'tap_home_viewcontroller.dart';
 
@@ -100,8 +102,43 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
               child: GetBuilder<TapHomeViewController>(builder: (logic) {
 
                 return logic.getdatafromweb
-                    ? Center(child: const CircularProgressIndicator())
-                    : ListView.builder(
+                    ? Center(child: const CircularProgressIndicator()):
+    //                 :   PagedListView (
+    //             pagingController: logic.pagingController,
+    //             builderDelegate: PagedChildBuilderDelegate<AdvertJson>(
+    //             itemBuilder: (context, item, index) {
+    //
+    //
+    //               if (logic.adverts[index].description
+    //                   .toLowerCase()
+    //                   .contains(logic.searchWord.text.toLowerCase())||logic.adverts[index].title
+    //                   .toLowerCase()
+    //                   .contains(logic.searchWord.text.toLowerCase())) {
+    //                 return InkWell(onTap: (){
+    //                   print(logic.adverts[index].id);
+    //
+    //                   Get.find<AdvertDetailsViewcontroller>().loading=true;
+    //                   Get.find<AdvertDetailsViewcontroller>().getAdvertDetails(logic.adverts[index].id);
+    //                   Navigator.push(
+    //                     context,
+    //                     MaterialPageRoute(builder: (context) => AdvertDetatilsScr() ),
+    //                   );
+    //
+    //                 },
+    //                   child: MyHomeItem(
+    //                     size: _size,
+    //                     adverts: logic.adverts[index],
+    //                   ),
+    //                 );
+    //               } else {
+    //                 return const SizedBox();
+    //               }
+    // }
+    //
+    //             )
+
+
+                ListView.builder(controller: logic.scrollController,
                         itemCount: logic.adverts.length,
                         itemBuilder: (context, pos) {
                           if (logic.adverts[pos].description
@@ -128,7 +165,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                           } else {
                             return const SizedBox();
                           }
-                        });
+                       }
+                 );
               }),
             )
           ],
