@@ -30,7 +30,8 @@ class TapHomeViewController extends GetxController {
   final PagingController<int, dynamic> pagingController =
       PagingController(firstPageKey: 0);
   ScrollController scrollController = ScrollController();
-int page=1;
+  int page = 1;
+
   @override
   void onInit() {
     super.onInit();
@@ -39,7 +40,7 @@ int page=1;
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent ==
           scrollController.position.pixels) {
-        _advertPageApi.page=page;
+        _advertPageApi.page = page;
         _advertPageApi.getList().then((value) {
           page++;
           adverts.addAll(value.embedded.adverts);

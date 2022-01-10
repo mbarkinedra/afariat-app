@@ -1,3 +1,4 @@
+import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/model/error_register.dart';
 
@@ -79,7 +80,8 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                             "${logic.advert.town.name} ${logic.advert.city.name}"),
                         SizedBox(
                           height: 8,
-                        ),  ],
+                        ),
+                      ],
                     ),
                     SizedBox(height: 10),
                     Container(
@@ -89,8 +91,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                           style: TextStyle(fontWeight: FontWeight.bold)),
                     ),
                     SizedBox(height: 10),
-
-                    Text("${logic.advert.price} DT",
+                    Text("${logic.advert.price} "+SettingsApp.moneySymbol,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 25)),
                     SizedBox(

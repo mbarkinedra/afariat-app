@@ -56,6 +56,8 @@ class MyHomeItem extends StatelessWidget {
                     Container(
                       child: Text(
                         adverts.title,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
                         softWrap: true,
                         overflow: TextOverflow.fade,
                       ),
@@ -64,17 +66,30 @@ class MyHomeItem extends StatelessWidget {
                       height: 4,
                     ),
                     Text(
-                     "${ adverts.price} DT" ,
+                      "${adverts.price} DT",
+                      style: TextStyle(
+                          color: Colors.deepOrange,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15),
                       softWrap: true,
                       overflow: TextOverflow.fade,
-                    ),     Spacer(),
+                    ),
+                    Spacer(),
                     Row(
-                      children: [Icon(Icons.add_location,color: Colors.grey,),
-                        Container(width: size.width*.28,
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          color: Colors.grey,
+                          size: 18,
+                        ),
+                        Container(
+                          width: size.width * .28,
                           child: Text(
-                            "${ adverts.town.name } ${ adverts.city.name }" ,
-                            softWrap: true,style: TextStyle(color: Colors.grey),
-                            overflow: TextOverflow.ellipsis,maxLines: 4,
+                            "${adverts.town.name}, ${adverts.city.name}",
+                            softWrap: true,
+                            style: TextStyle(color: Colors.grey),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 4,
                           ),
                         ),
                       ],

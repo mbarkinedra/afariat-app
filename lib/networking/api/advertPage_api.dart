@@ -6,7 +6,7 @@ class AdvertPageApi extends ApiManager {
   int page;
   @override
   String apiUrl() {
-    return SettingsApp.advertPageUrl+page.toString();
+    return SettingsApp.advertPageUrl+"?page="+page.toString();
   }
 
   @override
