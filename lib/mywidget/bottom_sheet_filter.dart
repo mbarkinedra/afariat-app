@@ -3,7 +3,9 @@ import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
+import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
+import 'package:afariat/mywidget/widget_publish.dart';
 
 import 'package:afariat/networking/json/categories_grouped_json.dart';
 
@@ -88,11 +90,19 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       );
                     }).toList(),
                   ),
-                )
+                ),
               ],
             );
           }),
+
         ),
+        GetBuilder<TapPublishViewController>(builder: (logic) {
+          return logic.getview != null
+              ? WidgetPublish(
+            logic.getview.name,
+          )
+              : SizedBox();
+        }),
         const Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
@@ -192,7 +202,8 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
             ],
           );
         }),
-        Align(alignment: Alignment.center,
+        Align(
+          alignment: Alignment.center,
           child: CustomButton(
             height: 50,
             width: _size.width * .4,

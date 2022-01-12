@@ -1,3 +1,4 @@
+import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:flutter/material.dart';
 
@@ -55,18 +56,18 @@ class MyHomeItem extends StatelessWidget {
                   children: [
                     Container(
                       child: Text(
-                        adverts.title,
+                        adverts.title ,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 15),
-                        softWrap: true,
-                        overflow: TextOverflow.fade,
+                       // softWrap: true,
+                     //   overflow: TextOverflow.fade,
                       ),
                     ),
                     SizedBox(
                       height: 4,
                     ),
                     Text(
-                      "${adverts.price} DT",
+                      "${adverts.price}" + SettingsApp.moneySymbol,
                       style: TextStyle(
                           color: Colors.deepOrange,
                           fontWeight: FontWeight.bold,

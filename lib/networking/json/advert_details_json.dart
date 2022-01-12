@@ -1,7 +1,7 @@
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 
-class AdvertDetails  extends AbstractJsonResource{
+class AdvertDetails extends AbstractJsonResource {
   String createdAt;
   int id;
   String username;
@@ -21,27 +21,38 @@ class AdvertDetails  extends AbstractJsonResource{
   List<Photos> photos;
   String shortUrl;
   Links lLinkss;
+  Mileage mileage;
+  Mileage yearModel;
+  Mileage energy;
+  Mileage vehicleBrand;
+  Mileage vehicleModel;
+  Mileage motoBrand;
 
   AdvertDetails(
       {this.createdAt,
-        this.id,
-        this.username,
-        this.mobilePhoneNumber,
-        this.title,
-        this.slug,
-        this.description,
-        this.price,
-        this.showPhoneNumber,
-        this.area,
-        this.advertType,
-        this.category,
-        this.region,
-        this.city,
-        this.town,
-        this.roomsNumber,
-        this.photos,
-        this.shortUrl,
-        this.lLinkss});
+      this.id,
+      this.username,
+      this.mobilePhoneNumber,
+      this.title,
+      this.slug,
+      this.description,
+      this.price,
+      this.showPhoneNumber,
+      this.area,
+      this.advertType,
+      this.category,
+      this.region,
+      this.city,
+      this.town,
+      this.roomsNumber,
+      this.photos,
+      this.shortUrl,
+      this.lLinkss,
+      this.yearModel,
+      this.vehicleBrand,
+      this.vehicleModel,
+      this.mileage,
+      this.energy,this.motoBrand});
 
   AdvertDetails.fromJson(Map<String, dynamic> json) {
     createdAt = json['created_at'];
@@ -61,20 +72,37 @@ class AdvertDetails  extends AbstractJsonResource{
         ? new Category.fromJson(json['category'])
         : null;
     region =
-    json['region'] != null ? new Region.fromJson(json['region']) : null;
+        json['region'] != null ? new Region.fromJson(json['region']) : null;
     city = json['city'] != null ? new Category.fromJson(json['city']) : null;
     town = json['town'] != null ? new Category.fromJson(json['town']) : null;
     roomsNumber = json['rooms_number'] != null
         ? new RoomsNumber.fromJson(json['rooms_number'])
         : null;
+    mileage =
+    json['mileage'] != null ? new Mileage.fromJson(json['mileage']) : null;
+    yearModel = json['year_model'] != null
+        ? new Mileage.fromJson(json['year_model'])
+        : null;
+    energy =
+    json['energy'] != null ? new Mileage.fromJson(json['energy']) : null;
+    vehicleBrand = json['vehicle_brand'] != null
+        ? new Mileage.fromJson(json['vehicle_brand'])
+        : null;
+    vehicleModel = json['vehicle_model'] != null
+        ? new Mileage.fromJson(json['vehicle_model'])
+        : null;
+    motoBrand = json['moto_brand'] != null
+        ? new Mileage.fromJson(json['moto_brand'])
+        : null;
     if (json['photos'] != null) {
       photos = <Photos>[];
-        json['photos'].forEach((v) {
+      json['photos'].forEach((v) {
         photos.add(new Photos.fromJson(v));
       });
     }
     shortUrl = json['short_url'];
-    lLinkss = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
+    lLinkss =
+        json['_links'] != null ? new Links.fromJson(json['_links']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -106,6 +134,9 @@ class AdvertDetails  extends AbstractJsonResource{
     }
     if (this.roomsNumber != null) {
       data['rooms_number'] = this.roomsNumber.toJson();
+    }
+    if (this.mileage != null) {
+      data['mileage'] = this.mileage.toJson();
     }
     if (this.photos != null) {
       data['photos'] = this.photos.map((v) => v.toJson()).toList();
@@ -162,7 +193,7 @@ class Links {
 
   Links.fromJson(Map<String, dynamic> json) {
     search =
-    json['search'] != null ? new Search.fromJson(json['search']) : null;
+        json['search'] != null ? new Search.fromJson(json['search']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -233,13 +264,29 @@ class RoomsNumber {
   }
 }
 
+class Mileage {
+  String value;
+
+  Mileage({this.value});
+
+  Mileage.fromJson(Map<String, dynamic> json) {
+    value = json['value'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['value'] = this.value;
+    return data;
+  }
+}
+
 class Photos {
   String path;
 
   Photos({this.path});
 
   Photos.fromJson(Map<String, dynamic> json) {
-    path = SettingsApp.baseUrl +"/"+json['path'];
+    path = SettingsApp.baseUrl + "/" + json['path'];
   }
 
   Map<String, dynamic> toJson() {

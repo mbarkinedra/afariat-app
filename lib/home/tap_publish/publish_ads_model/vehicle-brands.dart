@@ -16,7 +16,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.orange)),
+                  border: Border.all(color: Colors.deepOrangeAccent)),
               child: DropdownButton<RefJson>(
                 underline: SizedBox(),
                 isExpanded: true,
@@ -42,7 +42,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.orange)),
+                  border: Border.all(color: Colors.deepOrangeAccent)),
               child: DropdownButton<RefJson>(
                 underline: SizedBox(),
                 isExpanded: true,
@@ -68,7 +68,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.orange)),
+                  border: Border.all(color: Colors.deepOrangeAccent)),
               child: DropdownButton<String>(
                 underline: SizedBox(),
                 isExpanded: true,
@@ -94,7 +94,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.orange)),
+                  border: Border.all(color: Colors.deepOrangeAccent)),
               child: DropdownButton<RefJson>(
                 underline: SizedBox(),
                 isExpanded: true,
@@ -120,7 +120,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.orange)),
+                  border: Border.all(color: Colors.deepOrangeAccent)),
               child: DropdownButton<RefJson>(
                 underline: SizedBox(),
                 isExpanded: true,
