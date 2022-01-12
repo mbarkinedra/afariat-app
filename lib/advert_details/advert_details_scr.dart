@@ -7,10 +7,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-
 import 'package:email_launcher/email_launcher.dart' as mail;
 import 'package:url_launcher/url_launcher.dart';
 import 'advert_details_viewcontroller.dart';
+import 'package:pinch_zoom_image_last/pinch_zoom_image_last.dart';
 
 class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
   @override
@@ -18,137 +18,307 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
     Size _size = MediaQuery.of(context).size;
 
     //
-    return GetBuilder<AdvertDetailsViewcontroller>(builder: (logic) {
-      return logic.loading
-          ? Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Icon(
-                              Icons.arrow_back_ios,
-                            )),
-                        SizedBox(
-                          width: 8,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Annonce détaillée",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+        ),
+        backgroundColor: Colors.deepOrangeAccent,
+      ),
+      body: GetBuilder<AdvertDetailsViewcontroller>(builder: (logic) {
+        return logic.loading
+            ? Center(child: CircularProgressIndicator())
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 20),
+                      CarouselSlider(
+                        options: CarouselOptions(
+                          height: _size.height * .3,
+                          viewportFraction: .7,
+                          aspectRatio: 9 / 12,
+                          enlargeCenterPage: true,
+                          autoPlay: true,
                         ),
-                        Text(
-                          "Annonce détaillée",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    CarouselSlider(
-                      options: CarouselOptions(
-                        height: _size.height * .3,
-                        viewportFraction: .7,
-                        aspectRatio: 9 / 12,
-                        enlargeCenterPage: true,
-                        autoPlay: true,
+                        items: logic.advert.photos
+                            .map((item) => InkWell(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Dialog(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(40)),
+                                          elevation: 16,
+                                          child: Container(
+                                            child: PinchZoomImage(
+                                              image: Image.network(item.path),
+                                              zoomedBackgroundColor:
+                                                  Color.fromRGBO(
+                                                      240, 240, 240, 1.0),
+                                              hideStatusBarWhileZooming: true,
+                                              onZoomStart: () {
+                                                print('Zoom started');
+                                              },
+                                              onZoomEnd: () {
+                                                print('Zoom finished');
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    child: Center(
+                                        child: Image.network(
+                                      item.path,
+                                      fit: BoxFit.cover,
+                                      width: _size.width * .7,
+                                      height: _size.height * .3,
+                                    )),
+                                  ),
+                                ))
+                            .toList(),
                       ),
-                      items: logic.advert.photos
-                          .map((item) => Container(
-                                child: Center(
-                                    child: Image.network(
-                                  item.path,
-                                  fit: BoxFit.cover,
-                                  width: _size.width * .7,
-                                  height: _size.height * .3,
-                                )),
-                              ))
-                          .toList(),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Icon(Icons.add_location),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Text(
-                            "${logic.advert.town.name} ${logic.advert.city.name}"),
-                        SizedBox(
-                          height: 8,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      width: _size.width * .5,
-                      child: Text(logic.advert.title.toString(),
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    ),
-                    SizedBox(height: 10),
-                    Text("${logic.advert.price} "+SettingsApp.moneySymbol,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 25)),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text("Ajouter description",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16)),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(logic.advert.description,
-                        style: TextStyle(fontSize: 16)),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Container(
+                            width: _size.width * .8,
+                            child: Text(
+                              logic.advert.title.toString(),
+                              // overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            color: Colors.grey,
+                            size: 18,
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            "${logic.advert.town.name}, ${logic.advert.city.name}",
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Text("${logic.advert.price} " + SettingsApp.moneySymbol,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 29)),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text("Ajouter description",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Container(
+                        width: _size.width * .8,
+                        child: Text(logic.advert.description,
+                            style: TextStyle(
+                              fontSize: 16,
+                            )),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      if (logic.advert.roomsNumber != null)
+                        Row(
                           children: [
-                            if (logic.havephonenumber())
-                              CustomButtonIcon(
-                                btcolor: buttonColor,
-                                function: () {
-                                  logic.makePhoneCall(
-                                      logic.advert.mobilePhoneNumber);
-                                },
-                                height: 40,
-                                width: _size.width * .2,
-                                icon: Icons.add_call,
-                              ),
-                            if (logic.havephonenumber())
-                              CustomButtonIcon(
-                                btcolor: buttonColor,
-                                function: () {
-                                  logic.makesms(logic.advert.mobilePhoneNumber);
-                                },
-                                height: 40,
-                                width: _size.width * .2,
-                                icon: Icons.message,
-                              ),
-                            CustomButtonIcon(
-                              btcolor: buttonColor,
-                              function: () async {
-                                logic.showd(context);
-                              },
-                              height: 40,
-                              width: _size.width * .2,
-                              icon: Icons.markunread,
+                            Text(
+                              "Nombre de chambre : ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
+                            Text(
+                              "${logic.advert.roomsNumber.value}",
                             ),
                           ],
                         ),
+                      SizedBox(
+                        height: 8,
                       ),
-                    ),
-                  ],
+                      if (logic.advert.vehicleBrand != null)
+                        Row(
+                          children: [
+                            Text(
+                              "Marque : ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
+                            Text(
+                              "${logic.advert.vehicleBrand.value}",
+                            ),
+                          ],
+                        ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      if (logic.advert.motoBrand != null)
+                        Row(
+                          children: [
+                            Text(
+                              "Marque : ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
+                            Text(
+                              "${logic.advert.motoBrand.value}",
+                            ),
+                          ],
+                        ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      if (logic.advert.vehicleModel != null)
+                        Row(
+                          children: [
+                            Text(
+                              "Modéle : ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
+                            Text(
+                              "${logic.advert.vehicleModel.value}",
+                            ),
+                          ],
+                        ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      if (logic.advert.yearModel != null)
+                        Row(
+                          children: [
+                            Text(
+                              "Année : ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
+                            Text(
+                              "${logic.advert.yearModel.value}",
+                            ),
+                          ],
+                        ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      if (logic.advert.energy != null)
+                        Row(
+                          children: [
+                            Text(
+                              "Energie : ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
+                            Text(
+                              "${logic.advert.energy.value}",
+                            ),
+                          ],
+                        ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      if (logic.advert.mileage != null)
+                        Row(
+                          children: [
+                            Text(
+                              "Kilométrage: ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            ),
+                            Text(
+                              "${logic.advert.mileage.value}",
+                              // overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text("Catégorie",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Container(
+                        width: _size.width * .8,
+                        child: Text(logic.advert.category.name,
+                            style: TextStyle(
+                              fontSize: 16,
+                            )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (logic.havephonenumber())
+                                CustomButtonIcon(
+                                  btcolor: buttonColor,
+                                  function: () {
+                                    logic.makePhoneCall(
+                                        logic.advert.mobilePhoneNumber);
+                                  },
+                                  height: 40,
+                                  width: _size.width * .2,
+                                  icon: Icons.add_call,
+                                ),
+                              if (logic.havephonenumber())
+                                CustomButtonIcon(
+                                  btcolor: buttonColor,
+                                  function: () {
+                                    logic.makesms(
+                                        logic.advert.mobilePhoneNumber);
+                                  },
+                                  height: 40,
+                                  width: _size.width * .2,
+                                  icon: Icons.message,
+                                ),
+                              CustomButtonIcon(
+                                btcolor: buttonColor,
+                                function: () async {
+                                  logic.showd(context);
+                                },
+                                height: 40,
+                                width: _size.width * .2,
+                                icon: Icons.markunread,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-    });
+              );
+      }),
+    );
   }
 }

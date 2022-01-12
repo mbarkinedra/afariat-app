@@ -116,7 +116,6 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                   }).toList(),
                 );
               }),
-              //if (subcategories1 != null) getview(getOption),
 
               GetBuilder<TapPublishViewController>(builder: (logic) {
                 return logic.getview != null

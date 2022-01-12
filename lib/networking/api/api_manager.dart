@@ -8,6 +8,7 @@ import 'package:afariat/config/wsse.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as a;
+import 'dart:developer';
 
 abstract class ApiManager {
   final DioSingleton dioSingleton = DioSingleton();
@@ -58,13 +59,12 @@ abstract class ApiManager {
     });
   }
 
-
   /// POST DATA TO SERVER
   Future<Response<dynamic>> securePost({dataToPost}) async {
     //generer le wsse
 
     Wsse xwsse = Wsse();
-   String nn= xwsse.generateWsseFromStorage();
+    String nn = xwsse.generateWsseFromStorage();
     print(jsonEncode(dataToPost));
     Options options = Options(headers: {
       "Accept": "application/json",

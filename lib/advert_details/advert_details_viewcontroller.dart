@@ -13,7 +13,7 @@ class AdvertDetailsViewcontroller extends GetxController {
   AdvertDetailsApi _advertDetailsApi = AdvertDetailsApi();
 
   getAdvertDetails(int id) {
-    _advertDetailsApi.advertTypeId=id;
+    _advertDetailsApi.advertTypeId = id;
     _advertDetailsApi.getList().then((value) {
       advert = value;
 
@@ -28,16 +28,6 @@ class AdvertDetailsViewcontroller extends GetxController {
   }
 
   bool havephonenumber() {
-    // bool vall=false;
-    // if(!loading&&advert!=null) {
-    //   if(advert.mobilePhoneNumber!=null){
-    //     print(advert.mobilePhoneNumber);
-    //     vall=true;
-    //   }
-    //
-    //
-    // }
-    //bool vall=false;
     if (!loading && advert != null) {
       return advert.showPhoneNumber;
     }
@@ -67,7 +57,7 @@ class AdvertDetailsViewcontroller extends GetxController {
     await launch(launchUri.toString());
   }
 
-  showd(context){
+  showd(context) {
     // Get.defaultDialog(
     //     title: "Contacter l'annonceur par e_mail", confirm: confirmBtn(),cancel: cancelBtn(),
     //
@@ -96,23 +86,20 @@ class AdvertDetailsViewcontroller extends GetxController {
       builder: (context) {
         return AlertDialog(
           title: Container(
-           width: double.infinity,
+            width: double.infinity,
             height: 60,
             child: Column(
-              crossAxisAlignment:
-              CrossAxisAlignment
-                  .start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(height: 50,color: Colors
-                .orange,padding: EdgeInsets.all(8),
+                Container(
+                  height: 50,
+                  color: Colors.orange,
+                  padding: EdgeInsets.all(8),
                   child: Text("Contacter l'annonceur par e_mail",
                       style: TextStyle(
                           fontSize: 18,
-                          color: Colors
-                              .white,
-                          fontWeight:
-                          FontWeight
-                              .bold)),
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold)),
                 ),
               ],
             ),
@@ -121,44 +108,34 @@ class AdvertDetailsViewcontroller extends GetxController {
             width: 400,
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment:
-                CrossAxisAlignment
-                    .start,
-                mainAxisSize:
-                MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
                 children: [
-             TextField(maxLines: 5,),
-                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  TextField(
+                    maxLines: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
                           onPressed: () {
-Navigator.pop(context);
-
+                            Navigator.pop(context);
                           },
                           child: Row(
                             children: [
-                              Icon(Icons
-                                  .arrow_back),
-
-                              Text(
-                                  'Back'),
+                              Icon(Icons.arrow_back),
+                              Text('Back'),
                               SizedBox(
                                 width: 10,
                               ),
-
                             ],
-                          ))
-                     , Row(
+                          )),
+                      Row(
                         children: [
                           TextButton(
-                              onPressed:
-                                  () {
-
-                              },
-                              child:
-                              Row(
+                              onPressed: () {},
+                              child: Row(
                                 children: [
-
                                   SizedBox(
                                     width: 8,
                                   ),
@@ -166,7 +143,8 @@ Navigator.pop(context);
                                 ],
                               ))
                         ],
-                      )     ],
+                      )
+                    ],
                   )
                 ],
               ),
@@ -176,16 +154,16 @@ Navigator.pop(context);
       },
     );
   }
-  Widget confirmBtn() {
-    return ElevatedButton(onPressed: () {
 
-    }, child: Text("Confirm"));
+  Widget confirmBtn() {
+    return ElevatedButton(onPressed: () {}, child: Text("Confirm"));
   }
 
-
   Widget cancelBtn() {
-    return ElevatedButton(onPressed: () {
-      Get.back();
-    }, child: Text("Cancel"));
+    return ElevatedButton(
+        onPressed: () {
+          Get.back();
+        },
+        child: Text("Cancel"));
   }
 }

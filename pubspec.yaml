@@ -27,13 +27,13 @@ dependencies:
   get: ^4.5.1
   get_storage: ^2.0.3
   dio: ^4.0.4
-  http:
+
   animated_splash_screen: ^1.1.0
   persistent_bottom_nav_bar: ^4.0.2
   syncfusion_flutter_sliders: ^19.3.56
-  flutter_secure_storage: ^4.1.0
   flutter_svg: ^0.22.0
   uuid:
+  pinch_zoom_image_last: ^0.4.1
   carousel_slider: ^4.0.0
   flutter_screenutil: ^0.4.2
   # The following adds the Cupertino Icons font to your application.
@@ -49,8 +49,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+  # For information on the generic Dart part of this file, see the
+  # following page: https://dart.dev/tools/pub/pubspec
   flutter_lints: ^1.0.0
 # The following section is specific to Flutter.
 flutter:
