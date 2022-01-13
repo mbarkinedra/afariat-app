@@ -52,7 +52,6 @@ class Home extends GetWidget<HomeViwController> {
                   ),
                   label: 'Ads',
                 ),
-
                 BottomNavigationBarItem(
                   icon: Icon(Icons.article_rounded),
                   label: 'Notification',
@@ -73,13 +72,16 @@ class Home extends GetWidget<HomeViwController> {
               elevation: 5,
             );
           }),
-          floatingActionButton: FloatingActionButton(onPressed:(){
-            print("88888");
-            controller.changeSelectedValue(2);
-          },child: Icon(
-            Icons.add_box_rounded,
-
-          ),backgroundColor:  Colors.deepOrangeAccent,),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              print("88888");
+              controller.changeSelectedValue(2);
+            },
+            child: Icon(
+              Icons.add,
+            ),
+            backgroundColor: Colors.deepOrangeAccent,
+          ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
         ),

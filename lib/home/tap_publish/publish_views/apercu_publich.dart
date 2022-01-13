@@ -2,7 +2,6 @@ import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
-import 'package:afariat/home/tap_publish/publish_views/publish_succes.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:afariat/mywidget/custom_apercu.dart';
@@ -23,50 +22,50 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
           children: [
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(Icons.menu),
-                ),
+
                 SizedBox(
                   width: 50,
                 ),
                 Expanded(
                     child: Text(
-                  "Apercu",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  "Vérification",
+                  style: TextStyle(color: Colors.deepOrange,fontWeight: FontWeight.bold, fontSize: 25),
                 )),
               ],
+            ),
+            SizedBox(
+              height: 8,
             ),
             Divider(
               color: Colors.black,
               height: 2,
             ),
             CustomApercu(
-              label: "Category",
+              label: "Catégorie:",
               data: controller.myAdsview["category"],
             ),
             CustomApercu(
-              label: "AdvertType",
+              label: "Type d'annonce:",
               data: controller.myAdsview["advertType"],
             ),
             CustomApercu(
-              label: "title",
+              label: "Titre:",
               data: controller.myAdsview["title"],
             ),
             CustomApercu(
-              label: "description",
+              label: "Texte de l'annonce:",
               data: controller.myAdsview["description"],
             ),
             CustomApercu(
-              label: "Town",
+              label: "Commune:",
               data: controller.myAdsview["town"],
             ),
             CustomApercu(
-              label: "city",
+              label: "Gouvernorat :",
               data: controller.myAdsview["city"],
             ),
             CustomApercu(
-              label: "showphonenumber",
+              label: "Téléphone:",
               data: controller.myAdsview["showPhoneNumber"],
             ),
             Column(
@@ -95,26 +94,14 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    if (controller.image != null)
-                      Container(
-                        width: 100,
-                        height: 100,
-                        child: Image.file(
-                          controller.image,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    if (controller.image2 != null)
-                      Container(
-                        width: 100,
-                        height: 100,
-                        child: Image.file(
-                          controller.image2,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                  ]),
+                  children:controller.images.map((e) =>  Container(
+                    width: 100,
+                    height: 100,
+                    child: Image.file(
+                    e,
+                      fit: BoxFit.fill,
+                    ),
+                  )).toList()),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -123,7 +110,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                   width: MediaQuery.of(context).size.width * .25,
                   height: 50,
                   label: "Modifier",
-                  btcolor: buttonColor,
+                  btcolor: Colors.blue,
                   function: () {
                     int count = 0;
 
@@ -136,15 +123,15 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                   width: MediaQuery.of(context).size.width * .25,
                   height: 50,
                   label: "Supprimer",
-                  btcolor: buttonColor,
+                  btcolor: Colors.red,
                   function: () {
-                    controller.image = null;
-                    controller.image2 = null;
+                    controller.images.clear();
+
                     controller.updatecategoryToNull();
                     controller.updateSubcategoryToNull();
                     Get.find<LocController>().updatecitieAndTowen();
                     controller.citie = null;
-                    controller.price.clear();
+                    controller.prix.clear();
                     controller.description.clear();
                     controller.title.clear();
                     controller.myAds = {};
@@ -168,7 +155,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                     width: MediaQuery.of(context).size.width * .25,
                     height: 50,
                     label: "Publier",
-                    btcolor: buttonColor,
+                    btcolor: Colors.green,
                     function: () {
                       controller.postdata();
                     }

@@ -15,7 +15,7 @@ class CustomApercu extends StatelessWidget {
           Expanded(
               child: Text(
             label,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           )),
           Expanded(
             child: Text(data),

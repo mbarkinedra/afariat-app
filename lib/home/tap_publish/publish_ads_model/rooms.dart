@@ -68,7 +68,7 @@ class Rooms extends GetView<TapPublishViewController> {
               child: CustomTextFiled(
                 padding: 0,
                 color: Colors.deepOrangeAccent,
-                textEditingController: controller.price,
+                textEditingController: controller.prix,
                 keyboardType: TextInputType.number,
               ),
             ),

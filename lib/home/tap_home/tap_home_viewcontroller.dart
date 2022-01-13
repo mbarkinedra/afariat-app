@@ -38,7 +38,6 @@ class TapHomeViewController extends GetxController {
     updatedata();
     getPriceList();
     scrollController.addListener(() {
-
       if (scrollController.position.maxScrollExtent ==
           scrollController.position.pixels) {
         _advertPageApi.page = page;
@@ -47,22 +46,22 @@ class TapHomeViewController extends GetxController {
           adverts.addAll(value.embedded.adverts);
           update();
         });
-      }else if(scrollController.position.minScrollExtent==
-          scrollController.position.pixels)  {
-        _advertPageApi.page =0;
+      } else if (scrollController.position.minScrollExtent ==
+          scrollController.position.pixels) {
+        _advertPageApi.page = 0;
         _advertPageApi.getList().then((value) {
-          page=1;
+          page = 1;
           adverts.clear();
-          adverts=value.embedded.adverts;
+          adverts = value.embedded.adverts;
           update();
         });
         print("ooooooooooooooooooooooooooooooooooooooooooooooooo");
       }
     });
   }
-getfirestpage(){
 
-}
+  getfirestpage() {}
+
   updatedata() async {
     await _advertApi.getList().then((value) {
       adverts = value.embedded.adverts;

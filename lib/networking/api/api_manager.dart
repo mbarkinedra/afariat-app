@@ -98,17 +98,18 @@ abstract class ApiManager {
   }
 
   /// del DATA TO SERVER
-  Future<Response<dynamic>> delPost({int id, wss}) async {
+  Future<Response<dynamic>> delPost() async {
     //generer le wsse
-
+    Wsse xwsse = Wsse();
+    String vv = xwsse.generateWsseFromStorage();
     Options options = Options(headers: {
       "Accept": "application/json",
       'apikey': SettingsApp.apiKey,
       'Content-Type': 'application/json',
-      'X-WSSE': wss,
+      'X-WSSE': vv,
     });
     return dioSingleton.dio
-        .delete(apiUrl() + id.toString(), options: options
+        .delete(apiUrl()  , options: options
 
             // Options(
             //     followRedirects: false,

@@ -17,8 +17,10 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
+import '../home_view_controller.dart';
+
 class TapPublishViewController extends GetxController {
-    GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   CategoryGroupedJson category;
   SubcategoryJson subcategories;
 
@@ -26,9 +28,10 @@ class TapPublishViewController extends GetxController {
   Map<String, String> myAdsview = {};
   TextEditingController title = TextEditingController();
   TextEditingController description = TextEditingController();
-  TextEditingController price = TextEditingController();
+  TextEditingController prix = TextEditingController();
   TextEditingController surface = TextEditingController();
-  bool lights = false;
+  bool lights = true;
+  List<File> images = [];
 
   //bool lights = false;
   List<Widget> radiolist = [];
@@ -78,8 +81,9 @@ class TapPublishViewController extends GetxController {
   ];
 
   List<String> energies = ['Diesel', 'Essence', 'Electrique', 'LPG'];
-  File image;
-  File image2;
+
+  // File image;
+  // File image2;
   List<String> photos = [];
   final picker = ImagePicker();
 
@@ -89,37 +93,55 @@ class TapPublishViewController extends GetxController {
     photos.add(img64);
   }
 
-  void openCamera(int i) async {
+  void openCamera() async {
     var imgCamera = await picker.getImage(source: ImageSource.camera);
-    if (i == 1) {
-      image = File(imgCamera.path);
-      update();
-    } else {
-      image2 = File(imgCamera.path);
+
+    if (imgCamera != null) {
+      print(' image selected.');
+      images.add(File(imgCamera.path));
       update();
     }
+    // if (i == 1) {
+    //   image = File(imgCamera.path);
+    //   update();
+    // } else {
+    //   image2 = File(imgCamera.path);
+    update();
+    // }
   }
 
-  void openGallery(int i) async {
+  void openGallery() async {
     //  final picker = ImagePicker();
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    if (i == 1) {
-      if (pickedFile != null) {
-        print(' image selected.');
-        image = File(pickedFile.path);
-        update();
-      } else {
-        print('No image selected.');
-      }
-    } else {
-      if (pickedFile != null) {
-        print(' image selected.');
-        image2 = File(pickedFile.path);
-        update();
-      } else {
-        print('No image selected.');
-      }
+    if (pickedFile != null) {
+      print(' image selected.');
+      images.add(File(pickedFile.path));
+      update();
     }
+
+    // if (i == 1) {
+    //   if (pickedFile != null) {
+    //     print(' image selected.');
+    //     image = File(pickedFile.path);
+    //     update();
+    //   } else {
+    //     print('No image selected.');
+    //   }
+    // } else {
+    //   if (pickedFile != null) {
+    //     print(' image selected.');
+    //     image2 = File(pickedFile.path);
+    //     update();
+    //   } else {
+    //     print('No image selected.');
+    //   }
+    // }
+    update();
+  }
+
+  delImage(File file) {
+    images.remove(file);
+    update();
   }
 
   updatecategoryToNull() {
@@ -210,7 +232,7 @@ class TapPublishViewController extends GetxController {
   updateModele(RefJson newValue) {
     vehiculeModel = newValue;
     myAds["vehicleModel"] = newValue.id;
-    myAdsview["vehicleModel"] = newValue.name;
+    myAdsview["Modèle:"] = newValue.name;
     update();
   }
 
@@ -222,7 +244,7 @@ class TapPublishViewController extends GetxController {
   updateMarque(RefJson newValue) {
     _vehicleModelApi.vehicleModelId = newValue.id;
     myAds["vehiclebrand"] = newValue.id;
-    myAdsview["vehiclebrand"] = newValue.name;
+    myAdsview["Marque:"] = newValue.name;
     vehiculebrands = newValue;
 
     getvehicleModel();
@@ -233,14 +255,14 @@ class TapPublishViewController extends GetxController {
     kilometrage = newValue;
 
     myAds["mileage"] = newValue.id;
-    myAdsview["mileage"] = newValue.name;
+    myAdsview["Kilométrage:"] = newValue.name;
     update();
   }
 
   updateAnnee(RefJson newValue) {
     yearsmodele = newValue;
     myAds["yearModel"] = newValue.id;
-    myAdsview["yearModel"] = newValue.name;
+    myAdsview["Année:"] = newValue.name;
 
     update();
   }
@@ -254,8 +276,12 @@ class TapPublishViewController extends GetxController {
 
   updateLight(v) {
     lights = v;
+    print(accountInfoStorage.readPhone());
+    print(
+        " 0àààààààààààà0000ààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààà");
     myAds["showPhoneNumber"] = v ? "yes" : "no";
-    myAdsview["showPhoneNumber"] = v ? "yes" : "no";
+    myAdsview["showPhoneNumber"] =
+        v ? accountInfoStorage.readPhone() : accountInfoStorage.readPhone();
     update();
   }
 
@@ -276,11 +302,14 @@ class TapPublishViewController extends GetxController {
   }
 
   postdata() async {
-    if (image != null) {
-      photobase64Encode(image);
-    }
-    if (image2 != null) {
-      photobase64Encode(image2);
+    // if (image != null) {
+    //   photobase64Encode(image);
+    // }
+    // if (image2 != null) {
+    //   photobase64Encode(image2);
+    // }
+    for (var i in images) {
+      photobase64Encode(i);
     }
     myAds["photos"] = photos;
     print(photos.length);
@@ -288,22 +317,39 @@ class TapPublishViewController extends GetxController {
 
     // Map<String, dynamic> serverErrors;
 
-    publishApi.securePost(dataToPost: myAds).then((value) {
+ await   publishApi.securePost(dataToPost: myAds).then((value) {
       if (value.statusCode == 201) {
         Get.defaultDialog(
           title: "Felécitation",
-          middleText: "Votre annonce a été  publiée avec succés!",
+          titlePadding: EdgeInsets.all(8),
+          content: Container(
+            height: 100,
+            child: Center(
+                child: Text(
+              "Votre annonce a été  publiée avec succés!",
+              style: TextStyle(fontSize: 30),
+            )),
+          ),
           confirm: GestureDetector(
-            child: Text("ok"),
+            child: Text(
+              "ok",
+              style: TextStyle(
+                  color: Colors.red, fontWeight: FontWeight.bold, fontSize: 40),
+            ),
             onTap: () {
+
+
               Get.back();
             },
           ),
           titleStyle: TextStyle(color: Colors.deepOrange),
           middleTextStyle: TextStyle(color: Colors.deepOrange),
         );
-      }
+       }
     });
+    print("88888");
+    Get.find<HomeViwController>().changeSelectedValue(1);
+    update();
     // var response = await http.post(url, body: jsonEncode(myAds),headers: {
     //
     //   "Accept": "application/json",
