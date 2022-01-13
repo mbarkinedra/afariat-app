@@ -20,103 +20,101 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
     Size _size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar:   PreferredSize(
-        preferredSize: Size.fromHeight(60.0), // here the desired height
-    child: AppBar(
-    backgroundColor: Colors.white,
-    title: Container(
-    height: 60,
-    child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: <Widget>[
-    SizedBox(
-    width: _size.width * .12,
-    child: Image.asset(
-    "assets/images/Splash_1.png",
-    fit: BoxFit.fill,
-    ),
-    // Text("Afariat",
-    //     style: TextStyle(
-    //         fontSize: 24,
-    //         fontWeight: FontWeight.w800,
-    //         color: Colors.deepOrange)),
-    ),
-    SizedBox(
-    width: _size.width * .6,
-    child: DecoratedBox(
-    decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(5)),
-    child: Container(
-    decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.only(
-    topLeft: Radius.circular(10),
-    topRight: Radius.circular(10),
-    bottomLeft: Radius.circular(10),
-    bottomRight: Radius.circular(10)),
-    boxShadow: [
-    BoxShadow(
-    color: Colors.grey.withOpacity(0.5),
-    spreadRadius: 5,
-    blurRadius: 7,
-    offset:
-    Offset(0, 3), // changes position of shadow
-    ),
-    ],
-    ),
-    child: TextField(
-    controller: controller.searchWord,
-    keyboardType: TextInputType.text,
-    onChanged: controller.filterword,
-    decoration: InputDecoration(
-    prefixIcon: Icon(Icons.search),
-    suffixIcon: IconButton(
-    icon: Icon(Icons.clear),
-    onPressed: () {
-    /* Clear the search field */
-    controller.filterclear();
-    },
-    ),
-    hintText: 'Rechercher...',
-    border: InputBorder.none),
-    ),
-    )),
-    ),
-    SizedBox(
-    width: _size.width * .1,
-    child: InkWell(
-    onTap: () {
-    Get.bottomSheet(
-    Container(
-    decoration: const BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.only(
-    topLeft: Radius.circular(30.0),
-    topRight: Radius.circular(30.0),
-    )),
-    child: BottomSheetFilter()),
-    isDismissible: true,
-    elevation: 10,
-    enableDrag: true,
-    shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.only(
-    topLeft: Radius.circular(30.0),
-    topRight: Radius.circular(30.0),
-    )));
-    Filter.data.clear();
-    },
-    child: const Icon(
-    Icons.filter_alt_outlined,
-    size: 30,
-    color: Colors.grey,
-    ),
-    ),
-    )
-    ]),
-    ))
-    )
-   ,
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0), // here the desired height
+          child: AppBar(
+              backgroundColor: Colors.white,
+              title: Container(
+                height: 60,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      SizedBox(
+                        width: _size.width * .12,
+                        child: Image.asset(
+                          "assets/images/Splash_1.png",
+                          fit: BoxFit.fill,
+                        ),
+                        // Text("Afariat",
+                        //     style: TextStyle(
+                        //         fontSize: 24,
+                        //         fontWeight: FontWeight.w800,
+                        //         color: Colors.deepOrange)),
+                      ),
+                      SizedBox(
+                        width: _size.width * .6,
+                        child: DecoratedBox(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5)),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: TextField(
+                                controller: controller.searchWord,
+                                keyboardType: TextInputType.text,
+                                onChanged: controller.filterword,
+                                decoration: InputDecoration(
+                                    prefixIcon: Icon(Icons.search),
+                                    suffixIcon: IconButton(
+                                      icon: Icon(Icons.clear),
+                                      onPressed: () {
+                                        /* Clear the search field */
+                                        controller.filterclear();
+                                      },
+                                    ),
+                                    hintText: 'Rechercher...',
+                                    border: InputBorder.none),
+                              ),
+                            )),
+                      ),
+                      SizedBox(
+                        width: _size.width * .1,
+                        child: InkWell(
+                          onTap: () {
+                            Get.bottomSheet(
+                                Container(
+                                    decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(30.0),
+                                          topRight: Radius.circular(30.0),
+                                        )),
+                                    child: BottomSheetFilter()),
+                                isDismissible: true,
+                                elevation: 10,
+                                enableDrag: true,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30.0),
+                                  topRight: Radius.circular(30.0),
+                                )));
+                            Filter.data.clear();
+                          },
+                          child: const Icon(
+                            Icons.filter_alt_outlined,
+                            size: 30,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      )
+                    ]),
+              ))),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

@@ -5,10 +5,10 @@ import 'api_manager.dart';
 
 class DeleteAds extends ApiManager{
 
-
+int id;
   @override
   String apiUrl() {
-    return SettingsApp.Delete ;
+    return SettingsApp.Delete+id.toString() ;
   }
 
   @override

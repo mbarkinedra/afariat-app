@@ -5,6 +5,7 @@ import 'package:afariat/home/tap_publish/publish_views/publish_image/publish_ima
 import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
+import 'package:afariat/mywidget/custom_text_filed2.dart';
 import 'package:afariat/mywidget/widget_publish.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
@@ -18,6 +19,7 @@ import 'tap_publish_viewcontroller.dart';
 class TapPublishScr extends GetWidget<TapPublishViewController> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text("Deposer une annonce "),
@@ -40,7 +42,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Category",
+                            "Catégorie",
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
@@ -78,7 +80,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<SubcategoryJson>(
                           isExpanded: true,
-                          hint: Text("sub catégorie"),
+                          hint: Text("Sous catégorie"),
                           value: logic.subcategories1,
                           iconSize: 24,
                           elevation: 16,
@@ -130,7 +132,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "title",
+                  "Titre de l'annonce",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -163,7 +165,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "price",
+                  "Prix",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -171,28 +173,17 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Flexible(
-                    flex: 1,
-                    child: CustomTextFiled(
+                  Container(
+                    width: size.width * .84,
+                    child: CustomTextFiled2(
                       padding: 0,
                       color: Colors.deepOrangeAccent,
                       validator: controller.validatePrice,
-                      hintText: "price",
-                      textEditingController: controller.price,
+                      hintText: "Prix",
+                      textEditingController: controller.prix,
                       keyboardType: TextInputType.number,
                     ),
                   ),
-                  Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.deepOrangeAccent),
-                        borderRadius: BorderRadius.circular(0)),
-                    child: Text(
-                      "DT",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                  )
                 ],
               ),
               const SizedBox(
@@ -201,7 +192,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "City",
+                  "Gouvernorat",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -215,7 +206,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButton<RefJson>(
                         isExpanded: true,
-                        hint: Text("city"),
+                        hint: Text("Gouvernorat"),
                         value: logic.citie,
                         iconSize: 24,
                         elevation: 16,
@@ -237,7 +228,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "Town",
+                          "Commune",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
@@ -250,7 +241,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<RefJson>(
                           isExpanded: true,
-                          hint: Text("town"),
+                          hint: Text("Commune"),
                           value: logic.town,
                           iconSize: 24,
                           elevation: 16,
@@ -302,7 +293,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                   CustomButtonWithoutIcon(
                       width: MediaQuery.of(context).size.width * .35,
                       height: 50,
-                      label: "Next",
+                      label: "Suivant",
                       btcolor: buttonColor,
                       function: () {
                         //postAdvert(cities1,town1,advertType,price,description,title,photo)
@@ -310,8 +301,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                         if (controller.globalKey.currentState.validate() &&
                             controller.subcategories != null &&
                             controller.town != null) {
-                          controller.myAdsview["price"] = controller.price.text;
-                          controller.myAds["price"] = controller.price.text;
+                          controller.myAdsview["price"] = controller.prix.text;
+                          controller.myAds["price"] = controller.prix.text;
 
                           controller.myAdsview["title"] = controller.title.text;
                           controller.myAds["title"] = controller.title.text;

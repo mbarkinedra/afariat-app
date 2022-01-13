@@ -35,8 +35,10 @@ update();
   });
  }
 delads(int i){
-    _delAds.delPost(id: 10).then((value) {
+  _delAds.id=i;
+    _delAds.delPost( ).then((value) {
       print(value);
     });
+    update();
 }
 }
