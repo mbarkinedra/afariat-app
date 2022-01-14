@@ -317,7 +317,7 @@ class TapPublishViewController extends GetxController {
 
     // Map<String, dynamic> serverErrors;
 
- await   publishApi.securePost(dataToPost: myAds).then((value) {
+    await publishApi.securePost(dataToPost: myAds).then((value) {
       if (value.statusCode == 201) {
         Get.defaultDialog(
           title: "Felécitation",
@@ -337,15 +337,13 @@ class TapPublishViewController extends GetxController {
                   color: Colors.red, fontWeight: FontWeight.bold, fontSize: 40),
             ),
             onTap: () {
-
-
               Get.back();
             },
           ),
           titleStyle: TextStyle(color: Colors.deepOrange),
           middleTextStyle: TextStyle(color: Colors.deepOrange),
         );
-       }
+      }
     });
     print("88888");
     Get.find<HomeViwController>().changeSelectedValue(1);

@@ -22,14 +22,16 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
           children: [
             Row(
               children: [
-
                 SizedBox(
                   width: 50,
                 ),
                 Expanded(
                     child: Text(
                   "Vérification",
-                  style: TextStyle(color: Colors.deepOrange,fontWeight: FontWeight.bold, fontSize: 25),
+                  style: TextStyle(
+                      color: Colors.deepOrange,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25),
                 )),
               ],
             ),
@@ -94,14 +96,16 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children:controller.images.map((e) =>  Container(
-                    width: 100,
-                    height: 100,
-                    child: Image.file(
-                    e,
-                      fit: BoxFit.fill,
-                    ),
-                  )).toList()),
+                  children: controller.images
+                      .map((e) => Container(
+                            width: 100,
+                            height: 100,
+                            child: Image.file(
+                              e,
+                              fit: BoxFit.fill,
+                            ),
+                          ))
+                      .toList()),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -158,16 +162,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                     btcolor: Colors.green,
                     function: () {
                       controller.postdata();
-                    }
-
-                    //Navigator.of(context).push(MaterialPageRoute(
-                    //       builder: (
-                    // context,
-                    //    ) =>
-                    //   PublishSucces())
-                    //  );
-
-                    ),
+                    }),
               ],
             ),
           ],

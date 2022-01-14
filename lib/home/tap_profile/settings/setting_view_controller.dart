@@ -1,27 +1,17 @@
 import 'package:afariat/config/storage.dart';
+import 'package:afariat/networking/api/user_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SettingViewController extends GetxController{
   TextEditingController password=TextEditingController();
  bool tham=false;
- //  void changeTheme(bool v ) {
- //
- //    tham=v;
- //    //Get.isDarkMode ?
- //    Get.changeTheme(v?  ThemeData.dark():ThemeData.light()  );
- //     Get.find<SecureStorage>().writeBoolData("tham", v);
- // update(); }
- //
- //  @override
- //  void onReady() {
- //    super.onReady();
- //    bool darkmode=   Get.find<SecureStorage>().readBoolData("tham");
- //       print(darkmode);
- //       if(darkmode !=null){
- //         changeTheme(darkmode);
- //       }
- //       }
 
-
+  UserApi _userApi =UserApi();
+deluser(){
+  _userApi.id=password.text;
+  _userApi.deleteUser().then((value) {
+    print(value.data);
+  });
+}
 }

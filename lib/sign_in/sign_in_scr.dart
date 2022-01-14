@@ -6,6 +6,8 @@ import 'package:afariat/sign_up/sign_up_scr.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'forgotPassword/forgot_Password_scr.dart';
+
 class SignInScr extends GetWidget<SignInViewController> {
   @override
   Widget build(BuildContext context) {
@@ -50,9 +52,16 @@ class SignInScr extends GetWidget<SignInViewController> {
               SizedBox(
                 height: _size.height * .05,
               ),
-              Text(
-                "Mot de passe oublié ?",
-                style: TextStyle(color: Colors.blue),
+              InkWell(onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ForgotPassword()),
+                );
+              },
+                child: Text(
+                  "Mot de passe oublié ?",
+                  style: TextStyle(color: Colors.blue),
+                ),
               ),
               SizedBox(
                 height: _size.height * .05,

@@ -14,6 +14,7 @@ import 'package:afariat/home/tap_profile/settings/setting_view_controller.dart';
 import 'package:afariat/home/tap_profile/tap_profile_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/publish_views/publish_image/publish_image_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
+import 'package:afariat/sign_in/forgotPassword/forgotpassword_view_controller.dart';
 import 'package:afariat/sign_in/sign_in_viewcontroller.dart';
 import 'package:afariat/sign_up/sign_up_viewcontroller.dart';
 import 'package:get/get.dart';
@@ -23,12 +24,12 @@ class AllBindings extends Bindings {
   void dependencies() async {
     // Get.put(() => Tab4Profile() );
 
-    Get.put(SettingViewController());
     Get.lazyPut(() => AccountViewController());
     Get.lazyPut(() => TapHomeViewController(), fenix: true);
     Get.lazyPut(() => HomeViwController(), fenix: true);
     //Create Singleton AccountIntoStorage
     Get.put(SecureStorage());
+
     Get.put(AccountInfoStorage());
     Get.put(TapPublishViewController());
 
@@ -44,7 +45,7 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => AdvertDetailsViewcontroller());
     Get.lazyPut(() => TapPublishViewController(), fenix: true);
     Get.lazyPut(() => PublishImageViewController(), fenix: true);
-
-    // Get.putAsync<SecureStorage>(()async => await SecureStorage());
+    Get.lazyPut(() => ForgotPasswordViewController());
+    Get.lazyPut(() => SettingViewController());
   }
 }
