@@ -6,11 +6,15 @@ import 'package:afariat/config/filter.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/storage.dart';
 import 'package:afariat/config/wsse.dart';
+import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/networking/api/get_salt_api.dart';
+import 'package:afariat/networking/api/modif_ads_api.dart';
 
 import 'package:afariat/networking/api/publish_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
+import 'package:afariat/networking/json/modif_ads_json.dart';
+import 'package:afariat/networking/json/my_ads_json.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,6 +25,8 @@ import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+  bool  editads=false;
+  ModifAdsJson modifAdsJson=ModifAdsJson();
   CategoryGroupedJson category;
   SubcategoryJson subcategories;
 
@@ -30,6 +36,7 @@ class TapPublishViewController extends GetxController {
   TextEditingController description = TextEditingController();
   TextEditingController prix = TextEditingController();
   TextEditingController surface = TextEditingController();
+  ModifAdsApi _modifAdsApi = ModifAdsApi();
   bool lights = true;
   List<File> images = [];
 
@@ -395,7 +402,7 @@ class TapPublishViewController extends GetxController {
   }
 
   String validatetitle(String value) {
-    if (value.length < 11 || value.contains(new RegExp(r'[0-9]'))) {
+    if (value.length < 11) {
       return "Le titre doit être renseigné";
     }
 
@@ -422,4 +429,51 @@ class TapPublishViewController extends GetxController {
     final isv = globalKey.currentState.validate();
     print(isv);
   }
+  getEditId(int id){
+    _modifAdsApi.id=id;
+
+    _modifAdsApi.getList().then((value) {
+      modifAdsJson=value;
+       title .text= modifAdsJson.title;
+       description.text = modifAdsJson.description;
+       prix .text=  modifAdsJson.price.toString();
+      lights=modifAdsJson.showPhoneNumber=="yes"?true:false;
+
+print(modifAdsJson.category.toJson()["name"]);
+      print(modifAdsJson.town.toJson()["name"]);
+      print(modifAdsJson.city.toJson()["name"]);
+
+
+      for(int i =0;i<      Get.find<LocController>().cities.length;i++){
+
+
+        if(Get.find<LocController>().cities[i].name==modifAdsJson.city.toJson()["name"]){
+          print(Get.find<LocController>().cities[i].name==modifAdsJson.city.toJson()["name"]);
+         Get.find<LocController>().citie=Get.find<LocController>().cities[i];
+        //  Get.find<LocController>().updatetown(Get.find<LocController>().cities[i]);
+         Get.find<LocController>().updateTowns(Get.find<LocController>().cities[i].id).then((value){
+           for(int i =0;i<Get.find<LocController>().towns.length;i++){
+             print("ooooooooooooooooooooooooooo");
+
+             if(Get.find<LocController>().towns[i].name==modifAdsJson.town.toJson()["name"]){
+               print("ooooooooooooooooooooooooooo");
+               print(Get.find<LocController>().towns[i].name==modifAdsJson.town.toJson()["name"]);
+               ;
+               Get.find<LocController>().updatetown(     Get.find<LocController>().towns[i]);
+
+             }
+           }
+         });
+
+
+
+        }
+      }
+
+
+
+//Get.find<LocController>().towns.forEach((element) { });
+  update();  });
+}
+
 }

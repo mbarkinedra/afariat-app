@@ -6,8 +6,9 @@ import 'package:flutter/widgets.dart';
 class AdsItem extends StatelessWidget {
   final Size size;
   Adverts adverts;
-Function fun;
-  AdsItem({this.size, this.adverts,this.fun});
+  Function deleteAds;
+  Function EditAds;
+  AdsItem({this.size, this.adverts, this.deleteAds,this.EditAds});
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +32,13 @@ Function fun;
             ),
           ],
         ),
-     height: size.height * .35,
+        height: size.height * .35,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Expanded(flex: 1,
+            Expanded(
+              flex: 1,
               child: Image.network(
                 adverts.photo,
                 height: size.height * .35,
@@ -44,33 +46,58 @@ Function fun;
                 fit: BoxFit.fill,
               ),
             ),
-            Expanded(flex: 1,
+            Expanded(
+              flex: 1,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(2.0),
-                    child: Text(adverts.title,style: TextStyle(fontWeight: FontWeight.bold),),
+                    child: Text(
+                      adverts.title,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(2.0),
-                    child: Text(adverts.description,maxLines:6,),
+                    child: Text(
+                      adverts.description,
+                      maxLines: 6,
+                    ),
                   ),
-                  Align(alignment: Alignment.centerLeft,
+                  Align(
+                    alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: const EdgeInsets.all(2.0),
-                      child: Text( "${ adverts.price} DT",style: TextStyle(fontWeight: FontWeight.bold),),
+                      child: Text(
+                        "${adverts.price} DT",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ) ,
+                  ),
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.all(2.0),
-                    child:  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [InkWell(onTap: fun,child: Icon(Icons.delete,color: Colors.deepOrange,)),Icon(Icons.edit,color: Colors.deepOrange,)],
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                            onTap: deleteAds,
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.deepOrange,
+                            )),
+                        InkWell(onTap:EditAds ,
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.deepOrange,
+                          ),
+                        )
+                      ],
+                    ),
                   )
-              ],
+                ],
               ),
             )
           ],
