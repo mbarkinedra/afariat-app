@@ -9,36 +9,35 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TapMyadsViewController extends GetxController {
-  MyAdsApi  _myAdsApi=MyAdsApi();
-  DeleteAds _delAds=DeleteAds();
+  MyAdsApi _myAdsApi = MyAdsApi();
+  DeleteAds _deleteAds = DeleteAds();
 
-  final storge=Get.find<SecureStorage>();
-List<Adverts>adverts=[];
+  final storge = Get.find<SecureStorage>();
+  List<Adverts> adverts = [];
+
   @override
   void onInit() {
-super.onInit();
-ads();
-
-
-
-
+    super.onInit();
+    ads();
   }
-  List<AdvertListJson>  ads() {
-    _myAdsApi.userId=   Get.find<AccountInfoStorage>().readUserId();
-print("_myAdsApi.userId ${_myAdsApi.userId}");
-   _myAdsApi.getList(filters: Filter.data).then((value){
-     MyAdsJson myAdsJson=MyAdsJson();
-     myAdsJson=value;
-     adverts=myAdsJson.eEmbedded.adverts;
 
-update();
-  });
- }
-delads(int i){
-  _delAds.id=i;
-    _delAds.delPost( ).then((value) {
+  List<AdvertListJson> ads() {
+    _myAdsApi.userId = Get.find<AccountInfoStorage>().readUserId();
+    print("_myAdsApi.userId ${_myAdsApi.userId}");
+    _myAdsApi.getList(filters: Filter.data).then((value) {
+      MyAdsJson myAdsJson = MyAdsJson();
+      myAdsJson = value;
+      adverts = myAdsJson.eEmbedded.adverts;
+
+      update();
+    });
+  }
+
+  deleteAds(int i) {
+    _deleteAds.id = i;
+    _deleteAds.delPost().then((value) {
       print(value);
     });
     update();
-}
+  }
 }
