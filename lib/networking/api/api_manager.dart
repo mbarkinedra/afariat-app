@@ -54,9 +54,10 @@ abstract class ApiManager {
             )
         .then((value) {
       return value;
-    }).onError((error, stackTrace) {
-      print(error.toString());
     });
+    //      .catchError((error) {
+    // a.Get.snackbar("error", error.toString());
+    //  });
   }
 
   /// POST DATA TO SERVER
@@ -64,16 +65,73 @@ abstract class ApiManager {
     //generer le wsse
 
     Wsse xwsse = Wsse();
-    String nn = xwsse.generateWsseFromStorage();
+    String wsse = xwsse.generateWsseFromStorage();
     print(jsonEncode(dataToPost));
     Options options = Options(headers: {
       "Accept": "application/json",
       'apikey': SettingsApp.apiKey,
       'Content-Type': 'application/json',
-      'X-WSSE': nn,
+      'X-WSSE': wsse,
     });
     return dioSingleton.dio
         .post(apiUrl(), data: jsonEncode(dataToPost), options: options
+
+            // Options(
+            //     followRedirects: false,
+            //     validateStatus: (status) {
+            //       return status < 500;
+            //     }),
+            )
+        .then((value) {
+      return value;
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
+  }
+
+  /// Get Data  User From Server
+  Future<Response<dynamic>> secureGet({dataToPost}) async {
+    //generer le wsse
+
+    Wsse xwsse = Wsse();
+    String wsse = xwsse.generateWsseFromStorage();
+    print(jsonEncode(dataToPost));
+    Options options = Options(headers: {
+      "Accept": "application/json",
+      'apikey': SettingsApp.apiKey,
+      'Content-Type': 'application/json',
+      'X-WSSE': wsse,
+    });
+    return dioSingleton.dio
+        .get(apiUrl(), options: options
+
+            // Options(
+            //     followRedirects: false,
+            //     validateStatus: (status) {
+            //       return status < 500;
+            //     }),
+            )
+        .then((value) {
+      return value;
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
+  }
+
+  Future<Response<dynamic>> putData({dataToPost}) async {
+    //generer le wsse
+
+    Wsse xwsse = Wsse();
+    String wsse = xwsse.generateWsseFromStorage();
+    print(jsonEncode(dataToPost));
+    Options options = Options(headers: {
+      "Accept": "application/json",
+      'apikey': SettingsApp.apiKey,
+      'Content-Type': 'application/json',
+      'X-WSSE': wsse,
+    });
+    return dioSingleton.dio
+        .put(apiUrl(), data: jsonEncode(dataToPost), options: options
 
             // Options(
             //     followRedirects: false,
@@ -101,15 +159,42 @@ abstract class ApiManager {
   Future<Response<dynamic>> delPost() async {
     //generer le wsse
     Wsse xwsse = Wsse();
-    String vv = xwsse.generateWsseFromStorage();
+    String wsse = xwsse.generateWsseFromStorage();
     Options options = Options(headers: {
       "Accept": "application/json",
       'apikey': SettingsApp.apiKey,
       'Content-Type': 'application/json',
-      'X-WSSE': vv,
+      'X-WSSE': wsse,
     });
     return dioSingleton.dio
-        .delete(apiUrl()  , options: options
+        .delete(apiUrl(), options: options
+
+            // Options(
+            //     followRedirects: false,
+            //     validateStatus: (status) {
+            //       return status < 500;
+            //     }),
+            )
+        .then((value) {
+      return value;
+    }).onError((error, stackTrace) {
+      print(error.toString());
+    });
+  }
+
+  //Delete User From User
+  Future<Response<dynamic>> deleteUser() async {
+    //generer le wsse
+    Wsse xwsse = Wsse();
+    String wsse = xwsse.generateWsseFromStorage();
+    Options options = Options(headers: {
+      "Accept": "application/json",
+      'apikey': SettingsApp.apiKey,
+      'Content-Type': 'application/json',
+      'X-WSSE': wsse,
+    });
+    return dioSingleton.dio
+        .delete(apiUrl(), options: options
 
             // Options(
             //     followRedirects: false,
