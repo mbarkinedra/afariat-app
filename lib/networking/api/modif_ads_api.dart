@@ -4,19 +4,16 @@ import 'package:afariat/networking/json/modif_ads_json.dart';
 
 import 'api_manager.dart';
 
-class ModifAdsApi extends ApiManager{
-
+class ModifAdsApi extends ApiManager {
   int id;
+
   @override
   String apiUrl() {
-    return SettingsApp.modifAds+id.toString() ;
+    return SettingsApp.modifAds + id.toString();
   }
 
   @override
   AbstractJsonResource fromJson(data) {
     return ModifAdsJson.fromJson(data);
-
   }
-
-
 }

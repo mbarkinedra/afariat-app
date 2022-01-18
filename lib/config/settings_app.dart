@@ -32,6 +32,5 @@ class SettingsApp {
       baseApiUrl + '/simple/category/advert-types/';
   static const String deleteAds = baseApiUrl + '/adverts/';
   static const String modifAds = baseApiUrl + '/adverts/';
-  static const String  userUrl = baseApiUrl + '/users/';
-
+  static const String userUrl = baseApiUrl + '/users/';
 }
