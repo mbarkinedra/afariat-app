@@ -6,6 +6,7 @@ import 'package:afariat/config/filter.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/storage.dart';
 import 'package:afariat/config/wsse.dart';
+import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/networking/api/get_salt_api.dart';
 import 'package:afariat/networking/api/modif_ads_api.dart';
@@ -25,8 +26,8 @@ import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-  bool  editads=false;
-  ModifAdsJson modifAdsJson=ModifAdsJson();
+  bool dataAdverts = false;
+  ModifAdsJson modifAdsJson = ModifAdsJson();
   CategoryGroupedJson category;
   SubcategoryJson subcategories;
 
@@ -39,6 +40,7 @@ class TapPublishViewController extends GetxController {
   ModifAdsApi _modifAdsApi = ModifAdsApi();
   bool lights = true;
   List<File> images = [];
+  List<String> editadsimages = [];
 
   //bool lights = false;
   List<Widget> radiolist = [];
@@ -148,6 +150,11 @@ class TapPublishViewController extends GetxController {
 
   delImage(File file) {
     images.remove(file);
+    update();
+  }
+
+  deleditImage(String file) {
+    editadsimages.remove(file);
     update();
   }
 
@@ -322,37 +329,73 @@ class TapPublishViewController extends GetxController {
     print(photos.length);
     PublishApi publishApi = PublishApi();
 
-    // Map<String, dynamic> serverErrors;
+    // Map<StModifAdsApiring, dynamic> serverErrors;
 
-    await publishApi.securePost(dataToPost: myAds).then((value) {
-      if (value.statusCode == 201) {
-        Get.defaultDialog(
-          title: "Felécitation",
-          titlePadding: EdgeInsets.all(8),
-          content: Container(
-            height: 100,
-            child: Center(
-                child: Text(
-              "Votre annonce a été  publiée avec succés!",
-              style: TextStyle(fontSize: 30),
-            )),
-          ),
-          confirm: GestureDetector(
-            child: Text(
-              "ok",
-              style: TextStyle(
-                  color: Colors.red, fontWeight: FontWeight.bold, fontSize: 40),
+    if (dataAdverts) {
+      _modifAdsApi.id = modifAdsJson.id;
+      await _modifAdsApi.putData(dataToPost: myAds).then((value) {
+        if (value.statusCode == 204) {
+          Get.defaultDialog(
+            title: "Felécitation",
+            titlePadding: EdgeInsets.all(8),
+            content: Container(
+              height: 100,
+              child: Center(
+                  child: Text(
+                "Votre annonce a été  publiée avec succés!",
+                style: TextStyle(fontSize: 30),
+              )),
             ),
-            onTap: () {
-              Get.back();
-            },
-          ),
-          titleStyle: TextStyle(color: Colors.deepOrange),
-          middleTextStyle: TextStyle(color: Colors.deepOrange),
-        );
-      }
-    });
-    print("88888");
+            confirm: GestureDetector(
+              child: Text(
+                "ok",
+                style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 40),
+              ),
+              onTap: () {
+                Get.back();
+              },
+            ),
+            titleStyle: TextStyle(color: Colors.deepOrange),
+            middleTextStyle: TextStyle(color: Colors.deepOrange),
+          );
+        }
+      });
+    } else {
+      await publishApi.securePost(dataToPost: myAds).then((value) {
+        if (value.statusCode == 201) {
+          Get.defaultDialog(
+            title: "Felécitation",
+            titlePadding: EdgeInsets.all(8),
+            content: Container(
+              height: 100,
+              child: Center(
+                  child: Text(
+                "Votre annonce a été  publiée avec succés!",
+                style: TextStyle(fontSize: 30),
+              )),
+            ),
+            confirm: GestureDetector(
+              child: Text(
+                "ok",
+                style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 40),
+              ),
+              onTap: () {
+                Get.back();
+              },
+            ),
+            titleStyle: TextStyle(color: Colors.deepOrange),
+            middleTextStyle: TextStyle(color: Colors.deepOrange),
+          );
+        }
+      });
+    }
+
     Get.find<HomeViwController>().changeSelectedValue(1);
     update();
     // var response = await http.post(url, body: jsonEncode(myAds),headers: {
@@ -429,51 +472,62 @@ class TapPublishViewController extends GetxController {
     final isv = globalKey.currentState.validate();
     print(isv);
   }
-  getEditId(int id){
-    _modifAdsApi.id=id;
+
+  getEditId(int id) {
+    _modifAdsApi.id = id;
 
     _modifAdsApi.getList().then((value) {
-      modifAdsJson=value;
-       title .text= modifAdsJson.title;
-       description.text = modifAdsJson.description;
-       prix .text=  modifAdsJson.price.toString();
-      lights=modifAdsJson.showPhoneNumber=="yes"?true:false;
+      modifAdsJson = value;
+      title.text = modifAdsJson.title;
+      description.text = modifAdsJson.description;
+      prix.text = modifAdsJson.price.toString();
+      lights = modifAdsJson.showPhoneNumber == "yes" ? true : false;
+      // images=modifAdsJson.photos=;
 
-print(modifAdsJson.category.toJson()["name"]);
-      print(modifAdsJson.town.toJson()["name"]);
-      print(modifAdsJson.city.toJson()["name"]);
-
-
-      for(int i =0;i<      Get.find<LocController>().cities.length;i++){
-
-
-        if(Get.find<LocController>().cities[i].name==modifAdsJson.city.toJson()["name"]){
-          print(Get.find<LocController>().cities[i].name==modifAdsJson.city.toJson()["name"]);
-         Get.find<LocController>().citie=Get.find<LocController>().cities[i];
-        //  Get.find<LocController>().updatetown(Get.find<LocController>().cities[i]);
-         Get.find<LocController>().updateTowns(Get.find<LocController>().cities[i].id).then((value){
-           for(int i =0;i<Get.find<LocController>().towns.length;i++){
-             print("ooooooooooooooooooooooooooo");
-
-             if(Get.find<LocController>().towns[i].name==modifAdsJson.town.toJson()["name"]){
-               print("ooooooooooooooooooooooooooo");
-               print(Get.find<LocController>().towns[i].name==modifAdsJson.town.toJson()["name"]);
-               ;
-               Get.find<LocController>().updatetown(     Get.find<LocController>().towns[i]);
-
-             }
-           }
-         });
-
-
-
+      for (int i = 0; i < Get.find<LocController>().cities.length; i++) {
+        if (Get.find<LocController>().cities[i].id ==
+            modifAdsJson.city.toJson()["id"]) {
+          Get.find<LocController>().citie = Get.find<LocController>().cities[i];
+          Get.find<LocController>()
+              .updatecitie(Get.find<LocController>().cities[i]);
+          Get.find<LocController>()
+              .updateTowns(Get.find<LocController>().cities[i].id)
+              .then((value) {
+            for (int i = 0; i < Get.find<LocController>().towns.length; i++) {
+              if (Get.find<LocController>().towns[i].id ==
+                  modifAdsJson.town.toJson()["id"]) {
+                Get.find<LocController>()
+                    .updatetown(Get.find<LocController>().towns[i]);
+              }
+            }
+          });
         }
       }
 
-
-
-//Get.find<LocController>().towns.forEach((element) { });
-  update();  });
-}
-
+      for (int category = 0;
+          category <
+              Get.find<CategoryAndSubcategory>().categoryGroupList.length;
+          category++) {
+        if (Get.find<CategoryAndSubcategory>().categoryGroupList[category].id ==
+            modifAdsJson.category.group.id) {
+          Get.find<CategoryAndSubcategory>().updateCategorie(
+              Get.find<CategoryAndSubcategory>().categoryGroupList[category]);
+          SubcategoryJson subcat = Get.find<CategoryAndSubcategory>()
+              .sc[modifAdsJson.category.group.id]
+              .where((element) => element.id == modifAdsJson.category.id)
+              .first;
+          updateSubcategoryJson(subcat);
+          Get.find<CategoryAndSubcategory>().updateSupCategorie(subcat);
+          print(subcat.toString());
+        }
+      }
+      editadsimages
+          .clear(); // categoryAndSubcategory.updateSupCategorie(subcat );
+      modifAdsJson.photos.forEach((element) {
+        print(element.path);
+        editadsimages.add(element.path);
+      });
+      update();
+    });
+  }
 }

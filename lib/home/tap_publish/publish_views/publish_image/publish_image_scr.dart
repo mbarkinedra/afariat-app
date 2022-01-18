@@ -42,53 +42,105 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     )),
                 GetBuilder<TapPublishViewController>(builder: (logic) {
-                  return logic.images.length > 0
-                      ? Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: logic.images
-                              .map((e) => Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              border:
-                                                  Border.all(color: framColor),
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          width: size.width * .8,
-                                          height: size.height * .3,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Image.file(
-                                              e,
-                                              fit: BoxFit.fill,
+                  return logic.dataAdverts
+                      ? logic.editadsimages.length > 0
+                          ? Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: logic.editadsimages
+                                  .map((e) => Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: framColor),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              width: size.width * .8,
+                                              height: size.height * .3,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Image.network(
+                                                  e,
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Positioned(
+                                              right: 0,
+                                              child: InkWell(
+                                                  onTap: () {
+                                                    logic.deleditImage(e);
+                                                  },
+                                                  child: Icon(
+                                                    Icons.clear,
+                                                    size: 30,
+                                                    color:
+                                                        Colors.deepOrangeAccent,
+                                                  )),
+                                            ),
+                                          ],
                                         ),
-                                        Positioned(
-                                          right: 0,
-                                          child: InkWell(
-                                              onTap: () {
-                                                logic.delImage(e);
-                                              },
-                                              child: Icon(
-                                                Icons.clear,
-                                                size: 30,
-                                                color: Colors.deepOrangeAccent,
-                                              )),
+                                      ))
+                                  .toList(),
+                            )
+                          : Image.asset(
+                              "assets/images/placeholder.png",
+                              width: size.width,
+                              height: size.height * .8,
+                            )
+                      : logic.images.length > 0
+                          ? Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: logic.images
+                                  .map((e) => Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: framColor),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              width: size.width * .8,
+                                              height: size.height * .3,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Image.file(
+                                                  e,
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              right: 0,
+                                              child: InkWell(
+                                                  onTap: () {
+                                                    logic.delImage(e);
+                                                  },
+                                                  child: Icon(
+                                                    Icons.clear,
+                                                    size: 30,
+                                                    color:
+                                                        Colors.deepOrangeAccent,
+                                                  )),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ))
-                              .toList(),
-                        )
-                      : Image.asset(
-                          "assets/images/placeholder.png",
-                          width: size.width,
-                          height: size.height * .8,
-                        );
+                                      ))
+                                  .toList(),
+                            )
+                          : Image.asset(
+                              "assets/images/placeholder.png",
+                              width: size.width,
+                              height: size.height * .8,
+                            );
                 }),
                 // GetBuilder<TapPublishViewController>(builder: (logic) {
                 //   return Padding(

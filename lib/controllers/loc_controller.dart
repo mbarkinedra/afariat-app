@@ -44,9 +44,9 @@ class LocController extends GetxController {
     update();
   }
 
-Future  updateTowns(id) async{
+  Future updateTowns(id) async {
     _townsApi.cityId = id.toString();
-  await  _townsApi.getList().then((value) {
+    await _townsApi.getList().then((value) {
       towns = value.data;
       update();
     });

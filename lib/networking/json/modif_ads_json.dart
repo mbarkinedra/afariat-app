@@ -1,6 +1,7 @@
+import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 
-class ModifAdsJson extends AbstractJsonResource {
+class ModifAdsJson extends AbstractJsonResource{
   String createdAt;
   int id;
   String username;
@@ -13,8 +14,8 @@ class ModifAdsJson extends AbstractJsonResource {
   AdvertType advertType;
   Category category;
   Region region;
-  Category city;
-  Category town;
+  Group city;
+  Group town;
   List<Photos> photos;
   String shortUrl;
   Links lLinks;
@@ -56,8 +57,8 @@ class ModifAdsJson extends AbstractJsonResource {
         : null;
     region =
     json['region'] != null ? new Region.fromJson(json['region']) : null;
-    city = json['city'] != null ? new Category.fromJson(json['city']) : null;
-    town = json['town'] != null ? new Category.fromJson(json['town']) : null;
+    city = json['city'] != null ? new Group.fromJson(json['city']) : null;
+    town = json['town'] != null ? new Group.fromJson(json['town']) : null;
     if (json['photos'] != null) {
       photos = new List<Photos>();
       json['photos'].forEach((v) {
@@ -122,18 +123,50 @@ class AdvertType {
 }
 
 class Category {
+  int id;
+  String name;
+  Group group;
+  Links lLinks;
+
+  Category({this.id, this.name, this.group, this.lLinks});
+
+  Category.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    group = json['group'] != null ? new Group.fromJson(json['group']) : null;
+    lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    if (this.group != null) {
+      data['group'] = this.group.toJson();
+    }
+    if (this.lLinks != null) {
+      data['_links'] = this.lLinks.toJson();
+    }
+    return data;
+  }
+}
+
+class Group {
+  int id;
   String name;
   Links lLinks;
 
-  Category({this.name, this.lLinks});
+  Group({this.id, this.name, this.lLinks});
 
-  Category.fromJson(Map<String, dynamic> json) {
+  Group.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['name'] = this.name;
     if (this.lLinks != null) {
       data['_links'] = this.lLinks.toJson();
@@ -143,17 +176,21 @@ class Category {
 }
 
 class Links {
-  Search search;
+  Self self;
+  Self search;
 
-  Links({this.search});
+  Links({this.self, this.search});
 
   Links.fromJson(Map<String, dynamic> json) {
-    search =
-    json['search'] != null ? new Search.fromJson(json['search']) : null;
+    self = json['self'] != null ? new Self.fromJson(json['self']) : null;
+    search = json['search'] != null ? new Self.fromJson(json['search']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.self != null) {
+      data['self'] = this.self.toJson();
+    }
     if (this.search != null) {
       data['search'] = this.search.toJson();
     }
@@ -161,12 +198,12 @@ class Links {
   }
 }
 
-class Search {
+class Self {
   String href;
 
-  Search({this.href});
+  Self({this.href});
 
-  Search.fromJson(Map<String, dynamic> json) {
+  Self.fromJson(Map<String, dynamic> json) {
     href = json['href'];
   }
 
@@ -178,14 +215,16 @@ class Search {
 }
 
 class Region {
+  int id;
   String name;
   String isoCode;
   String codeInsee;
   Links lLinks;
 
-  Region({this.name, this.isoCode, this.codeInsee, this.lLinks});
+  Region({this.id, this.name, this.isoCode, this.codeInsee, this.lLinks});
 
   Region.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
     isoCode = json['iso_code'];
     codeInsee = json['code_insee'];
@@ -194,6 +233,7 @@ class Region {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['name'] = this.name;
     data['iso_code'] = this.isoCode;
     data['code_insee'] = this.codeInsee;
@@ -210,7 +250,7 @@ class Photos {
   Photos({this.path});
 
   Photos.fromJson(Map<String, dynamic> json) {
-    path = json['path'];
+    path =SettingsApp.baseUrl +"/"+ json['path'];
   }
 
   Map<String, dynamic> toJson() {
