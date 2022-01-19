@@ -40,24 +40,23 @@ abstract class ApiManager {
         "Accept": "application/json",
         'apikey': SettingsApp.apiKey,
         'Content-Type': 'application/json',
-        'X-WSSE': dataToPost['X-WSSE'],
       },
     );
     return dioSingleton.dio
-        .post(apiUrl(), data: jsonEncode(dataToPost), options: options
-
-            // Options(
-            //     followRedirects: false,
-            //     validateStatus: (status) {
-            //       return status < 500;
-            //     }),
-            )
+        .post(
+      apiUrl(),
+      data: jsonEncode(dataToPost),
+      options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status < 500;
+          }),
+    )
         .then((value) {
       return value;
+    }).catchError((error) {
+      a.Get.snackbar("error", error.toString());
     });
-    //      .catchError((error) {
-    // a.Get.snackbar("error", error.toString());
-    //  });
   }
 
   /// POST DATA TO SERVER
@@ -74,14 +73,15 @@ abstract class ApiManager {
       'X-WSSE': wsse,
     });
     return dioSingleton.dio
-        .post(apiUrl(), data: jsonEncode(dataToPost), options: options
-
-            // Options(
-            //     followRedirects: false,
-            //     validateStatus: (status) {
-            //       return status < 500;
-            //     }),
-            )
+        .post(
+      apiUrl(),
+      data: jsonEncode(dataToPost),
+      options: Options(
+          followRedirects: false,
+          validateStatus: (status) {
+            return status < 500;
+          }),
+    )
         .then((value) {
       return value;
     }).onError((error, stackTrace) {
@@ -120,10 +120,10 @@ abstract class ApiManager {
 
   Future<Response<dynamic>> putData({dataToPost}) async {
     //generer le wsse
-
+    print(jsonEncode(dataToPost));
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
-    print(jsonEncode(dataToPost));
+    print(wsse);
     Options options = Options(headers: {
       "Accept": "application/json",
       'apikey': SettingsApp.apiKey,
@@ -131,14 +131,7 @@ abstract class ApiManager {
       'X-WSSE': wsse,
     });
     return dioSingleton.dio
-        .put(apiUrl(), data: jsonEncode(dataToPost), options: options
-
-            // Options(
-            //     followRedirects: false,
-            //     validateStatus: (status) {
-            //       return status < 500;
-            //     }),
-            )
+        .put(apiUrl(), data: jsonEncode(dataToPost), options: options)
         .then((value) {
       return value;
     }).onError((error, stackTrace) {
@@ -146,7 +139,7 @@ abstract class ApiManager {
     });
   }
 
-  Future get(Map<String, dynamic> dataToPost) async {
+  Future getdata(Map<String, dynamic> dataToPost) async {
     Options options = Options(headers: {
       'apikey': SettingsApp.apiKey,
       'Content-Type': 'application/json',
@@ -166,16 +159,7 @@ abstract class ApiManager {
       'Content-Type': 'application/json',
       'X-WSSE': wsse,
     });
-    return dioSingleton.dio
-        .delete(apiUrl(), options: options
-
-            // Options(
-            //     followRedirects: false,
-            //     validateStatus: (status) {
-            //       return status < 500;
-            //     }),
-            )
-        .then((value) {
+    return dioSingleton.dio.delete(apiUrl(), options: options).then((value) {
       return value;
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -193,16 +177,7 @@ abstract class ApiManager {
       'Content-Type': 'application/json',
       'X-WSSE': wsse,
     });
-    return dioSingleton.dio
-        .delete(apiUrl(), options: options
-
-            // Options(
-            //     followRedirects: false,
-            //     validateStatus: (status) {
-            //       return status < 500;
-            //     }),
-            )
-        .then((value) {
+    return dioSingleton.dio.delete(apiUrl(), options: options).then((value) {
       return value;
     }).onError((error, stackTrace) {
       print(error.toString());

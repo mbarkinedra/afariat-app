@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/model/type_register.dart';
 import 'package:afariat/model/user.dart';
+import 'package:afariat/model/validate_server.dart';
 import 'package:afariat/networking/api/sign_up_api.dart';
 import 'package:afariat/sign_up/sign_up_succes.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class SignUpViewController extends GetxController {
   TextEditingController password = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController email = TextEditingController();
-
+  ValidateServer validateServer = ValidateServer();
   bool isVisiblePassword = false;
 
   SignUpApi _signUpApi = SignUpApi();
@@ -25,28 +26,8 @@ class SignUpViewController extends GetxController {
   ];
   TypeRegister type;
 
-  Map<String, dynamic> serverErrors;
-
-  /// value: is the entered user value, field: is the name of the field
-  String validator(String value, String field) {
-    //1st validate the front entered fields, then validate the errors from server
-    //
-    String errorMessage = null;
-
-    //validating server errors
-    serverErrors.forEach((key, elementErrors) {
-      if (field == key && elementErrors.containsKey('errors')) {
-        if (elementErrors['errors'].length > 0) {
-          errorMessage = elementErrors['errors'][0];
-        }
-      }
-    });
-
-    return errorMessage ?? null;
-  }
-
   void showHidePassword() {
-    this.isVisiblePassword = !this.isVisiblePassword;
+    isVisiblePassword = !isVisiblePassword;
     print('pressed');
 
     update();
@@ -75,42 +56,18 @@ class SignUpViewController extends GetxController {
 
     var response = await _signUpApi.post(user).then((value) {
       print(value.statusCode);
-
-      switch (value.statusCode) {
-        case 201:
-          //Affichage success
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => SignUpSucces(value.data['message'])),
-          );
-          break;
-        case 400:
-          serverErrors = value.data;
-          value.data.forEach((key, value) {
-            print('Key: $key');
-            print('------------------------------');
-          });
-          registerFormKey.currentState.validate();
-
-          Get.snackbar(
-            'Erreur',
-            'Veuillez corriger les erreurs ci-dessous.',
-            colorText: Colors.white,
-            backgroundColor: Colors.red,
-          );
-          break;
-        default:
-          return;
-      }
-      // Navigator.pushReplacement(
-      //    context,
-      //    MaterialPageRoute(builder: (context) => SignUpSucces()),
-      //  );
+      validateServer.validatorServer(
+          validate: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => SignUpSucces(value.data['message'])),
+            );
+          },
+          value: value,
+          registerFormKey: registerFormKey);
     }).catchError((e) {
-      // Error_Register errors= Error_Register.fromJson(  e);
       Get.snackbar("error", "${e}");
     });
-    // print("response.statusCode ${response.statusCode}");
   }
 }

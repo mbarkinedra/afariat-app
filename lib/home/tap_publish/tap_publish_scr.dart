@@ -138,7 +138,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
               ),
               CustomTextFiled(
                 color: framColor,
-                validator: controller.validatetitle,
+                validator: controller.validator.validatetitle,
                 hintText: "",
                 textEditingController: controller.title,
               ),
@@ -155,7 +155,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
               CustomTextFiled(
                 maxLines: 5,
                 color: framColor,
-                validator: controller.validateDescription,
+                validator: controller.validator.validateDescription,
                 hintText: "description",
                 textEditingController: controller.description,
               ),
@@ -178,7 +178,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                     child: CustomTextFiled2(
                       padding: 0,
                       color: Colors.deepOrangeAccent,
-                      validator: controller.validatePrice,
+                      validator: controller.validator.validatePrice,
                       hintText: "Prix",
                       textEditingController: controller.prix,
                       keyboardType: TextInputType.number,

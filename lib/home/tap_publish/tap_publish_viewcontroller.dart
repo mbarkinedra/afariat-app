@@ -8,6 +8,7 @@ import 'package:afariat/config/storage.dart';
 import 'package:afariat/config/wsse.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
+import 'package:afariat/model/validator.dart';
 import 'package:afariat/networking/api/get_salt_api.dart';
 import 'package:afariat/networking/api/modif_ads_api.dart';
 
@@ -26,6 +27,7 @@ import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+  Validator validator=Validator();
   bool dataAdverts = false;
   ModifAdsJson modifAdsJson = ModifAdsJson();
   CategoryGroupedJson category;
@@ -443,7 +445,7 @@ class TapPublishViewController extends GetxController {
     //  print(vv.toString());
 //    });
   }
-
+/*
   String validatetitle(String value) {
     if (value.length < 11) {
       return "Le titre doit être renseigné";
@@ -471,7 +473,7 @@ class TapPublishViewController extends GetxController {
   isvala() {
     final isv = globalKey.currentState.validate();
     print(isv);
-  }
+  }*/
 
   getEditId(int id) {
     _modifAdsApi.id = id;

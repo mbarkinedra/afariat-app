@@ -59,7 +59,7 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
               press: () {
                 Get.find<AccountInfoStorage>().removeHashedPassword();
                 Get.find<HomeViwController>().changeSelectedValue(0);
-
+                Get.find<AccountInfoStorage>().logout();
                   // Navigator.of(context).push(MaterialPageRoute(
                   //     builder: (
                   //         context,
