@@ -142,33 +142,6 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                               height: size.height * .8,
                             );
                 }),
-                // GetBuilder<TapPublishViewController>(builder: (logic) {
-                //   return Padding(
-                //     padding: const EdgeInsets.all(8.0),
-                //     child: InkWell(
-                //         onTap: () {
-                //           showOptionsDialog(context, 2);
-                //         },
-                //         child: Container(
-                //           decoration: BoxDecoration(
-                //               border: Border.all(color: framColor),
-                //               borderRadius: BorderRadius.circular(10)),
-                //           width: size.width * .8,
-                //           height: size.height * .3,
-                //           child: controller.image2 == null
-                //               ? Image.asset(
-                //                   'assets/images/placeholder.png',
-                //                   width: size.width,
-                //                   fit: BoxFit.fill,
-                //                 )
-                //               : Image.file(
-                //                   controller.image2,
-                //                   fit: BoxFit.fill,
-                //                 ),
-                //         )),
-                //   );
-                // }),
-
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Row(

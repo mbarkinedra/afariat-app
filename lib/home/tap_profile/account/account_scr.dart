@@ -34,16 +34,21 @@ class Account extends GetWidget<AccountViewController> {
             ),
             CustomTextFiled(
               color: framColor,
+              textEditingController: controller.email,
               width: size.width * .8,
               hintText: 'email',
-              textEditingController: logic.email,
+              validator: (value) {
+                return controller.validateServer.validator(value, 'email');
+              },
             ),
             CustomTextFiled(
-              color: framColor,
-              width: size.width * .8,
-              hintText: 'phone',
-              textEditingController: logic.phone,
-            ),
+                color: framColor,
+                textEditingController: controller.phone,
+                width: size.width * .8,
+                hintText: 'phone',
+                validator: (value) {
+                  return controller.validateServer.validator(value, 'phone');
+                }),
             GetBuilder<LocController>(builder: (logic) {
               return Column(
                 children: [
@@ -82,8 +87,8 @@ class Account extends GetWidget<AccountViewController> {
               function: () {
                 controller.updateUserData();
               },
-            )
-         ,  CustomButtonWithoutIcon(
+            ),
+            CustomButtonWithoutIcon(
               height: 50,
               label: "back",
               width: size.width * .8,
@@ -91,7 +96,8 @@ class Account extends GetWidget<AccountViewController> {
               function: () {
                 Navigator.pop(context);
               },
-            ) ],
+            )
+          ],
         );
       }),
     );

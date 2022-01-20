@@ -30,11 +30,10 @@ class LogInItem extends StatelessWidget {
           validator: validator,
           obscureText: obscureText,
           decoration: InputDecoration(
-            icon: Icon(icon),
-            border: InputBorder.none,
-            hintText: hint,
-            suffixIcon: suffixIcon
-          ),
+              icon: Icon(icon),
+              border: InputBorder.none,
+              hintText: hint,
+              suffixIcon: suffixIcon),
         ),
       ],
     );

@@ -20,20 +20,27 @@ class AccountInfoStorage extends GetxController {
   saveUserId(String userId) {
     _secureStorage.writeSecureData(_key_user_id, userId);
   }
+
   saveName(String name) {
-      _secureStorage.writeSecureData(_key_name,name);
+    _secureStorage.writeSecureData(_key_name, name);
   }
+
   savePhone(String phone) {
-      _secureStorage.writeSecureData(_key_phone,phone);
+    _secureStorage.writeSecureData(_key_phone, phone);
   }
+
   String readEmail() {
     return _secureStorage.readSecureData(_key_email);
   }
+
   String readName() {
     return _secureStorage.readSecureData(_key_name);
-  } String readPhone() {
+  }
+
+  String readPhone() {
     return _secureStorage.readSecureData(_key_phone);
   }
+
   String readHashedPassword() {
     return _secureStorage.readSecureData(_key_hashedPassword);
   }
@@ -45,6 +52,14 @@ class AccountInfoStorage extends GetxController {
   /// Removes the hashed password from the secure storage, so user is no longer loggen in.
   String removeHashedPassword() {
     return _secureStorage.deleteSecureData(_key_hashedPassword);
+  }
+
+  logout() {
+    print(" iiiii");
+    _secureStorage.deleteSecureData(_key_email);
+    _secureStorage.deleteSecureData(_key_phone);
+    _secureStorage.deleteSecureData(_key_user_id);
+    _secureStorage.deleteSecureData(_key_name);
   }
 
   bool isLoggedIn() {

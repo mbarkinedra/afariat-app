@@ -10,25 +10,25 @@ class SecureStorage extends GetxController {
   //
   // SecureStorage._internal();
 
-    final box = GetStorage('secure');
+  final box = GetStorage('secure');
 
-      writeSecureData(String key, String value)   {
-    var writeData =   box.write(key, value);
+  writeSecureData(String key, String value) {
+    var writeData = box.write(key, value);
     return writeData;
   }
 
-    String   readSecureData(String key)  {
-    var readData =   box.read(key);
+  String readSecureData(String key) {
+    var readData = box.read(key);
     return readData;
   }
 
-      deleteSecureData(String key)  {
-    var deleteData =  box.remove(key);
-    return deleteData;
+  deleteSecureData(String key) {
+    var deleteData = box.remove(key);
+    // return deleteData;
   }
 
-     String readImmediatlyData(String key)  {
-    String readData =   box.read(key);
+  String readImmediatlyData(String key) {
+    String readData = box.read(key);
     return readData;
   }
 }

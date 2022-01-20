@@ -41,7 +41,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                   hint: "Nom et prénom ou nom de société",
                   icon: Icons.account_circle,
                   validator: (value) {
-                    return controller.validator(value, 'name');
+                    return controller.validateServer.validator(value, 'name');
                   },
                 ),
                 SizedBox(
@@ -53,7 +53,8 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                     hint: "Pone Number",
                     icon: Icons.add_call,
                     validator: (value) {
-                      return controller.validator(value, 'phone');
+                      return controller.validateServer
+                          .validator(value, 'phone');
                     }),
                 SizedBox(
                   height: _size.height * .05,
@@ -63,7 +64,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                     children: [
                       Container(
                         width: double.infinity,
-                        // decoration: BoxDecoration(border: Border.all(color: Colors.orange),borderRadius: BorderRadius.circular(10)),
+                        // decoration: BoxDecoration(border: Border.all(color: Colors.deepOrange),borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<TypeRegister>(
                           hint: Text("Type"),
                           isExpanded: true,
@@ -95,7 +96,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                     children: [
                       Container(
                         width: double.infinity,
-                        // decoration: BoxDecoration(border: Border.all(color: Colors.orange),borderRadius: BorderRadius.circular(10)),
+                        // decoration: BoxDecoration(border: Border.all(color: Colors.deepOrange),borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<RefJson>(
                           hint: Text("City"),
                           isExpanded: true,
@@ -127,25 +128,29 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                   hint: "Email",
                   icon: Icons.email,
                   validator: (value) {
-                    return controller.validator(value, 'email');
+                    return controller.validateServer.validator(value, 'email');
                   },
                 ),
                 SizedBox(
                   height: _size.height * .05,
                 ),
-                LogInItem(
-                  label: "Password",
-                  hint: "**********",
-                  icon: Icons.lock_outline,
-                  obscureText: controller.isVisiblePassword,
-                  textEditingController: controller.password,
-                  suffixIcon: IconButton(
-                    onPressed: controller.showHidePassword,
-                    icon: Icon(controller.isVisiblePassword
-                        ? Icons.visibility_off
-                        : Icons.visibility),
-                  ),
-                ),
+                //Ajouter controller builder
+                GetBuilder<SignUpViewController>(builder: (logic) {
+                  return LogInItem(
+                    label: "Password",
+                    hint: "**********",
+                    icon: Icons.lock_outline,
+                    //Ajouter
+                    obscureText: logic.isVisiblePassword,
+                    textEditingController: controller.password,
+                    suffixIcon: IconButton(
+                      onPressed: controller.showHidePassword,
+                      icon: Icon(logic.isVisiblePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                    ),
+                  );
+                }),
                 SizedBox(
                   height: _size.height * .05,
                 ),
@@ -169,10 +174,6 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                 Center(
                   child: InkWell(
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) =>  SignUpScr()),
-                      // );
                       Navigator.pop(context);
                     },
                     child: RichText(

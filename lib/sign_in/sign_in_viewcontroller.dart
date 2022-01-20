@@ -26,7 +26,7 @@ class SignInViewController extends GetxController {
       Get.find<AccountInfoStorage>().saveEmail(email.text);
       Get.find<AccountInfoStorage>().saveHashedPassword(hashedPassword);
       //Try to login user
-      _signInApi.get({'X-WSSE': wsse}).then((value) {
+      _signInApi.getdata({'X-WSSE': wsse}).then((value) {
         print("User ID: ${value.data["user_id"]}");
         //save user info to local storage
 
