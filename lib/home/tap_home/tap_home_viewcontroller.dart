@@ -35,29 +35,31 @@ class TapHomeViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    pagingController.addPageRequestListener((pageKey) {
+      _fetchPage(page);
+    });
     updatedata();
     getPriceList();
-    scrollController.addListener(() {
-      if (scrollController.position.maxScrollExtent ==
-          scrollController.position.pixels) {
-        _advertPageApi.page = page;
-        _advertPageApi.getList().then((value) {
-          page++;
-          adverts.addAll(value.embedded.adverts);
-          update();
-        });
-      } else if (scrollController.position.minScrollExtent ==
-          scrollController.position.pixels) {
-        _advertPageApi.page = 0;
-        _advertPageApi.getList().then((value) {
-          page = 1;
-          adverts.clear();
-          adverts = value.embedded.adverts;
-          update();
-        });
-        print("ooooooooooooooooooooooooooooooooooooooooooooooooo");
+  }
+
+  Future<void> _fetchPage(int pageKey) async {
+    try {
+      _advertPageApi.page = page;
+      page++;
+      print(_advertPageApi.page);
+      final data = await _advertPageApi.getList();
+      final newItems = data.embedded.adverts;
+      final isLastPage = newItems.length < _pageSize;
+
+      if (isLastPage) {
+        pagingController.appendLastPage(newItems);
+      } else {
+        final nextPageKey = pageKey + newItems.length;
+        pagingController.appendPage(newItems, nextPageKey);
       }
-    });
+    } catch (error) {
+      pagingController.error = error;
+    }
   }
 
   getfirestpage() {}
@@ -80,15 +82,17 @@ class TapHomeViewController extends GetxController {
     update();
   }
 
-  filterupdate() {
+  filterUpdate() {
     if (searchWord.text.isNotEmpty) {
       setsearch("search", searchWord.text.toString());
     }
     SearchApi a = SearchApi(search);
     print(Filter.data.toString());
     a.getList(filters: Filter.data).then((value) {
+      pagingController.itemList.clear();
       adverts.clear();
       adverts = value.embedded.adverts;
+      pagingController.appendLastPage(adverts);
       print(value.embedded.adverts.toString());
       update();
     });
@@ -113,5 +117,11 @@ class TapHomeViewController extends GetxController {
   updateslidval(value) {
     values = value;
     update();
+  }
+
+  @override
+  void dispose() {
+    pagingController.dispose();
+    super.dispose();
   }
 }

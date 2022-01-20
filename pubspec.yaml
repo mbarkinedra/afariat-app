@@ -43,6 +43,7 @@ dependencies:
   email_launcher: ^1.1.1
   image_picker: 0.8.0
   infinite_scroll_pagination: ^3.1.0
+  convex_bottom_bar: ^3.0.0
 
 
 dev_dependencies:

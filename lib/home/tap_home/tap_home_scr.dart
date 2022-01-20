@@ -124,75 +124,113 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
               child: GetBuilder<TapHomeViewController>(builder: (logic) {
                 return logic.getdatafromweb
                     ? Center(child: const CircularProgressIndicator())
-                    :
-                    //                 :   PagedListView (
-                    //             pagingController: logic.pagingController,
-                    //             builderDelegate: PagedChildBuilderDelegate<AdvertJson>(
-                    //             itemBuilder: (context, item, index) {
-                    //
-                    //
-                    //               if (logic.adverts[index].description
-                    //                   .toLowerCase()
-                    //                   .contains(logic.searchWord.text.toLowerCase())||logic.adverts[index].title
-                    //                   .toLowerCase()
-                    //                   .contains(logic.searchWord.text.toLowerCase())) {
-                    //                 return InkWell(onTap: (){
-                    //                   print(logic.adverts[index].id);
-                    //
-                    //                   Get.find<AdvertDetailsViewcontroller>().loading=true;
-                    //                   Get.find<AdvertDetailsViewcontroller>().getAdvertDetails(logic.adverts[index].id);
-                    //                   Navigator.push(
-                    //                     context,
-                    //                     MaterialPageRoute(builder: (context) => AdvertDetatilsScr() ),
-                    //                   );
-                    //
-                    //                 },
-                    //                   child: MyHomeItem(
-                    //                     size: _size,
-                    //                     adverts: logic.adverts[index],
-                    //                   ),
-                    //                 );
-                    //               } else {
-                    //                 return const SizedBox();
-                    //               }
-                    // }
-                    //
-                    //             )
-
-                    ListView.builder(
-                        controller: logic.scrollController,
-                        itemCount: logic.adverts.length,
-                        itemBuilder: (context, pos) {
-                          if (logic.adverts[pos].description
-                                  .toLowerCase()
-                                  .contains(
+                    : RefreshIndicator(
+                        onRefresh: () => Future.sync(
+                          () => controller.pagingController.refresh(),
+                        ),
+                        child: PagedListView<int, dynamic>(
+                          pagingController: controller.pagingController,
+                          //,scrollController: controller.scrollController,
+                          builderDelegate: PagedChildBuilderDelegate<dynamic>(
+                            itemBuilder: (context, item, index) {
+                              if (item.description.toLowerCase().contains(
                                       logic.searchWord.text.toLowerCase()) ||
-                              logic.adverts[pos].title.toLowerCase().contains(
-                                  logic.searchWord.text.toLowerCase())) {
-                            return InkWell(
-                              onTap: () {
-                                print(logic.adverts[pos].id);
-
-                                Get.find<AdvertDetailsViewcontroller>()
-                                    .loading = true;
-                                Get.find<AdvertDetailsViewcontroller>()
-                                    .getAdvertDetails(logic.adverts[pos].id);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          AdvertDetatilsScr()),
+                                  item.title.toLowerCase().contains(
+                                      logic.searchWord.text.toLowerCase())) {
+                                return InkWell(
+                                  onTap: () {
+                                    Get.find<AdvertDetailsViewcontroller>()
+                                        .loading = true;
+                                    Get.find<AdvertDetailsViewcontroller>()
+                                        .getAdvertDetails(item.id);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AdvertDetatilsScr()),
+                                    );
+                                  },
+                                  child: MyHomeItem(
+                                    size: _size,
+                                    adverts: item, //logic.adverts[index],
+                                  ),
                                 );
-                              },
-                              child: MyHomeItem(
-                                size: _size,
-                                adverts: logic.adverts[pos],
-                              ),
-                            );
-                          } else {
-                            return const SizedBox();
-                          }
-                        });
+                              } else {
+                                return const SizedBox();
+                              }
+                            },
+                          ),
+                        ),
+                      );
+
+                //                 :   PagedListView (
+                //             pagingController: logic.pagingController,
+                //             builderDelegate: PagedChildBuilderDelegate<AdvertJson>(
+                //             itemBuilder: (context, item, index) {
+                //
+                //
+                //               if (logic.adverts[index].description
+                //                   .toLowerCase()
+                //                   .contains(logic.searchWord.text.toLowerCase())||logic.adverts[index].title
+                //                   .toLowerCase()
+                //                   .contains(logic.searchWord.text.toLowerCase())) {
+                //                 return InkWell(onTap: (){
+                //                   print(logic.adverts[index].id);
+                //
+                //                   Get.find<AdvertDetailsViewcontroller>().loading=true;
+                //                   Get.find<AdvertDetailsViewcontroller>().getAdvertDetails(logic.adverts[index].id);
+                //                   Navigator.push(
+                //                     context,
+                //                     MaterialPageRoute(builder: (context) => AdvertDetatilsScr() ),
+                //                   );
+                //
+                //                 },
+                //                   child: MyHomeItem(
+                //                     size: _size,
+                //                     adverts: logic.adverts[index],
+                //                   ),
+                //                 );
+                //               } else {
+                //                 return const SizedBox();
+                //               }
+                // }
+                //
+                //             )
+
+                // ListView.builder(
+                //     controller: logic.scrollController,
+                //     itemCount: logic.adverts.length,
+                //     itemBuilder: (context, pos) {
+                //       if (logic.adverts[pos].description
+                //               .toLowerCase()
+                //               .contains(
+                //                   logic.searchWord.text.toLowerCase()) ||
+                //           logic.adverts[pos].title.toLowerCase().contains(
+                //               logic.searchWord.text.toLowerCase())) {
+                //         return InkWell(
+                //           onTap: () {
+                //             print(logic.adverts[pos].id);
+                //
+                //             Get.find<AdvertDetailsViewcontroller>()
+                //                 .loading = true;
+                //             Get.find<AdvertDetailsViewcontroller>()
+                //                 .getAdvertDetails(logic.adverts[pos].id);
+                //             Navigator.push(
+                //               context,
+                //               MaterialPageRoute(
+                //                   builder: (context) =>
+                //                       AdvertDetatilsScr()),
+                //             );
+                //           },
+                //           child: MyHomeItem(
+                //             size: _size,
+                //             adverts: logic.adverts[pos],
+                //           ),
+                //         );
+                //       } else {
+                //         return const SizedBox();
+                //       }
+                //     });
               }),
             )
           ],
