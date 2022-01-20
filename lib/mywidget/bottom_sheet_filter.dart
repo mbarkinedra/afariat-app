@@ -208,7 +208,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
             height: 50,
             width: _size.width * .4,
             function: () {
-              tap1ViewController.filterupdate();
+              tap1ViewController.filterUpdate();
             },
             labcolor: textbuttonColor,
             label: "rechercher",

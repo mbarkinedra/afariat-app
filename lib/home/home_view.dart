@@ -1,4 +1,5 @@
 import 'package:afariat/config/storage.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -35,55 +36,70 @@ class Home extends GetWidget<HomeViwController> {
           }),
           //init: HomeViwController(),
           bottomNavigationBar: GetBuilder<HomeViwController>(builder: (logic) {
-            return BottomNavigationBar(
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'MyHome',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.photo_size_select_large_outlined),
-                  label: 'Publish',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.add_box_rounded,
-                    color: Colors.transparent,
-                  ),
-                  label: 'Ads',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.article_rounded),
-                  label: 'Notification',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'Account',
-                )
+            return   ConvexAppBar(
+              items: [
+                TabItem(icon: Icons.home, title: 'MyHome'),
+                TabItem(icon: Icons.photo_size_select_large_outlined, title: 'Publish'),
+                TabItem(icon: Icons.add_box_rounded, title: 'Ads'),
+                TabItem(icon: Icons.article_rounded, title: 'Notification'),
+                TabItem(icon: Icons.person, title: 'Account'),
               ],
+              initialActiveIndex:controller.navigatorValue,//optional, default as 0
               onTap: controller.changeSelectedValue,
-              currentIndex: controller.navigatorValue,
-              iconSize: 35,
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              type: BottomNavigationBarType.fixed,
-              unselectedItemColor: Colors.grey,
-              selectedItemColor: Colors.deepOrangeAccent,
-              elevation: 5,
-            );
+        backgroundColor:  Colors.deepOrangeAccent, color: Colors.white, );
+
+
+
+            //
+            //   BottomNavigationBar(
+            //   items: const [
+            //     BottomNavigationBarItem(
+            //       icon: Icon(Icons.home),
+            //       label: 'MyHome',
+            //     ),
+            //     BottomNavigationBarItem(
+            //       icon: Icon(Icons.photo_size_select_large_outlined),
+            //       label: 'Publish',
+            //     ),
+            //     BottomNavigationBarItem(
+            //       icon: Icon(
+            //         Icons.add_box_rounded,
+            //         color: Colors.transparent,
+            //       ),
+            //       label: 'Ads',
+            //     ),
+            //     BottomNavigationBarItem(
+            //       icon: Icon(Icons.article_rounded),
+            //       label: 'Notification',
+            //     ),
+            //     BottomNavigationBarItem(
+            //       icon: Icon(Icons.person),
+            //       label: 'Account',
+            //     )
+            //   ],
+            //   onTap: controller.changeSelectedValue,
+            //   currentIndex: controller.navigatorValue,
+            //   iconSize: 35,
+            //   showSelectedLabels: false,
+            //   showUnselectedLabels: false,
+            //   type: BottomNavigationBarType.fixed,
+            //   unselectedItemColor: Colors.grey,
+            //   selectedItemColor: Colors.deepOrangeAccent,
+            //   elevation: 5,
+            // );
           }),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              print("88888");
-              controller.changeSelectedValue(2);
-            },
-            child: Icon(
-              Icons.add,
-            ),
-            backgroundColor: Colors.deepOrangeAccent,
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () {
+          //     print("88888");
+          //     controller.changeSelectedValue(2);
+          //   },
+          //   child: Icon(
+          //     Icons.add,
+          //   ),
+          //   backgroundColor: Colors.deepOrangeAccent,
+          // ),
+          // floatingActionButtonLocation:
+          //     FloatingActionButtonLocation.centerDocked,
         ),
       ),
     );
