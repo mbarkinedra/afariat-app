@@ -376,8 +376,8 @@ class TapPublishViewController extends GetxController {
               height: 100,
               child: Center(
                   child: Text(
-                "Votre annonce est  encours de vérification!",
-                style: TextStyle(fontSize: 30),
+                "Votre annonce est encours de verification!",
+                style: TextStyle(fontSize: 25),
               )),
             ),
             confirm: GestureDetector(
