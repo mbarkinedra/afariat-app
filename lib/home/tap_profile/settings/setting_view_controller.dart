@@ -10,8 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SettingViewController extends GetxController {
-  TextEditingController password1 = TextEditingController();
-  TextEditingController password2 = TextEditingController();
+  TextEditingController newPassword = TextEditingController();
+  TextEditingController oldPassword = TextEditingController();
+
   bool tham = false;
   ChangePasswordApi changePasswordApi = ChangePasswordApi();
   UserApi _userApi = UserApi();
@@ -30,8 +31,8 @@ class SettingViewController extends GetxController {
 
   changePassword() {
     Filter.data = {
-      "currentPassword": password1.text.toString(),
-      "plainPassword": password2.text.toString(),
+      "currentPassword": oldPassword.text.toString(),
+      "plainPassword": newPassword.text.toString(),
     };
 
     changePasswordApi.putData(dataToPost: Filter.data).then((value) {
@@ -40,7 +41,7 @@ class SettingViewController extends GetxController {
           _getSalt.post({"login": "${accountInfoStorage.readEmail()}"}).then(
               (value) {
             String hashedPassword =
-                Wsse.hashPassword(password2.text, value.data["salt"]);
+                Wsse.hashPassword(newPassword.text, value.data["salt"]);
             print("Hashed Password: $hashedPassword");
             String wsse = Wsse.generateWsseHeader(
                 accountInfoStorage.readEmail(), hashedPassword);

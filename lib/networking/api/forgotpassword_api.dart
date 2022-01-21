@@ -6,7 +6,7 @@ import 'package:afariat/networking/json/forgot_password_json.dart';
 class ForgotPasswordApi extends ApiManager {
   @override
   String apiUrl() {
-    return SettingsApp.forgotPasswordUrl;
+    return SettingsApp.resetPasswordUrl;
   }
 
   @override

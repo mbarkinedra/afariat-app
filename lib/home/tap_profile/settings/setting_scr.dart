@@ -44,13 +44,13 @@ class Setting extends GetWidget<SettingViewController> {
             color: framColor,
             width: size.width * .8,
             hintText: "Nouveau mot de passe",
-            textEditingController: controller.password1,
+            textEditingController: controller.oldPassword,
           ),
           CustomTextFiled(
             color: framColor,
             width: size.width * .8,
             hintText: "Ancien mot de passe",
-            textEditingController: controller.password2,
+            textEditingController: controller.newPassword,
           ),
           CustomButtonWithoutIcon(
             height: 50,
