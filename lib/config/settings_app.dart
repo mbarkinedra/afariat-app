@@ -9,6 +9,7 @@ class SettingsApp {
   static const String loginUrl = baseApiUrl + '/users/login';
   static const String registerUrl = baseApiUrl + '/users';
   static const String forgotPasswordUrl = baseApiUrl + '/users/reset-password';
+  static const String changePasswordUrl = baseApiUrl + '/users/change-password';
   static const String getSaltUrl = baseApiUrl + '/users/get-salt';
   static const String advertUrl = baseApiUrl + '/adverts';
   static const String advertPageUrl = baseApiUrl + '/adverts.json';
@@ -34,3 +35,4 @@ class SettingsApp {
   static const String modifAds = baseApiUrl + '/adverts/';
   static const String userUrl = baseApiUrl + '/users/';
 }
+
