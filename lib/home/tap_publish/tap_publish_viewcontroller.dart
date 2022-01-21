@@ -27,7 +27,7 @@ import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-  Validator validator=Validator();
+  Validator validator = Validator();
   bool dataAdverts = false;
   ModifAdsJson modifAdsJson = ModifAdsJson();
   CategoryGroupedJson category;
@@ -367,6 +367,7 @@ class TapPublishViewController extends GetxController {
       });
     } else {
       await publishApi.securePost(dataToPost: myAds).then((value) {
+        print(value.data);
         if (value.statusCode == 201) {
           Get.defaultDialog(
             title: "Felécitation",
@@ -375,7 +376,7 @@ class TapPublishViewController extends GetxController {
               height: 100,
               child: Center(
                   child: Text(
-                "Votre annonce a été  publiée avec succés!",
+                "Votre annonce est  encours de vérification!",
                 style: TextStyle(fontSize: 30),
               )),
             ),
@@ -400,80 +401,7 @@ class TapPublishViewController extends GetxController {
 
     Get.find<HomeViwController>().changeSelectedValue(1);
     update();
-    // var response = await http.post(url, body: jsonEncode(myAds),headers: {
-    //
-    //   "Accept": "application/json",
-    //   'apikey': SettingsApp.apiKey,
-    //   'Content-Type': 'application/json',
-    // 'X-WSSE': wsse,
-    // });
-
-    //     print('Response status: ${vv.statusCode}');
-    //    print('Response body: ${vv.data}');
-
-    // switch (value.statusCode) {
-    //   case 201:
-    //     Get.snackbar(
-    //       'hii',
-    //       'gggggggggggggggg.',
-    //       colorText: Colors.white,
-    //       backgroundColor: Colors.red,
-    //     );
-    //
-    //     break;
-    //   case 400:
-    //     serverErrors = value.data;
-    //     value.data.forEach((key, value) {
-    //       print('Key: $key');
-    //       print('------------------------------');
-    //     });
-    //
-    //
-    //
-    //     Get.snackbar(
-    //       'Erreur',
-    //       'Veuillez corriger les erreurs ci-dessous.',
-    //       colorText: Colors.white,
-    //       backgroundColor: Colors.red,
-    //     );
-    //     break;
-    //   default:
-    //     return;
-    // }
-    //
-
-    //  print(vv.toString());
-//    });
   }
-/*
-  String validatetitle(String value) {
-    if (value.length < 11) {
-      return "Le titre doit être renseigné";
-    }
-
-    return null;
-  }
-
-  String validatePrice(String value) {
-    if (value.length < 1) {
-      return "Le prix n'est pas valide";
-    }
-
-    return null;
-  }
-
-  String validateDescription(String value) {
-    if (value.length < 50) {
-      return "La description doit faire au moins 50 caractères";
-    }
-
-    return null;
-  }
-
-  isvala() {
-    final isv = globalKey.currentState.validate();
-    print(isv);
-  }*/
 
   getEditId(int id) {
     _modifAdsApi.id = id;

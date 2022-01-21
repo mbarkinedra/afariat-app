@@ -8,7 +8,7 @@ class MyAdsApi extends ApiManager {
 
   @override
   String apiUrl() {
-    return SettingsApp.myAdsUrl + userId;
+    return SettingsApp.myAdsUrl + userId + "&allAdverts=true";
   }
 
   @override

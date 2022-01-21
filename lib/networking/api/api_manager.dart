@@ -66,17 +66,16 @@ abstract class ApiManager {
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
     print(jsonEncode(dataToPost));
-    Options options = Options(headers: {
-      "Accept": "application/json",
-      'apikey': SettingsApp.apiKey,
-      'Content-Type': 'application/json',
-      'X-WSSE': wsse,
-    });
     return dioSingleton.dio
         .post(
       apiUrl(),
       data: jsonEncode(dataToPost),
-      options: Options(
+      options: Options(headers: {
+        "Accept": "application/json",
+        'apikey': SettingsApp.apiKey,
+        'Content-Type': 'application/json',
+        'X-WSSE': wsse,
+      },
           followRedirects: false,
           validateStatus: (status) {
             return status < 500;
