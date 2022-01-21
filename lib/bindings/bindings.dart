@@ -10,6 +10,7 @@ import 'package:afariat/home/home_view_controller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
 import 'package:afariat/home/tap_profile/account/account_view_controller.dart';
+import 'package:afariat/home/tap_profile/notification/notification_view_controller.dart';
 import 'package:afariat/home/tap_profile/settings/setting_view_controller.dart';
 import 'package:afariat/home/tap_profile/tap_profile_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/publish_views/publish_image/publish_image_viewcontroller.dart';
@@ -47,5 +48,6 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => PublishImageViewController(), fenix: true);
     Get.lazyPut(() => ForgotPasswordViewController());
     Get.lazyPut(() => SettingViewController());
+    Get.lazyPut(() => NotificationViewController());
   }
 }

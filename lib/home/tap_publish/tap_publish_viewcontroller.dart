@@ -344,7 +344,7 @@ class TapPublishViewController extends GetxController {
               height: 100,
               child: Center(
                   child: Text(
-                "Votre annonce a été  publiée avec succés!",
+                "Votre annonce est encours de verification!",
                 style: TextStyle(fontSize: 30),
               )),
             ),

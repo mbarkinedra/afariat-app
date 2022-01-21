@@ -39,10 +39,10 @@ class Home extends GetWidget<HomeViwController> {
             return   ConvexAppBar(
               items: [
                 TabItem(icon: Icons.home, title: 'MyHome'),
-                TabItem(icon: Icons.photo_size_select_large_outlined, title: 'Publish'),
-                TabItem(icon: Icons.add_box_rounded, title: 'Ads'),
-                TabItem(icon: Icons.article_rounded, title: 'Notification'),
-                TabItem(icon: Icons.person, title: 'Account'),
+                TabItem(icon: Icons.photo_size_select_large_outlined, title: 'MyAds'),
+                TabItem(icon: Icons.add_box_rounded, title: 'Publish'),
+                TabItem(icon: Icons.article_rounded, title: 'Chat'),
+                TabItem(icon: Icons.person, title: 'Profile'),
               ],
               initialActiveIndex:controller.navigatorValue,//optional, default as 0
               onTap: controller.changeSelectedValue,
