@@ -53,7 +53,7 @@ class ForgotPassword extends GetWidget<ForgotPasswordViewController> {
             width: size.width * .8,
             btcolor: framColor,
             function: () {
-              controller.restpassword();
+              controller.forgotPassword();
             },
           ),
 

@@ -27,6 +27,7 @@ class ValidateServer {
       case 200:
         //Affichage success
         validate();
+
         break;
       case 201:
         //Affichage success

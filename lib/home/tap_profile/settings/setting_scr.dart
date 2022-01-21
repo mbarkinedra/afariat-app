@@ -19,7 +19,6 @@ class Setting extends GetWidget<SettingViewController> {
         ),
         backgroundColor: Colors.deepOrangeAccent,
       ),
-
       body: Column(
         children: [
           SizedBox(
@@ -45,20 +44,22 @@ class Setting extends GetWidget<SettingViewController> {
             color: framColor,
             width: size.width * .8,
             hintText: "Nouveau mot de passe",
-            textEditingController: controller.password,
+            textEditingController: controller.oldPassword,
           ),
           CustomTextFiled(
             color: framColor,
             width: size.width * .8,
             hintText: "Ancien mot de passe",
-            textEditingController: controller.password,
+            textEditingController: controller.newPassword,
           ),
           CustomButtonWithoutIcon(
             height: 50,
             label: "send",
             width: size.width * .8,
             btcolor: framColor,
-            function: () {},
+            function: () {
+              controller.changePassword();
+            },
           ),
           CustomButtonWithoutIcon(
             height: 50,
@@ -66,38 +67,39 @@ class Setting extends GetWidget<SettingViewController> {
             width: size.width * .8,
             btcolor: framColor,
             function: () {
-              Get.defaultDialog(cancel:  GestureDetector(
-                child: Text(
-                  "cancel",
-                  style: TextStyle(
-                      color: Colors.red, fontWeight: FontWeight.bold, fontSize: 40),
+              Get.defaultDialog(
+                cancel: GestureDetector(
+                  child: Text(
+                    "cancel",
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40),
+                  ),
+                  onTap: () {
+                    Get.back();
+                  },
                 ),
-                onTap: () {
-
-
-                  Get.back();
-                },
-              ),
                 title: "Confiramtion",
                 titlePadding: EdgeInsets.all(8),
                 content: Container(
                   height: 100,
                   child: Center(
                       child: Text(
-                        " Êtes-vous sûr de supprimer votre compte?",
-                        style: TextStyle(fontSize: 20),
-                      )),
+                    " Êtes-vous sûr de supprimer votre compte?",
+                    style: TextStyle(fontSize: 20),
+                  )),
                 ),
                 confirm: GestureDetector(
                   child: Text(
                     "ok",
                     style: TextStyle(
-                        color: Colors.red, fontWeight: FontWeight.bold, fontSize: 40),
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40),
                   ),
                   onTap: () {
-
-
-             controller.deluser();
+                    //  controller.deleteuser();
                   },
                 ),
                 titleStyle: TextStyle(color: Colors.deepOrange),
@@ -105,7 +107,6 @@ class Setting extends GetWidget<SettingViewController> {
               );
             },
           ),
-
         ],
       ),
     );
