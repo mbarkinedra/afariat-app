@@ -34,10 +34,10 @@ class AllBindings extends Bindings {
     Get.put(AccountInfoStorage());
     Get.put(TapPublishViewController());
 
-    Get.put(CategoryAndSubcategory(), permanent: true);
+    Get.put(CategoryAndSubcategory() );
     Get.put(LocController());
     // Get.lazyPut(() => CategoryAndSubcategory() ,fenix: true );
-    Get.lazyPut(() => LocController(), fenix: true);
+    //Get.lazyPut(() => LocController(), fenix: true);
     Get.lazyPut(() => SignUpViewController());
     Get.lazyPut(() => SignInViewController());
 

@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'dart:developer' as devlog;
 import 'dart:convert';
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
@@ -317,6 +317,30 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
+  clearAllData() {
+    category = null;
+    subcategories = null;
+    yearsmodele = null;
+    getview = null;
+    vehiculebrands = null;
+    motosBrand = null;
+    vehiculeModel = null;
+    energie = "";
+    kilometrage = null;
+    pieces="";
+    town = null;
+    citie = null;
+
+    myAds = {};
+    myAdsview = {};
+    title.text = "";
+    description.text = "";
+    prix.text = "";
+    surface.text = "";
+
+    update();
+  }
+
   postdata() async {
     // if (image != null) {
     //   photobase64Encode(image);
@@ -366,6 +390,9 @@ class TapPublishViewController extends GetxController {
         }
       });
     } else {
+      devlog.log(jsonEncode(myAds));
+      myAds["energy"] = energie;
+      print(energie);
       await publishApi.securePost(dataToPost: myAds).then((value) {
         print(value.data);
         if (value.statusCode == 201) {
@@ -389,6 +416,11 @@ class TapPublishViewController extends GetxController {
                     fontSize: 40),
               ),
               onTap: () {
+                Filter.data.clear();
+                clearAllData();
+                Get.find<CategoryAndSubcategory>().clearData();
+                Get.find<LocController>().clearData();
+
                 Get.back();
               },
             ),

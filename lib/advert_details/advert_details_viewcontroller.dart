@@ -4,6 +4,8 @@ import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AdvertDetailsViewcontroller extends GetxController {
@@ -11,6 +13,7 @@ class AdvertDetailsViewcontroller extends GetxController {
 
   bool loading = true;
   AdvertDetailsApi _advertDetailsApi = AdvertDetailsApi();
+  PhotoViewController photoViewController;
 
   getAdvertDetails(int id) {
     _advertDetailsApi.advertTypeId = id;
@@ -25,9 +28,10 @@ class AdvertDetailsViewcontroller extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    photoViewController = PhotoViewController();
   }
 
-  bool havephonenumber() {
+  bool havePhoneNumber() {
     if (!loading && advert != null) {
       return advert.showPhoneNumber;
     }
@@ -45,7 +49,7 @@ class AdvertDetailsViewcontroller extends GetxController {
     await launch(launchUri.toString());
   }
 
-  Future<void> makesms(String phoneNumber) async {
+  Future<void> makeSms(String phoneNumber) async {
     // Use `Uri` to ensure that `phoneNumber` is properly URL-encoded.
     // Just using 'tel:$phoneNumber' would create invalid URLs in some cases,
     // such as spaces in the input, which would cause `launch` to fail on some
@@ -57,30 +61,7 @@ class AdvertDetailsViewcontroller extends GetxController {
     await launch(launchUri.toString());
   }
 
-  showd(context) {
-    // Get.defaultDialog(
-    //     title: "Contacter l'annonceur par e_mail", confirm: confirmBtn(),cancel: cancelBtn(),
-    //
-    //     backgroundColor: Colors.white,
-    //     titleStyle: TextStyle(color: Colors.orange),
-    //     middleTextStyle: TextStyle(color: Colors.orange),
-    //     textConfirm: "Confirm",
-    //     textCancel: "Cancel",
-    //     cancelTextColor: Colors.white,
-    //     confirmTextColor: Colors.white,
-    //     buttonColor: Colors.orange,
-    //   //  barrierDismissible: false,
-    //     radius: 10,
-    //     content:SingleChildScrollView (
-    //       child: Container(
-    //         child: Column(
-    //           children: [//Text("Contacter l'annonceur par e_mail"),
-    //            TextField(  maxLines: 4, ),
-    //           ],
-    //         ),
-    //       ),
-    //     )
-    // );
+  showDialogue(context) {
     return showDialog(
       context: context,
       builder: (context) {
@@ -157,6 +138,65 @@ class AdvertDetailsViewcontroller extends GetxController {
 
   Widget confirmBtn() {
     return ElevatedButton(onPressed: () {}, child: Text("Confirm"));
+  }
+
+// Agrandir photo avec annimation
+  displayDialog(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      transitionDuration: Duration(milliseconds: 2000),
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: ScaleTransition(
+            scale: animation,
+            child: child,
+          ),
+        );
+      },
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return SafeArea(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            padding: EdgeInsets.all(20),
+            color: Colors.white,
+            child: Center(
+              child: Container(
+                  child: PhotoViewGallery.builder(
+                scrollPhysics: const BouncingScrollPhysics(),
+                builder: (BuildContext context, int index) {
+                  return PhotoViewGalleryPageOptions(
+                    controller: photoViewController,
+                    imageProvider: NetworkImage(
+                      advert.photos[index].path,
+                    ),
+                    maxScale: PhotoViewComputedScale.covered * 2,
+                    minScale: PhotoViewComputedScale.contained * .8,
+                    heroAttributes:
+                        PhotoViewHeroAttributes(tag: advert.photos[index].path),
+                  );
+                },
+                itemCount: advert.photos.length,
+                loadingBuilder: (context, event) => Center(
+                  child: Container(
+                    width: 20.0,
+                    height: 20.0,
+                    child: CircularProgressIndicator(
+                      value: event == null
+                          ? 0
+                          : event.cumulativeBytesLoaded /
+                              event.expectedTotalBytes,
+                    ),
+                  ),
+                ),
+              )),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Widget cancelBtn() {

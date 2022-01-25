@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/model/error_register.dart';
@@ -8,9 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:email_launcher/email_launcher.dart' as mail;
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'advert_details_viewcontroller.dart';
-import 'package:pinch_zoom_image_last/pinch_zoom_image_last.dart';
+import 'package:photo_view/photo_view.dart';
 
 class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
   @override
@@ -48,41 +51,13 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                         items: logic.advert.photos
                             .map((item) => InkWell(
                                   onTap: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return Dialog(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(40)),
-                                          elevation: 16,
-                                          child: Container(
-                                            child: PinchZoomImage(
-                                              image: Image.network(item.path),
-                                              zoomedBackgroundColor:
-                                                  Color.fromRGBO(
-                                                      240, 240, 240, 1.0),
-                                              hideStatusBarWhileZooming: true,
-                                              onZoomStart: () {
-                                                print('Zoom started');
-                                              },
-                                              onZoomEnd: () {
-                                                print('Zoom finished');
-                                              },
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
+                                    logic.displayDialog(context);
                                   },
-                                  child: Container(
-                                    child: Center(
-                                        child: Image.network(
-                                      item.path,
-                                      fit: BoxFit.cover,
-                                      width: _size.width * .7,
-                                      height: _size.height * .3,
-                                    )),
+                                  child: Image.network(
+                                    item.path,
+                                    height: _size.height * .25,
+                                    width: _size.width * .8,
+                                    fit: BoxFit.fill,
                                   ),
                                 ))
                             .toList(),
@@ -279,7 +254,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              if (logic.havephonenumber())
+                              if (logic.havePhoneNumber())
                                 CustomButtonIcon(
                                   btcolor: buttonColor,
                                   function: () {
@@ -290,11 +265,11 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                                   width: _size.width * .2,
                                   icon: Icons.add_call,
                                 ),
-                              if (logic.havephonenumber())
+                              if (logic.havePhoneNumber())
                                 CustomButtonIcon(
                                   btcolor: buttonColor,
                                   function: () {
-                                    logic.makesms(
+                                    logic.makeSms(
                                         logic.advert.mobilePhoneNumber);
                                   },
                                   height: 40,
@@ -304,7 +279,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                               CustomButtonIcon(
                                 btcolor: buttonColor,
                                 function: () async {
-                                  logic.showd(context);
+                                  logic.showDialogue(context);
                                 },
                                 height: 40,
                                 width: _size.width * .2,

@@ -1,4 +1,6 @@
 import 'package:afariat/config/filter.dart';
+import 'package:afariat/controllers/category_and_subcategory.dart';
+import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/networking/api/advertPage_api.dart';
 import 'package:afariat/networking/api/advert_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
@@ -88,11 +90,16 @@ class TapHomeViewController extends GetxController {
     }
     SearchApi a = SearchApi(search);
     print(Filter.data.toString());
+    print("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
     a.getList(filters: Filter.data).then((value) {
+
+      clearPrice();
       pagingController.itemList.clear();
       adverts.clear();
       adverts = value.embedded.adverts;
       pagingController.appendLastPage(adverts);
+      Get.find<LocController>().clearData();
+      Get.find<CategoryAndSubcategory>().clearData();
       print(value.embedded.adverts.toString());
       update();
     });
@@ -100,6 +107,7 @@ class TapHomeViewController extends GetxController {
 
   setsearch(String key, v) {
     search[key] = v;
+    Filter.data[key] = v;
   }
 
   getPriceList() async {
@@ -111,6 +119,13 @@ class TapHomeViewController extends GetxController {
 
       loadprice = false;
     });
+    update();
+  }
+
+  clearPrice() {
+    minValue = prices[0].id;
+    maxValue = prices[prices.length - 1].id;
+    values = SfRangeValues(minValue, maxValue);
     update();
   }
 
