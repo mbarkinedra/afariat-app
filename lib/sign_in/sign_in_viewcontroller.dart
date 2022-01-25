@@ -14,6 +14,14 @@ class SignInViewController extends GetxController {
   final storge = Get.find<SecureStorage>();
   GetSaltApi _getSalt = GetSaltApi();
   SignInApi _signInApi = SignInApi();
+  bool isVisiblePassword = true;
+
+  void showHidePassword() {
+    isVisiblePassword = !isVisiblePassword;
+    print('pressed');
+
+    update();
+  }
 
   login() {
     //GET the user SALT

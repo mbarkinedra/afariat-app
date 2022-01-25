@@ -24,6 +24,13 @@ class LocController extends GetxController {
     });
   }
 
+  clearData() {
+    citie = null;
+
+    town = null;
+    update();
+  }
+
   updatecitie(RefJson ci) {
     citie = ci;
     tapPublishViewController.citie = ci;
@@ -35,12 +42,13 @@ class LocController extends GetxController {
     update();
   }
 
-  updatetown(RefJson tow) {
-    town = tow;
-    tapPublishViewController.town = tow;
-    tapHomeViewController.setsearch("town", tow.id);
-    tapPublishViewController.myAds["town"] = tow.id;
-    tapPublishViewController.myAdsview["town"] = tow.name;
+  updatetown(RefJson town) {
+    this.town = town;
+
+    tapPublishViewController.town = town;
+    tapHomeViewController.setsearch("town", town.id);
+    tapPublishViewController.myAds["town"] = town.id;
+    tapPublishViewController.myAdsview["town"] = town.name;
     update();
   }
 

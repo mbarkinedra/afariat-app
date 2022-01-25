@@ -17,7 +17,7 @@ class SignUpViewController extends GetxController {
   TextEditingController phone = TextEditingController();
   TextEditingController email = TextEditingController();
   ValidateServer validateServer = ValidateServer();
-  bool isVisiblePassword = false;
+  bool isVisiblePassword = true;
 
   SignUpApi _signUpApi = SignUpApi();
   List<TypeRegister> typeList = [

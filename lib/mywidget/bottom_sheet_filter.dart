@@ -21,8 +21,6 @@ class BottomSheetFilter extends StatefulWidget {
 }
 
 class _BottomSheetFilterState extends State<BottomSheetFilter> {
-  final tap1ViewController = Get.find<TapHomeViewController>();
-
   // final categoryAndSubcategory = Get.find<CategoryAndSubcategory>();
 
   @override
@@ -51,7 +49,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButton<CategoryGroupedJson>(
                     isExpanded: true,
-                    hint: Text("catégorie"),
+                    hint: Text("Catégorie"),
                     value: logic.categoryGroupedJson,
                     iconSize: 24,
                     elevation: 16,
@@ -94,13 +92,12 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
               ],
             );
           }),
-
         ),
         GetBuilder<TapPublishViewController>(builder: (logic) {
           return logic.getview != null
               ? WidgetPublish(
-            logic.getview.name,
-          )
+                  logic.getview.name,
+                )
               : SizedBox();
         }),
         const Padding(
@@ -162,7 +159,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                     borderRadius: BorderRadius.circular(10)),
                 child: DropdownButton<RefJson>(
                   isExpanded: true,
-                  hint: Text("City"),
+                  hint: Text("Gouvernorat"),
                   value: logic.citie,
                   iconSize: 24,
                   elevation: 16,
@@ -186,7 +183,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       borderRadius: BorderRadius.circular(10)),
                   child: DropdownButton<RefJson>(
                     isExpanded: true,
-                    hint: Text("Town"),
+                    hint: Text("Ville"),
                     value: logic.town,
                     iconSize: 24,
                     elevation: 16,
@@ -208,10 +205,11 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
             height: 50,
             width: _size.width * .4,
             function: () {
-              tap1ViewController.filterUpdate();
+              Get.find<TapHomeViewController>().filterUpdate();
+              Navigator.pop(context);
             },
             labcolor: textbuttonColor,
-            label: "rechercher",
+            label: "Rechercher",
             btcolor: buttonColor,
             fontWeight: FontWeight.bold,
             fontSize: 20,

@@ -42,22 +42,32 @@ class SignInScr extends GetWidget<SignInViewController> {
               SizedBox(
                 height: _size.height * .05,
               ),
-              LogInItem(
-                label: "Mot de passe",
-                hint: "**********",
-                icon: Icons.lock_outline,
-                textEditingController: controller.password,
-                obscureText: true,
-              ),
+              GetBuilder<SignInViewController>(builder: (logic) {
+                return LogInItem(
+                  label: "Password",
+                  hint: "**********",
+                  icon: Icons.lock_outline,
+                  //Ajouter
+                  obscureText: logic.isVisiblePassword,
+                  textEditingController: controller.password,
+                  suffixIcon: IconButton(
+                    onPressed: controller.showHidePassword,
+                    icon: Icon(logic.isVisiblePassword
+                        ? Icons.visibility_off
+                        : Icons.visibility),
+                  ),
+                );
+              }),
               SizedBox(
                 height: _size.height * .05,
               ),
-              InkWell(onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ForgotPassword()),
-                );
-              },
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ForgotPassword()),
+                  );
+                },
                 child: Text(
                   "Mot de passe oublié ?",
                   style: TextStyle(color: Colors.blue),

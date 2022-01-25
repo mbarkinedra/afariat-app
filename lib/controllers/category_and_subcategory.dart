@@ -31,8 +31,15 @@ class CategoryAndSubcategory extends GetxController {
       update();
     });
   }
-
+clearData(){
+  categoryGroupedJson = null;
+  subcategories1 = null;
+    update();
+}
   updateCategorie(CategoryGroupedJson cat) {
+    Filter.data["category"]=cat.id;
+    tapHomeViewController.setsearch("category", cat.id);
+    print(   Filter.data.toString());
     categoryGroupedJson = cat;
     tapPublishViewController.updatecategory(cat);
     subcategories1 = null;
@@ -42,6 +49,8 @@ class CategoryAndSubcategory extends GetxController {
   }
 
   updateSupCategorie(SubcategoryJson subCat) {
+    // Filter.data["category"]=subCat.id;
+    // print(   Filter.data.toString());
     subcategories1 = subCat;
     tapHomeViewController.setsearch("category", subCat.id);
 
