@@ -14,7 +14,7 @@ class Motos extends GetView<TapPublishViewController> {
             title:  Container(
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrangeAccent)
+                  border: Border.all(color: Colors.deepOrange)
               ),
               child: DropdownButton<RefJson>(  underline: SizedBox(),isExpanded: true,
                 value: logic.vehiculebrands,
@@ -42,7 +42,7 @@ class Motos extends GetView<TapPublishViewController> {
             title:  Container(
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrangeAccent)
+                  border: Border.all(color: Colors.deepOrange)
               ),
               child: DropdownButton<RefJson>(underline: SizedBox(),isExpanded: true,
                 value:logic. kilometrage,
@@ -68,7 +68,7 @@ class Motos extends GetView<TapPublishViewController> {
             title:  Container(
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrangeAccent)
+                  border: Border.all(color: Colors.deepOrange)
               ),
               child: DropdownButton<RefJson>(underline: SizedBox(),isExpanded: true,
                 value: logic.yearsmodele,

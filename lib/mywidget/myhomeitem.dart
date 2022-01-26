@@ -64,10 +64,10 @@ class MyHomeItem extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 4,
+                      height: 10,
                     ),
                     Text(
-                      "${adverts.price}" + SettingsApp.moneySymbol,
+                      "${adverts.price} " + SettingsApp.moneySymbol,
                       style: TextStyle(
                           color: Colors.deepOrange,
                           fontWeight: FontWeight.bold,

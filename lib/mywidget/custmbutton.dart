@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget {
   final Color btcolor;
   final Color labcolor;
+  final Color iconcolor;
   final String label;
   final double height;
   final double width;
@@ -24,22 +25,22 @@ class CustomButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+
+                if (icon != null)
+                  Icon(
+                    icon,
+                    color: iconcolor,
+                  ),
+                SizedBox(
+                  width: 8,
+                ),
                 Text(
                   label,
                   style: TextStyle(
                       color: labcolor,
                       fontSize: fontSize,
                       fontWeight: fontWeight),
-                ),
-                SizedBox(
-                  width: 50,
-                ),
-                if (icon != null)
-                  Icon(
-                    icon,
-                    color: Colors.white,
-                  )
-              ],
+                ), ],
             ),
           ),
           width: width,
@@ -62,7 +63,7 @@ class CustomButton extends StatelessWidget {
 
   CustomButton(
       {@required this.btcolor,
-      this.icon,
+      this.icon,this.iconcolor,
       @required this.function,
       @required this.labcolor,
       @required this.label,

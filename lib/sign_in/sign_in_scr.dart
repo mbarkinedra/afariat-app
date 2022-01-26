@@ -82,6 +82,7 @@ class SignInScr extends GetWidget<SignInViewController> {
                 width: _size.width * .8,
                 btcolor: buttonColor,
                 icon: Icons.login,
+                iconcolor: Colors.white,
                 label: "Log  In",
                 labcolor: textbuttonColor,
                 fontWeight: FontWeight.bold,

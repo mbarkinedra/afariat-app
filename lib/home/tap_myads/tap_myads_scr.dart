@@ -1,6 +1,8 @@
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/ads_item.dart';
+import 'package:afariat/mywidget/custmbutton.dart';
+import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,37 +19,61 @@ class TapMyadsScr extends GetWidget<TapMyadsViewController> {
         appBar: AppBar(
           title: Text(
             "Mes annonces",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
-          backgroundColor: Colors.deepOrangeAccent,
+          backgroundColor: Colors.deepOrange,
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: GetBuilder<TapMyadsViewController>(builder: (logic) {
-                return ListView.builder(
-                    itemCount: logic.adverts.length,
-                    itemBuilder: (context, pos) {
-                      return AdsItem(
-                        size: _size,
-                        adverts: logic.adverts[pos],
-                        deleteAds: () {
-                          print(logic.adverts[pos].id);
-                          controller.deleteAds(logic.adverts[pos].id);
-                        },
-                        EditAds: () {
-                          Get.find<TapPublishViewController>().dataAdverts = true;
-                          print(logic.adverts[pos].id);
-                          Get.find<TapPublishViewController>()
-                              .getEditId(logic.adverts[pos].id);
+        body: GetBuilder<TapMyadsViewController>(builder: (logic) {
+          return logic.adverts.length == 0
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text("Vous n'avez déposé aucune annonce",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16,color: Colors.grey)),
+                      ),
+                      SizedBox(
+                        height: _size.height * .20,
+                      ),
+                      CustomButtonWithoutIcon(
+                        function: () {
                           Get.find<HomeViwController>().changeSelectedValue(2);
                         },
-                      );
-                    });
-              }),
-            ),
-          ],
-        ),
+                        labcolor: Colors.white,
+                        height: 50,
+                        width: 300,
+                        label: "Déposer une annonce maintenant",
+                        btcolor: Colors.deepOrange,
+                      )
+                    ],
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: logic.adverts.length,
+                  itemBuilder: (context, pos) {
+                    return AdsItem(
+                      size: _size,
+                      adverts: logic.adverts[pos],
+                      deleteAds: () {
+                        print(logic.adverts[pos].id);
+                        controller.deleteAds(logic.adverts[pos].id);
+                      },
+                      EditAds: () {
+                        Get.find<TapPublishViewController>().dataAdverts = true;
+                        print(logic.adverts[pos].id);
+                        Get.find<TapPublishViewController>()
+                            .getEditId(logic.adverts[pos].id);
+                        Get.find<HomeViwController>().changeSelectedValue(2);
+                      },
+                    );
+                  });
+        }),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:afariat/networking/json/advert_details_json.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -145,7 +146,7 @@ class AdvertDetailsViewcontroller extends GetxController {
     showGeneralDialog(
       context: context,
       barrierDismissible: false,
-      transitionDuration: Duration(milliseconds: 2000),
+      transitionDuration: Duration(milliseconds: 300),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         return FadeTransition(
           opacity: animation,
@@ -157,42 +158,51 @@ class AdvertDetailsViewcontroller extends GetxController {
       },
       pageBuilder: (context, animation, secondaryAnimation) {
         return SafeArea(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            padding: EdgeInsets.all(20),
-            color: Colors.white,
-            child: Center(
-              child: Container(
-                  child: PhotoViewGallery.builder(
-                scrollPhysics: const BouncingScrollPhysics(),
-                builder: (BuildContext context, int index) {
-                  return PhotoViewGalleryPageOptions(
-                    controller: photoViewController,
-                    imageProvider: NetworkImage(
-                      advert.photos[index].path,
-                    ),
-                    maxScale: PhotoViewComputedScale.covered * 2,
-                    minScale: PhotoViewComputedScale.contained * .8,
-                    heroAttributes:
-                        PhotoViewHeroAttributes(tag: advert.photos[index].path),
-                  );
-                },
-                itemCount: advert.photos.length,
-                loadingBuilder: (context, event) => Center(
+          child: Stack(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                padding: EdgeInsets.all(20),
+                color: Colors.white,
+                child: Center(
                   child: Container(
-                    width: 20.0,
-                    height: 20.0,
-                    child: CircularProgressIndicator(
-                      value: event == null
-                          ? 0
-                          : event.cumulativeBytesLoaded /
-                              event.expectedTotalBytes,
+                      child: PhotoViewGallery.builder(
+                    scrollPhysics: const BouncingScrollPhysics(),
+                    builder: (BuildContext context, int index) {
+                      return PhotoViewGalleryPageOptions(
+                        controller: photoViewController,
+                        imageProvider: NetworkImage(
+                          advert.photos[index].path,
+                        ),
+                        maxScale: PhotoViewComputedScale.covered * 2,
+                        minScale: PhotoViewComputedScale.contained * .8,
+                        heroAttributes:
+                            PhotoViewHeroAttributes(tag: advert.photos[index].path),
+                      );
+                    },
+                    itemCount: advert.photos.length,
+                    loadingBuilder: (context, event) => Center(
+                      child: Container(
+                        width: 20.0,
+                        height: 20.0,
+                        child: CircularProgressIndicator(
+                          value: event == null
+                              ? 0
+                              : event.cumulativeBytesLoaded /
+                                  event.expectedTotalBytes,
+                        ),
+                      ),
                     ),
-                  ),
+                  )),
                 ),
-              )),
-            ),
+              ),
+              Align(alignment: Alignment.topRight,child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GestureDetector(onTap: (){
+                Navigator.pop(context);
+                },child: Container(color: Colors.grey[100],child: Icon(Icons.close,color: Colors.deepOrange,size: 50,))),
+              ),),   ],
           ),
         );
       },

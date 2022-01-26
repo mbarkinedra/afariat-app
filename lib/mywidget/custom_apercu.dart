@@ -10,12 +10,12 @@ class CustomApercu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Row(
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
               child: Text(
             label,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
           )),
           Expanded(
             child: Text(data),

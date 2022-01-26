@@ -79,7 +79,7 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                                                     Icons.clear,
                                                     size: 30,
                                                     color:
-                                                        Colors.deepOrangeAccent,
+                                                        Colors.deepOrange,
                                                   )),
                                             ),
                                           ],
@@ -128,7 +128,7 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                                                     Icons.clear,
                                                     size: 30,
                                                     color:
-                                                        Colors.deepOrangeAccent,
+                                                        Colors.deepOrange,
                                                   )),
                                             ),
                                           ],
@@ -148,18 +148,20 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       CustomButton(
-                        width: MediaQuery.of(context).size.width * .4,
-                        height: 50,
+                        width: MediaQuery.of(context).size.width * .35,
+                        height: 45,
                         label: "Précédent",
+                        labcolor: Colors.white,
                         btcolor: buttonColor,
                         function: () {
                           Navigator.of(context).pop();
                         },
                       ),
                       CustomButton(
-                          width: MediaQuery.of(context).size.width * .4,
-                          height: 50,
+                          width: MediaQuery.of(context).size.width * .35,
+                          height: 45,
                           label: "Suivant",
+                          labcolor: Colors.white,
                           btcolor: buttonColor,
                           function: () {
                             Navigator.of(context).push(MaterialPageRoute(
@@ -189,10 +191,6 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                   GestureDetector(
                     child: Text("Capture Image From Camera"),
                     onTap: () async {
-                      // var imgGallery = await  ImagePicker.pickImage(source: ImageSource.camera);
-                      //
-                      // // image = File(imgGallery.path);
-                      // Get.find<PublishadsImageViewController>().  updateImage ( Get.find<PublishadsImageViewController>().image ,imgGallery);
                       controller.openCamera();
                     },
                   ),
@@ -201,7 +199,6 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                     child: Text("Take Image From Gallery"),
                     onTap: () async {
                       controller.openGallery();
-                      //Get.find<PublishadsImageViewController>().  updateImage ( Get.find<PublishadsImageViewController>().image ,imgGallery);
                     },
                   ),
                 ],

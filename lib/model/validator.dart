@@ -5,7 +5,7 @@ class Validator {
 
   String validatetitle(String value) {
     if (value.length < 11) {
-      return "Le titre doit être renseigné";
+      return " le titre doit avoir au minimum X caractères";
     }
 
     return null;

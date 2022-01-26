@@ -1,4 +1,5 @@
 import 'package:afariat/config/utility.dart';
+import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
 import 'package:afariat/mywidget/profile_pic.dart';
@@ -16,6 +17,7 @@ class Setting extends GetWidget<SettingViewController> {
       appBar: AppBar(
         title: Text(
           "Settings ",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         backgroundColor: Colors.deepOrangeAccent,
       ),
@@ -52,20 +54,26 @@ class Setting extends GetWidget<SettingViewController> {
             hintText: "Ancien mot de passe",
             textEditingController: controller.newPassword,
           ),
-          CustomButtonWithoutIcon(
+          CustomButton(
             height: 50,
-            label: "send",
+            label: "Mettre à jour",
+            icon: Icons.refresh_outlined,
+            iconcolor: Colors.white,
             width: size.width * .8,
             btcolor: framColor,
+            labcolor: Colors.white,
             function: () {
               controller.changePassword();
             },
           ),
-          CustomButtonWithoutIcon(
+          CustomButton(
             height: 50,
             label: "Supprimer mon compte",
+            icon: Icons.delete,
+            iconcolor: Colors.white,
             width: size.width * .8,
             btcolor: framColor,
+            labcolor: Colors.white,
             function: () {
               Get.defaultDialog(
                 cancel: GestureDetector(

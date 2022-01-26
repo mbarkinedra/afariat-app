@@ -1,5 +1,3 @@
-
-
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/storage.dart';
 import 'package:afariat/home/tap_profile/notification/notification_scr.dart';
@@ -16,8 +14,6 @@ import 'settings/setting_scr.dart';
 import 'tap_profile_viewcontroller.dart';
 
 class TapProfileScr extends GetWidget<TapProfileViewController> {
-
-
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -25,65 +21,72 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            ProfilePic(controller.pic),
+            CircleAvatar(
+              maxRadius: 50,
+              backgroundImage: NetworkImage(
+                  "https://www.sleeptasticsolutions.com/wp-content/uploads/2018/05/happy-kids-1.jpg"),
+            ),
+          //  ProfilePic(controller.pic),
             SizedBox(height: 20),
             ProfileMenu(
-              text: "My Account",
-             // icon: "assets/icons/User Icon.svg",
+              text: "Mon compte",
+              // icon: "assets/icons/User Icon.svg",
               press: () => {
                 Navigator.of(context).push(MaterialPageRoute(
-                builder: (
-                context,
+                    builder: (
+                  context,
                 ) =>
-                    Account())),
+                        Account())),
               },
             ),
             ProfileMenu(
-              text: "Settings",
+              text: "Paramètres",
               //icon: "assets/icons/Settings.svg",
               press: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (
-                        context,
-                        ) =>
+                  context,
+                ) =>
                         Setting()));
-
               },
             ),
             ProfileMenu(
-              text: "Help Center",
-            //  icon: "assets/icons/Question mark.svg",
+              text: "Centre d'aide",
+              //  icon: "assets/icons/Question mark.svg",
               press: () {},
             ),
-         Obx((){
-           return    ProfileMenu(
-             text: "Notification",hasnotfication: Get.find<NotificationViewController>().hasnotification.value,isnotfication: true,
-             //  icon: "assets/icons/Question mark.svg",
-             press: () {
-               Get.find<NotificationViewController>().hasnotification.value=false;
-               Navigator.of(context).push(MaterialPageRoute(
-                   builder: (
-                       context,
-                       ) =>
-                       NotificationSrc()));
-             },
-           );
-         }),
+            Obx(() {
+              return ProfileMenu(
+                text: "Notifications",
+                hasnotfication: Get.find<NotificationViewController>()
+                    .hasnotification
+                    .value,
+                isnotfication: true,
+                //  icon: "assets/icons/Question mark.svg",
+                press: () {
+                  Get.find<NotificationViewController>().hasnotification.value =
+                      false;
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (
+                    context,
+                  ) =>
+                          NotificationSrc()));
+                },
+              );
+            }),
             ProfileMenu(
-              text: "Log Out",
-            //  icon: "assets/icons/Log out.svg",
+              text: "Déconnexion",
+              //  icon: "assets/icons/Log out.svg",
               press: () {
                 Get.find<AccountInfoStorage>().removeHashedPassword();
                 Get.find<HomeViwController>().changeSelectedValue(0);
                 Get.find<AccountInfoStorage>().logout();
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (
-                  //         context,
-                  //         ) =>
-                  //         SignInScr()));
-
-                },
-
+                // Navigator.of(context).push(MaterialPageRoute(
+                //     builder: (
+                //         context,
+                //         ) =>
+                //         SignInScr()));
+              },
             ),
           ],
         ),

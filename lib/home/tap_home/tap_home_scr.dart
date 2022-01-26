@@ -163,40 +163,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                         ),
                       );
 
-                //                 :   PagedListView (
-                //             pagingController: logic.pagingController,
-                //             builderDelegate: PagedChildBuilderDelegate<AdvertJson>(
-                //             itemBuilder: (context, item, index) {
-                //
-                //
-                //               if (logic.adverts[index].description
-                //                   .toLowerCase()
-                //                   .contains(logic.searchWord.text.toLowerCase())||logic.adverts[index].title
-                //                   .toLowerCase()
-                //                   .contains(logic.searchWord.text.toLowerCase())) {
-                //                 return InkWell(onTap: (){
-                //                   print(logic.adverts[index].id);
-                //
-                //                   Get.find<AdvertDetailsViewcontroller>().loading=true;
-                //                   Get.find<AdvertDetailsViewcontroller>().getAdvertDetails(logic.adverts[index].id);
-                //                   Navigator.push(
-                //                     context,
-                //                     MaterialPageRoute(builder: (context) => AdvertDetatilsScr() ),
-                //                   );
-                //
-                //                 },
-                //                   child: MyHomeItem(
-                //                     size: _size,
-                //                     adverts: logic.adverts[index],
-                //                   ),
-                //                 );
-                //               } else {
-                //                 return const SizedBox();
-                //               }
-                // }
-                //
-                //             )
-
                 // ListView.builder(
                 //     controller: logic.scrollController,
                 //     itemCount: logic.adverts.length,

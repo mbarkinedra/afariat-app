@@ -1,5 +1,6 @@
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/loc_controller.dart';
+import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
 import 'package:afariat/mywidget/profile_pic.dart';
@@ -55,7 +56,7 @@ class Account extends GetWidget<AccountViewController> {
                   Container(
                     width: size.width * .8,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.deepOrangeAccent),
+                        border: Border.all(color: Colors.deepOrange),
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButton<RefJson>(
                       hint: Text("City"),
@@ -79,18 +80,29 @@ class Account extends GetWidget<AccountViewController> {
                 ],
               );
             }),
-            CustomButtonWithoutIcon(
-              height: 50,
-              label: "send",
-              width: size.width * .8,
-              btcolor: framColor,
-              function: () {
-                controller.updateUserData();
-              },
+
+            GetBuilder<AccountViewController>(builder: (logic) {
+              return logic.updateData?CircularProgressIndicator():CustomButton(
+                  height: 50,
+                  label: "Mettre à jour",
+                  icon: Icons.refresh_outlined,
+                  iconcolor:Colors.white,
+                  labcolor: Colors.white,
+                  width: size.width * .8,
+                  btcolor: framColor,
+                  function: () {
+                    controller.updateUserData();
+                  },
+                );
+              }
             ),
-            CustomButtonWithoutIcon(
+            CustomButton(
               height: 50,
-              label: "back",
+              label: "Annuler",
+              icon: Icons.arrow_back_rounded,
+              labcolor: Colors.white,
+              iconcolor:Colors.white,
+
               width: size.width * .8,
               btcolor: framColor,
               function: () {

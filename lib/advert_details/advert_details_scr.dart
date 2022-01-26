@@ -24,10 +24,10 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Annonce détaillée",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+          "Détails de l'annonce",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: Colors.deepOrange,
       ),
       body: GetBuilder<AdvertDetailsViewcontroller>(builder: (logic) {
         return logic.loading
@@ -98,11 +98,13 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                       SizedBox(height: 10),
                       Text("${logic.advert.price} " + SettingsApp.moneySymbol,
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 29)),
+                              color: Colors.deepOrange,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 29)),
                       SizedBox(
                         height: 8,
                       ),
-                      Text("Ajouter description",
+                      Text("Catégorie",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -112,13 +114,10 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                       ),
                       Container(
                         width: _size.width * .8,
-                        child: Text(logic.advert.description,
+                        child: Text(logic.advert.category.name,
                             style: TextStyle(
                               fontSize: 16,
                             )),
-                      ),
-                      SizedBox(
-                        height: 8,
                       ),
                       if (logic.advert.roomsNumber != null)
                         Row(
@@ -233,7 +232,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                       SizedBox(
                         height: 8,
                       ),
-                      Text("Catégorie",
+                      Text("Ajouter description",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -243,10 +242,13 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                       ),
                       Container(
                         width: _size.width * .8,
-                        child: Text(logic.advert.category.name,
+                        child: Text(logic.advert.description,
                             style: TextStyle(
                               fontSize: 16,
                             )),
+                      ),
+                      SizedBox(
+                        height: 8,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
