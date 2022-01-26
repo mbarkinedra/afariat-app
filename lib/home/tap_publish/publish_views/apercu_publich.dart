@@ -67,7 +67,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
               data: controller.myAdsview["city"],
             ),
             CustomApercu(
-              label: "Téléphone:",
+              label: "Afficher N° Tél:",
               data: controller.myAdsview["showPhoneNumber"],
             ),
             Column(
@@ -114,6 +114,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                   width: MediaQuery.of(context).size.width * .25,
                   height: 50,
                   label: "Modifier",
+                  labcolor: Colors.white,
                   btcolor: Colors.blue,
                   function: () {
                     int count = 0;
@@ -127,6 +128,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                   width: MediaQuery.of(context).size.width * .25,
                   height: 50,
                   label: "Supprimer",
+                  labcolor: Colors.white,
                   btcolor: Colors.red,
                   function: () {
                     controller.images.clear();
@@ -159,6 +161,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                     width: MediaQuery.of(context).size.width * .25,
                     height: 50,
                     label: "Publier",
+                    labcolor: Colors.white,
                     btcolor: Colors.green,
                     function: () {
                       controller.postdata();

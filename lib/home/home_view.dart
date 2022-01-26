@@ -38,15 +38,15 @@ class Home extends GetWidget<HomeViwController> {
           bottomNavigationBar: GetBuilder<HomeViwController>(builder: (logic) {
             return   ConvexAppBar(
               items: [
-                TabItem(icon: Icons.home, title: 'MyHome'),
-                TabItem(icon: Icons.photo_size_select_large_outlined, title: 'MyAds'),
-                TabItem(icon: Icons.add_box_rounded, title: 'Publish'),
-                TabItem(icon: Icons.article_rounded, title: 'Chat'),
-                TabItem(icon: Icons.person, title: 'Profile'),
+                TabItem(icon: Icons.home, title: 'Accueil'),
+                TabItem(icon: Icons.photo_size_select_large_outlined, title: 'My ads'),
+                TabItem(icon: Icons.add_box_rounded, title: 'Déposer'),
+                TabItem(icon: Icons.article_rounded, title: 'Messages'),
+                TabItem(icon: Icons.person, title: 'Profil'),
               ],
               initialActiveIndex:controller.navigatorValue,//optional, default as 0
               onTap: controller.changeSelectedValue,
-        backgroundColor:  Colors.deepOrangeAccent, color: Colors.white, );
+        backgroundColor:  Colors.deepOrange, color: Colors.white, );
 
 
 

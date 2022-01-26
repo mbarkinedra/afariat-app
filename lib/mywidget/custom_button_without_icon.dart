@@ -9,6 +9,8 @@ class CustomButtonWithoutIcon extends StatelessWidget {
   final double fontSize;
   final FontWeight fontWeight;
   final Function function;
+  final Color iconcolor;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,9 @@ class CustomButtonWithoutIcon extends StatelessWidget {
               style: TextStyle(
                   color: labcolor, fontSize: fontSize, fontWeight: fontWeight),
             ),
+
           ),
+
           width: width,
           height: height,
           decoration: BoxDecoration(
@@ -50,6 +54,8 @@ class CustomButtonWithoutIcon extends StatelessWidget {
       @required this.labcolor,
       @required this.label,
       @required this.height,
+        this.icon,
+        this.iconcolor = Colors.white,
       @required this.width,
       this.fontSize = 16,
       this.fontWeight = FontWeight.normal});

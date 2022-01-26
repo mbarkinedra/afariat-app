@@ -293,8 +293,7 @@ class TapPublishViewController extends GetxController {
   updateLight(v) {
     lights = v;
     print(accountInfoStorage.readPhone());
-    print(
-        " 0àààààààààààà0000ààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààààà");
+
     myAds["showPhoneNumber"] = v ? "yes" : "no";
     myAdsview["showPhoneNumber"] =
         v ? accountInfoStorage.readPhone() : accountInfoStorage.readPhone();
@@ -327,7 +326,7 @@ class TapPublishViewController extends GetxController {
     vehiculeModel = null;
     energie = "";
     kilometrage = null;
-    pieces="";
+    pieces = "";
     town = null;
     citie = null;
 

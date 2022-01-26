@@ -14,6 +14,7 @@ class TapMyadsViewController extends GetxController {
 
   final storge = Get.find<SecureStorage>();
   List<Adverts> adverts = [];
+  bool deleteData = false;
 
   @override
   void onInit() {
@@ -34,10 +35,16 @@ class TapMyadsViewController extends GetxController {
   }
 
   deleteAds(int i) {
+    deleteData = true;
+    update();
     _deleteAds.id = i;
+    print(_deleteAds.apiUrl());
     _deleteAds.delPost().then((value) {
-      print(value);
+      ads();
+      deleteData = false;
+      update();
     });
+
     update();
   }
 }

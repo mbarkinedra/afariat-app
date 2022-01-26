@@ -10,8 +10,9 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
       appBar: AppBar(
         title: Text(
           "Notifications ",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: Colors.deepOrange,
       ),
       body: Column(
         children: [

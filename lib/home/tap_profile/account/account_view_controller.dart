@@ -14,12 +14,13 @@ class AccountViewController extends GetxController {
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController city = TextEditingController();
+  ValidateServer _validateServer = ValidateServer();
   final localisation = Get.find<LocController>();
   AccountInfoStorage _storage = AccountInfoStorage();
   UserApi _userApi = UserApi();
   UserJson _userJson = UserJson();
   ValidateServer validateServer = ValidateServer();
-
+bool updateData=false;
   @override
   void onInit() {
     super.onInit();
@@ -33,19 +34,38 @@ class AccountViewController extends GetxController {
     // "type": 0,
     // "phone": "22923568",
     // "city": 1_userJson
+    updateData=true;
+    update();
     Filter.data["type"] = _userJson.type;
     Filter.data["email"] = email.text;
-    Filter.data["username"] = _userJson.username;
+    // Filter.data["username"] = _userJson.username;
 
     Filter.data["name"] = name.text;
     Filter.data["phone"] = phone.text;
 
     Filter.data["city"] = localisation.citie.id;
-print(Filter.data);
 
-    _userApi.putData(dataToPost: Filter.data).then((value) {
-      print(value);
-    }).catchError((e){print(e.toString());});
+    _userApi.id = Get.find<AccountInfoStorage>().readUserId();
+    print(_userApi.apiUrl());
+    _userApi.putData(dataToPost: Filter.data).then(
+      (value) {
+        print(value.data);
+        _validateServer.validatorServer(
+            validate: () {
+              Get.snackbar("", "mise à jours avec succés ");
+              updateData=false;
+              update();   },
+            value: value);
+
+
+
+        print(value.data);
+      },
+    ).catchError((e) {
+      updateData=false;
+      update();
+      print(e.toString());
+    });
   }
 
   getuserdata() {
@@ -61,18 +81,20 @@ print(Filter.data);
       name.text = _userJson.name;
 
       phone.text = _userJson.phone;
-      print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+      print(
+          "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
       print(_userJson.phone);
       print(_userJson.username);
       print(_userJson.city.id);
       print(_userJson.id);
-      print("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+      print(
+          "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
       localisation.cities.forEach((element) {
         if (element.id == _userJson.city.id) {
           localisation.updatecitie(element);
         }
       });
-      _userApi.id=null;
+      _userApi.id = null;
       update();
     });
   }
