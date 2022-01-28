@@ -98,6 +98,7 @@ abstract class ApiManager {
 
     String wsse = xwsse.generateWsseFromStorage();
     print(jsonEncode(dataToPost));
+    print(wsse);
 
     return dioSingleton.dio
         .get(

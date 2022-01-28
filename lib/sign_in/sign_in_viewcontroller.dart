@@ -26,6 +26,7 @@ class SignInViewController extends GetxController {
   login() {
     //GET the user SALT
     _getSalt.post({"login": "${email.text}"}).then((value) {
+
       String hashedPassword =
           Wsse.hashPassword(password.text, value.data["salt"]);
       print("Hashed Password: $hashedPassword");

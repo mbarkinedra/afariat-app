@@ -34,14 +34,18 @@ class TapHomeViewController extends GetxController {
   ScrollController scrollController = ScrollController();
   int page = 1;
 
-  @override
-  void onInit() {
-    super.onInit();
+  getAlllAds() {
     pagingController.addPageRequestListener((pageKey) {
       _fetchPage(page);
     });
     updatedata();
     getPriceList();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getAlllAds();
   }
 
   Future<void> _fetchPage(int pageKey) async {
@@ -92,7 +96,6 @@ class TapHomeViewController extends GetxController {
     print(Filter.data.toString());
     print("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
     a.getList(filters: Filter.data).then((value) {
-
       clearPrice();
       pagingController.itemList.clear();
       adverts.clear();

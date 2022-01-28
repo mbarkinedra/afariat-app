@@ -16,7 +16,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrangeAccent)),
+                  border: Border.all(color: Colors.deepOrangeAccent,width: 2)),
               child: DropdownButton<RefJson>(
                 underline: SizedBox(),
                 isExpanded: true,
@@ -68,7 +68,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrangeAccent)),
+                  border: Border.all(color: Colors.deepOrangeAccent,width: 2)),
               child: DropdownButton<String>(
                 underline: SizedBox(),
                 isExpanded: true,
@@ -78,6 +78,8 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                 onChanged: logic.updateEnergie,
                 items: logic.energies
                     .map<DropdownMenuItem<String>>((String value) {
+                      print(value);
+                      print("7 77766555444444445556767788876");
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -94,7 +96,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrangeAccent)),
+                  border: Border.all(color: Colors.deepOrange,width: 2)),
               child: DropdownButton<RefJson>(
                 underline: SizedBox(),
                 isExpanded: true,
@@ -120,7 +122,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrangeAccent)),
+                  border: Border.all(color: Colors.deepOrange,width: 2)),
               child: DropdownButton<RefJson>(
                 underline: SizedBox(),
                 isExpanded: true,

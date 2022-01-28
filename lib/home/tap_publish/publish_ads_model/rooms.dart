@@ -24,7 +24,7 @@ class Rooms extends GetView<TapPublishViewController> {
                 return Container(
                   decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.deepOrange,
+                        color: Colors.deepOrange,width: 2
                       ),
                       borderRadius: BorderRadius.circular(10)),
                   child: ListTile(
@@ -77,7 +77,7 @@ class Rooms extends GetView<TapPublishViewController> {
               width: 50,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrange),
+                  border: Border.all(color: Colors.deepOrange,width: 2),
                   color: Colors.grey[100]),
               child: Center(
                 child: Text(

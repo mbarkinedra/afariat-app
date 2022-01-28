@@ -4,16 +4,24 @@ import 'package:get/get.dart';
 
 class NotificationViewController extends GetxController {
   NotificationApi _notificationApi = NotificationApi();
-List<Notification>notification=[];
+List<Notification>notifications=[];
  RxBool hasnotification=false.obs;
+
+  onDeleteNotifications(int index ){
+
+
+   // update( );
+    Get.snackbar("","Votre notification est supprimé" );
+
+  }
   @override
   void onInit() {
     super.onInit();
 
     _notificationApi.secureGet().then((value) {
       NotificationJson notificationJson=NotificationJson.fromJson(value.data);
-      notification=notificationJson.eEmbedded.notification;
-     notification.forEach((element) {
+      notifications=notificationJson.eEmbedded.notification;
+     notifications.forEach((element) {
        if(!element.read){
          hasnotification.value=true;
        }

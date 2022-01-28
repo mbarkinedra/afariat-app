@@ -27,7 +27,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
           "Deposer une annonce ",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: Colors.deepOrange
       ),
       body: Padding(
         padding: const EdgeInsets.all(25),
@@ -55,7 +55,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.deepOrange),
+                            border: Border.all(color: Colors.deepOrange,width: 2),
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<CategoryGroupedJson>(
                           isExpanded: true,
@@ -80,7 +80,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.deepOrange),
+                            border: Border.all(color: Colors.deepOrange,width: 2),
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<SubcategoryJson>(
                           isExpanded: true,
@@ -205,7 +205,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.deepOrange),
+                          border: Border.all(color: Colors.deepOrange,width: 2),
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButton<RefJson>(
                         isExpanded: true,
@@ -240,7 +240,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                     Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.deepOrange),
+                            border: Border.all(color: Colors.deepOrange,width: 2),
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<RefJson>(
                           isExpanded: true,
