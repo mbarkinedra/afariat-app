@@ -9,6 +9,7 @@ import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/sign_in/sign_in_scr.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'tap_myads/tap_myads_scr.dart';
 import 'tap_profile/tap_profile_scr.dart';
@@ -21,6 +22,7 @@ class HomeViwController extends GetxController {
   //   _selectedIndex=index;
   //   update();
   // }
+  PersistentTabController controller;
 
   int _navigatorValue = 0;
   String _currentPage = 'Page1';
@@ -47,17 +49,46 @@ class HomeViwController extends GetxController {
 
   Widget currentScreen = TapHomeScr();
 
+  List<Widget> buildScreens=[
+      TapHomeScr(),
+      Get.find<AccountInfoStorage>().isLoggedIn() ? TapMyadsScr() : SignInScr(),
+      Get.find<AccountInfoStorage>().isLoggedIn()
+          ? TapPublishScr()
+          : SignInScr(),
+      Get.find<AccountInfoStorage>().isLoggedIn() ? TapChatScr() : SignInScr(),
+      Get.find<AccountInfoStorage>().isLoggedIn()
+          ? TapProfileScr()
+          : SignInScr()
+    ];
+
+
   @override
   void onInit() {
+    controller = PersistentTabController(initialIndex: 0);
     super.onInit();
     currentScreen = PageToView(
       naigatorKey: _navigatorKeys[_pageKeys[0]],
       tabItem: _pageKeys[0],
     ); //=HomeView();
   }
-
-/// Selected Navigation bar
+updatelist(){
+    if(  Get.find<AccountInfoStorage>().isLoggedIn() ){
+      buildScreens[1]=TapMyadsScr();
+      buildScreens[2]=TapPublishScr();
+      buildScreens[3]=TapChatScr();
+      buildScreens[4]=TapProfileScr();
+    }else{
+      buildScreens[1]=SignInScr();
+      buildScreens[2]=SignInScr();
+      buildScreens[3]=SignInScr();
+      buildScreens[4]=SignInScr();
+    }
+}
+  /// Selected Navigation bar
   changeSelectedValue(int selectedValue) {
+
+    updatelist();
+    controller = PersistentTabController(initialIndex: selectedValue);
     Filter.data.clear();
     Get.find<TapPublishViewController>().clearAllData();
     Get.find<CategoryAndSubcategory>().clearData();
@@ -116,10 +147,9 @@ class PageToView extends StatelessWidget {
         }
       case 'Page3':
         {
-          currentScreen = currentScreen =
-              Get.find<AccountInfoStorage>().isLoggedIn()
-                  ? TapPublishScr()
-                  : SignInScr();
+          currentScreen = Get.find<AccountInfoStorage>().isLoggedIn()
+              ? TapPublishScr()
+              : SignInScr();
           break;
         }
       case 'Page4':

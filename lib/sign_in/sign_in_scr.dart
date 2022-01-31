@@ -44,8 +44,8 @@ class SignInScr extends GetWidget<SignInViewController> {
               ),
               GetBuilder<SignInViewController>(builder: (logic) {
                 return LogInItem(
-                  label: "Password",
-                  hint: "**********",
+                  label: "Mot de passe",
+                  hint: "Mot de passe",
                   icon: Icons.lock_outline,
                   //Ajouter
                   obscureText: logic.isVisiblePassword,
@@ -69,8 +69,8 @@ class SignInScr extends GetWidget<SignInViewController> {
                   );
                 },
                 child: Text(
-                  "Mot de passe oublié ?",
-                  style: TextStyle(color: Colors.blue),
+                  "Mot de passe oublié ? ",
+                  style: TextStyle(color: Colors.grey[700]),
                 ),
               ),
               SizedBox(
@@ -83,7 +83,7 @@ class SignInScr extends GetWidget<SignInViewController> {
                 btcolor: buttonColor,
                 icon: Icons.login,
                 iconcolor: Colors.white,
-                label: "Log  In",
+                label: "Se connecter",
                 labcolor: textbuttonColor,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -104,12 +104,12 @@ class SignInScr extends GetWidget<SignInViewController> {
                   },
                   child: RichText(
                     text: TextSpan(
-                      text: "Vous n'avez pas de compte ?",
+                      text: "Vous n'avez pas de compte ?  ",
                       style: DefaultTextStyle.of(context).style,
                       children: const <TextSpan>[
                         TextSpan(
                             text: 'Créer un compte',
-                            style: TextStyle(fontWeight: FontWeight.bold))
+                            style: TextStyle(fontWeight: FontWeight.bold,color: Colors.deepOrange))
                       ],
                     ),
                   ),

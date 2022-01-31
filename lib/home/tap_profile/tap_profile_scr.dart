@@ -39,6 +39,26 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
                         Account())),
               },
             ),
+            Obx(() {
+              return ProfileMenu(
+                iconProfile: Icons.notifications_outlined,
+                text: "Notifications",
+                hasnotfication: Get.find<NotificationViewController>()
+                    .hasnotification
+                    .value,
+                isnotfication: true,
+                //  icon: "assets/icons/Question mark.svg",
+                press: () {
+                  Get.find<NotificationViewController>().hasnotification.value =
+                  false;
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (
+                          context,
+                          ) =>
+                          NotificationSrc()));
+                },
+              );
+            }),
             ProfileMenu(
               iconProfile: Icons.settings,
               text: "Paramètres",
@@ -59,26 +79,7 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
                 controller.launchURL("https://afariat.com/aide.html");
               },
             ),
-            Obx(() {
-              return ProfileMenu(
-                iconProfile: Icons.notifications_outlined,
-                text: "Notifications",
-                hasnotfication: Get.find<NotificationViewController>()
-                    .hasnotification
-                    .value,
-                isnotfication: true,
-                //  icon: "assets/icons/Question mark.svg",
-                press: () {
-                  Get.find<NotificationViewController>().hasnotification.value =
-                      false;
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (
-                    context,
-                  ) =>
-                          NotificationSrc()));
-                },
-              );
-            }),
+
             ProfileMenu(
               iconProfile: Icons.logout,
               text: "Déconnexion",
