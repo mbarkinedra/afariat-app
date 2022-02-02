@@ -7,6 +7,7 @@ import 'package:afariat/networking/api/sign_in_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class SignInViewController extends GetxController {
   TextEditingController email = TextEditingController();
@@ -26,6 +27,7 @@ class SignInViewController extends GetxController {
   login() {
     //GET the user SALT
     _getSalt.post({"login": "${email.text}"}).then((value) {
+
       String hashedPassword =
           Wsse.hashPassword(password.text, value.data["salt"]);
       print("Hashed Password: $hashedPassword");
@@ -42,7 +44,8 @@ class SignInViewController extends GetxController {
             .saveUserId(value.data["user_id"].toString());
 
         Get.find<HomeViwController>().changeSelectedValue(0);
-
+        Get.find<HomeViwController>().  updatelist();
+        Get.find<HomeViwController>() . controller = PersistentTabController(initialIndex: 0);
         //TODO: Process error cases: bad salt, bad login/pwd
       });
     });

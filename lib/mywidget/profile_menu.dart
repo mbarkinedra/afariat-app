@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfileMenu extends StatelessWidget {
+  final String text, icon;
+  final VoidCallback press;
+  final bool isnotfication;
+  final bool hasnotfication;
+  final IconData iconProfile;
+
   const ProfileMenu(
       {Key key,
       this.text,
       this.icon,
       this.press,
+      this.iconProfile,
       this.hasnotfication = false,
       this.isnotfication = false})
       : super(key: key);
-
-  final String text, icon;
-  final VoidCallback press;
-  final bool isnotfication;
-  final bool hasnotfication;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +41,10 @@ class ProfileMenu extends StatelessWidget {
                 //   color: buttonColor,
                 //   width: 22,
                 // ),
+                Icon(iconProfile,color: Colors.grey,),
                 SizedBox(width: 20),
-                Expanded(child: Text(text)),
-                Icon(Icons.arrow_forward_ios),
+                Expanded(child: Text(text,style: TextStyle(color: Colors.grey[700],fontWeight: FontWeight.bold),)),
+                Icon(Icons.arrow_forward_ios,color: Colors.grey,),
               ],
             ),
           ),

@@ -7,6 +7,7 @@ import 'package:afariat/config/storage.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/home_view_controller.dart';
+import 'package:afariat/home/tap_chat/chat_user/chat_user_viewcontroller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
 import 'package:afariat/home/tap_profile/account/account_view_controller.dart';
@@ -34,7 +35,7 @@ class AllBindings extends Bindings {
     Get.put(AccountInfoStorage());
     Get.put(TapPublishViewController());
 
-    Get.put(CategoryAndSubcategory() );
+    Get.put(CategoryAndSubcategory());
     Get.put(LocController());
     // Get.lazyPut(() => CategoryAndSubcategory() ,fenix: true );
     //Get.lazyPut(() => LocController(), fenix: true);
@@ -49,5 +50,6 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => ForgotPasswordViewController());
     Get.lazyPut(() => SettingViewController());
     Get.lazyPut(() => NotificationViewController());
+    Get.lazyPut(() => ChatUserViewController());
   }
 }

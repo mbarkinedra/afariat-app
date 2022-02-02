@@ -8,6 +8,7 @@ import 'package:afariat/config/storage.dart';
 import 'package:afariat/config/wsse.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
+import 'package:afariat/model/validate_server.dart';
 import 'package:afariat/model/validator.dart';
 import 'package:afariat/networking/api/get_salt_api.dart';
 import 'package:afariat/networking/api/modif_ads_api.dart';
@@ -74,7 +75,7 @@ class TapPublishViewController extends GetxController {
   RefJson citie;
   final storge = Get.find<SecureStorage>();
   final accountInfoStorage = Get.find<AccountInfoStorage>();
-
+  ValidateServer _validateServer = ValidateServer();
   RefJson town;
   String pieces;
   List<String> Nombredepieces = [
@@ -254,6 +255,7 @@ class TapPublishViewController extends GetxController {
 
   updateEnergie(newValue) {
     energie = newValue;
+    Filter.data["energy"] = newValue;
     update();
   }
 
@@ -324,9 +326,9 @@ class TapPublishViewController extends GetxController {
     vehiculebrands = null;
     motosBrand = null;
     vehiculeModel = null;
-    energie = "";
+    energie = null;
     kilometrage = null;
-    pieces = "";
+    pieces = null;
     town = null;
     citie = null;
 
@@ -390,11 +392,47 @@ class TapPublishViewController extends GetxController {
       });
     } else {
       devlog.log(jsonEncode(myAds));
-      myAds["energy"] = energie;
-      print(energie);
-      await publishApi.securePost(dataToPost: myAds).then((value) {
-        print(value.data);
-        if (value.statusCode == 201) {
+      /*  myAds["energy"] = energie;
+      print(energie);*/
+      final postData =
+          await publishApi.securePost(dataToPost: myAds).then((value) {
+        _validateServer.validatorServer(
+            validate: () {
+              Get.defaultDialog(
+                title: "Felécitation",
+                titlePadding: EdgeInsets.all(8),
+                content: Container(
+                  height: 100,
+                  child: Center(
+                      child: Text(
+                    "Votre annonce est encours de verification!",
+                    style: TextStyle(fontSize: 25),
+                  )),
+                ),
+                confirm: GestureDetector(
+                  child: Text(
+                    "ok",
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40),
+                  ),
+                  onTap: () {
+                    Filter.data.clear();
+                    clearAllData();
+                    Get.find<CategoryAndSubcategory>().clearData();
+                    Get.find<LocController>().clearData();
+
+                    Get.back();
+                  },
+                ),
+                titleStyle: TextStyle(color: Colors.deepOrange),
+                middleTextStyle: TextStyle(color: Colors.deepOrange),
+              );
+            },
+            value: value);
+
+        /* if (value.statusCode == 201) {
           Get.defaultDialog(
             title: "Felécitation",
             titlePadding: EdgeInsets.all(8),
@@ -426,8 +464,9 @@ class TapPublishViewController extends GetxController {
             titleStyle: TextStyle(color: Colors.deepOrange),
             middleTextStyle: TextStyle(color: Colors.deepOrange),
           );
-        }
+        }*/
       });
+      print(postData.statusCode);
     }
 
     Get.find<HomeViwController>().changeSelectedValue(1);

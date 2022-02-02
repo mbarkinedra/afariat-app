@@ -28,22 +28,35 @@ class CategoryAndSubcategory extends GetxController {
       for (var element in categoryGroupList) {
         sc[element.id] = element.subcategories;
       }
+      categoryGroupList.insert(
+          0, CategoryGroupedJson(id: 0, name: "all category"));
       update();
     });
   }
-clearData(){
-  categoryGroupedJson = null;
-  subcategories1 = null;
-    update();
-}
-  updateCategorie(CategoryGroupedJson cat) {
-    Filter.data["category"]=cat.id;
-    tapHomeViewController.setsearch("category", cat.id);
-    print(   Filter.data.toString());
-    categoryGroupedJson = cat;
-    tapPublishViewController.updatecategory(cat);
+
+  clearData() {
+    categoryGroupedJson = null;
     subcategories1 = null;
-    listSubcategories = sc[cat.id];
+    update();
+  }
+
+  updateCategorie(CategoryGroupedJson cat) {
+    if (cat.id == 0) {
+      if (Filter.data["category"] != null) {
+        Filter.data.remove("category");
+      }
+
+      tapHomeViewController.filterUpdate();
+      print("iiiiiiiiiiiiiiiiiiii");
+    } else {
+      Filter.data["category"] = cat.id;
+      tapHomeViewController.setsearch("category", cat.id);
+      print(Filter.data.toString());
+      categoryGroupedJson = cat;
+      tapPublishViewController.updatecategory(cat);
+      subcategories1 = null;
+      listSubcategories = sc[cat.id];
+    }
 
     update();
   }

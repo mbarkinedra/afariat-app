@@ -1,8 +1,11 @@
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
 import 'package:afariat/config/storage.dart';
+import 'package:afariat/config/wsse.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/model/validate_server.dart';
+import 'package:afariat/networking/api/get_salt_api.dart';
+import 'package:afariat/networking/api/sign_in_api.dart';
 import 'package:afariat/networking/api/user_api.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:afariat/networking/json/user_json.dart';
@@ -20,7 +23,11 @@ class AccountViewController extends GetxController {
   UserApi _userApi = UserApi();
   UserJson _userJson = UserJson();
   ValidateServer validateServer = ValidateServer();
-bool updateData=false;
+  bool updateData = false;
+  GetSaltApi _getSalt = GetSaltApi();
+  SignInApi _signInApi = SignInApi();
+  Wsse wsse = Wsse();
+
   @override
   void onInit() {
     super.onInit();
@@ -34,7 +41,7 @@ bool updateData=false;
     // "type": 0,
     // "phone": "22923568",
     // "city": 1_userJson
-    updateData=true;
+    updateData = true;
     update();
     Filter.data["type"] = _userJson.type;
     Filter.data["email"] = email.text;
@@ -53,16 +60,16 @@ bool updateData=false;
         _validateServer.validatorServer(
             validate: () {
               Get.snackbar("", "mise à jours avec succés ");
-              updateData=false;
-              update();   },
+              updateData = false;
+              wsse.generateWsseFromStorage();
+              update();
+            },
             value: value);
-
-
 
         print(value.data);
       },
     ).catchError((e) {
-      updateData=false;
+      updateData = false;
       update();
       print(e.toString());
     });

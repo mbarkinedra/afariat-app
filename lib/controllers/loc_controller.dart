@@ -20,6 +20,7 @@ class LocController extends GetxController {
     super.onInit();
     _cityApi.getList().then((value) {
       cities = value.data;
+      cities.insert(0, RefJson(id: 0, name: "all city"));
       update();
     });
   }
@@ -32,14 +33,27 @@ class LocController extends GetxController {
   }
 
   updatecitie(RefJson ci) {
-    citie = ci;
-    tapPublishViewController.citie = ci;
-    town = null;
-    tapHomeViewController.setsearch("city", ci.id);
-    tapPublishViewController.myAds["city"] = ci.id;
-    tapPublishViewController.myAdsview["city"] = ci.name;
-    updateTowns(ci.id);
-    update();
+    if(ci.id==0){
+if(Filter.data["city"]!=null){
+  Filter.data.remove("city");
+}
+if(Filter.data["town"]!=null){
+  Filter.data.remove("town");
+}
+
+   tapHomeViewController.filterUpdate();
+   print("iiiiiiiiiiiiiiiiiiii");
+    }else{
+      citie = ci;
+      tapPublishViewController.citie = ci;
+      town = null;
+      tapHomeViewController.setsearch("city", ci.id);
+      tapPublishViewController.myAds["city"] = ci.id;
+      tapPublishViewController.myAdsview["city"] = ci.name;
+      updateTowns(ci.id);
+      update();
+    }
+
   }
 
   updatetown(RefJson town) {

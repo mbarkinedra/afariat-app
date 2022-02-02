@@ -35,11 +35,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                           "assets/images/Splash_1.png",
                           fit: BoxFit.fill,
                         ),
-                        // Text("Afariat",
-                        //     style: TextStyle(
-                        //         fontSize: 24,
-                        //         fontWeight: FontWeight.w800,
-                        //         color: Colors.deepOrange)),
                       ),
                       SizedBox(
                         width: _size.width * .6,
@@ -162,41 +157,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                           ),
                         ),
                       );
-
-                // ListView.builder(
-                //     controller: logic.scrollController,
-                //     itemCount: logic.adverts.length,
-                //     itemBuilder: (context, pos) {
-                //       if (logic.adverts[pos].description
-                //               .toLowerCase()
-                //               .contains(
-                //                   logic.searchWord.text.toLowerCase()) ||
-                //           logic.adverts[pos].title.toLowerCase().contains(
-                //               logic.searchWord.text.toLowerCase())) {
-                //         return InkWell(
-                //           onTap: () {
-                //             print(logic.adverts[pos].id);
-                //
-                //             Get.find<AdvertDetailsViewcontroller>()
-                //                 .loading = true;
-                //             Get.find<AdvertDetailsViewcontroller>()
-                //                 .getAdvertDetails(logic.adverts[pos].id);
-                //             Navigator.push(
-                //               context,
-                //               MaterialPageRoute(
-                //                   builder: (context) =>
-                //                       AdvertDetatilsScr()),
-                //             );
-                //           },
-                //           child: MyHomeItem(
-                //             size: _size,
-                //             adverts: logic.adverts[pos],
-                //           ),
-                //         );
-                //       } else {
-                //         return const SizedBox();
-                //       }
-                //     });
               }),
             )
           ],
