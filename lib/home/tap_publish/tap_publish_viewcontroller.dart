@@ -8,6 +8,7 @@ import 'package:afariat/config/storage.dart';
 import 'package:afariat/config/wsse.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
+import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
 import 'package:afariat/model/validate_server.dart';
 import 'package:afariat/model/validator.dart';
 import 'package:afariat/networking/api/get_salt_api.dart';
@@ -28,56 +29,44 @@ import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+  final storge = Get.find<SecureStorage>();
+  final accountInfoStorage = Get.find<AccountInfoStorage>();
+  final picker = ImagePicker();
+
   Validator validator = Validator();
   bool dataAdverts = false;
   ModifAdsJson modifAdsJson = ModifAdsJson();
   CategoryGroupedJson category;
-  SubcategoryJson subcategories;
+  SubcategoryJson subCategories;
+  bool lights = true;
+  String pieces;
+  BuildContext context;
+  String energie;
 
   Map<String, dynamic> myAds = {};
-  Map<String, String> myAdsview = {};
+  Map<String, String> myAdsView = {};
   TextEditingController title = TextEditingController();
   TextEditingController description = TextEditingController();
   TextEditingController prix = TextEditingController();
   TextEditingController surface = TextEditingController();
   ModifAdsApi _modifAdsApi = ModifAdsApi();
-  bool lights = true;
-  List<File> images = [];
-  List<String> editadsimages = [];
 
-  //bool lights = false;
-  List<Widget> radiolist = [];
-  List<RefJson> valus = [
+  List<File> images = [];
+  List<String> EditAdsImages = [];
+
+  List<Widget> radioList = [];
+  List<RefJson> values = [
     RefJson(name: "Offer", id: 1),
     RefJson(name: "Demande", id: 2),
     RefJson(name: "Offre de location", id: 3)
   ];
-  RefJson advertType;
-  GetSaltApi _getSalt = GetSaltApi();
+
   List<RefJson> vehiculeBrands = [];
   List<RefJson> motosBrands = [];
   List<RefJson> vehiculeModels = [];
-  List<RefJson> meliages = [];
-  List<RefJson> yersmodeles = [];
-  RefJson yearsmodele;
-  RefJson getview;
-  RefJson vehiculebrands;
-  RefJson motosBrand;
-  RefJson vehiculeModel;
-  String energie;
-  RefJson kilometrage;
-  VehicleBrandsApi _vehicleBrandsApi = VehicleBrandsApi();
-  MotoBrandsApi _motoBrandsApi = MotoBrandsApi();
-  VehicleModelApi _vehicleModelApi = VehicleModelApi();
-  MileagesApi _mileagesApi = MileagesApi();
-  YearsModelsApi _yearsModelsApi = YearsModelsApi();
+  List<RefJson> mileages = [];
+  List<RefJson> yearsModels = [];
   List<RefJson> rooms = [];
-  RefJson citie;
-  final storge = Get.find<SecureStorage>();
-  final accountInfoStorage = Get.find<AccountInfoStorage>();
-  ValidateServer _validateServer = ValidateServer();
-  RefJson town;
-  String pieces;
   List<String> Nombredepieces = [
     '1',
     '2',
@@ -91,13 +80,26 @@ class TapPublishViewController extends GetxController {
     '10',
     '10+'
   ];
-
-  List<String> energies = ['Diesel', 'Essence', 'Electrique', 'LPG'];
-
-  // File image;
-  // File image2;
   List<String> photos = [];
-  final picker = ImagePicker();
+  List<String> energies = ['Diesel', 'Essence', 'Electrique', 'LPG'];
+  RefJson advertType;
+  RefJson yearsmodele;
+  RefJson getView;
+  RefJson vehiculebrands;
+  RefJson motosBrand;
+  RefJson vehiculeModel;
+  RefJson citie;
+  RefJson town;
+
+  RefJson kilometrage;
+  GetSaltApi _getSalt = GetSaltApi();
+  VehicleBrandsApi _vehicleBrandsApi = VehicleBrandsApi();
+  MotoBrandsApi _motoBrandsApi = MotoBrandsApi();
+  VehicleModelApi _vehicleModelApi = VehicleModelApi();
+  MileagesApi _mileagesApi = MileagesApi();
+  YearsModelsApi _yearsModelsApi = YearsModelsApi();
+
+  ValidateServer _validateServer = ValidateServer();
 
   photobase64Encode(im) {
     final bytes = File(im.path).readAsBytesSync();
@@ -113,17 +115,11 @@ class TapPublishViewController extends GetxController {
       images.add(File(imgCamera.path));
       update();
     }
-    // if (i == 1) {
-    //   image = File(imgCamera.path);
-    //   update();
-    // } else {
-    //   image2 = File(imgCamera.path);
+
     update();
-    // }
   }
 
   void openGallery() async {
-    //  final picker = ImagePicker();
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       print(' image selected.');
@@ -131,62 +127,45 @@ class TapPublishViewController extends GetxController {
       update();
     }
 
-    // if (i == 1) {
-    //   if (pickedFile != null) {
-    //     print(' image selected.');
-    //     image = File(pickedFile.path);
-    //     update();
-    //   } else {
-    //     print('No image selected.');
-    //   }
-    // } else {
-    //   if (pickedFile != null) {
-    //     print(' image selected.');
-    //     image2 = File(pickedFile.path);
-    //     update();
-    //   } else {
-    //     print('No image selected.');
-    //   }
-    // }
     update();
   }
 
-  delImage(File file) {
+  deleteImage(File file) {
     images.remove(file);
     update();
   }
 
   deleditImage(String file) {
-    editadsimages.remove(file);
+    EditAdsImages.remove(file);
     update();
   }
 
-  updatecategoryToNull() {
+  updateCategoryToNull() {
     category = null;
     update();
   }
 
   updateSubcategoryToNull() {
-    subcategories = null;
+    subCategories = null;
     update();
   }
 
-  updatecategory(CategoryGroupedJson cat) {
-    category = cat;
+  updateCategory(CategoryGroupedJson categoryGrouped) {
+    category = categoryGrouped;
   }
 
-  updateSubcategoryJson(SubcategoryJson sub) {
-    subcategories = sub;
+  updateSubCategoryJson(SubcategoryJson subCategoryJson) {
+    subCategories = subCategoryJson;
   }
 
   @override
   void onInit() {
     super.onInit();
-    advertType = valus[0];
-    myAds["advertType"] = valus[0].name;
-    myAdsview["advertType"] = valus[0].name;
-    getmeliages();
-    getyearsmodels();
+    advertType = values[0];
+    myAds["advertType"] = values[0].name;
+    myAdsView["advertType"] = values[0].name;
+    getMileages();
+    getYearsModels();
   }
 
   getvehicleBrand() {
@@ -199,7 +178,7 @@ class TapPublishViewController extends GetxController {
     });
   }
 
-  getvehicleModel() {
+  getVehicleModel() {
     _vehicleModelApi.getList().then((value) {
       vehiculeModels = value.data;
 
@@ -207,17 +186,17 @@ class TapPublishViewController extends GetxController {
     });
   }
 
-  getmeliages() {
+  getMileages() {
     _mileagesApi.getList().then((value) {
-      meliages = value.data;
+      mileages = value.data;
 
       update();
     });
   }
 
   getMotosBrand() {
-    getmeliages();
-    getyearsmodels();
+    getMileages();
+    getYearsModels();
     _motoBrandsApi.getList().then((value) {
       motosBrands = value.data;
 
@@ -225,16 +204,16 @@ class TapPublishViewController extends GetxController {
     });
   }
 
-  getyearsmodels() {
+  getYearsModels() {
     _yearsModelsApi.getList().then((value) {
-      yersmodeles = value.data;
+      yearsModels = value.data;
 
       update();
     });
   }
 
-  updategetview(RefJson data) async {
-    getview = data;
+  updateGetView(RefJson data) async {
+    getView = data;
     vehiculebrands = null;
     vehiculeModel = null;
     motosBrand = null;
@@ -246,10 +225,10 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
-  updateModele(RefJson newValue) {
+  updateModel(RefJson newValue) {
     vehiculeModel = newValue;
     myAds["vehicleModel"] = newValue.id;
-    myAdsview["Modèle:"] = newValue.name;
+    myAdsView["Modèle:"] = newValue.name;
     update();
   }
 
@@ -262,25 +241,25 @@ class TapPublishViewController extends GetxController {
   updateMarque(RefJson newValue) {
     _vehicleModelApi.vehicleModelId = newValue.id;
     myAds["vehiclebrand"] = newValue.id;
-    myAdsview["Marque:"] = newValue.name;
+    myAdsView["Marque:"] = newValue.name;
     vehiculebrands = newValue;
 
-    getvehicleModel();
+    getVehicleModel();
     update();
   }
 
-  updateKilomtrage(RefJson newValue) {
+  updateKilometrage(RefJson newValue) {
     kilometrage = newValue;
 
     myAds["mileage"] = newValue.id;
-    myAdsview["Kilométrage:"] = newValue.name;
+    myAdsView["Kilométrage:"] = newValue.name;
     update();
   }
 
   updateAnnee(RefJson newValue) {
     yearsmodele = newValue;
     myAds["yearModel"] = newValue.id;
-    myAdsview["Année:"] = newValue.name;
+    myAdsView["Année:"] = newValue.name;
 
     update();
   }
@@ -288,7 +267,7 @@ class TapPublishViewController extends GetxController {
   updateNombredepieces(newValue) {
     pieces = newValue;
     myAds["roomsNumber"] = newValue;
-    myAdsview["roomsNumber"] = newValue;
+    myAdsView["roomsNumber"] = newValue;
     update();
   }
 
@@ -297,16 +276,16 @@ class TapPublishViewController extends GetxController {
     print(accountInfoStorage.readPhone());
 
     myAds["showPhoneNumber"] = v ? "yes" : "no";
-    myAdsview["showPhoneNumber"] =
+    myAdsView["showPhoneNumber"] =
         v ? accountInfoStorage.readPhone() : accountInfoStorage.readPhone();
     update();
   }
 
   updateadvertTypes(v) {
-    valus = v.data;
-    advertType = valus[0];
+    values = v.data;
+    advertType = values[0];
     myAds["advertType"] = advertType.id;
-    myAdsview["advertType"] = advertType.name;
+    myAdsView["advertType"] = advertType.name;
     update();
   }
 
@@ -314,15 +293,15 @@ class TapPublishViewController extends GetxController {
     advertType = v;
 
     myAds["advertType"] = v.id;
-    myAdsview["advertType"] = v.name;
+    myAdsView["advertType"] = v.name;
     update();
   }
 
   clearAllData() {
     category = null;
-    subcategories = null;
+    subCategories = null;
     yearsmodele = null;
-    getview = null;
+    getView = null;
     vehiculebrands = null;
     motosBrand = null;
     vehiculeModel = null;
@@ -333,7 +312,7 @@ class TapPublishViewController extends GetxController {
     citie = null;
 
     myAds = {};
-    myAdsview = {};
+    myAdsView = {};
     title.text = "";
     description.text = "";
     prix.text = "";
@@ -382,7 +361,21 @@ class TapPublishViewController extends GetxController {
                     fontSize: 40),
               ),
               onTap: () {
-                Get.back();
+                Get.find<TapMyadsViewController>().ads();
+                Get.find<HomeViwController>().changeSelectedValue(1);
+                Filter.data.clear();
+                clearAllData();
+                Get.find<CategoryAndSubcategory>().clearData();
+                Get.find<LocController>().clearData();
+                int count = 0;
+                if (Navigator.canPop(context)) {
+                  Navigator.popUntil(context, (route) {
+                    return count++ == 2;
+                  });
+                }
+                update();
+                //  Get.back();
+                Navigator.pop(context);
               },
             ),
             titleStyle: TextStyle(color: Colors.deepOrange),
@@ -418,11 +411,20 @@ class TapPublishViewController extends GetxController {
                         fontSize: 40),
                   ),
                   onTap: () {
+                    Get.find<TapMyadsViewController>().ads();
+                    Get.find<HomeViwController>().changeSelectedValue(1);
                     Filter.data.clear();
                     clearAllData();
                     Get.find<CategoryAndSubcategory>().clearData();
                     Get.find<LocController>().clearData();
+                    int count = 0;
+                    if (Navigator.canPop(context)) {
+                      Navigator.popUntil(context, (route) {
+                        return count++ == 2;
+                      });
+                    }
 
+                    update();
                     Get.back();
                   },
                 ),
@@ -466,10 +468,8 @@ class TapPublishViewController extends GetxController {
           );
         }*/
       });
-      print(postData.statusCode);
     }
 
-    Get.find<HomeViwController>().changeSelectedValue(1);
     update();
   }
 
@@ -487,9 +487,9 @@ class TapPublishViewController extends GetxController {
       for (int i = 0; i < Get.find<LocController>().cities.length; i++) {
         if (Get.find<LocController>().cities[i].id ==
             modifAdsJson.city.toJson()["id"]) {
-          Get.find<LocController>().citie = Get.find<LocController>().cities[i];
+          Get.find<LocController>().city = Get.find<LocController>().cities[i];
           Get.find<LocController>()
-              .updatecitie(Get.find<LocController>().cities[i]);
+              .updateCity(Get.find<LocController>().cities[i]);
           Get.find<LocController>()
               .updateTowns(Get.find<LocController>().cities[i].id)
               .then((value) {
@@ -516,16 +516,16 @@ class TapPublishViewController extends GetxController {
               .sc[modifAdsJson.category.group.id]
               .where((element) => element.id == modifAdsJson.category.id)
               .first;
-          updateSubcategoryJson(subcat);
-          Get.find<CategoryAndSubcategory>().updateSupCategorie(subcat);
+          updateSubCategoryJson(subcat);
+          Get.find<CategoryAndSubcategory>().updateSubCategorie(subcat);
           print(subcat.toString());
         }
       }
-      editadsimages
+      EditAdsImages
           .clear(); // categoryAndSubcategory.updateSupCategorie(subcat );
       modifAdsJson.photos.forEach((element) {
         print(element.path);
-        editadsimages.add(element.path);
+        EditAdsImages.add(element.path);
       });
       update();
     });

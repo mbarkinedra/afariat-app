@@ -50,7 +50,7 @@ class SignUpViewController extends GetxController {
         first: password.text,
         second: password.text,
         phone: phone.text,
-        city: tapHomeViewController.citie.id,
+        city: tapHomeViewController.city.id,
         name: name.text,
         email: email.text);
 

@@ -13,7 +13,7 @@ class CategoryAndSubcategory extends GetxController {
   final CategoriesGrouppedApi _categoriesGrouppedApi = CategoriesGrouppedApi();
   final tapHomeViewController = Get.find<TapHomeViewController>();
   Map<int, List<SubcategoryJson>> sc = {};
-  List<SubcategoryJson> listSubcategories = [];
+  List<SubcategoryJson> listeSubCategories = [];
   SubcategoryJson subcategories1;
   List<CategoryGroupedJson> categoryGroupList = [];
   CategoryGroupedJson categoryGroupedJson;
@@ -28,8 +28,8 @@ class CategoryAndSubcategory extends GetxController {
       for (var element in categoryGroupList) {
         sc[element.id] = element.subcategories;
       }
-      categoryGroupList.insert(
-          0, CategoryGroupedJson(id: 0, name: "all category"));
+      // Inserez tout les categories index[0]
+      categoryGroupList.insert(0, CategoryGroupedJson(id: 0, name: "Category"));
       update();
     });
   }
@@ -40,40 +40,37 @@ class CategoryAndSubcategory extends GetxController {
     update();
   }
 
-  updateCategorie(CategoryGroupedJson cat) {
-    if (cat.id == 0) {
+  updateCategorie(CategoryGroupedJson categoryGrouped) {
+    if (categoryGrouped.id == 0) {
       if (Filter.data["category"] != null) {
         Filter.data.remove("category");
       }
 
       tapHomeViewController.filterUpdate();
-      print("iiiiiiiiiiiiiiiiiiii");
     } else {
-      Filter.data["category"] = cat.id;
-      tapHomeViewController.setsearch("category", cat.id);
+      Filter.data["category"] = categoryGrouped.id;
+      tapHomeViewController.setSearch("category", categoryGrouped.id);
       print(Filter.data.toString());
-      categoryGroupedJson = cat;
-      tapPublishViewController.updatecategory(cat);
+      categoryGroupedJson = categoryGrouped;
+      tapPublishViewController.updateCategory(categoryGrouped);
       subcategories1 = null;
-      listSubcategories = sc[cat.id];
+      listeSubCategories = sc[categoryGrouped.id];
     }
 
     update();
   }
 
-  updateSupCategorie(SubcategoryJson subCat) {
-    // Filter.data["category"]=subCat.id;
-    // print(   Filter.data.toString());
-    subcategories1 = subCat;
-    tapHomeViewController.setsearch("category", subCat.id);
+  updateSubCategorie(SubcategoryJson subCategorie) {
+    subcategories1 = subCategorie;
+    tapHomeViewController.setSearch("category", subCategorie.id);
 
-    tapPublishViewController.updateSubcategoryJson(subCat);
+    tapPublishViewController.updateSubCategoryJson(subCategorie);
     tapPublishViewController
-        .updategetview(RefJson(id: subCat.id, name: subCat.name));
-    tapPublishViewController.myAds["category"] = subCat.id;
-    tapPublishViewController.myAdsview["category"] = subCat.name;
-    _categoriesGrouppedApi.categoryId = subCat.id;
-    _refApi.advertTypeId = subCat.id;
+        .updateGetView(RefJson(id: subCategorie.id, name: subCategorie.name));
+    tapPublishViewController.myAds["category"] = subCategorie.id;
+    tapPublishViewController.myAdsView["category"] = subCategorie.name;
+    _categoriesGrouppedApi.categoryId = subCategorie.id;
+    _refApi.advertTypeId = subCategorie.id;
     _refApi.getList().then((value) {
       print(value.data);
       Get.find<TapPublishViewController>().updateadvertTypes(value);

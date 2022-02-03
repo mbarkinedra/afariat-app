@@ -11,20 +11,21 @@ class Motos extends GetView<TapPublishViewController> {
         GetBuilder<TapPublishViewController>(builder: (logic) {
           return ListTile(
             leading: Text("Marque"),
-            title:  Container(
+            title: Container(
               padding: const EdgeInsets.all(3.0),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrange,width: 2),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.deepOrange, width: 2),
               ),
-              child: DropdownButton<RefJson>(  underline: SizedBox(),isExpanded: true,
+              child: DropdownButton<RefJson>(
+                underline: SizedBox(),
+                isExpanded: true,
                 value: logic.vehiculebrands,
-
                 iconSize: 24,
                 elevation: 16,
-
-
-                onChanged: logic.updateMarque ,
-                items: logic.motosBrands.map<DropdownMenuItem<RefJson>>((RefJson value) {
+                onChanged: logic.updateMarque,
+                items: logic.motosBrands
+                    .map<DropdownMenuItem<RefJson>>((RefJson value) {
                   return DropdownMenuItem<RefJson>(
                     value: value,
                     child: Text(value.name),
@@ -33,25 +34,24 @@ class Motos extends GetView<TapPublishViewController> {
               ),
             ),
           );
-        }
-        ),
+        }),
         GetBuilder<TapPublishViewController>(builder: (logic) {
-
           return ListTile(
             leading: Text("Kilométrage"),
-            title:  Container(
+            title: Container(
               padding: const EdgeInsets.all(3.0),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrange,width: 2)
-              ),
-              child: DropdownButton<RefJson>(underline: SizedBox(),isExpanded: true,
-                value:logic. kilometrage,
-
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.deepOrange, width: 2)),
+              child: DropdownButton<RefJson>(
+                underline: SizedBox(),
+                isExpanded: true,
+                value: logic.kilometrage,
                 iconSize: 24,
                 elevation: 16,
-
-                onChanged: logic.updateKilomtrage,
-                items:logic. meliages.map<DropdownMenuItem<RefJson>>((RefJson value) {
+                onChanged: logic.updateKilometrage,
+                items: logic.mileages
+                    .map<DropdownMenuItem<RefJson>>((RefJson value) {
                   return DropdownMenuItem<RefJson>(
                     value: value,
                     child: Text(value.name),
@@ -60,24 +60,24 @@ class Motos extends GetView<TapPublishViewController> {
               ),
             ),
           );
-        }
-        ),
+        }),
         GetBuilder<TapPublishViewController>(builder: (logic) {
           return ListTile(
             leading: Text("Année"),
-            title:  Container(
+            title: Container(
               padding: const EdgeInsets.all(3.0),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrange,width: 2)
-              ),
-              child: DropdownButton<RefJson>(underline: SizedBox(),isExpanded: true,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.deepOrange, width: 2)),
+              child: DropdownButton<RefJson>(
+                underline: SizedBox(),
+                isExpanded: true,
                 value: logic.yearsmodele,
-
                 iconSize: 24,
                 elevation: 16,
-
                 onChanged: logic.updateAnnee,
-                items: logic.yersmodeles.map<DropdownMenuItem<RefJson>>((RefJson value) {
+                items: logic.yearsModels
+                    .map<DropdownMenuItem<RefJson>>((RefJson value) {
                   return DropdownMenuItem<RefJson>(
                     value: value,
                     child: Text(value.name),
@@ -86,8 +86,7 @@ class Motos extends GetView<TapPublishViewController> {
               ),
             ),
           );
-        }
-        )
+        })
       ],
     );
   }

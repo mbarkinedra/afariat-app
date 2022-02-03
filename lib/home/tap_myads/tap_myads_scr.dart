@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import '../home_view_controller.dart';
 import 'tap_myads_viewcontroller.dart';
 
-class TapMyadsScr extends GetWidget<TapMyadsViewController> {
+class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;

@@ -43,10 +43,10 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                     )),
                 GetBuilder<TapPublishViewController>(builder: (logic) {
                   return logic.dataAdverts
-                      ? logic.editadsimages.length > 0
+                      ? logic.EditAdsImages.length > 0
                           ? Column(
                               mainAxisSize: MainAxisSize.max,
-                              children: logic.editadsimages
+                              children: logic.EditAdsImages
                                   .map((e) => Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Stack(
@@ -78,8 +78,7 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                                                   child: Icon(
                                                     Icons.clear,
                                                     size: 30,
-                                                    color:
-                                                        Colors.deepOrange,
+                                                    color: Colors.deepOrange,
                                                   )),
                                             ),
                                           ],
@@ -122,13 +121,12 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                                               right: 0,
                                               child: InkWell(
                                                   onTap: () {
-                                                    logic.delImage(e);
+                                                    logic.deleteImage(e);
                                                   },
                                                   child: Icon(
                                                     Icons.clear,
                                                     size: 30,
-                                                    color:
-                                                        Colors.deepOrange,
+                                                    color: Colors.deepOrange,
                                                   )),
                                             ),
                                           ],

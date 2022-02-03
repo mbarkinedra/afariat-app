@@ -33,12 +33,6 @@ class Setting extends GetWidget<SettingViewController> {
               style: TextStyle(fontSize: 15),
             ),
           ),
-
-          // CircleAvatar(maxRadius: 50,
-          //   backgroundImage: NetworkImage(
-          //       "https://www.sleeptasticsolutions.com/wp-content/uploads/2018/05/happy-kids-1.jpg"),
-          // ),
-
           SizedBox(
             height: 20,
           ),
