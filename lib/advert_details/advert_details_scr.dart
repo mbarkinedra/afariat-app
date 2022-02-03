@@ -23,11 +23,14 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
     //
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Détails de l'annonce",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        iconTheme: IconThemeData(
+          color: Colors.white, //change your color here
         ),
         backgroundColor: Colors.deepOrange,
+        title: Text(
+          "Annonce Détaillés",
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
       ),
       body: GetBuilder<AdvertDetailsViewcontroller>(builder: (logic) {
         return logic.loading

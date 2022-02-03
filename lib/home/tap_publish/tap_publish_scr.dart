@@ -23,11 +23,15 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-            "Deposer une annonce ",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-          ),
-          backgroundColor: Colors.deepOrange),
+        iconTheme: IconThemeData(
+          color: Colors.white, //change your color here
+        ),
+        backgroundColor: Colors.deepOrange,
+        title: Text(
+          "Déposer une annonce",
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(25),
         child: Form(

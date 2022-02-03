@@ -8,11 +8,14 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Notifications ",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        iconTheme: IconThemeData(
+          color: Colors.white, //change your color here
         ),
         backgroundColor: Colors.deepOrange,
+        title: Text(
+          "Notifications",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Column(
         children: [

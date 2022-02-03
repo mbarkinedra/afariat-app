@@ -17,7 +17,15 @@ class PublishImageScr extends GetView<TapPublishViewController> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("Deposer une annonce "),
+            iconTheme: IconThemeData(
+            color: Colors.white, //change your color here
+        ),
+          backgroundColor: Colors.deepOrange,
+          title: Text(
+            "Deposer annonces",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+
           actions: [
             IconButton(
               icon: Icon(Icons.add_a_photo),

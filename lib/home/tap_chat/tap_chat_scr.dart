@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 import 'chat_user/chat_user_scr.dart';
+import 'chat_user/chat_user_viewcontroller.dart';
 import 'tap_chat_viewcontroller.dart';
 import 'dart:convert';
 import 'dart:math';
@@ -25,9 +26,10 @@ class TapChatScr extends GetWidget<TapChatViewController> {
         appBar: AppBar(
           title: Text(
             "Messagerie",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20 , color: Colors.white),
           ),
           backgroundColor: Colors.deepOrange,
+
         ),
         body: ListView.builder(
             itemCount: 100,
@@ -35,6 +37,7 @@ class TapChatScr extends GetWidget<TapChatViewController> {
               return GestureDetector(
                   onTap: () {
                     //
+                    Get.find<ChatUserViewController>().messages.clear();
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => ChatUserScr()));
                   },

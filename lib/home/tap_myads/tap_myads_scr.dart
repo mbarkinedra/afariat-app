@@ -19,7 +19,7 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
         appBar: AppBar(
           title: Text(
             "Mes annonces",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            style: TextStyle( color:Colors.white,fontWeight: FontWeight.bold, fontSize: 20),
           ),
           backgroundColor: Colors.deepOrange,
         ),
