@@ -16,7 +16,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrangeAccent,width: 2)),
+                  border: Border.all(color: Colors.deepOrangeAccent, width: 2)),
               child: DropdownButton<RefJson>(
                 underline: SizedBox(),
                 isExpanded: true,
@@ -49,7 +49,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                 value: logic.vehiculeModel,
                 iconSize: 24,
                 elevation: 16,
-                onChanged: logic.updateModele,
+                onChanged: logic.updateModel,
                 items: logic.vehiculeModels
                     .map<DropdownMenuItem<RefJson>>((RefJson value) {
                   return DropdownMenuItem<RefJson>(
@@ -68,7 +68,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrangeAccent,width: 2)),
+                  border: Border.all(color: Colors.deepOrangeAccent, width: 2)),
               child: DropdownButton<String>(
                 underline: SizedBox(),
                 isExpanded: true,
@@ -78,8 +78,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                 onChanged: logic.updateEnergie,
                 items: logic.energies
                     .map<DropdownMenuItem<String>>((String value) {
-                      print(value);
-                      print("7 77766555444444445556767788876");
+                  print(value);
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -96,15 +95,15 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrange,width: 2)),
+                  border: Border.all(color: Colors.deepOrange, width: 2)),
               child: DropdownButton<RefJson>(
                 underline: SizedBox(),
                 isExpanded: true,
                 value: logic.kilometrage,
                 iconSize: 24,
                 elevation: 16,
-                onChanged: logic.updateKilomtrage,
-                items: logic.meliages
+                onChanged: logic.updateKilometrage,
+                items: logic.mileages
                     .map<DropdownMenuItem<RefJson>>((RefJson value) {
                   return DropdownMenuItem<RefJson>(
                     value: value,
@@ -122,7 +121,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               padding: const EdgeInsets.all(3.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrange,width: 2)),
+                  border: Border.all(color: Colors.deepOrange, width: 2)),
               child: DropdownButton<RefJson>(
                 underline: SizedBox(),
                 isExpanded: true,
@@ -130,7 +129,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                 iconSize: 24,
                 elevation: 16,
                 onChanged: logic.updateAnnee,
-                items: logic.yersmodeles
+                items: logic.yearsModels
                     .map<DropdownMenuItem<RefJson>>((RefJson value) {
                   return DropdownMenuItem<RefJson>(
                     value: value,

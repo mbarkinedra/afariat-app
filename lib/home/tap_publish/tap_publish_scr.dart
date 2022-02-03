@@ -23,12 +23,11 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Deposer une annonce ",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-        backgroundColor: Colors.deepOrange
-      ),
+          title: Text(
+            "Deposer une annonce ",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          backgroundColor: Colors.deepOrange),
       body: Padding(
         padding: const EdgeInsets.all(25),
         child: Form(
@@ -55,7 +54,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.deepOrange,width: 2),
+                            border:
+                                Border.all(color: Colors.deepOrange, width: 2),
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<CategoryGroupedJson>(
                           isExpanded: true,
@@ -80,7 +80,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.deepOrange,width: 2),
+                            border:
+                                Border.all(color: Colors.deepOrange, width: 2),
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<SubcategoryJson>(
                           isExpanded: true,
@@ -88,8 +89,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                           value: logic.subcategories1,
                           iconSize: 24,
                           elevation: 16,
-                          onChanged: logic.updateSupCategorie,
-                          items: logic.listSubcategories
+                          onChanged: logic.updateSubCategorie,
+                          items: logic.listeSubCategories
                               .map<DropdownMenuItem<SubcategoryJson>>(
                                   (SubcategoryJson value) {
                             return DropdownMenuItem<SubcategoryJson>(
@@ -112,7 +113,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
               ),
               GetBuilder<TapPublishViewController>(builder: (logic) {
                 return Column(
-                  children: logic.valus.map((e) {
+                  children: logic.values.map((e) {
                     return RadioListTile(
                         activeColor: Colors.deepOrange,
                         title: Text(e.name),
@@ -123,9 +124,9 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                 );
               }),
               GetBuilder<TapPublishViewController>(builder: (logic) {
-                return logic.getview != null
+                return logic.getView != null
                     ? WidgetPublish(
-                        logic.getview.name,
+                        logic.getView.name,
                       )
                     : SizedBox();
               }),
@@ -205,15 +206,16 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.deepOrange,width: 2),
+                          border:
+                              Border.all(color: Colors.deepOrange, width: 2),
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButton<RefJson>(
                         isExpanded: true,
                         hint: Text("Gouvernorat"),
-                        value: logic.citie,
+                        value: logic.city,
                         iconSize: 24,
                         elevation: 16,
-                        onChanged: logic.updatecitie,
+                        onChanged: logic.updateCity,
                         items: logic.cities
                             .map<DropdownMenuItem<RefJson>>((RefJson value) {
                           return DropdownMenuItem<RefJson>(
@@ -240,7 +242,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                     Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.deepOrange,width: 2),
+                            border:
+                                Border.all(color: Colors.deepOrange, width: 2),
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<RefJson>(
                           isExpanded: true,
@@ -295,21 +298,22 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                         //postAdvert(cities1,town1,advertType,price,description,title,photo)
 
                         if (controller.globalKey.currentState.validate() &&
-                            controller.subcategories != null &&
+                            controller.subCategories != null &&
                             controller.town != null) {
-                          controller.myAdsview["prix"] = controller.prix.text+ SettingsApp.moneySymbol;
+                          controller.myAdsView["prix"] =
+                              controller.prix.text + SettingsApp.moneySymbol;
                           controller.myAds["price"] = controller.prix.text;
 
-                          controller.myAdsview["title"] = controller.title.text;
+                          controller.myAdsView["title"] = controller.title.text;
                           controller.myAds["title"] = controller.title.text;
 
-                          controller.myAdsview["description"] =
+                          controller.myAdsView["description"] =
                               controller.description.text;
                           controller.myAds["description"] =
                               controller.description.text;
                           controller.myAds["showPhoneNumber"] =
                               controller.lights ? "yes" : "no";
-                          controller.myAdsview["showPhoneNumber"] =
+                          controller.myAdsView["showPhoneNumber"] =
                               controller.lights ? "Check" : "no";
 
                           Navigator.of(context).push(MaterialPageRoute(

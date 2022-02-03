@@ -63,14 +63,14 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                               child: TextField(
                                 controller: controller.searchWord,
                                 keyboardType: TextInputType.text,
-                                onChanged: controller.filterword,
+                                onChanged: controller.filterWord,
                                 decoration: InputDecoration(
                                     prefixIcon: Icon(Icons.search),
                                     suffixIcon: IconButton(
                                       icon: Icon(Icons.clear),
                                       onPressed: () {
                                         /* Clear the search field */
-                                        controller.filterclear();
+                                        controller.filterClear();
                                       },
                                     ),
                                     hintText: 'Rechercher...',
@@ -117,7 +117,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
             Expanded(
               flex: 1,
               child: GetBuilder<TapHomeViewController>(builder: (logic) {
-                return logic.getdatafromweb
+                return logic.getDataFromWeb
                     ? Center(child: const CircularProgressIndicator())
                     : RefreshIndicator(
                         onRefresh: () => Future.sync(

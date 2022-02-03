@@ -23,14 +23,21 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
                   itemBuilder: (context, pos) {
                     final item = logic.notifications[pos];
                     return Dismissible(
-                      background: Container(color: Colors.red,child: Icon(Icons.delete,size: 50,color: Colors.white,),),
+                      background: Container(
+                        color: Colors.red,
+                        child: Icon(
+                          Icons.delete,
+                          size: 50,
+                          color: Colors.white,
+                        ),
+                      ),
                       key: Key(item.id.toString()),
                       onDismissed: (direction) {
                         // Remove the item from the data source.
                         // if (direction == DismissDirection.endToStart) {
                         //   print(direction == DismissDirection.endToStart);
-                          logic.onDeleteNotifications(pos);
-                   //     }
+                        logic.onDeleteNotifications(pos);
+                        //     }
 
                         // Then show a snackbar.
                       },
@@ -74,9 +81,10 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
                                   child: Text(
                                     logic.notifications[pos].message,
                                     style: TextStyle(
-                                        fontWeight: logic.notifications[pos].read
-                                            ? FontWeight.normal
-                                            : FontWeight.bold),
+                                        fontWeight:
+                                            logic.notifications[pos].read
+                                                ? FontWeight.normal
+                                                : FontWeight.bold),
                                   ),
                                 ),
                               ],

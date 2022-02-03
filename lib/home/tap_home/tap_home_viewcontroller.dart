@@ -14,19 +14,19 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class TapHomeViewController extends GetxController {
   TextEditingController searchWord = TextEditingController();
-  RxBool showsearch = false.obs;
+  RxBool showSearch = false.obs;
   AdvertApi _advertApi = AdvertApi();
   PriceApi _pricesApi = PriceApi();
   AdvertPageApi _advertPageApi = AdvertPageApi();
   var box = GetStorage();
-  bool getdatafromweb = true;
+  bool getDataFromWeb = true;
   List<AdvertJson> adverts = [];
   List<dynamic> prices = [];
   int maxValue = 20;
   int minValue = 0;
   SfRangeValues values = SfRangeValues(0, 100000);
   Map<String, dynamic> search = {};
-  bool loadprice = true;
+  bool loadPrice = true;
   static const _pageSize = 20;
 
   final PagingController<int, dynamic> pagingController =
@@ -34,18 +34,18 @@ class TapHomeViewController extends GetxController {
   ScrollController scrollController = ScrollController();
   int page = 1;
 
-  getAlllAds() {
+  getAllAds() {
     pagingController.addPageRequestListener((pageKey) {
       _fetchPage(page);
     });
-    updatedata();
+    updateData();
     getPriceList();
   }
 
   @override
   void onInit() {
     super.onInit();
-    getAlllAds();
+    getAllAds();
   }
 
   Future<void> _fetchPage(int pageKey) async {
@@ -68,34 +68,33 @@ class TapHomeViewController extends GetxController {
     }
   }
 
-  getfirestpage() {}
+  getFirstPage() {}
 
-  updatedata() async {
+  updateData() async {
     await _advertApi.getList().then((value) {
       adverts = value.embedded.adverts;
 
-      getdatafromweb = false;
+      getDataFromWeb = false;
     });
     update();
   }
 
-  filterword(v) {
+  filterWord(v) {
     update();
   }
 
-  filterclear() {
+  filterClear() {
     searchWord.clear();
     update();
   }
 
   filterUpdate() {
     if (searchWord.text.isNotEmpty) {
-      setsearch("search", searchWord.text.toString());
+      setSearch("search", searchWord.text.toString());
     }
-    SearchApi a = SearchApi(search);
+    SearchApi searchApi = SearchApi(search);
     print(Filter.data.toString());
-    print("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
-    a.getList(filters: Filter.data).then((value) {
+    searchApi.getList(filters: Filter.data).then((value) {
       clearPrice();
       pagingController.itemList.clear();
       adverts.clear();
@@ -108,7 +107,7 @@ class TapHomeViewController extends GetxController {
     });
   }
 
-  setsearch(String key, v) {
+  setSearch(String key, v) {
     search[key] = v;
     Filter.data[key] = v;
   }
@@ -120,7 +119,7 @@ class TapHomeViewController extends GetxController {
       maxValue = prices[prices.length - 1].id;
       values = SfRangeValues(minValue, maxValue);
 
-      loadprice = false;
+      loadPrice = false;
     });
     update();
   }
@@ -132,7 +131,7 @@ class TapHomeViewController extends GetxController {
     update();
   }
 
-  updateslidval(value) {
+  updateSlideValue(value) {
     values = value;
     update();
   }

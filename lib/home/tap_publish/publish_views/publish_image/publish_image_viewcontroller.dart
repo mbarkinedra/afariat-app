@@ -21,7 +21,6 @@ class PublishImageViewController extends GetxController {
   }
 
   void openGallery(int i) async {
-    //  final picker = ImagePicker();
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (i == 1) {
       if (pickedFile != null) {

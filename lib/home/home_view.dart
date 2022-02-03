@@ -11,6 +11,8 @@ import 'tap_profile/settings/setting_view_controller.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
+import 'tap_publish/tap_publish_viewcontroller.dart';
+
 class Home extends GetWidget<HomeViwController> {
 
   @override
@@ -121,7 +123,10 @@ class Home extends GetWidget<HomeViwController> {
       context,
       controller: logic.controller,
       screens: logic.buildScreens,
-      items: _navBarsItems(),
+      items: _navBarsItems(),selectedTabScreenContext:(BuildContext context){
+
+        Get.find<TapPublishViewController>().context=context;
+    } ,
       confineInSafeArea: true,
       backgroundColor: Colors.white, // Default is Colors.white.
       handleAndroidBackButtonPress: true, // Default is true.

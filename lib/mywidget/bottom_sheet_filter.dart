@@ -80,8 +80,8 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       value: logic.subcategories1,
                       iconSize: 24,
                       elevation: 16,
-                      onChanged: logic.updateSupCategorie,
-                      items: logic.listSubcategories
+                      onChanged: logic.updateSubCategorie,
+                      items: logic.listeSubCategories
                           .map<DropdownMenuItem<SubcategoryJson>>(
                               (SubcategoryJson value) {
                         return DropdownMenuItem<SubcategoryJson>(
@@ -96,9 +96,9 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
             }),
           ),
           GetBuilder<TapPublishViewController>(builder: (logic) {
-            return logic.getview != null
+            return logic.getView != null
                 ? WidgetPublish(
-                    logic.getview.name,
+                    logic.getView.name,
                   )
                 : SizedBox();
           }),
@@ -112,7 +112,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
           GetBuilder<TapHomeViewController>(builder: (logic) {
             print(logic.maxValue);
             print(logic.minValue);
-            return logic.loadprice
+            return logic.loadPrice
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
@@ -141,7 +141,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       }
                       return '';
                     },
-                    onChanged: logic.updateslidval,
+                    onChanged: logic.updateSlideValue,
                   );
           }),
           const Padding(
@@ -163,10 +163,10 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                   child: DropdownButton<RefJson>(
                     isExpanded: true,
                     hint: Text("Gouvernorat"),
-                    value: logic.citie,
+                    value: logic.city,
                     iconSize: 24,
                     elevation: 16,
-                    onChanged: logic.updatecitie,
+                    onChanged: logic.updateCity,
                     items: logic.cities
                         .asMap()
                         .entries

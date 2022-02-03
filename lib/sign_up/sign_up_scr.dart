@@ -100,10 +100,10 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                         child: DropdownButton<RefJson>(
                           hint: Text("City"),
                           isExpanded: true,
-                          value: logic.citie,
+                          value: logic.city,
                           iconSize: 24,
                           elevation: 16,
-                          onChanged: logic.updatecitie,
+                          onChanged: logic.updateCity,
                           items: logic.cities
                               .map<DropdownMenuItem<RefJson>>((RefJson value) {
                             return DropdownMenuItem<RefJson>(

@@ -5,8 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TapProfileViewController extends GetxController {
-  launchURL(url)async{
+  launchURL(url) async {
     if (!await launch(url)) throw 'Could not launch $url';
   }
-  //String pic = "";
 }

@@ -14,7 +14,6 @@ class ChatUserScr extends GetWidget<ChatUserViewController> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
 
-    //
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -41,7 +40,7 @@ class ChatUserScr extends GetWidget<ChatUserViewController> {
                             maxWidth: MediaQuery.of(context).size.width * 0.7,
                           ),
                           child: Text(
-                            " 99999999999999",
+                            " Capsa Systems",
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -57,7 +56,7 @@ class ChatUserScr extends GetWidget<ChatUserViewController> {
                             maxWidth: MediaQuery.of(context).size.width * 0.7,
                           ),
                           child: Text(
-                            " 99999999999999",
+                            "  Capsa Systems",
                             style: TextStyle(color: Colors.black),
                           ),
                         ),

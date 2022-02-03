@@ -20,17 +20,19 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          children: [ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Image.asset( "assets/images/Splash_1.png",width: 100,height: 100,),
-          )
-           ,
-            //  ProfilePic(controller.pic),
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.asset(
+                "assets/images/Splash_1.png",
+                width: 100,
+                height: 100,
+              ),
+            ),
             SizedBox(height: 20),
             ProfileMenu(
               iconProfile: Icons.person,
               text: "Mon compte",
-              // icon: "assets/icons/User Icon.svg",
               press: () => {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (
@@ -44,17 +46,16 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
                 iconProfile: Icons.notifications_outlined,
                 text: "Notifications",
                 hasnotfication: Get.find<NotificationViewController>()
-                    .hasnotification
+                    .hasNotification
                     .value,
                 isnotfication: true,
-                //  icon: "assets/icons/Question mark.svg",
                 press: () {
-                  Get.find<NotificationViewController>().hasnotification.value =
-                  false;
+                  Get.find<NotificationViewController>().hasNotification.value =
+                      false;
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (
-                          context,
-                          ) =>
+                    context,
+                  ) =>
                           NotificationSrc()));
                 },
               );
@@ -62,7 +63,6 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
             ProfileMenu(
               iconProfile: Icons.settings,
               text: "Paramètres",
-              //icon: "assets/icons/Settings.svg",
               press: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (
@@ -74,25 +74,17 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
             ProfileMenu(
               iconProfile: Icons.help_center,
               text: "Centre d'aide",
-              //   icon: "assets/icons/Question mark.svg",
               press: () {
                 controller.launchURL("https://afariat.com/aide.html");
               },
             ),
-
             ProfileMenu(
               iconProfile: Icons.logout,
               text: "Déconnexion",
-              //  icon: "assets/icons/Log out.svg",
               press: () {
                 Get.find<AccountInfoStorage>().removeHashedPassword();
                 Get.find<HomeViwController>().changeSelectedValue(0);
                 Get.find<AccountInfoStorage>().logout();
-                // Navigator.of(context).push(MaterialPageRoute(
-                //     builder: (
-                //         context,
-                //         ) =>
-                //         SignInScr()));
               },
             ),
           ],

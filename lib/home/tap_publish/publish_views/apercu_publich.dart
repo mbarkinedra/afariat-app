@@ -18,7 +18,6 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
               children: [
@@ -44,34 +43,34 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
             ),
             CustomApercu(
               label: "Catégorie:",
-              data: controller.myAdsview["category"],
+              data: controller.myAdsView["category"],
             ),
             CustomApercu(
               label: "Type d'annonce:",
-              data: controller.myAdsview["advertType"],
+              data: controller.myAdsView["advertType"],
             ),
             CustomApercu(
               label: "Titre:",
-              data: controller.myAdsview["title"],
+              data: controller.myAdsView["title"],
             ),
             CustomApercu(
               label: "Texte de l'annonce:",
-              data: controller.myAdsview["description"],
+              data: controller.myAdsView["description"],
             ),
             CustomApercu(
               label: "Commune:",
-              data: controller.myAdsview["town"],
+              data: controller.myAdsView["town"],
             ),
             CustomApercu(
               label: "Gouvernorat :",
-              data: controller.myAdsview["city"],
+              data: controller.myAdsView["city"],
             ),
             CustomApercu(
               label: "Afficher N° Tél:",
-              data: controller.myAdsview["showPhoneNumber"],
+              data: controller.myAdsView["showPhoneNumber"],
             ),
             Column(
-              children: controller.myAdsview.entries.map((entry) {
+              children: controller.myAdsView.entries.map((entry) {
                 if (entry.key == "category" ||
                     entry.key == "title" ||
                     entry.key == "advertType" ||
@@ -133,16 +132,16 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                   function: () {
                     controller.images.clear();
 
-                    controller.updatecategoryToNull();
+                    controller.updateCategoryToNull();
                     controller.updateSubcategoryToNull();
-                    Get.find<LocController>().updatecitieAndTowen();
+                    Get.find<LocController>().updateCityAndTown();
                     controller.citie = null;
                     controller.prix.clear();
                     controller.description.clear();
                     controller.title.clear();
                     controller.myAds = {};
                     controller.category = null;
-                    controller.updatecategory(null);
+                    controller.updateCategory(null);
                     controller.energies = [];
                     controller.energie = "";
                     controller.kilometrage = null;

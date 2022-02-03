@@ -75,7 +75,7 @@ class AdvertDetailsViewcontroller extends GetxController {
               children: [
                 Container(
                   height: 50,
-                  color: Colors.orange,
+                  color: Colors.deepOrange,
                   padding: EdgeInsets.all(8),
                   child: Text("Contacter l'annonceur par e_mail",
                       style: TextStyle(
@@ -201,7 +201,7 @@ class AdvertDetailsViewcontroller extends GetxController {
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(onTap: (){
                 Navigator.pop(context);
-                },child: Container(color: Colors.grey[100],child: Icon(Icons.close,color: Colors.deepOrange,size: 50,))),
+                },child: Container(color: Colors.grey[100],child: Icon(Icons.close,color: Colors.deepOrange,size: 30,))),
               ),),   ],
           ),
         );

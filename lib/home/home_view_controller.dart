@@ -51,7 +51,7 @@ class HomeViwController extends GetxController {
 
   List<Widget> buildScreens=[
       TapHomeScr(),
-      Get.find<AccountInfoStorage>().isLoggedIn() ? TapMyadsScr() : SignInScr(),
+      Get.find<AccountInfoStorage>().isLoggedIn() ? TapMyAdsScr() : SignInScr(),
       Get.find<AccountInfoStorage>().isLoggedIn()
           ? TapPublishScr()
           : SignInScr(),
@@ -73,7 +73,7 @@ class HomeViwController extends GetxController {
   }
 updatelist(){
     if(  Get.find<AccountInfoStorage>().isLoggedIn() ){
-      buildScreens[1]=TapMyadsScr();
+      buildScreens[1]=TapMyAdsScr();
       buildScreens[2]=TapPublishScr();
       buildScreens[3]=TapChatScr();
       buildScreens[4]=TapProfileScr();
@@ -88,7 +88,8 @@ updatelist(){
   changeSelectedValue(int selectedValue) {
 
     updatelist();
-    controller = PersistentTabController(initialIndex: selectedValue);
+    controller.index=selectedValue;//= PersistentTabController(initialIndex: selectedValue,);
+    update();
     Filter.data.clear();
     Get.find<TapPublishViewController>().clearAllData();
     Get.find<CategoryAndSubcategory>().clearData();
@@ -101,7 +102,7 @@ updatelist(){
       naigatorKey: _navigatorKey,
       tabItem: _currentPage,
     );
-
+print( controller.index);
     update();
   }
 
@@ -140,7 +141,7 @@ class PageToView extends StatelessWidget {
       case 'Page2':
         {
           currentScreen = Get.find<AccountInfoStorage>().isLoggedIn()
-              ? TapMyadsScr()
+              ? TapMyAdsScr()
               : SignInScr();
 
           break;

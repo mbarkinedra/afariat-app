@@ -23,12 +23,9 @@ class Rooms extends GetView<TapPublishViewController> {
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
                 return Container(
                   decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.deepOrange,width: 2
-                      ),
+                      border: Border.all(color: Colors.deepOrange, width: 2),
                       borderRadius: BorderRadius.circular(10)),
                   child: ListTile(
-                    //leading: Text("Nombre de pièces"),
                     title: DropdownButton<String>(
                       value: logic.pieces,
                       isExpanded: true,
@@ -77,7 +74,7 @@ class Rooms extends GetView<TapPublishViewController> {
               width: 50,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrange,width: 2),
+                  border: Border.all(color: Colors.deepOrange, width: 2),
                   color: Colors.grey[100]),
               child: Center(
                 child: Text(

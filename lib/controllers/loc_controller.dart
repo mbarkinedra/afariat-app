@@ -11,7 +11,7 @@ class LocController extends GetxController {
   final CityApi _cityApi = CityApi();
   final TownApi _townsApi = TownApi();
   List<RefJson> cities = [];
-  RefJson citie;
+  RefJson city;
   List<RefJson> towns = [];
   RefJson town;
 
@@ -20,49 +20,49 @@ class LocController extends GetxController {
     super.onInit();
     _cityApi.getList().then((value) {
       cities = value.data;
-      cities.insert(0, RefJson(id: 0, name: "all city"));
+      // Inserez tout les villes index[0]
+
+      cities.insert(0, RefJson(id: 0, name: "city"));
       update();
     });
   }
 
   clearData() {
-    citie = null;
+    city = null;
 
     town = null;
     update();
   }
 
-  updatecitie(RefJson ci) {
-    if(ci.id==0){
-if(Filter.data["city"]!=null){
-  Filter.data.remove("city");
-}
-if(Filter.data["town"]!=null){
-  Filter.data.remove("town");
-}
+  updateCity(RefJson ci) {
+    if (ci.id == 0) {
+      if (Filter.data["city"] != null) {
+        Filter.data.remove("city");
+      }
+      if (Filter.data["town"] != null) {
+        Filter.data.remove("town");
+      }
 
-   tapHomeViewController.filterUpdate();
-   print("iiiiiiiiiiiiiiiiiiii");
-    }else{
-      citie = ci;
+      tapHomeViewController.filterUpdate();
+    } else {
+      city = ci;
       tapPublishViewController.citie = ci;
       town = null;
-      tapHomeViewController.setsearch("city", ci.id);
+      tapHomeViewController.setSearch("city", ci.id);
       tapPublishViewController.myAds["city"] = ci.id;
-      tapPublishViewController.myAdsview["city"] = ci.name;
+      tapPublishViewController.myAdsView["city"] = ci.name;
       updateTowns(ci.id);
       update();
     }
-
   }
 
   updatetown(RefJson town) {
     this.town = town;
 
     tapPublishViewController.town = town;
-    tapHomeViewController.setsearch("town", town.id);
+    tapHomeViewController.setSearch("town", town.id);
     tapPublishViewController.myAds["town"] = town.id;
-    tapPublishViewController.myAdsview["town"] = town.name;
+    tapPublishViewController.myAdsView["town"] = town.name;
     update();
   }
 
@@ -74,8 +74,8 @@ if(Filter.data["town"]!=null){
     });
   }
 
-  updatecitieAndTowen() {
-    citie = null;
+  updateCityAndTown() {
+    city = null;
     tapPublishViewController.citie = null;
     tapPublishViewController.town = null;
     town = null;

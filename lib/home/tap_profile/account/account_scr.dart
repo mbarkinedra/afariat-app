@@ -5,6 +5,7 @@ import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
 import 'package:afariat/mywidget/profile_pic.dart';
 import 'package:afariat/networking/json/ref_json.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,103 +16,104 @@ class Account extends GetWidget<AccountViewController> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return SingleChildScrollView(
-      child: GetBuilder<AccountViewController>(builder: (logic) {
-        return Column(
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            CircleAvatar(
-              maxRadius: 50,
-              backgroundImage: NetworkImage(
-                  "https://www.sleeptasticsolutions.com/wp-content/uploads/2018/05/happy-kids-1.jpg"),
-            ),
-            CustomTextFiled(
-              color: framColor,
-              width: size.width * .8,
-              hintText: 'name',
-              textEditingController: logic.name,
-            ),
-            CustomTextFiled(
-              color: framColor,
-              textEditingController: controller.email,
-              width: size.width * .8,
-              hintText: 'email',
-              validator: (value) {
-                return controller.validateServer.validator(value, 'email');
-              },
-            ),
-            CustomTextFiled(
+    return Material(
+      child: SingleChildScrollView(
+        child: GetBuilder<AccountViewController>(builder: (logic) {
+          return Column(
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              CircleAvatar(
+                maxRadius: 50,
+                backgroundImage: NetworkImage(
+                    "https://www.sleeptasticsolutions.com/wp-content/uploads/2018/05/happy-kids-1.jpg"),
+              ),
+              CustomTextFiled(
                 color: framColor,
-                textEditingController: controller.phone,
                 width: size.width * .8,
-                hintText: 'phone',
+                hintText: 'name',
+                textEditingController: logic.name,
+              ),
+              CustomTextFiled(
+                color: framColor,
+                textEditingController: controller.email,
+                width: size.width * .8,
+                hintText: 'email',
                 validator: (value) {
-                  return controller.validateServer.validator(value, 'phone');
-                }),
-            GetBuilder<LocController>(builder: (logic) {
-              return Column(
-                children: [
-                  Container(
-                    width: size.width * .8,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.deepOrange),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: DropdownButton<RefJson>(
-                      hint: Text("City"),
-                      isExpanded: true,
-                      value: logic.citie,
-                      iconSize: 24,
-                      elevation: 16,
-                      onChanged: logic.updatecitie,
-                      items: logic.cities
-                          .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                        return DropdownMenuItem<RefJson>(
-                          value: value,
-                          child: Text(value.name),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                ],
-              );
-            }),
-
-            GetBuilder<AccountViewController>(builder: (logic) {
-              return logic.updateData?CircularProgressIndicator():CustomButton(
-                  height: 50,
-                  label: "Mettre à jour",
-                  icon: Icons.refresh_outlined,
-                  iconcolor:Colors.white,
-                  labcolor: Colors.white,
+                  return controller.validateServer.validator(value, 'email');
+                },
+              ),
+              CustomTextFiled(
+                  color: framColor,
+                  textEditingController: controller.phone,
                   width: size.width * .8,
-                  btcolor: framColor,
-                  function: () {
-                    controller.updateUserData();
-                  },
+                  hintText: 'phone',
+                  validator: (value) {
+                    return controller.validateServer.validator(value, 'phone');
+                  }),
+              GetBuilder<LocController>(builder: (logic) {
+                return Column(
+                  children: [
+                    Container(
+                      width: size.width * .8,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.deepOrange),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: DropdownButton<RefJson>(
+                        hint: Text("City"),
+                        isExpanded: true,
+                        value: logic.city,
+                        iconSize: 24,
+                        elevation: 16,
+                        onChanged: logic.updateCity,
+                        items: logic.cities
+                            .map<DropdownMenuItem<RefJson>>((RefJson value) {
+                          return DropdownMenuItem<RefJson>(
+                            value: value,
+                            child: Text(value.name),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                  ],
                 );
-              }
-            ),
-            CustomButton(
-              height: 50,
-              label: "Annuler",
-              icon: Icons.arrow_back_rounded,
-              labcolor: Colors.white,
-              iconcolor:Colors.white,
-
-              width: size.width * .8,
-              btcolor: framColor,
-              function: () {
-                Navigator.pop(context);
-              },
-            )
-          ],
-        );
-      }),
+              }),
+              GetBuilder<AccountViewController>(builder: (logic) {
+                return logic.updateData
+                    ? CircularProgressIndicator()
+                    : CustomButton(
+                        height: 50,
+                        label: "Mettre à jour",
+                        icon: Icons.refresh_outlined,
+                        iconcolor: Colors.white,
+                        labcolor: Colors.white,
+                        width: size.width * .8,
+                        btcolor: framColor,
+                        function: () {
+                          controller.updateUserData();
+                        },
+                      );
+              }),
+              CustomButton(
+                height: 50,
+                label: "Annuler",
+                icon: Icons.arrow_back_rounded,
+                labcolor: Colors.white,
+                iconcolor: Colors.white,
+                width: size.width * .8,
+                btcolor: framColor,
+                function: () {
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          );
+        }),
+      ),
     );
   }
 }

@@ -6,13 +6,21 @@ import 'package:get/get.dart';
 
 import 'chat_user/chat_user_scr.dart';
 import 'tap_chat_viewcontroller.dart';
+import 'dart:convert';
+import 'dart:math';
+import 'package:flutter/material.dart';
 
 class TapChatScr extends GetWidget<TapChatViewController> {
+  String randomString() {
+    final random = Random.secure();
+    final values = List<int>.generate(16, (i) => random.nextInt(255));
+    return base64UrlEncode(values);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
 
-    //
     return Scaffold(
         appBar: AppBar(
           title: Text(
