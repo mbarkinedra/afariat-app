@@ -27,7 +27,6 @@ class SignInViewController extends GetxController {
   login() {
     //GET the user SALT
     _getSalt.post({"login": "${email.text}"}).then((value) {
-
       String hashedPassword =
           Wsse.hashPassword(password.text, value.data["salt"]);
       print("Hashed Password: $hashedPassword");
@@ -44,8 +43,9 @@ class SignInViewController extends GetxController {
             .saveUserId(value.data["user_id"].toString());
 
         Get.find<HomeViwController>().changeSelectedValue(0);
-        Get.find<HomeViwController>().  updatelist();
-        Get.find<HomeViwController>() . controller = PersistentTabController(initialIndex: 0);
+        Get.find<HomeViwController>().updatelist();
+        Get.find<HomeViwController>().controller =
+            PersistentTabController(initialIndex: 0);
         //TODO: Process error cases: bad salt, bad login/pwd
       });
     });

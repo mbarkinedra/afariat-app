@@ -9,7 +9,7 @@ class ModifAdsApi extends ApiManager {
 
   @override
   String apiUrl() {
-    return SettingsApp.modifAds + id.toString();
+    return SettingsApp.modifAds + "/" + id.toString();
   }
 
   @override

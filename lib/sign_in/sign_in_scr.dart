@@ -5,7 +5,6 @@ import 'package:afariat/sign_in/sign_in_viewcontroller.dart';
 import 'package:afariat/sign_up/sign_up_scr.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'forgotPassword/forgot_Password_scr.dart';
 
 class SignInScr extends GetWidget<SignInViewController> {

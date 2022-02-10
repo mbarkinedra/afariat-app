@@ -23,11 +23,15 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-            "Deposer une annonce ",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-          ),
-          backgroundColor: Colors.deepOrange),
+        iconTheme: IconThemeData(
+          color: Colors.white, //change your color here
+        ),
+        backgroundColor: Colors.deepOrange,
+        title: Text(
+          "Déposer une annonce",
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(25),
         child: Form(
@@ -292,8 +296,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                       width: MediaQuery.of(context).size.width * .35,
                       height: 50,
                       label: "Suivant",
-                      labcolor: Colors.white,
-                      btcolor: buttonColor,
+                      labColor: Colors.white,
+                      btColor: buttonColor,
                       function: () {
                         //postAdvert(cities1,town1,advertType,price,description,title,photo)
 

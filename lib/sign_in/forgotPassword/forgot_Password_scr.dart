@@ -5,7 +5,6 @@ import 'package:afariat/mywidget/profile_pic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'forgotpassword_view_controller.dart';
 
 class ForgotPassword extends GetWidget<ForgotPasswordViewController> {
@@ -19,7 +18,6 @@ class ForgotPassword extends GetWidget<ForgotPasswordViewController> {
         ),
         backgroundColor: Colors.deepOrangeAccent,
       ),
-
       body: Column(
         children: [
           SizedBox(
@@ -32,12 +30,6 @@ class ForgotPassword extends GetWidget<ForgotPasswordViewController> {
               style: TextStyle(fontSize: 15),
             ),
           ),
-
-          // CircleAvatar(maxRadius: 50,
-          //   backgroundImage: NetworkImage(
-          //       "https://www.sleeptasticsolutions.com/wp-content/uploads/2018/05/happy-kids-1.jpg"),
-          // ),
-
           SizedBox(
             height: 20,
           ),
@@ -51,12 +43,11 @@ class ForgotPassword extends GetWidget<ForgotPasswordViewController> {
             height: 50,
             label: "send",
             width: size.width * .8,
-            btcolor: framColor,
+            btColor: framColor,
             function: () {
               controller.forgotPassword();
             },
           ),
-
         ],
       ),
     );

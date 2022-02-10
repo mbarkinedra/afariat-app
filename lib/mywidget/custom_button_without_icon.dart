@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class CustomButtonWithoutIcon extends StatelessWidget {
-  final Color btcolor;
-  final Color labcolor;
+  final Color btColor;
+  final Color labColor;
   final String label;
   final double height;
   final double width;
   final double fontSize;
   final FontWeight fontWeight;
   final Function function;
-  final Color iconcolor;
+  final Color iconColor;
   final IconData icon;
 
   @override
@@ -25,16 +25,14 @@ class CustomButtonWithoutIcon extends StatelessWidget {
             child: Text(
               label,
               style: TextStyle(
-                  color: labcolor, fontSize: fontSize, fontWeight: fontWeight),
+                  color: labColor, fontSize: fontSize, fontWeight: fontWeight),
             ),
-
           ),
-
           width: width,
           height: height,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.0),
-            color: btcolor,
+            color: btColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.16),
@@ -49,13 +47,13 @@ class CustomButtonWithoutIcon extends StatelessWidget {
   }
 
   CustomButtonWithoutIcon(
-      {@required this.btcolor,
+      {@required this.btColor,
       @required this.function,
-      @required this.labcolor,
+      @required this.labColor,
       @required this.label,
       @required this.height,
-        this.icon,
-        this.iconcolor = Colors.white,
+      this.icon,
+      this.iconColor = Colors.white,
       @required this.width,
       this.fontSize = 16,
       this.fontWeight = FontWeight.normal});

@@ -25,7 +25,6 @@ class CustomButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
                 if (icon != null)
                   Icon(
                     icon,
@@ -40,7 +39,8 @@ class CustomButton extends StatelessWidget {
                       color: labcolor,
                       fontSize: fontSize,
                       fontWeight: fontWeight),
-                ), ],
+                ),
+              ],
             ),
           ),
           width: width,
@@ -63,7 +63,8 @@ class CustomButton extends StatelessWidget {
 
   CustomButton(
       {@required this.btcolor,
-      this.icon,this.iconcolor,
+      this.icon,
+      this.iconcolor,
       @required this.function,
       @required this.labcolor,
       @required this.label,

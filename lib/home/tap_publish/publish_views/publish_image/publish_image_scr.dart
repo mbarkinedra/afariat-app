@@ -17,7 +17,14 @@ class PublishImageScr extends GetView<TapPublishViewController> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("Deposer une annonce "),
+          iconTheme: IconThemeData(
+            color: Colors.white, //change your color here
+          ),
+          backgroundColor: Colors.deepOrange,
+          title: Text(
+            "Deposer annonces",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
           actions: [
             IconButton(
               icon: Icon(Icons.add_a_photo),
@@ -46,45 +53,42 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                       ? logic.EditAdsImages.length > 0
                           ? Column(
                               mainAxisSize: MainAxisSize.max,
-                              children: logic.EditAdsImages
-                                  .map((e) => Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Stack(
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: framColor),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              width: size.width * .8,
-                                              height: size.height * .3,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                child: Image.network(
-                                                  e,
-                                                  fit: BoxFit.fill,
-                                                ),
-                                              ),
+                              children: logic.EditAdsImages.map((e) => Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              border:
+                                                  Border.all(color: framColor),
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          width: size.width * .8,
+                                          height: size.height * .3,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: Image.network(
+                                              e,
+                                              fit: BoxFit.fill,
                                             ),
-                                            Positioned(
-                                              right: 0,
-                                              child: InkWell(
-                                                  onTap: () {
-                                                    logic.deleditImage(e);
-                                                  },
-                                                  child: Icon(
-                                                    Icons.clear,
-                                                    size: 30,
-                                                    color: Colors.deepOrange,
-                                                  )),
-                                            ),
-                                          ],
+                                          ),
                                         ),
-                                      ))
-                                  .toList(),
+                                        Positioned(
+                                          right: 0,
+                                          child: InkWell(
+                                              onTap: () {
+                                                logic.deleditImage(e);
+                                              },
+                                              child: Icon(
+                                                Icons.clear,
+                                                size: 30,
+                                                color: Colors.deepOrange,
+                                              )),
+                                        ),
+                                      ],
+                                    ),
+                                  )).toList(),
                             )
                           : Image.asset(
                               "assets/images/placeholder.png",

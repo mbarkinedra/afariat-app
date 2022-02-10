@@ -17,7 +17,7 @@ class Setting extends GetWidget<SettingViewController> {
       appBar: AppBar(
         title: Text(
           "Settings ",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.white),
         ),
         backgroundColor: Colors.deepOrangeAccent,
       ),
@@ -72,7 +72,7 @@ class Setting extends GetWidget<SettingViewController> {
               Get.defaultDialog(
                 cancel: GestureDetector(
                   child: Text(
-                    "cancel",
+                    "Annuler",
                     style: TextStyle(
                         color: Colors.red,
                         fontWeight: FontWeight.bold,

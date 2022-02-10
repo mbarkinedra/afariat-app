@@ -30,9 +30,9 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       SizedBox(
-                        width: _size.width * .12,
+                        width: _size.width * .13,
                         child: Image.asset(
-                          "assets/images/Splash_1.png",
+                          "assets/images/Splash_2.png",
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -134,6 +134,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                       logic.searchWord.text.toLowerCase())) {
                                 return InkWell(
                                   onTap: () {
+                                    print(item.id);
                                     Get.find<AdvertDetailsViewcontroller>()
                                         .loading = true;
                                     Get.find<AdvertDetailsViewcontroller>()

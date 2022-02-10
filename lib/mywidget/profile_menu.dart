@@ -1,12 +1,14 @@
 import 'package:afariat/config/utility.dart';
+import 'package:afariat/home/tap_profile/notification/notification_view_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class ProfileMenu extends StatelessWidget {
   final String text, icon;
   final VoidCallback press;
-  final bool isnotfication;
-  final bool hasnotfication;
+  final bool isNotification;
+  final bool hasNotification;
   final IconData iconProfile;
 
   const ProfileMenu(
@@ -15,8 +17,8 @@ class ProfileMenu extends StatelessWidget {
       this.icon,
       this.press,
       this.iconProfile,
-      this.hasnotfication = false,
-      this.isnotfication = false})
+      this.hasNotification = false,
+      this.isNotification = false})
       : super(key: key);
 
   @override
@@ -36,26 +38,41 @@ class ProfileMenu extends StatelessWidget {
             onPressed: press,
             child: Row(
               children: [
-                // SvgPicture.asset(
-                //   icon,
-                //   color: buttonColor,
-                //   width: 22,
-                // ),
-                Icon(iconProfile,color: Colors.grey,),
+                Icon(
+                  iconProfile,
+                  color: Colors.grey,
+                ),
                 SizedBox(width: 20),
-                Expanded(child: Text(text,style: TextStyle(color: Colors.grey[700],fontWeight: FontWeight.bold),)),
-                Icon(Icons.arrow_forward_ios,color: Colors.grey,),
+                Expanded(
+                    child: Text(
+                  text,
+                  style: TextStyle(
+                      color: Colors.grey[700], fontWeight: FontWeight.bold),
+                )),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.grey,
+                ),
               ],
             ),
           ),
         ),
-        if (isnotfication && hasnotfication)
+        if (isNotification && hasNotification)
           Positioned(
             left: 8,
             top: 8,
             child: Container(
               decoration:
                   BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+              child: Center(
+                  child: Obx(() => Text(
+                      Get.find<NotificationViewController>().notifCount.value >
+                              0
+                          ? Get.find<NotificationViewController>()
+                              .notifCount
+                              .value
+                              .toString()
+                          : " "))),
               height: 20,
               width: 20,
             ),

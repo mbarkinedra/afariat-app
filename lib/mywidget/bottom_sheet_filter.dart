@@ -21,8 +21,6 @@ class BottomSheetFilter extends StatefulWidget {
 }
 
 class _BottomSheetFilterState extends State<BottomSheetFilter> {
-  // final categoryAndSubcategory = Get.find<CategoryAndSubcategory>();
-
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -152,7 +150,6 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
             ),
           ),
           GetBuilder<LocController>(builder: (logic) {
-
             return Column(
               children: [
                 Container(

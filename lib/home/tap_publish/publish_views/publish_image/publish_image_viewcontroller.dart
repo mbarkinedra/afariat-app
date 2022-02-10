@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 class PublishImageViewController extends GetxController {
   File image;
   File image2;
-
   final picker = ImagePicker();
 
   void openCamera(int i) async {

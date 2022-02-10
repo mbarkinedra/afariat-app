@@ -7,9 +7,10 @@ import 'bindings/bindings.dart';
 import 'config/storage.dart';
 import 'controllers/category_and_subcategory.dart';
 import 'home/home_view.dart';
+import 'home/tap_chat/chat_user/test_chatScr.dart';
 import 'home/tap_profile/settings/setting_view_controller.dart';
 
-void main() async{
+void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -17,27 +18,26 @@ void main() async{
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key  key}) : super(key: key);
+  const MyApp({Key key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
-    return GetMaterialApp( debugShowCheckedModeBanner: false, initialBinding: AllBindings(),
-
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      initialBinding: AllBindings(),
       theme: ThemeData(
-        primaryColor:Colors.deepOrangeAccent,
-        primarySwatch: Colors.orange,
+        primaryColor: Colors.deepOrange,
+        primarySwatch: Colors.deepOrange,
       ),
       home: AnimatedSplashScreen(
-          duration: 3000,splashIconSize:800,
-          splash: Image.asset("assets/images/Splash_1.png",),
-          nextScreen:Home(),
+          duration: 3000,
+          splashIconSize: 200,
+          splash: Image.asset("assets/images/Splash_1.png"),
+          nextScreen: Home(),//
           splashTransition: SplashTransition.slideTransition,
-       //   pageTransitionType: PageTransitionType.,
-          backgroundColor: Colors.white
-      )   ,
+          //   pageTransitionType: PageTransitionType.,
+          backgroundColor: Colors.deepOrange),
     );
   }
 }
-
