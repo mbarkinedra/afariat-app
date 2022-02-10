@@ -34,7 +34,7 @@ class CustomTextFiled extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(padding),
         child: Container(
-          width: width, //height: 50,
+          width: width,
 
           child: TextFormField(
             onChanged: onchange,
@@ -50,7 +50,7 @@ class CustomTextFiled extends StatelessWidget {
             ),
           ),
           decoration: BoxDecoration(
-              border: Border.all(color: color,width: 2),
+              border: Border.all(color: color, width: 2),
               borderRadius: BorderRadius.circular(10)),
         ),
       ),

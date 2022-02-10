@@ -12,7 +12,6 @@ class ForgotPasswordViewController extends GetxController {
 
   forgotPassword() {
     Filter.data["username"] = password.text;
-
     _forgotPasswordApi.post(Filter.data).then((value) {
       validateServer.validatorServer(
         validate: () {},

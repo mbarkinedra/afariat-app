@@ -12,6 +12,6 @@ class AdvertDetailsApi extends ApiManager {
 
   @override
   fromJson(data) {
-    return AdvertDetails.fromJson(data);
+    return AdvertDetailsJson.fromJson(data);
   }
 }

@@ -1,7 +1,11 @@
 import 'dart:math';
 
+import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
+import 'package:afariat/home/home_view_controller.dart';
+import 'package:afariat/home/tap_chat/chat_user/chat_user_scr.dart';
+import 'package:afariat/home/tap_chat/chat_user/chat_user_viewcontroller.dart';
 import 'package:afariat/model/error_register.dart';
 
 import 'package:afariat/mywidget/custom_button_icon.dart';
@@ -20,7 +24,6 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
 
-    //
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
@@ -33,6 +36,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
         ),
       ),
       body: GetBuilder<AdvertDetailsViewcontroller>(builder: (logic) {
+        //  logic.advert.userId
         return logic.loading
             ? Center(child: CircularProgressIndicator())
             : Padding(
@@ -54,7 +58,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                         items: logic.advert.photos
                             .map((item) => InkWell(
                                   onTap: () {
-                                    logic.displayDialog(context);
+                                    logic.displayDialogue(context);
                                   },
                                   child: Image.network(
                                     item.path,
@@ -284,7 +288,17 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                               CustomButtonIcon(
                                 btcolor: buttonColor,
                                 function: () async {
-                                  logic.showDialogue(context);
+                                  print(controller.advert.id);
+                                  if (controller.advert.isRegistredUser &&
+                                      Get.find<AccountInfoStorage>()
+                                              .readUserId() !=
+                                          null) {
+                                    print(
+                                        "advert.userId   ${logic.advert.userId}");
+
+                                    controller.showDialogue(context);
+
+                                  }
                                 },
                                 height: 40,
                                 width: _size.width * .2,

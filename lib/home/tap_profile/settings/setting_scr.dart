@@ -72,7 +72,7 @@ class Setting extends GetWidget<SettingViewController> {
               Get.defaultDialog(
                 cancel: GestureDetector(
                   child: Text(
-                    "cancel",
+                    "Annuler",
                     style: TextStyle(
                         color: Colors.red,
                         fontWeight: FontWeight.bold,

@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 class TapMyadsViewController extends GetxController {
   MyAdsApi _myAdsApi = MyAdsApi();
   DeleteAds _deleteAds = DeleteAds();
-
   final storge = Get.find<SecureStorage>();
   List<Adverts> adverts = [];
   bool deleteData = false;

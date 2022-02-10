@@ -17,6 +17,8 @@ abstract class ApiManager {
   /// Returns the API URL of current API ressource
   String apiUrl();
 
+  // Headers responseHeaders;
+
   AbstractJsonResource fromJson(data);
 
   Future<dynamic> getList({Map<String, dynamic> filters}) async {
@@ -25,6 +27,7 @@ abstract class ApiManager {
     await dioSingleton.dio
         .get(apiUrl(), queryParameters: filters)
         .then((value) {
+      print(value.data);
       data = value.data;
     });
     jsonList = fromJson(data);
@@ -53,6 +56,8 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
+//      responseHeaders = value.headers;
+
       return value;
     }).catchError((error) {
       a.Get.snackbar("error", error.toString());
@@ -72,18 +77,22 @@ abstract class ApiManager {
         .post(
       apiUrl(),
       data: jsonEncode(dataToPost),
-      options: Options(headers: {
-        "Accept": "application/json",
-        'apikey': SettingsApp.apiKey,
-        'Content-Type': 'application/json',
-        'X-WSSE': wsse,
-      },
+      options: Options(
+          headers: {
+            "Accept": "application/json",
+            'apikey': SettingsApp.apiKey,
+            'Content-Type': 'application/json',
+            'X-WSSE': wsse,
+          },
           followRedirects: false,
           validateStatus: (status) {
             return status < 500;
           }),
     )
         .then((value) {
+      // responseHeaders = value.headers;
+      // String v=responseHeaders['location'][0];
+      // print(v.split("/").last);
       return value;
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -145,6 +154,8 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
+    //  responseHeaders = value.headers;
+
       return value;
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -152,12 +163,29 @@ abstract class ApiManager {
   }
 
   Future getdata(Map<String, dynamic> dataToPost) async {
-    Options options = Options(headers: {
-      'apikey': SettingsApp.apiKey,
-      'Content-Type': 'application/json',
-      'X-WSSE': dataToPost['X-WSSE'],
+    Wsse xwsse = Wsse();
+    String wsse = xwsse.generateWsseFromStorage();
+
+    return dioSingleton.dio
+        .get(
+      apiUrl(),
+      options: Options(
+          headers: {
+            "Accept": "application/json",
+            'apikey': SettingsApp.apiKey,
+            'Content-Type': 'application/json',
+            'X-WSSE': wsse,
+          },
+          followRedirects: false,
+          validateStatus: (status) {
+            return status < 500;
+          }),
+    )
+        .then((value) {
+      return value;
+    }).onError((error, stackTrace) {
+      print(error.toString());
     });
-    return dioSingleton.dio.get(apiUrl(), options: options);
   }
 
   /// del DATA TO SERVER
@@ -179,10 +207,14 @@ abstract class ApiManager {
   }
 
   //Delete User From User
-  Future<Response<dynamic>> deleteUser() async {
+  Future<Response<dynamic>> deleteData() async {
     //generer le wsse
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
+    print("000000000000àààààààààààààààààààààààààààà00000");
+    print(apiUrl());
+    print(wsse);
+    print("000000000000àààààààààààààààààààààààààààà00000");
     Options options = Options(headers: {
       "Accept": "application/json",
       'apikey': SettingsApp.apiKey,

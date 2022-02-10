@@ -16,16 +16,16 @@ class CustomTextFiled2 extends StatelessWidget {
 
   CustomTextFiled2(
       {@required this.textEditingController,
-        @required this.hintText,
-        this.onchange,
-        @required this.color,
-        this.padding = 4.0,
-        @required this.width,
-        this.validator,
-        this.icon,
-        this.maxLines,
-        this.obscureText = false,
-        @required this.keyboardType});
+      @required this.hintText,
+      this.onchange,
+      @required this.color,
+      this.padding = 4.0,
+      @required this.width,
+      this.validator,
+      this.icon,
+      this.maxLines,
+      this.obscureText = false,
+      @required this.keyboardType});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,8 @@ class CustomTextFiled2 extends StatelessWidget {
 
           child: Row(
             children: [
-              Expanded(flex: 1,
+              Expanded(
+                flex: 1,
                 child: TextFormField(
                   onChanged: onchange,
                   maxLines: maxLines,
@@ -54,12 +55,15 @@ class CustomTextFiled2 extends StatelessWidget {
               ),
               Text(
                 "DT",
-                style:
-                TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),SizedBox(width: 4,)  ],
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              SizedBox(
+                width: 4,
+              )
+            ],
           ),
           decoration: BoxDecoration(
-              border: Border.all(color: color,width: 2),
+              border: Border.all(color: color, width: 2),
               borderRadius: BorderRadius.circular(10)),
         ),
       ),

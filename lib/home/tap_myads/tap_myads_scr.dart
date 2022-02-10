@@ -47,11 +47,11 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                         function: () {
                           Get.find<HomeViwController>().changeSelectedValue(2);
                         },
-                        labcolor: Colors.white,
+                        labColor: Colors.white,
                         height: 50,
                         width: 300,
                         label: "Déposer une annonce maintenant",
-                        btcolor: Colors.deepOrange,
+                        btColor: Colors.deepOrange,
                       )
                     ],
                   ),
@@ -70,7 +70,7 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                         Get.find<TapPublishViewController>().dataAdverts = true;
                         print(logic.adverts[pos].id);
                         Get.find<TapPublishViewController>()
-                            .getEditId(logic.adverts[pos].id);
+                            .getModifAds(logic.adverts[pos].id);
                         Get.find<HomeViwController>().changeSelectedValue(2);
                       },
                     );

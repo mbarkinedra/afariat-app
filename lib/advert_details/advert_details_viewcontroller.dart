@@ -1,6 +1,12 @@
+import 'package:afariat/config/filter.dart';
+import 'package:afariat/home/home_view_controller.dart';
+import 'package:afariat/home/tap_chat/chat_user/chat_user_scr.dart';
+import 'package:afariat/home/tap_chat/chat_user/chat_user_viewcontroller.dart';
 import 'package:afariat/networking/api/advert_details_api.dart';
+import 'package:afariat/networking/api/conversations_api.dart';
 import 'package:afariat/networking/json/advert_details_json.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -8,13 +14,15 @@ import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:developer' as devlog;
 
 class AdvertDetailsViewcontroller extends GetxController {
-  AdvertDetails advert;
-
+  AdvertDetailsJson advert;
+  TextEditingController textEditingController = TextEditingController();
   bool loading = true;
   AdvertDetailsApi _advertDetailsApi = AdvertDetailsApi();
   PhotoViewController photoViewController;
+  ConvertionsApi _convertionsApi = ConvertionsApi();
 
   getAdvertDetails(int id) {
     _advertDetailsApi.advertTypeId = id;
@@ -74,10 +82,10 @@ class AdvertDetailsViewcontroller extends GetxController {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 50,
+
                   color: Colors.deepOrange,
                   padding: EdgeInsets.all(8),
-                  child: Text("Contacter l'annonceur par e_mail",
+                  child: Text("Contacter l'annonceur par messagerie",
                       style: TextStyle(
                           fontSize: 18,
                           color: Colors.white,
@@ -95,6 +103,7 @@ class AdvertDetailsViewcontroller extends GetxController {
                 children: [
                   TextField(
                     maxLines: 5,
+                    controller: textEditingController,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,7 +115,7 @@ class AdvertDetailsViewcontroller extends GetxController {
                           child: Row(
                             children: [
                               Icon(Icons.arrow_back),
-                              Text('Back'),
+                              Text('retour'),
                               SizedBox(
                                 width: 10,
                               ),
@@ -115,13 +124,36 @@ class AdvertDetailsViewcontroller extends GetxController {
                       Row(
                         children: [
                           TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                print("advert.userId   ${advert.userId}");
+                                Filter.data["message"] =
+                                    textEditingController.text;
+                                Filter.data["advert"] = advert.id;
+                                _convertionsApi
+                                    .securePost(dataToPost: Filter.data)
+                                    .then((value) {
+                                  Headers responseHeaders = value.headers;
+                                  String v = responseHeaders['location'][0];
+                                  Get.find<ChatUserViewController>().name =
+                                      advert.username;
+                                  Get.find<ChatUserViewController>().id =
+                                      v.split("/").last;
+                                  Get.find<ChatUserViewController>()
+                                      .getMessage();
+                                  textEditingController.clear();
+                                  Navigator.pop(context);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ChatUserScr()));
+                                });
+                              },
                               child: Row(
                                 children: [
                                   SizedBox(
                                     width: 8,
                                   ),
-                                  Text('conform')
+                                  Text('Envoyer')
                                 ],
                               ))
                         ],
@@ -138,11 +170,11 @@ class AdvertDetailsViewcontroller extends GetxController {
   }
 
   Widget confirmBtn() {
-    return ElevatedButton(onPressed: () {}, child: Text("Confirm"));
+    return ElevatedButton(onPressed: () {}, child: Text("Confirmer"));
   }
 
 // Agrandir photo avec annimation
-  displayDialog(BuildContext context) {
+  displayDialogue(BuildContext context) {
     showGeneralDialog(
       context: context,
       barrierDismissible: false,
@@ -177,8 +209,8 @@ class AdvertDetailsViewcontroller extends GetxController {
                         ),
                         maxScale: PhotoViewComputedScale.covered * 2,
                         minScale: PhotoViewComputedScale.contained * .8,
-                        heroAttributes:
-                            PhotoViewHeroAttributes(tag: advert.photos[index].path),
+                        heroAttributes: PhotoViewHeroAttributes(
+                            tag: advert.photos[index].path),
                       );
                     },
                     itemCount: advert.photos.length,
@@ -197,12 +229,24 @@ class AdvertDetailsViewcontroller extends GetxController {
                   )),
                 ),
               ),
-              Align(alignment: Alignment.topRight,child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GestureDetector(onTap: (){
-                Navigator.pop(context);
-                },child: Container(color: Colors.grey[100],child: Icon(Icons.close,color: Colors.deepOrange,size: 30,))),
-              ),),   ],
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                          color: Colors.grey[100],
+                          child: Icon(
+                            Icons.close,
+                            color: Colors.deepOrange,
+                            size: 30,
+                          ))),
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -214,6 +258,6 @@ class AdvertDetailsViewcontroller extends GetxController {
         onPressed: () {
           Get.back();
         },
-        child: Text("Cancel"));
+        child: Text("Annuler"));
   }
 }

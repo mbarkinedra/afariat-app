@@ -13,7 +13,6 @@ import 'package:afariat/model/validate_server.dart';
 import 'package:afariat/model/validator.dart';
 import 'package:afariat/networking/api/get_salt_api.dart';
 import 'package:afariat/networking/api/modif_ads_api.dart';
-
 import 'package:afariat/networking/api/publish_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
@@ -24,7 +23,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-
 import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
@@ -322,20 +320,12 @@ class TapPublishViewController extends GetxController {
   }
 
   postdata() async {
-    // if (image != null) {
-    //   photobase64Encode(image);
-    // }
-    // if (image2 != null) {
-    //   photobase64Encode(image2);
-    // }
     for (var i in images) {
       photobase64Encode(i);
     }
     myAds["photos"] = photos;
     print(photos.length);
     PublishApi publishApi = PublishApi();
-
-    // Map<StModifAdsApiring, dynamic> serverErrors;
 
     if (dataAdverts) {
       _modifAdsApi.id = modifAdsJson.id;
@@ -385,8 +375,7 @@ class TapPublishViewController extends GetxController {
       });
     } else {
       devlog.log(jsonEncode(myAds));
-      /*  myAds["energy"] = energie;
-      print(energie);*/
+
       final postData =
           await publishApi.securePost(dataToPost: myAds).then((value) {
         _validateServer.validatorServer(
@@ -473,7 +462,7 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
-  getEditId(int id) {
+  getModifAds(int id) {
     _modifAdsApi.id = id;
 
     _modifAdsApi.getList().then((value) {
@@ -482,8 +471,6 @@ class TapPublishViewController extends GetxController {
       description.text = modifAdsJson.description;
       prix.text = modifAdsJson.price.toString();
       lights = modifAdsJson.showPhoneNumber == "yes" ? true : false;
-      // images=modifAdsJson.photos=;
-
       for (int i = 0; i < Get.find<LocController>().cities.length; i++) {
         if (Get.find<LocController>().cities[i].id ==
             modifAdsJson.city.toJson()["id"]) {

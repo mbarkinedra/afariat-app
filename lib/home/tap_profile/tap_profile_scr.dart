@@ -19,17 +19,20 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
     Size _size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
+
         child: Column(
+
           children: [
+            SizedBox(height: 10),
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image.asset(
-                "assets/images/Splash_1.png",
-                width: 100,
-                height: 100,
+                "assets/images/Splash_2.png",
+                width: 120,
+                height: 120,
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 5),
             ProfileMenu(
               iconProfile: Icons.person,
               text: "Mon compte",
@@ -45,10 +48,10 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
               return ProfileMenu(
                 iconProfile: Icons.notifications_outlined,
                 text: "Notifications",
-                hasnotfication: Get.find<NotificationViewController>()
+                hasNotification: Get.find<NotificationViewController>()
                     .hasNotification
                     .value,
-                isnotfication: true,
+                isNotification: true,
                 press: () {
                   Get.find<NotificationViewController>().hasNotification.value =
                       false;

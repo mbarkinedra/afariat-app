@@ -8,7 +8,7 @@ class DeleteAds extends ApiManager {
 
   @override
   String apiUrl() {
-    return SettingsApp.deleteAds + id.toString();
+    return SettingsApp.deleteAds + "/" + id.toString();
   }
 
   @override

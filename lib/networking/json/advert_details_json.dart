@@ -1,9 +1,10 @@
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 
-class AdvertDetails extends AbstractJsonResource {
+class AdvertDetailsJson extends AbstractJsonResource {
   String createdAt;
   int id;
+  bool  isRegistredUser;
   String username;
   String mobilePhoneNumber;
   String title;
@@ -27,8 +28,9 @@ class AdvertDetails extends AbstractJsonResource {
   Mileage vehicleBrand;
   Mileage vehicleModel;
   Mileage motoBrand;
+  int userId;
 
-  AdvertDetails(
+  AdvertDetailsJson(
       {this.createdAt,
       this.id,
       this.username,
@@ -52,9 +54,10 @@ class AdvertDetails extends AbstractJsonResource {
       this.vehicleBrand,
       this.vehicleModel,
       this.mileage,
-      this.energy,this.motoBrand});
+      this.energy,this.motoBrand,this.isRegistredUser,  this.userId,});
 
-  AdvertDetails.fromJson(Map<String, dynamic> json) {
+  AdvertDetailsJson.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
     createdAt = json['created_at'];
     id = json['id'];
     username = json['username'];
@@ -64,6 +67,8 @@ class AdvertDetails extends AbstractJsonResource {
     description = json['description'];
     price = json['price'];
     showPhoneNumber = json['show_phone_number'];
+    isRegistredUser= json['isRegistredUser'];
+
     area = json['area'];
     advertType = json['advert_type'] != null
         ? new AdvertType.fromJson(json['advert_type'])
@@ -117,6 +122,7 @@ class AdvertDetails extends AbstractJsonResource {
     data['price'] = this.price;
     data['show_phone_number'] = this.showPhoneNumber;
     data['area'] = this.area;
+    data['userId'] = this.userId;
     if (this.advertType != null) {
       data['advert_type'] = this.advertType.toJson();
     }

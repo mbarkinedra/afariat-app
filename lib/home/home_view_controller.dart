@@ -16,12 +16,6 @@ import 'tap_profile/tap_profile_scr.dart';
 import 'tap_publish/tap_publish_scr.dart';
 
 class HomeViwController extends GetxController {
-  // int _selectedIndex = 0;
-  // getselectedIndex()=>_selectedIndex;
-  // setSelectIndex(int index){
-  //   _selectedIndex=index;
-  //   update();
-  // }
   PersistentTabController controller;
 
   int _navigatorValue = 0;
@@ -49,18 +43,13 @@ class HomeViwController extends GetxController {
 
   Widget currentScreen = TapHomeScr();
 
-  List<Widget> buildScreens=[
-      TapHomeScr(),
-      Get.find<AccountInfoStorage>().isLoggedIn() ? TapMyAdsScr() : SignInScr(),
-      Get.find<AccountInfoStorage>().isLoggedIn()
-          ? TapPublishScr()
-          : SignInScr(),
-      Get.find<AccountInfoStorage>().isLoggedIn() ? TapChatScr() : SignInScr(),
-      Get.find<AccountInfoStorage>().isLoggedIn()
-          ? TapProfileScr()
-          : SignInScr()
-    ];
-
+  List<Widget> buildScreens = [
+    TapHomeScr(),
+    Get.find<AccountInfoStorage>().isLoggedIn() ? TapMyAdsScr() : SignInScr(),
+    Get.find<AccountInfoStorage>().isLoggedIn() ? TapPublishScr() : SignInScr(),
+    Get.find<AccountInfoStorage>().isLoggedIn() ? TapChatScr() : SignInScr(),
+    Get.find<AccountInfoStorage>().isLoggedIn() ? TapProfileScr() : SignInScr()
+  ];
 
   @override
   void onInit() {
@@ -69,26 +58,27 @@ class HomeViwController extends GetxController {
     currentScreen = PageToView(
       naigatorKey: _navigatorKeys[_pageKeys[0]],
       tabItem: _pageKeys[0],
-    ); //=HomeView();
+    );
   }
-updatelist(){
-    if(  Get.find<AccountInfoStorage>().isLoggedIn() ){
-      buildScreens[1]=TapMyAdsScr();
-      buildScreens[2]=TapPublishScr();
-      buildScreens[3]=TapChatScr();
-      buildScreens[4]=TapProfileScr();
-    }else{
-      buildScreens[1]=SignInScr();
-      buildScreens[2]=SignInScr();
-      buildScreens[3]=SignInScr();
-      buildScreens[4]=SignInScr();
+
+  updatelist() {
+    if (Get.find<AccountInfoStorage>().isLoggedIn()) {
+      buildScreens[1] = TapMyAdsScr();
+      buildScreens[2] = TapPublishScr();
+      buildScreens[3] = TapChatScr();
+      buildScreens[4] = TapProfileScr();
+    } else {
+      buildScreens[1] = SignInScr();
+      buildScreens[2] = SignInScr();
+      buildScreens[3] = SignInScr();
+      buildScreens[4] = SignInScr();
     }
-}
+  }
+
   /// Selected Navigation bar
   changeSelectedValue(int selectedValue) {
-
     updatelist();
-    controller.index=selectedValue;//= PersistentTabController(initialIndex: selectedValue,);
+    controller.index = selectedValue;
     update();
     Filter.data.clear();
     Get.find<TapPublishViewController>().clearAllData();
@@ -102,7 +92,7 @@ updatelist(){
       naigatorKey: _navigatorKey,
       tabItem: _currentPage,
     );
-print( controller.index);
+    print(controller.index);
     update();
   }
 
@@ -163,7 +153,6 @@ class PageToView extends StatelessWidget {
         }
       case 'Page5':
         {
-          // currentScreen = AccountInfoStorage.isLoggedIn()?SignInScr(): TapProfileScr();
           currentScreen = currentScreen =
               Get.find<AccountInfoStorage>().isLoggedIn()
                   ? TapProfileScr()

@@ -56,11 +56,9 @@ class MyHomeItem extends StatelessWidget {
                   children: [
                     Container(
                       child: Text(
-                        adverts.title ,
+                        adverts.title,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 15),
-                       // softWrap: true,
-                     //   overflow: TextOverflow.fade,
                       ),
                     ),
                     SizedBox(

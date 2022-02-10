@@ -296,8 +296,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                       width: MediaQuery.of(context).size.width * .35,
                       height: 50,
                       label: "Suivant",
-                      labcolor: Colors.white,
-                      btcolor: buttonColor,
+                      labColor: Colors.white,
+                      btColor: buttonColor,
                       function: () {
                         //postAdvert(cities1,town1,advertType,price,description,title,photo)
 
