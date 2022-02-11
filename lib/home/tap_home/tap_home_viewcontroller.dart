@@ -22,8 +22,8 @@ class TapHomeViewController extends GetxController {
   bool getDataFromWeb = true;
   List<AdvertJson> adverts = [];
   List<dynamic> prices = [];
-  int maxValue = 20;
-  int minValue = 0;
+  double maxValue = 20;
+  double minValue = 0;
   SfRangeValues values = SfRangeValues(0, 100000);
   Map<String, dynamic> search = {};
   bool loadPrice = true;
@@ -115,8 +115,8 @@ class TapHomeViewController extends GetxController {
   getPriceList() async {
     await _pricesApi.getList().then((value) {
       prices = value.data;
-      minValue = prices[0].id;
-      maxValue = prices[prices.length - 1].id;
+      minValue =double.parse( prices[0].id);
+      maxValue = double.parse( prices[prices.length - 1].id);
       values = SfRangeValues(minValue, maxValue);
 
       loadPrice = false;

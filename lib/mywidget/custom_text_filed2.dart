@@ -33,7 +33,7 @@ class CustomTextFiled2 extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(padding),
         child: Container(
-          width: width, //height: 50,
+         // width: width, //height: 50,
 
           child: Row(
             children: [
