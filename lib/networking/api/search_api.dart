@@ -8,13 +8,14 @@ import 'api_manager.dart';
 class SearchApi extends ApiManager {
   Map<String, dynamic> map = {};
 
+  String searchData="";
   SearchApi(this.map) {
     Filter.data = map;
   }
 
   @override
   String apiUrl() {
-    return SettingsApp.advertUrl;
+    return SettingsApp.advertUrl+searchData;
   }
 
   @override

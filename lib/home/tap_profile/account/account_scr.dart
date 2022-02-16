@@ -22,12 +22,15 @@ class Account extends GetWidget<AccountViewController> {
           return Column(
             children: [
               SizedBox(
-                height: 20,
+                height: 30,
               ),
-              CircleAvatar(
-                maxRadius: 50,
-                backgroundImage: NetworkImage(
-                    "https://www.sleeptasticsolutions.com/wp-content/uploads/2018/05/happy-kids-1.jpg"),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.asset(
+                  "assets/images/Splash_2.png",
+                  width: 120,
+                  height: 120,
+                ),
               ),
               CustomTextFiled(
                 color: framColor,
@@ -61,7 +64,11 @@ class Account extends GetWidget<AccountViewController> {
                           border: Border.all(color: Colors.deepOrange),
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButton<RefJson>(
-                        hint: Text("City"),
+                        underline: SizedBox(),
+                        hint: Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 8),
+                          child: Text("City"),
+                        ),
                         isExpanded: true,
                         value: logic.city,
                         iconSize: 24,

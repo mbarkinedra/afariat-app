@@ -106,9 +106,9 @@ class HomeViwController extends GetxController {
     );
   }
 
-  gotomun() {
-    // Get.to(() => MenuView());
-  }
+  // gotomun() {
+  //   // Get.to(() => MenuView());
+  // }
 }
 
 class PageToView extends StatelessWidget {

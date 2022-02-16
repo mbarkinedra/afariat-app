@@ -48,6 +48,7 @@ class CategoryAndSubcategory extends GetxController {
 
       tapHomeViewController.filterUpdate();
     } else {
+      tapHomeViewController. searchAddLinke= tapHomeViewController .searchAddLinke+"category=${categoryGrouped.id}&";
       Filter.data["category"] = categoryGrouped.id;
       tapHomeViewController.setSearch("category", categoryGrouped.id);
       print(Filter.data.toString());

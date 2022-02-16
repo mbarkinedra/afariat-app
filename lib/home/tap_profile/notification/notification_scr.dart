@@ -41,7 +41,7 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
                         key: Key(item.id.toString()),
                         onDismissed: (direction) {
                           logic.onDeleteNotifications(
-                              id: item.id, index: pos);
+                              id: item.id, index: item);
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),

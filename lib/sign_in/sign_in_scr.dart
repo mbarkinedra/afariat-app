@@ -16,6 +16,8 @@ class SignInScr extends GetWidget<SignInViewController> {
         child: Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
+    child: Form(
+    key: controller.registerFormKey,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -37,6 +39,9 @@ class SignInScr extends GetWidget<SignInViewController> {
                 hint: "Votre E-mail",
                 icon: Icons.email,
                 textEditingController: controller.email,
+                  validator: (v){
+                 return controller.validateEmail(v );
+                  }
               ),
               SizedBox(
                 height: _size.height * .05,
@@ -49,6 +54,10 @@ class SignInScr extends GetWidget<SignInViewController> {
                   //Ajouter
                   obscureText: logic.isVisiblePassword,
                   textEditingController: controller.password,
+                  validator: (value) {
+                    return controller.validateServer
+                        .validator(value, 'password');
+                  },
                   suffixIcon: IconButton(
                     onPressed: controller.showHidePassword,
                     icon: Icon(logic.isVisiblePassword
@@ -118,6 +127,6 @@ class SignInScr extends GetWidget<SignInViewController> {
           ),
         ),
       ),
-    ));
+    )));
   }
 }

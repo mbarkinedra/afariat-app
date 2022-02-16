@@ -26,6 +26,10 @@ import 'package:http/http.dart' as http;
 import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
+  bool buttonPublier=false;
+  bool buttonModif=false;
+  bool buttonSupprimer = false;
+
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   final storge = Get.find<SecureStorage>();
   final accountInfoStorage = Get.find<AccountInfoStorage>();
@@ -39,7 +43,7 @@ class TapPublishViewController extends GetxController {
   bool lights = true;
   String pieces;
   BuildContext context;
-  String energie;
+  RefJson energie;
 
   Map<String, dynamic> myAds = {};
   Map<String, String> myAdsView = {};
@@ -60,6 +64,8 @@ class TapPublishViewController extends GetxController {
   ];
 
   List<RefJson> vehiculeBrands = [];
+  List<RefJson> energies = [];
+
   List<RefJson> motosBrands = [];
   List<RefJson> vehiculeModels = [];
   List<RefJson> mileages = [];
@@ -79,7 +85,8 @@ class TapPublishViewController extends GetxController {
     '10+'
   ];
   List<String> photos = [];
-  List<String> energies = ['Diesel', 'Essence', 'Electrique', 'LPG'];
+
+  // List<String> energies = ['Diesel', 'Essence', 'Electrique', 'LPG'];
   RefJson advertType;
   RefJson yearsmodele;
   RefJson getView;
@@ -88,7 +95,6 @@ class TapPublishViewController extends GetxController {
   RefJson vehiculeModel;
   RefJson citie;
   RefJson town;
-
   RefJson kilometrage;
   GetSaltApi _getSalt = GetSaltApi();
   VehicleBrandsApi _vehicleBrandsApi = VehicleBrandsApi();
@@ -96,7 +102,7 @@ class TapPublishViewController extends GetxController {
   VehicleModelApi _vehicleModelApi = VehicleModelApi();
   MileagesApi _mileagesApi = MileagesApi();
   YearsModelsApi _yearsModelsApi = YearsModelsApi();
-
+  EnergieApi _energieApi = EnergieApi();
   ValidateServer _validateServer = ValidateServer();
 
   photobase64Encode(im) {
@@ -166,7 +172,20 @@ class TapPublishViewController extends GetxController {
     getYearsModels();
   }
 
-  getvehicleBrand() {
+  getEnergie() {
+    energie=null;
+    _energieApi.getList().then((value) {
+      print("eniytytyutytytytuytyutytutuyergy${value.data}");
+      print("eniytytyutytytytuytyutytutuyergy${value}");
+      List<RefJson> refListJson = value.data;
+      energies.clear();
+      energies = refListJson;
+
+      update();
+    });
+  }
+
+  getVehicleBrand() {
     _vehicleBrandsApi.getList().then((value) {
       vehiculeModel = null;
 
@@ -179,7 +198,7 @@ class TapPublishViewController extends GetxController {
   getVehicleModel() {
     _vehicleModelApi.getList().then((value) {
       vehiculeModels = value.data;
-
+      getEnergie();
       update();
     });
   }
@@ -217,7 +236,7 @@ class TapPublishViewController extends GetxController {
     motosBrand = null;
     yearsmodele = null;
     kilometrage = null;
-    getvehicleBrand();
+    getVehicleBrand();
     getMotosBrand();
 
     update();
@@ -232,7 +251,9 @@ class TapPublishViewController extends GetxController {
 
   updateEnergie(newValue) {
     energie = newValue;
-    Filter.data["energy"] = newValue;
+    myAds["energy"] = newValue.id;
+    myAdsView["energie:"] = newValue.name;
+   // getEnergie();
     update();
   }
 
@@ -320,6 +341,8 @@ class TapPublishViewController extends GetxController {
   }
 
   postdata() async {
+    buttonPublier=true;
+    update();
     for (var i in images) {
       photobase64Encode(i);
     }
@@ -456,7 +479,9 @@ class TapPublishViewController extends GetxController {
             middleTextStyle: TextStyle(color: Colors.deepOrange),
           );
         }*/
-      });
+        buttonPublier=false;
+
+        update();  });
     }
 
     update();

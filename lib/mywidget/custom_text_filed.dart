@@ -6,7 +6,7 @@ class CustomTextFiled extends StatelessWidget {
   final TextEditingController textEditingController;
   final Color color;
   final double width;
-  final IconData icon;
+//  final IconData icon;
   final bool obscureText;
   final TextInputType keyboardType;
   final String hintText;
@@ -23,37 +23,35 @@ class CustomTextFiled extends StatelessWidget {
       this.padding = 4.0,
       @required this.width,
       this.validator,
-      this.icon,
+    //  this.icon,
       this.maxLines,
       this.obscureText = false,
       @required this.keyboardType});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(padding),
-        child: Container(
-          width: width,
+    return Container(
+      width: width,
 
-          child: TextFormField(
-            onChanged: onchange,
-            maxLines: maxLines,
-            obscureText: obscureText,
-            keyboardType: keyboardType,
-            validator: validator,
-            controller: textEditingController,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              icon: Icon(icon),
-              hintText: hintText,
-            ),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: TextFormField(
+          onChanged: onchange,
+          maxLines: maxLines,
+          obscureText: obscureText,
+          keyboardType: keyboardType,
+          validator: validator,
+          controller: textEditingController,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+ //        icon: Icon(icon),
+            hintText: hintText,
           ),
-          decoration: BoxDecoration(
-              border: Border.all(color: color, width: 2),
-              borderRadius: BorderRadius.circular(10)),
         ),
       ),
+      decoration: BoxDecoration(
+          border: Border.all(color: color, width: 2),
+          borderRadius: BorderRadius.circular(10)),
     );
   }
 }

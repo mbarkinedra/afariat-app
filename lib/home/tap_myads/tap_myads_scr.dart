@@ -56,25 +56,28 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                     ],
                   ),
                 )
-              : ListView.builder(
-                  itemCount: logic.adverts.length,
-                  itemBuilder: (context, pos) {
-                    return AdsItem(
-                      size: _size,
-                      adverts: logic.adverts[pos],
-                      deleteAds: () {
-                        print(logic.adverts[pos].id);
-                        controller.deleteAds(logic.adverts[pos].id);
-                      },
-                      EditAds: () {
-                        Get.find<TapPublishViewController>().dataAdverts = true;
-                        print(logic.adverts[pos].id);
-                        Get.find<TapPublishViewController>()
-                            .getModifAds(logic.adverts[pos].id);
-                        Get.find<HomeViwController>().changeSelectedValue(2);
-                      },
-                    );
-                  });
+              : Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: ListView.builder(
+                    itemCount: logic.adverts.length,
+                    itemBuilder: (context, pos) {
+                      return AdsItem(
+                        size: _size,
+                        adverts: logic.adverts[pos],
+                        deleteAds: () {
+                          print(logic.adverts[pos].id);
+                          controller.deleteAds(logic.adverts[pos].id);
+                        },
+                        EditAds: () {
+                          Get.find<TapPublishViewController>().dataAdverts = true;
+                          print(logic.adverts[pos].id);
+                          Get.find<TapPublishViewController>()
+                              .getModifAds(logic.adverts[pos].id);
+                          Get.find<HomeViwController>().changeSelectedValue(2);
+                        },
+                      );
+                    }),
+              );
         }),
       ),
     );

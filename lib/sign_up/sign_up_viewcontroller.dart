@@ -67,7 +67,7 @@ class SignUpViewController extends GetxController {
           value: value,
           registerFormKey: registerFormKey);
     }).catchError((e) {
-      Get.snackbar("error", "${e}");
+      Get.snackbar("Erreur", "${e}");
     });
   }
 }

@@ -40,7 +40,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
         return logic.loading
             ? Center(child: CircularProgressIndicator())
             : Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(top: 8.0,bottom: 40,right: 8,left: 8),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,

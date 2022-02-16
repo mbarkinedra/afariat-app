@@ -15,7 +15,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
     return SafeArea(
         child: Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(right: 16.0,left: 16.0,top: 16.0,bottom: 50),
         child: Form(
           key: controller.registerFormKey,
           child: SingleChildScrollView(
@@ -178,12 +178,12 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                     },
                     child: RichText(
                       text: TextSpan(
-                        text: "Vous avez déjà un compte ? ",
-                        style: DefaultTextStyle.of(context).style,
+                        text: "Vous avez déjà un compte ? ",style: TextStyle(color: Colors.deepOrange,fontSize: 15),
+                     //   style: DefaultTextStyle.of(context).style,
                         children: const <TextSpan>[
                           TextSpan(
                               text: 'Log in',
-                              style: TextStyle(fontWeight: FontWeight.bold))
+                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.deepOrange,fontSize: 18))
                         ],
                       ),
                     ),

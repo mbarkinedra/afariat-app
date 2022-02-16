@@ -23,6 +23,8 @@ class SettingsApp {
   static const String vehicleBrandsUrl = baseApiUrl + '/simple/vehicle-brands';
   static const String vehiculeModelUrl = baseApiUrl + '/simple/vehicle-models';
   static const String motoBrandsUrl = baseApiUrl + '/simple/moto-brands';
+  static const String energiesUrl = baseApiUrl + '/simple/energies';
+
   static const String mileagesUrl = baseApiUrl + '/simple/mileages';
   static const String yearsModelsUrl = baseApiUrl + '/simple/year-models';
   static const String roomsNumberUrl = baseApiUrl + '/simple/rooms-number';

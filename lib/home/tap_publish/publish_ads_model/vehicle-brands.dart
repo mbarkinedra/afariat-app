@@ -69,7 +69,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: Colors.deepOrangeAccent, width: 2)),
-              child: DropdownButton<String>(
+              child: DropdownButton<RefJson>(
                 underline: SizedBox(),
                 isExpanded: true,
                 value: logic.energie,
@@ -77,11 +77,11 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                 elevation: 16,
                 onChanged: logic.updateEnergie,
                 items: logic.energies
-                    .map<DropdownMenuItem<String>>((String value) {
+                    .map<DropdownMenuItem<RefJson>>((RefJson value) {
                   print(value);
-                  return DropdownMenuItem<String>(
+                  return DropdownMenuItem<RefJson>(
                     value: value,
-                    child: Text(value),
+                    child: Text(value.name),
                   );
                 }).toList(),
               ),

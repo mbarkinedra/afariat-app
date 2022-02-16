@@ -67,6 +67,7 @@ class ValidateServer {
           colorText: Colors.white,
           backgroundColor: Colors.red,
         );
+
         break;
       case 403:
         serverErrors = value.data;
@@ -84,6 +85,8 @@ class ValidateServer {
         break;
       case 404:
         serverErrors = value.data;
+        print(value.data);
+        print(value.data['error']['message']);
         value.data.forEach((key, value) {
           print('Key: $key');
           print('------------------------------');
@@ -91,8 +94,8 @@ class ValidateServer {
 
         Get.snackbar(
           'Erreur',
-          'Veuillez corriger les erreurs ci-dessous.',
-          colorText: Colors.white,
+          value.data['error']['message']//  'Veuillez corriger les erreurs ci-dessous.',
+          ,colorText: Colors.white,
           backgroundColor: Colors.red,
         );
         break;
