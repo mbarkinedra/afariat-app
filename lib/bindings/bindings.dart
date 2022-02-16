@@ -42,7 +42,7 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => PublishImageViewController(), fenix: true);
     Get.lazyPut(() => ForgotPasswordViewController());
     Get.lazyPut(() => SettingViewController());
-    Get.lazyPut(() => NotificationViewController());
+    Get.lazyPut(() => NotificationViewController(),fenix: true);
     Get.lazyPut(() => ChatUserViewController());
     Get.lazyPut(() => TapChatViewController());
   }

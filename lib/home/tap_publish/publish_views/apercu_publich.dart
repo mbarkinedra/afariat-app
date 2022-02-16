@@ -22,8 +22,9 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
             Row(
               children: [
                 SizedBox(
-                  width: 50,
+                  width: 130,
                 ),
+                SizedBox(height: 110),
                 Expanded(
                     child: Text(
                   "Vérification",
@@ -35,7 +36,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
               ],
             ),
             SizedBox(
-              height: 8,
+              height: 2,
             ),
             Divider(
               color: Colors.black,
@@ -93,18 +94,24 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: controller.images
-                      .map((e) => Container(
-                            width: 100,
-                            height: 100,
-                            child: Image.file(
-                              e,
-                              fit: BoxFit.fill,
-                            ),
-                          ))
-                      .toList()),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: controller.images
+                        .map((e) => Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Container(
+                                width: 100,
+                                height: 100,
+                                child: Image.file(
+                                  e,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ))
+                        .toList()),
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -142,8 +149,8 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                     controller.myAds = {};
                     controller.category = null;
                     controller.updateCategory(null);
-                    controller.energies = [];
-                    controller.energie = "";
+                //    controller.energies = [];
+                    controller.energie = null;
                     controller.kilometrage = null;
                     controller.lights = false;
                     controller.motosBrand = null;
@@ -156,15 +163,18 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                     });
                   },
                 ),
-                CustomButtonWithoutIcon(
-                    width: MediaQuery.of(context).size.width * .25,
-                    height: 50,
-                    label: "Publier",
-                    labColor: Colors.white,
-                    btColor: Colors.green,
-                    function: () {
-                      controller.postdata();
-                    }),
+                GetBuilder<TapPublishViewController>(builder: (logic) {
+                    return logic.buttonPublier? CircularProgressIndicator():  CustomButtonWithoutIcon(
+                        width: MediaQuery.of(context).size.width * .25,
+                        height: 50,
+                        label: "Publier",
+                        labColor: Colors.white,
+                        btColor: Colors.green,
+                        function: () {
+                          controller.postdata();
+                        });})
+
+
               ],
             ),
           ],

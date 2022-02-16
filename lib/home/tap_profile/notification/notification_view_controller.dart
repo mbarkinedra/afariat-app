@@ -1,3 +1,4 @@
+import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
 import 'package:afariat/networking/api/count_notification_api.dart';
 import 'package:afariat/networking/api/delete_notification_api.dart';
@@ -15,13 +16,13 @@ class NotificationViewController extends GetxController {
   RxBool hasNotification = false.obs;
   RxInt notifCount = 0.obs;
 
-  onDeleteNotifications({int index, int id}) {
-    notifications.removeAt(index);
+  onDeleteNotifications({index, int id}) {
+    notifications.remove(index);
 
     deleteNotificationApi.id = id.toString();
     deleteNotificationApi.deleteData().then((value) {
       print("Votre notification est supprimé");
-     // update();
+      update();
     });
     // update( );
     Get.snackbar("", "Votre notification est supprimé");
@@ -40,7 +41,9 @@ class NotificationViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getAllNotification();
+    if (Get.find<AccountInfoStorage>().readUserId() != null) {
+      getAllNotification();
+    }
   }
 
   getAllNotification() {

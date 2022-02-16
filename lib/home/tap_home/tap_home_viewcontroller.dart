@@ -22,13 +22,14 @@ class TapHomeViewController extends GetxController {
   bool getDataFromWeb = true;
   List<AdvertJson> adverts = [];
   List<dynamic> prices = [];
-  double maxValue = 20;
-  double minValue = 0;
+  int maxValue = 20;
+  int minValue = 0;
   SfRangeValues values = SfRangeValues(0, 100000);
   Map<String, dynamic> search = {};
   bool loadPrice = true;
   static const _pageSize = 20;
-
+  String searchAddLinke = "?";
+  String priceSearch = "";
   final PagingController<int, dynamic> pagingController =
       PagingController(firstPageKey: 0);
   ScrollController scrollController = ScrollController();
@@ -91,9 +92,13 @@ class TapHomeViewController extends GetxController {
   filterUpdate() {
     if (searchWord.text.isNotEmpty) {
       setSearch("search", searchWord.text.toString());
+      searchAddLinke = searchAddLinke + "search=${searchWord.text}&";
     }
+    searchAddLinke = searchAddLinke + priceSearch;
     SearchApi searchApi = SearchApi(search);
+    searchApi.searchData = searchAddLinke;
     print(Filter.data.toString());
+    print(searchApi.apiUrl());
     searchApi.getList(filters: Filter.data).then((value) {
       clearPrice();
       pagingController.itemList.clear();
@@ -103,6 +108,7 @@ class TapHomeViewController extends GetxController {
       Get.find<LocController>().clearData();
       Get.find<CategoryAndSubcategory>().clearData();
       print(value.embedded.adverts.toString());
+      searchAddLinke = "?";
       update();
     });
   }
@@ -115,8 +121,8 @@ class TapHomeViewController extends GetxController {
   getPriceList() async {
     await _pricesApi.getList().then((value) {
       prices = value.data;
-      minValue =double.parse( prices[0].id);
-      maxValue = double.parse( prices[prices.length - 1].id);
+      minValue = prices[0].id;
+      maxValue = prices[prices.length - 1].id;
       values = SfRangeValues(minValue, maxValue);
 
       loadPrice = false;
@@ -133,6 +139,14 @@ class TapHomeViewController extends GetxController {
 
   updateSlideValue(value) {
     values = value;
+    Filter.data["minPrice="] = prices[values.start.toInt() - 1].id;
+    Filter.data["maxPrice="] = prices[values.end.toInt() - 1].id;
+    print("bbbbbbbbbbbbbbbbbbbbbb ${values.start.toInt().toString()}");
+
+    print("bbbbbbbbbbbbbbbbbbbbbb ${prices[values.start.toInt() - 1].id}");
+    print("bbbbbbbbbbbbbbbbbbbbbb ${values.end.toInt().toString()}");
+    priceSearch =
+        "minPrice=${values.start.toInt().toString()}&maxPrice=${values.end.toInt().toString()}&";
     update();
   }
 

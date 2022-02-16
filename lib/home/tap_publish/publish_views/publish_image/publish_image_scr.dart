@@ -5,6 +5,7 @@ import 'package:afariat/home/tap_publish/publish_views/apercu_publich.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -186,21 +187,23 @@ class PublishImageScr extends GetView<TapPublishViewController> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Options"),
+            title: Text("Selectionner votre options :",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
             content: SingleChildScrollView(
               child: ListBody(
                 children: [
                   GestureDetector(
-                    child: Text("Capture Image From Camera"),
+                    child: Text("Prendre une photo"),
                     onTap: () async {
                       controller.openCamera();
+                      Navigator.pop(context);
                     },
                   ),
                   Padding(padding: EdgeInsets.all(10)),
                   GestureDetector(
-                    child: Text("Take Image From Gallery"),
+                    child: Text("Choisir une image"),
                     onTap: () async {
                       controller.openGallery();
+                      Navigator.pop(context);
                     },
                   ),
                 ],

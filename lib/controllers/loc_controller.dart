@@ -51,6 +51,7 @@ class LocController extends GetxController {
       tapHomeViewController.setSearch("city", ci.id);
       tapPublishViewController.myAds["city"] = ci.id;
       tapPublishViewController.myAdsView["city"] = ci.name;
+      tapHomeViewController. searchAddLinke= tapHomeViewController .searchAddLinke+"city=${ci.id}&";
       updateTowns(ci.id);
       update();
     }
@@ -58,7 +59,7 @@ class LocController extends GetxController {
 
   updatetown(RefJson town) {
     this.town = town;
-
+    tapHomeViewController. searchAddLinke= tapHomeViewController .searchAddLinke+"town=${town.id}&";
     tapPublishViewController.town = town;
     tapHomeViewController.setSearch("town", town.id);
     tapPublishViewController.myAds["town"] = town.id;

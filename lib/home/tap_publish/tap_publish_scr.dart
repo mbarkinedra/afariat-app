@@ -33,11 +33,11 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(25),
+        padding: const EdgeInsets.only(bottom: 25, left: 25, right: 25, top: 8),
         child: Form(
           key: controller.globalKey,
           child: ListView(
-            padding: EdgeInsets.all(4),
+          //  padding: EdgeInsets.all(4),
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -62,8 +62,12 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                 Border.all(color: Colors.deepOrange, width: 2),
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<CategoryGroupedJson>(
+                          underline: SizedBox(),
                           isExpanded: true,
-                          hint: Text("catégorie"),
+                          hint: Padding(
+                            padding: const EdgeInsets.only(left: 8.0, right: 8),
+                            child: Text("Catégorie"),
+                          ),
                           value: logic.categoryGroupedJson,
                           iconSize: 24,
                           elevation: 16,
@@ -73,7 +77,10 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                   (CategoryGroupedJson value) {
                             return DropdownMenuItem<CategoryGroupedJson>(
                               value: value,
-                              child: Text(value.name),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8.0, right: 8),
+                                child: Text(value.name),
+                              ),
                             );
                           }).toList(),
                         ),
@@ -89,7 +96,11 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<SubcategoryJson>(
                           isExpanded: true,
-                          hint: Text("Sous catégorie"),
+                          underline: SizedBox(),
+                          hint: Padding(
+                            padding: const EdgeInsets.only(left: 8.0, right: 8),
+                            child: Text("Sous catégorie"),
+                          ),
                           value: logic.subcategories1,
                           iconSize: 24,
                           elevation: 16,
@@ -99,7 +110,10 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                   (SubcategoryJson value) {
                             return DropdownMenuItem<SubcategoryJson>(
                               value: value,
-                              child: Text(value.name),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8.0, right: 8),
+                                child: Text(value.name),
+                              ),
                             );
                           }).toList(),
                         ),
@@ -147,7 +161,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
               CustomTextFiled(
                 color: framColor,
                 validator: controller.validator.validatetitle,
-                hintText: "",
+                hintText: "Titre",
                 textEditingController: controller.title,
               ),
               const SizedBox(
@@ -164,7 +178,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                 maxLines: 5,
                 color: framColor,
                 validator: controller.validator.validateDescription,
-                hintText: "description",
+                hintText: "Description",
                 textEditingController: controller.description,
               ),
               const SizedBox(
@@ -182,14 +196,31 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: size.width * .84,
-                    child: CustomTextFiled2(
-                      padding: 0,
-                      color: Colors.deepOrange,
-                      validator: controller.validator.validatePrice,
-                      hintText: "Prix",
-                      textEditingController: controller.prix,
-                      keyboardType: TextInputType.number,
+                    width: size.width * .82,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.deepOrange, width: 2),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 0, right: 0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: CustomTextFiled2(
+                              color: Colors.deepOrange,
+                              validator: controller.validator.validatePrice,
+                              hintText: "Prix",
+                              textEditingController: controller.prix,
+                              keyboardType: TextInputType.number,
+                            ),
+                          ),
+                          Text(
+                            "DT",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -215,7 +246,14 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButton<RefJson>(
                         isExpanded: true,
-                        hint: Text("Gouvernorat"),
+                        underline: SizedBox(),
+                        hint: Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 8),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8.0, right: 8),
+                            child: Text("Gouvernorat"),
+                          ),
+                        ),
                         value: logic.city,
                         iconSize: 24,
                         elevation: 16,
@@ -224,7 +262,11 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             .map<DropdownMenuItem<RefJson>>((RefJson value) {
                           return DropdownMenuItem<RefJson>(
                             value: value,
-                            child: Text(value.name),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 8.0, right: 8),
+                              child: Text(value.name),
+                            ),
                           );
                         }).toList(),
                       ),
@@ -251,7 +293,11 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<RefJson>(
                           isExpanded: true,
-                          hint: Text("Commune"),
+                          underline: SizedBox(),
+                          hint: Padding(
+                            padding: const EdgeInsets.only(left: 8.0, right: 8),
+                            child: Text("Commune"),
+                          ),
                           value: logic.town,
                           iconSize: 24,
                           elevation: 16,
@@ -260,7 +306,11 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                               .map<DropdownMenuItem<RefJson>>((RefJson value) {
                             return DropdownMenuItem<RefJson>(
                               value: value,
-                              child: Text(value.name),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 8.0, right: 8),
+                                child: Text(value.name),
+                              ),
                             );
                           }).toList(),
                         ))

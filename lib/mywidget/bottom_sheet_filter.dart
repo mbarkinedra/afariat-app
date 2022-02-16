@@ -47,9 +47,12 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.deepOrange, width: 2),
                         borderRadius: BorderRadius.circular(10)),
-                    child: DropdownButton<CategoryGroupedJson>(
+                    child: DropdownButton<CategoryGroupedJson>(   underline: SizedBox(),
                       isExpanded: true,
-                      hint: Text("Catégorie"),
+                      hint: Padding(
+                        padding: const EdgeInsets.only(left: 8.0, right: 8),
+                        child: Text("Catégorie"),
+                      ),
                       value: logic.categoryGroupedJson,
                       iconSize: 24,
                       elevation: 16,
@@ -59,7 +62,10 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                               (CategoryGroupedJson value) {
                         return DropdownMenuItem<CategoryGroupedJson>(
                           value: value,
-                          child: Text(value.name),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8.0, right: 8),
+                            child: Text(value.name),
+                          ),
                         );
                       }).toList(),
                     ),
@@ -72,9 +78,12 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.deepOrange, width: 2),
                         borderRadius: BorderRadius.circular(10)),
-                    child: DropdownButton<SubcategoryJson>(
+                    child: DropdownButton<SubcategoryJson>(   underline: SizedBox(),
                       isExpanded: true,
-                      hint: Text("Sous Catégories"),
+                      hint: Padding(
+                        padding: const EdgeInsets.only(left: 8.0, right: 8),
+                        child: Text("Sous Catégories"),
+                      ),
                       value: logic.subcategories1,
                       iconSize: 24,
                       elevation: 16,
@@ -84,7 +93,10 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                               (SubcategoryJson value) {
                         return DropdownMenuItem<SubcategoryJson>(
                           value: value,
-                          child: Text(value.name),
+                          child: Padding(
+                            padding:const EdgeInsets.only(left: 8.0, right: 8),
+                            child: Text(value.name),
+                          ),
                         );
                       }).toList(),
                     ),
@@ -157,9 +169,12 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.deepOrange, width: 2),
                       borderRadius: BorderRadius.circular(10)),
-                  child: DropdownButton<RefJson>(
+                  child: DropdownButton<RefJson>(   underline: SizedBox(),
                     isExpanded: true,
-                    hint: Text("Gouvernorat"),
+                    hint: Padding(
+                      padding:const EdgeInsets.only(left: 8.0, right: 8),
+                      child: Text("Gouvernorat"),
+                    ),
                     value: logic.city,
                     iconSize: 24,
                     elevation: 16,
@@ -170,7 +185,10 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                         .map<DropdownMenuItem<RefJson>>((value) {
                       return DropdownMenuItem<RefJson>(
                         value: value.value,
-                        child: Text(value.value.name),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 8),
+                          child: Text(value.value.name),
+                        ),
                       );
                     }).toList(),
                   ),
@@ -183,9 +201,12 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.deepOrange, width: 2),
                         borderRadius: BorderRadius.circular(10)),
-                    child: DropdownButton<RefJson>(
+                    child: DropdownButton<RefJson>(   underline: SizedBox(),
                       isExpanded: true,
-                      hint: Text("Ville"),
+                      hint: Padding(
+                        padding:const EdgeInsets.only(left: 8.0, right: 8),
+                        child: Text("Ville"),
+                      ),
                       value: logic.town,
                       iconSize: 24,
                       elevation: 16,
@@ -194,7 +215,10 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                           .map<DropdownMenuItem<RefJson>>((RefJson value) {
                         return DropdownMenuItem<RefJson>(
                           value: value,
-                          child: Text(value.name),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8.0, right: 8),
+                            child: Text(value.name),
+                          ),
                         );
                       }).toList(),
                     ))
@@ -207,6 +231,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
               height: 50,
               width: _size.width * .4,
               function: () {
+
                 Get.find<TapHomeViewController>().filterUpdate();
                 Navigator.pop(context);
               },

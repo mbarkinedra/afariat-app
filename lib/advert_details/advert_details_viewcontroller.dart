@@ -85,11 +85,13 @@ class AdvertDetailsViewcontroller extends GetxController {
 
                   color: Colors.deepOrange,
                   padding: EdgeInsets.all(8),
-                  child: Text("Contacter l'annonceur par messagerie",
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold)),
+                  child: FittedBox(
+                    child: Text("Contacter l'annonceur par messagerie",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold)),
+                  ),
                 ),
               ],
             ),
@@ -125,6 +127,7 @@ class AdvertDetailsViewcontroller extends GetxController {
                         children: [
                           TextButton(
                               onPressed: () {
+                                Filter.data.clear();
                                 print("advert.userId   ${advert.userId}");
                                 Filter.data["message"] =
                                     textEditingController.text;
@@ -133,6 +136,7 @@ class AdvertDetailsViewcontroller extends GetxController {
                                     .securePost(dataToPost: Filter.data)
                                     .then((value) {
                                   Headers responseHeaders = value.headers;
+                                  print(responseHeaders.map);
                                   String v = responseHeaders['location'][0];
                                   Get.find<ChatUserViewController>().name =
                                       advert.username;

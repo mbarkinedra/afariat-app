@@ -33,6 +33,10 @@ class VehicleBrandsApi extends RefApi {
   @override
   String apiUrl() => SettingsApp.vehicleBrandsUrl;
 }
+class EnergieApi extends RefApi{
+  @override
+  String apiUrl() => SettingsApp.energiesUrl;
+}
 class VehicleModelApi extends RefApi {
   int  vehicleModelId;
   @override
