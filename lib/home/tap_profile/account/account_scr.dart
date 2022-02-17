@@ -35,39 +35,49 @@ class Account extends GetWidget<AccountViewController> {
               CustomTextFiled(
                 color: framColor,
                 width: size.width * .8,
-                hintText: 'name',
+                hintText: 'Nom',
                 textEditingController: logic.name,
+              ),
+              SizedBox(
+                height: 10,
               ),
               CustomTextFiled(
                 color: framColor,
                 textEditingController: controller.email,
                 width: size.width * .8,
-                hintText: 'email',
+                hintText: 'e_mail',
                 validator: (value) {
                   return controller.validateServer.validator(value, 'email');
                 },
+              ),
+              SizedBox(
+                height: 10,
               ),
               CustomTextFiled(
                   color: framColor,
                   textEditingController: controller.phone,
                   width: size.width * .8,
-                  hintText: 'phone',
+                  hintText: 'Numéro de tel',
                   validator: (value) {
                     return controller.validateServer.validator(value, 'phone');
                   }),
+              SizedBox(
+                height: 10,
+              ),
               GetBuilder<LocController>(builder: (logic) {
                 return Column(
                   children: [
                     Container(
                       width: size.width * .8,
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.deepOrange),
+                          border:
+                              Border.all(color: Colors.deepOrange, width: 2),
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButton<RefJson>(
                         underline: SizedBox(),
                         hint: Padding(
                           padding: const EdgeInsets.only(left: 8.0, right: 8),
-                          child: Text("City"),
+                          child: Text("Ville"),
                         ),
                         isExpanded: true,
                         value: logic.city,
@@ -77,9 +87,12 @@ class Account extends GetWidget<AccountViewController> {
                         items: logic.cities
                             .map<DropdownMenuItem<RefJson>>((RefJson value) {
                           return DropdownMenuItem<RefJson>(
-                            value: value,
-                            child: Text(value.name),
-                          );
+                              value: value,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 15.0, right: 8),
+                                child: Text(value.name),
+                              ));
                         }).toList(),
                       ),
                     ),

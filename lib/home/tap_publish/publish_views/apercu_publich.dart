@@ -113,69 +113,72 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                         .toList()),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                CustomButtonWithoutIcon(
-                  width: MediaQuery.of(context).size.width * .25,
-                  height: 50,
-                  label: "Modifier",
-                  labColor: Colors.white,
-                  btColor: Colors.blue,
-                  function: () {
-                    int count = 0;
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CustomButtonWithoutIcon(
+                    width: MediaQuery.of(context).size.width * .25,
+                    height: 50,
+                    label: "Modifier",
+                    labColor: Colors.white,
+                    btColor: Colors.blue,
+                    function: () {
+                      int count = 0;
 
-                    Navigator.popUntil(context, (route) {
-                      return count++ == 2;
-                    });
-                  },
-                ),
-                CustomButtonWithoutIcon(
-                  width: MediaQuery.of(context).size.width * .25,
-                  height: 50,
-                  label: "Supprimer",
-                  labColor: Colors.white,
-                  btColor: Colors.red,
-                  function: () {
-                    controller.images.clear();
+                      Navigator.popUntil(context, (route) {
+                        return count++ == 2;
+                      });
+                    },
+                  ),
+                  CustomButtonWithoutIcon(
+                    width: MediaQuery.of(context).size.width * .25,
+                    height: 50,
+                    label: "Supprimer",
+                    labColor: Colors.white,
+                    btColor: Colors.red,
+                    function: () {
+                      controller.images.clear();
 
-                    controller.updateCategoryToNull();
-                    controller.updateSubcategoryToNull();
-                    Get.find<LocController>().updateCityAndTown();
-                    controller.citie = null;
-                    controller.prix.clear();
-                    controller.description.clear();
-                    controller.title.clear();
-                    controller.myAds = {};
-                    controller.category = null;
-                    controller.updateCategory(null);
-                //    controller.energies = [];
-                    controller.energie = null;
-                    controller.kilometrage = null;
-                    controller.lights = false;
-                    controller.motosBrand = null;
-                    controller.vehiculebrands = null;
+                      controller.updateCategoryToNull();
+                      controller.updateSubcategoryToNull();
+                      Get.find<LocController>().updateCityAndTown();
+                      controller.citie = null;
+                      controller.prix.clear();
+                      controller.description.clear();
+                      controller.title.clear();
+                      controller.myAds = {};
+                      controller.category = null;
+                      controller.updateCategory(null);
+                  //    controller.energies = [];
+                      controller.energie = null;
+                      controller.kilometrage = null;
+                      controller.lights = false;
+                      controller.motosBrand = null;
+                      controller.vehiculebrands = null;
 
-                    int count = 0;
+                      int count = 0;
 
-                    Navigator.popUntil(context, (route) {
-                      return count++ == 2;
-                    });
-                  },
-                ),
-                GetBuilder<TapPublishViewController>(builder: (logic) {
-                    return logic.buttonPublier? CircularProgressIndicator():  CustomButtonWithoutIcon(
-                        width: MediaQuery.of(context).size.width * .25,
-                        height: 50,
-                        label: "Publier",
-                        labColor: Colors.white,
-                        btColor: Colors.green,
-                        function: () {
-                          controller.postdata();
-                        });})
+                      Navigator.popUntil(context, (route) {
+                        return count++ == 2;
+                      });
+                    },
+                  ),
+                  GetBuilder<TapPublishViewController>(builder: (logic) {
+                      return logic.buttonPublier? CircularProgressIndicator():  CustomButtonWithoutIcon(
+                          width: MediaQuery.of(context).size.width * .25,
+                          height: 50,
+                          label: "Publier",
+                          labColor: Colors.white,
+                          btColor: Colors.green,
+                          function: () {
+                            controller.postdata();
+                          });})
 
 
-              ],
+                ],
+              ),
             ),
           ],
         ),

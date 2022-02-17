@@ -2,6 +2,7 @@ import 'package:afariat/config/utility.dart';
 import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
+import 'package:afariat/mywidget/log_in_item.dart';
 import 'package:afariat/mywidget/profile_pic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,37 +17,86 @@ class Setting extends GetWidget<SettingViewController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Settings ",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.white),
+          "Paramètres ",
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
         ),
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: Colors.deepOrange,
       ),
       body: Column(
         children: [
           SizedBox(
             height: 20,
           ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Text(
-              "Modifier mon mot de passe:",
-              style: TextStyle(fontSize: 15),
+          Padding(
+            padding: const EdgeInsets.only(left: 15.0, right: 8),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Changement de mot de passe:",
+                style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+              ),
             ),
           ),
           SizedBox(
             height: 20,
           ),
-          CustomTextFiled(
-            color: framColor,
-            width: size.width * .8,
-            hintText: "Nouveau mot de passe",
-            textEditingController: controller.oldPassword,
+          GetBuilder<SettingViewController>(builder: (logic) {
+            return LogInItem(
+              label: "",
+
+              hint: "Nouveau mot de passe",
+             // icon: Icons.lock_outline,
+              //Ajouter
+              obscureText: logic.isVisiblePassword,
+              textEditingController: controller.oldPassword,
+              validator: (value) {
+                return controller.validateServer.validator(value, 'password');
+              },
+              suffixIcon: IconButton(
+                onPressed: controller.showHidePassword,
+                icon: Icon(logic.isVisiblePassword
+                    ? Icons.visibility_off
+                    : Icons.visibility),
+              ),
+            );
+          }),
+          // CustomTextFiled(
+          //   color: framColor,
+          //   width: size.width * .8,
+          //   hintText: "Nouveau mot de passe",
+          //   textEditingController: controller.oldPassword,
+          // ),
+          SizedBox(
+            height: 12,
           ),
-          CustomTextFiled(
-            color: framColor,
-            width: size.width * .8,
-            hintText: "Ancien mot de passe",
-            textEditingController: controller.newPassword,
+          GetBuilder<SettingViewController>(builder: (logic) {
+            return LogInItem(
+              label: "",
+              hint: "Nouveau mot de passe",
+             // icon: Icons.lock_outline,
+              //Ajouter
+              obscureText: logic.isVisiblePassword,
+              textEditingController: controller.newPassword,
+              validator: (value) {
+                return controller.validateServer.validator(value, 'password');
+              },
+              suffixIcon: IconButton(
+                onPressed: controller.showHidePassword,
+                icon: Icon(logic.isVisiblePassword
+                    ? Icons.visibility_off
+                    : Icons.visibility),
+              ),
+            );
+          }),
+          // CustomTextFiled(
+          //   color: framColor,
+          //   width: size.width * .8,
+          //   hintText: "Ancien mot de passe",
+          //   textEditingController: controller.newPassword,
+          // ),
+          SizedBox(
+            height: 12,
           ),
           CustomButton(
             height: 50,
@@ -59,6 +109,9 @@ class Setting extends GetWidget<SettingViewController> {
             function: () {
               controller.changePassword();
             },
+          ),
+          SizedBox(
+            height: 130,
           ),
           CustomButton(
             height: 50,

@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 class SettingViewController extends GetxController {
   TextEditingController newPassword = TextEditingController();
   TextEditingController oldPassword = TextEditingController();
-
+  bool isVisiblePassword = true;
   bool tham = false;
   ChangePasswordApi changePasswordApi = ChangePasswordApi();
   UserApi _userApi = UserApi();
@@ -20,6 +20,13 @@ class SettingViewController extends GetxController {
   final storge = Get.find<SecureStorage>();
   GetSaltApi _getSalt = GetSaltApi();
   AccountInfoStorage accountInfoStorage = AccountInfoStorage();
+
+  void showHidePassword() {
+    isVisiblePassword = !isVisiblePassword;
+    print('pressed');
+
+    update();
+  }
 
 /*
   deleteuser() {

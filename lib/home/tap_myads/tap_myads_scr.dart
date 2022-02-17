@@ -30,10 +30,10 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: 15,
+                        height: 150,
                       ),
                       Align(
-                        alignment: Alignment.topLeft,
+                        alignment: Alignment.topCenter,
                         child: Text("Vous n'avez déposé aucune annonce",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,

@@ -16,7 +16,7 @@ class ForgotPassword extends GetWidget<ForgotPasswordViewController> {
         title: Text(
           "Forgot Password ",
         ),
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: Colors.deepOrange,
       ),
       body: Column(
         children: [
