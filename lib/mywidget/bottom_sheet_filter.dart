@@ -168,7 +168,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.deepOrange, width: 2),
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius: BorderRadius.circular(15)),
                   child: DropdownButton<RefJson>(   underline: SizedBox(),
                     isExpanded: true,
                     hint: Padding(
@@ -200,7 +200,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.deepOrange, width: 2),
-                        borderRadius: BorderRadius.circular(10)),
+                        borderRadius: BorderRadius.circular(15)),
                     child: DropdownButton<RefJson>(   underline: SizedBox(),
                       isExpanded: true,
                       hint: Padding(

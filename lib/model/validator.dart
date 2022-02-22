@@ -5,7 +5,7 @@ class Validator {
 
   String validatetitle(String value) {
     if (value.length < 11) {
-      return " le titre doit avoir au minimum X caractères";
+      return "  Le titre doit faire au minimum 10 caractères";
     }
 
     return null;
@@ -20,8 +20,8 @@ class Validator {
   }
 
   String validateDescription(String value) {
-    if (value.length < 50) {
-      return "La description doit faire au moins 50 caractères";
+    if (value.length < 20) {
+      return " La description doit faire au moins 20 caractères.";
     }
 
     return null;

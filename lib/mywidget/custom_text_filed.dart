@@ -51,7 +51,7 @@ class CustomTextFiled extends StatelessWidget {
       ),
       decoration: BoxDecoration(
           border: Border.all(color: color, width: 2),
-          borderRadius: BorderRadius.circular(10)),
+          borderRadius: BorderRadius.circular(15)),
     );
   }
 }

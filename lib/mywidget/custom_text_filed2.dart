@@ -5,7 +5,8 @@ class CustomTextFiled2 extends StatelessWidget {
   final TextEditingController textEditingController;
   final Color color;
   final double width;
- // final IconData icon;
+
+  // final IconData icon;
   final bool obscureText;
   final TextInputType keyboardType;
   final String hintText;
@@ -29,7 +30,7 @@ class CustomTextFiled2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return     Padding(
+    return Padding(
       padding: const EdgeInsets.all(10.0),
       child: TextFormField(
         onChanged: onchange,
@@ -40,7 +41,7 @@ class CustomTextFiled2 extends StatelessWidget {
         controller: textEditingController,
         decoration: InputDecoration(
           border: InputBorder.none,
-        //  icon: Icon(icon),
+          //  icon: Icon(icon),
           hintText: hintText,
         ),
       ),

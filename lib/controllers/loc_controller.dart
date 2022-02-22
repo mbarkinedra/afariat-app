@@ -22,7 +22,7 @@ class LocController extends GetxController {
       cities = value.data;
       // Inserez tout les villes index[0]
 
-      cities.insert(0, RefJson(id: 0, name: "city"));
+      cities.insert(0, RefJson(id: 0, name: ""));
       update();
     });
   }
@@ -37,12 +37,13 @@ class LocController extends GetxController {
   updateCity(RefJson ci) {
     if (ci.id == 0) {
       if (Filter.data["city"] != null) {
+
         Filter.data.remove("city");
       }
       if (Filter.data["town"] != null) {
         Filter.data.remove("town");
       }
-
+      town = null;
       tapHomeViewController.filterUpdate();
     } else {
       city = ci;
@@ -58,6 +59,14 @@ class LocController extends GetxController {
   }
 
   updatetown(RefJson town) {
+    if (town.id == 0) {
+
+      if (Filter.data["town"] != null) {
+        Filter.data.remove("town");
+      }
+      town = null;
+      tapHomeViewController.filterUpdate();
+    } else {
     this.town = town;
     tapHomeViewController. searchAddLinke= tapHomeViewController .searchAddLinke+"town=${town.id}&";
     tapPublishViewController.town = town;
@@ -65,12 +74,14 @@ class LocController extends GetxController {
     tapPublishViewController.myAds["town"] = town.id;
     tapPublishViewController.myAdsView["town"] = town.name;
     update();
-  }
+  }}
 
   Future updateTowns(id) async {
     _townsApi.cityId = id.toString();
     await _townsApi.getList().then((value) {
       towns = value.data;
+      towns.insert(0, RefJson(id: 0, name: ""));
+
       update();
     });
   }

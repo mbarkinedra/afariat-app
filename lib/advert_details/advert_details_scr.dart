@@ -31,7 +31,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
         ),
         backgroundColor: Colors.deepOrange,
         title: Text(
-          "Annonce Détaillés",
+          "Annonce détaillée",
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),

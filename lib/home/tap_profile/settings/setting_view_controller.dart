@@ -3,6 +3,7 @@ import 'package:afariat/config/filter.dart';
 import 'package:afariat/config/storage.dart';
 import 'package:afariat/config/wsse.dart';
 import 'package:afariat/model/validate_server.dart';
+import 'package:afariat/mywidget/custom_dialogue_delete.dart';
 import 'package:afariat/networking/api/change_password_api.dart';
 import 'package:afariat/networking/api/get_salt_api.dart';
 import 'package:afariat/networking/api/user_api.dart';
@@ -12,6 +13,7 @@ import 'package:get/get.dart';
 class SettingViewController extends GetxController {
   TextEditingController newPassword = TextEditingController();
   TextEditingController oldPassword = TextEditingController();
+  bool updatepasseword = false;
   bool isVisiblePassword = true;
   bool tham = false;
   ChangePasswordApi changePasswordApi = ChangePasswordApi();
@@ -37,6 +39,8 @@ class SettingViewController extends GetxController {
   }*/
 
   changePassword() {
+    updatepasseword=true;
+    update();
     Filter.data = {
       "currentPassword": oldPassword.text.toString(),
       "plainPassword": newPassword.text.toString(),
@@ -56,7 +60,8 @@ class SettingViewController extends GetxController {
             Get.find<AccountInfoStorage>()
                 .saveEmail(accountInfoStorage.readEmail());
             Get.find<AccountInfoStorage>().saveHashedPassword(hashedPassword);
-          });
+            updatepasseword=false;
+            update();  });
           Get.snackbar("", value.data);
 
           print(value.data);

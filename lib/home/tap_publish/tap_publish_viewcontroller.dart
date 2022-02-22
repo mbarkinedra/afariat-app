@@ -11,6 +11,7 @@ import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
 import 'package:afariat/model/validate_server.dart';
 import 'package:afariat/model/validator.dart';
+import 'package:afariat/mywidget/custom_dialogue_felecitation.dart';
 import 'package:afariat/networking/api/get_salt_api.dart';
 import 'package:afariat/networking/api/modif_ads_api.dart';
 import 'package:afariat/networking/api/publish_api.dart';
@@ -352,49 +353,38 @@ class TapPublishViewController extends GetxController {
 
     if (dataAdverts) {
       _modifAdsApi.id = modifAdsJson.id;
-      await _modifAdsApi.putData(dataToPost: myAds).then((value) {
+      await _modifAdsApi.putData(dataToPost: myAds).then((value) async{
         if (value.statusCode == 204) {
-          Get.defaultDialog(
-            title: "Felécitation",
-            titlePadding: EdgeInsets.all(8),
-            content: Container(
-              height: 100,
-              child: Center(
-                  child: Text(
-                "Votre annonce est encours de verification!",
-                style: TextStyle(fontSize: 30),
-              )),
-            ),
-            confirm: GestureDetector(
-              child: Text(
-                "ok",
-                style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 40),
-              ),
-              onTap: () {
-                Get.find<TapMyadsViewController>().ads();
-                Get.find<HomeViwController>().changeSelectedValue(1);
-                Filter.data.clear();
-                clearAllData();
-                Get.find<CategoryAndSubcategory>().clearData();
-                Get.find<LocController>().clearData();
-                int count = 0;
-                if (Navigator.canPop(context)) {
-                  Navigator.popUntil(context, (route) {
-                    return count++ == 2;
-                  });
-                }
-                update();
-                //  Get.back();
-                Navigator.pop(context);
-              },
-            ),
-            titleStyle: TextStyle(color: Colors.deepOrange),
-            middleTextStyle: TextStyle(color: Colors.deepOrange),
-          );
-        }
+          final value = await showDialog<bool>(
+              context: context,
+              builder: (context) {
+                return CustomDialogueFelecitation(
+                  Text2: " ",
+                  title: "Confirmation",
+                  function: () {
+                    Get.find<TapMyadsViewController>().ads();
+                    Get.find<HomeViwController>().changeSelectedValue(1);
+                    Filter.data.clear();
+                    clearAllData();
+                    Get.find<CategoryAndSubcategory>().clearData();
+                    Get.find<LocController>().clearData();
+                    // int count = 0;
+                    // if (Navigator.canPop(context)) {
+                    //   Navigator.popUntil(context, (route) {
+                    //     return count++ == 1;
+                    //   });
+                    // }
+                    buttonPublier=false;
+                    Navigator.pop(context);
+                    update();
+                    // Get.back();
+                  },
+                  description:
+                  "Êtes-vous sûr de  vouloir supprimer votre compt?؟",
+                  buttonText: "Ok",
+                  phone: false,
+                );
+              });}
       });
     } else {
       devlog.log(jsonEncode(myAds));
@@ -402,47 +392,76 @@ class TapPublishViewController extends GetxController {
       final postData =
           await publishApi.securePost(dataToPost: myAds).then((value) {
         _validateServer.validatorServer(
-            validate: () {
-              Get.defaultDialog(
-                title: "Felécitation",
-                titlePadding: EdgeInsets.all(8),
-                content: Container(
-                  height: 100,
-                  child: Center(
-                      child: Text(
-                    "Votre annonce est encours de verification!",
-                    style: TextStyle(fontSize: 25),
-                  )),
-                ),
-                confirm: GestureDetector(
-                  child: Text(
-                    "ok",
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 40),
-                  ),
-                  onTap: () {
-                    Get.find<TapMyadsViewController>().ads();
-                    Get.find<HomeViwController>().changeSelectedValue(1);
-                    Filter.data.clear();
-                    clearAllData();
-                    Get.find<CategoryAndSubcategory>().clearData();
-                    Get.find<LocController>().clearData();
-                    int count = 0;
-                    if (Navigator.canPop(context)) {
-                      Navigator.popUntil(context, (route) {
-                        return count++ == 2;
-                      });
-                    }
-
-                    update();
-                    Get.back();
-                  },
-                ),
-                titleStyle: TextStyle(color: Colors.deepOrange),
-                middleTextStyle: TextStyle(color: Colors.deepOrange),
-              );
+            validate: ()async {
+              final value = await showDialog<bool>(
+                  context: context,
+                  builder: (context) {
+                    return CustomDialogueFelecitation(
+                      Text2: " ",
+                      title: "Confirmation",
+                      function: () {
+                        Get.find<TapMyadsViewController>().ads();
+                              Get.find<HomeViwController>().changeSelectedValue(1);
+                              Filter.data.clear();
+                              clearAllData();
+                              Get.find<CategoryAndSubcategory>().clearData();
+                              Get.find<LocController>().clearData();
+                              // int count = 0;
+                              // if (Navigator.canPop(context)) {
+                              //   Navigator.popUntil(context, (route) {
+                              //     return count++ == 2;
+                              //   });
+                              // }
+                        Navigator.pop(context);
+                              update();
+                             // Get.back();
+                      },
+                      description:
+                      "Êtes-vous sûr de  vouloir supprimer votre compt?؟",
+                      buttonText: "Ok",
+                      phone: false,
+                    );
+                  });
+              // Get.defaultDialog(
+              //   title: "Felécitation",
+              //   titlePadding: EdgeInsets.all(8),
+              //   content: Container(
+              //     height: 100,
+              //     child: Center(
+              //         child: Text(
+              //       "Votre annonce est encours de verification!",
+              //       style: TextStyle(fontSize: 25),
+              //     )),
+              //   ),
+              //   confirm: GestureDetector(
+              //     child: Text(
+              //       "ok",
+              //       style: TextStyle(
+              //           color: Colors.red,
+              //           fontWeight: FontWeight.bold,
+              //           fontSize: 40),
+              //     ),
+              //     onTap: () {
+              //       Get.find<TapMyadsViewController>().ads();
+              //       Get.find<HomeViwController>().changeSelectedValue(1);
+              //       Filter.data.clear();
+              //       clearAllData();
+              //       Get.find<CategoryAndSubcategory>().clearData();
+              //       Get.find<LocController>().clearData();
+              //       int count = 0;
+              //       if (Navigator.canPop(context)) {
+              //         Navigator.popUntil(context, (route) {
+              //           return count++ == 2;
+              //         });
+              //       }
+              //
+              //       update();
+              //       Get.back();
+              //     },
+              //   ),
+              //   titleStyle: TextStyle(color: Colors.deepOrange),
+              //   middleTextStyle: TextStyle(color: Colors.deepOrange),
+              // );
             },
             value: value);
 

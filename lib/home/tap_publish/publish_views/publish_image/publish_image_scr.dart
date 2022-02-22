@@ -31,7 +31,12 @@ class PublishImageScr extends GetView<TapPublishViewController> {
               icon: Icon(Icons.add_a_photo),
               iconSize: 40,
               onPressed: () {
-                showOptionsDialog(context);
+                if (controller.images.length < 6) {
+                  showOptionsDialog(context);
+                } else {
+                  Get.snackbar("Erreur",
+                      "Vous ne pouvez ajouter que **6** photos par annonce");
+                }
               },
             )
           ],
@@ -43,12 +48,28 @@ class PublishImageScr extends GetView<TapPublishViewController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Selectionner des images : ",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    )),
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "Rajouter des photos :",
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Text(
+                          "Une annonce avec des images attire beaucoup l'attention des internautes.Utilisez une image réelle de votre objet, et non de catalogues",
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 GetBuilder<TapPublishViewController>(builder: (logic) {
                   return logic.dataAdverts
                       ? logic.EditAdsImages.length > 0
@@ -139,41 +160,55 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                                       ))
                                   .toList(),
                             )
-                          : Image.asset(
-                              "assets/images/placeholder.png",
-                              width: size.width,
-                              height: size.height * .8,
+                          : GestureDetector(
+                              onTap: () {
+                                if (controller.images.length < 6) {
+                                  showOptionsDialog(context);
+                                } else {
+                                  Get.snackbar("Erreur",
+                                      "Vous ne pouvez ajouter que **6** photos par annonce");
+                                }
+                              },
+                              child: Image.asset(
+                                "assets/images/placeholder.png",
+                                width: size.width,
+                                height: size.height * .8,
+                              ),
                             );
                 }),
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CustomButton(
-                        width: MediaQuery.of(context).size.width * .35,
-                        height: 45,
-                        label: "Précédent",
-                        labcolor: Colors.white,
-                        btcolor: buttonColor,
-                        function: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      CustomButton(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 8.0, bottom: 40, right: 8, left: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CustomButton(
                           width: MediaQuery.of(context).size.width * .35,
                           height: 45,
-                          label: "Suivant",
+                          label: "Précédent",
                           labcolor: Colors.white,
                           btcolor: buttonColor,
                           function: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (
-                              context,
-                            ) =>
-                                    ApercuPublich()));
-                          }),
-                    ],
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        CustomButton(
+                            width: MediaQuery.of(context).size.width * .35,
+                            height: 45,
+                            label: "Suivant",
+                            labcolor: Colors.white,
+                            btcolor: buttonColor,
+                            function: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (
+                                context,
+                              ) =>
+                                      ApercuPublich()));
+                            }),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -187,7 +222,10 @@ class PublishImageScr extends GetView<TapPublishViewController> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Selectionner votre options :",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+            title: Text(
+              "Selectionner votre options :",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: [

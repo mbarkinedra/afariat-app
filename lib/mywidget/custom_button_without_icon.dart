@@ -31,7 +31,7 @@ class CustomButtonWithoutIcon extends StatelessWidget {
           width: width,
           height: height,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(15.0),border: Border.all(color: Colors.deepOrange, width: 2),
             color: btColor,
             boxShadow: [
               BoxShadow(
