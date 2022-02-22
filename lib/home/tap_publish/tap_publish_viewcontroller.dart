@@ -3,9 +3,9 @@ import 'dart:developer' as devlog;
 import 'dart:convert';
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
-import 'package:afariat/config/settings_app.dart';
+ 
 import 'package:afariat/config/storage.dart';
-import 'package:afariat/config/wsse.dart';
+ 
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
@@ -18,12 +18,12 @@ import 'package:afariat/networking/api/publish_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
 import 'package:afariat/networking/json/modif_ads_json.dart';
-import 'package:afariat/networking/json/my_ads_json.dart';
+ 
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
+ 
 import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
@@ -97,7 +97,7 @@ class TapPublishViewController extends GetxController {
   RefJson citie;
   RefJson town;
   RefJson kilometrage;
-  GetSaltApi _getSalt = GetSaltApi();
+   
   VehicleBrandsApi _vehicleBrandsApi = VehicleBrandsApi();
   MotoBrandsApi _motoBrandsApi = MotoBrandsApi();
   VehicleModelApi _vehicleModelApi = VehicleModelApi();
@@ -355,7 +355,7 @@ class TapPublishViewController extends GetxController {
       _modifAdsApi.id = modifAdsJson.id;
       await _modifAdsApi.putData(dataToPost: myAds).then((value) async{
         if (value.statusCode == 204) {
-          final value = await showDialog<bool>(
+          await showDialog<bool>(
               context: context,
               builder: (context) {
                 return CustomDialogueFelecitation(
@@ -389,11 +389,11 @@ class TapPublishViewController extends GetxController {
     } else {
       devlog.log(jsonEncode(myAds));
 
-      final postData =
+       
           await publishApi.securePost(dataToPost: myAds).then((value) {
         _validateServer.validatorServer(
             validate: ()async {
-              final value = await showDialog<bool>(
+              await showDialog<bool>(
                   context: context,
                   builder: (context) {
                     return CustomDialogueFelecitation(
@@ -406,15 +406,18 @@ class TapPublishViewController extends GetxController {
                               clearAllData();
                               Get.find<CategoryAndSubcategory>().clearData();
                               Get.find<LocController>().clearData();
-                              // int count = 0;
+                              int count = 0;
+                              for(int ii=0;ii<2;ii++){
+                                Get.back();
+                              }
                               // if (Navigator.canPop(context)) {
                               //   Navigator.popUntil(context, (route) {
                               //     return count++ == 2;
                               //   });
                               // }
-                        Navigator.pop(context);
+                    //    Navigator.pop(context);
                               update();
-                             // Get.back();
+                        //Get.back();
                       },
                       description:
                       "Êtes-vous sûr de  vouloir supprimer votre compt?؟",
@@ -422,46 +425,47 @@ class TapPublishViewController extends GetxController {
                       phone: false,
                     );
                   });
-              // Get.defaultDialog(
-              //   title: "Felécitation",
-              //   titlePadding: EdgeInsets.all(8),
-              //   content: Container(
-              //     height: 100,
-              //     child: Center(
-              //         child: Text(
-              //       "Votre annonce est encours de verification!",
-              //       style: TextStyle(fontSize: 25),
-              //     )),
-              //   ),
-              //   confirm: GestureDetector(
-              //     child: Text(
-              //       "ok",
-              //       style: TextStyle(
-              //           color: Colors.red,
-              //           fontWeight: FontWeight.bold,
-              //           fontSize: 40),
-              //     ),
-              //     onTap: () {
-              //       Get.find<TapMyadsViewController>().ads();
-              //       Get.find<HomeViwController>().changeSelectedValue(1);
-              //       Filter.data.clear();
-              //       clearAllData();
-              //       Get.find<CategoryAndSubcategory>().clearData();
-              //       Get.find<LocController>().clearData();
-              //       int count = 0;
-              //       if (Navigator.canPop(context)) {
-              //         Navigator.popUntil(context, (route) {
-              //           return count++ == 2;
-              //         });
-              //       }
-              //
-              //       update();
-              //       Get.back();
-              //     },
-              //   ),
-              //   titleStyle: TextStyle(color: Colors.deepOrange),
-              //   middleTextStyle: TextStyle(color: Colors.deepOrange),
-              // );
+          //   Get.generalDialog(pageBuilder: pageBuilder);
+          //     Get.defaultDialog(
+          //       title: "Felécitation",
+          //       titlePadding: EdgeInsets.all(8),
+          //       content: Container(
+          //         height: 100,
+          //         child: Center(
+          //             child: Text(
+          //           "Votre annonce est encours de verification!",
+          //           style: TextStyle(fontSize: 25),
+          //         )),
+          //       ),
+          //       confirm: GestureDetector(
+          //         child: Text(
+          //           "ok",
+          //           style: TextStyle(
+          //               color: Colors.red,
+          //               fontWeight: FontWeight.bold,
+          //               fontSize: 40),
+          //         ),
+          //         onTap: () {
+          //           Get.find<TapMyadsViewController>().ads();
+          //           //Get.find<HomeViwController>().changeSelectedValue(1);
+          //           Filter.data.clear();
+          //           clearAllData();
+          //           Get.find<CategoryAndSubcategory>().clearData();
+          //           Get.find<LocController>().clearData();
+          //           int count = 0;
+          //           if (Navigator.canPop(context)) {
+          //             Navigator.popUntil(context, (route) {
+          //               return count++ == 2;
+          //             });
+          //           }
+          //
+          //           update();
+          //           Get.back();
+          //         },
+          //       ),
+          //       titleStyle: TextStyle(color: Colors.deepOrange),
+          //       middleTextStyle: TextStyle(color: Colors.deepOrange),
+          //     );
             },
             value: value);
 

@@ -72,7 +72,7 @@ class ProfileMenu extends StatelessWidget {
                               .notifCount
                               .value
                               .toString()
-                          : " "))),
+                          : " ",style: TextStyle(color: Colors.white),))),
               height: 20,
               width: 20,
             ),
