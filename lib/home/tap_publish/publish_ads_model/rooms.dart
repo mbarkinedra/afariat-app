@@ -34,7 +34,7 @@ class Rooms extends GetView<TapPublishViewController> {
                       style: const TextStyle(color: Colors.deepPurple),
                       underline: Container(),
                       onChanged: logic.updateNombredepieces,
-                      items: logic.Nombredepieces.map<DropdownMenuItem<String>>(
+                      items: logic.nombrePieces.map<DropdownMenuItem<String>>(
                           (String value) {
                         return DropdownMenuItem<String>(
                           value: value,

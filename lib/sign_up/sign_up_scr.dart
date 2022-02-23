@@ -1,7 +1,7 @@
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/model/type_register.dart';
-import 'package:afariat/mywidget/custmbutton.dart';
+import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:afariat/mywidget/log_in_item.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:afariat/sign_up/sign_up_viewcontroller.dart';
@@ -155,7 +155,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                   height: _size.height * .05,
                 ),
                 Center(
-                    child: CustomButton(
+                    child: CustomButton1(
                   height: 50,
                   width: _size.width * .8,
                   btcolor: buttonColor,

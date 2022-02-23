@@ -3,7 +3,7 @@ import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
-import 'package:afariat/mywidget/custmbutton.dart';
+import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:afariat/mywidget/custom_apercu.dart';
 import 'package:afariat/mywidget/custom_apercu_description.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
@@ -210,8 +210,8 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                               width: MediaQuery.of(context).size.width * .25,
                               height: 40,
                               label: "Publier",
-                              labColor: Colors.deepOrange,
-                              btColor: Colors.white,
+                              labColor: Colors.white,
+                              btColor: Colors.deepOrange,
                               function: () {
                                 controller.postdata();
                               });

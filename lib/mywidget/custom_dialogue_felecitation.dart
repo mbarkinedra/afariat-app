@@ -70,7 +70,7 @@ class CustomDialogueFelecitation extends StatelessWidget {
                 description,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 16.0,
+                  fontSize: 18.0,
                 ),
               ),
               SizedBox(height: 24.0),

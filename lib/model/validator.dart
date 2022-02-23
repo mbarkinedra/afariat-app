@@ -12,8 +12,8 @@ class Validator {
   }
 
   String validatePrice(String value) {
-    if (value.length < 1) {
-      return "Le prix n'est pas valide";
+    if (value.length < 0) {
+      return "Le prix doit être supérieur à 0 et numérique.";
     }
 
     return null;

@@ -20,6 +20,7 @@ class SignInViewController extends GetxController {
   ValidateServer validateServer = ValidateServer();
   final registerFormKey = GlobalKey<FormState>();
   String validEmail = "";
+  bool buttonConnceter = false;
 
   String validateEmail(String value) {
     String val = null;
@@ -37,9 +38,11 @@ class SignInViewController extends GetxController {
     update();
   }
 
-  login() {
-    //GET the user SALT
-    _getSalt.post({"login": "${email.text}"}).then((value) {
+  login()async {
+    //GET the user
+    buttonConnceter = true;
+    update();
+  await  _getSalt.post({"login": "${email.text}"}).then((value) {
       validateServer.validatorServer(
           validate: () {
             String hashedPassword =
@@ -70,9 +73,10 @@ class SignInViewController extends GetxController {
               // print("bbbbbbbbbbbbbbbbbbbbbbbbbb")
               Get.snackbar("Erreur", "Votre password est incorrect");
             });
-          },
+             },
           value: value,
           registerFormKey: registerFormKey);
+
     }).catchError((e) {
       //validateServer.validator(value, field)
       // registerFormKey.currentWidget.key.
@@ -82,5 +86,6 @@ class SignInViewController extends GetxController {
       print("Votre e_mail est incorrect");
       Get.snackbar("Erreur", "Votre e_mail est incorrect");
     });
-  }
+    buttonConnceter = false;
+    update();  }
 }

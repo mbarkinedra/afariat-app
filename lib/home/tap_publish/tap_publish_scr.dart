@@ -3,7 +3,7 @@ import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_publish/publish_views/publish_image/publish_image_scr.dart';
-import 'package:afariat/mywidget/custmbutton.dart';
+import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
 import 'package:afariat/mywidget/custom_text_filed2.dart';
@@ -59,12 +59,10 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                         ),
                         Container(
                           width: double.infinity,
-
-
                           decoration: BoxDecoration(
                               border: Border.all(
                                   color: Colors.deepOrange, width: 2),
-                              borderRadius: BorderRadius.circular(15)),
+                              borderRadius: BorderRadius.circular(10)),
                           child: DropdownButton<CategoryGroupedJson>(
                             underline: SizedBox(),
                             isExpanded: true,
@@ -99,7 +97,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                           decoration: BoxDecoration(
                               border: Border.all(
                                   color: Colors.deepOrange, width: 2),
-                              borderRadius: BorderRadius.circular(15)),
+                              borderRadius: BorderRadius.circular(10)),
                           child: DropdownButton<SubcategoryJson>(
                             isExpanded: true,
                             underline: SizedBox(),
@@ -174,11 +172,14 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-                CustomTextFiled(
-                  color: framColor,
-                  validator: controller.validator.validatetitle,
-                  hintText: "Titre",
-                  textEditingController: controller.title,
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8),
+                  child: CustomTextFiled(
+                    color: framColor,
+                    validator: controller.validator.validatetitle,
+                    hintText: "Titre",
+                    textEditingController: controller.title,
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -193,12 +194,15 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                 const SizedBox(
                   height: 10,
                 ),
-                CustomTextFiled(
-                  maxLines: 5,
-                  color: framColor,
-                  validator: controller.validator.validateDescription,
-                  hintText: "Description",
-                  textEditingController: controller.description,
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8),
+                  child: CustomTextFiled(
+                    maxLines: 5,
+                    color: framColor,
+                    validator: controller.validator.validateDescription,
+                    hintText: "Description",
+                    textEditingController: controller.description,
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -211,17 +215,15 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                   ),
                 ),
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: size.width * .82,
+                      width: size.width * .87,
                       decoration: BoxDecoration(
                           border:
                               Border.all(color: Colors.deepOrange, width: 2),
-                          borderRadius: BorderRadius.circular(15)),
+                          borderRadius: BorderRadius.circular(10)),
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 0, right: 0),
+                        padding: const EdgeInsets.only(left: 8.0, right: 8),
                         child: Row(
                           children: [
                             Expanded(
@@ -255,76 +257,30 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-                GetBuilder<LocController>(builder: (logic) {
-                  return Column(
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Colors.deepOrange, width: 2),
-                            borderRadius: BorderRadius.circular(15)),
-                        child: DropdownButton<RefJson>(
-                          isExpanded: true,
-                          underline: SizedBox(),
-                          hint: Padding(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 8.0, right: 8),
-                              child: Text("Gouvernorat"),
-                            ),
-                          ),
-                          value: logic.city,
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: logic.updateCity,
-                          items: logic.cities
-                              .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 8.0, right: 8),
-                                child: Text(value.name),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Commune",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      Container(
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8),
+                  child: GetBuilder<LocController>(builder: (logic) {
+                    return Column(
+                      children: [
+                        Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
                               border: Border.all(
                                   color: Colors.deepOrange, width: 2),
-                              borderRadius: BorderRadius.circular(15)),
+                              borderRadius: BorderRadius.circular(10)),
                           child: DropdownButton<RefJson>(
                             isExpanded: true,
                             underline: SizedBox(),
                             hint: Padding(
                               padding:
                                   const EdgeInsets.only(left: 8.0, right: 8),
-                              child: Text("Commune"),
+                              child: Text("Gouvernorat"),
                             ),
-                            value: logic.town,
+                            value: logic.city,
                             iconSize: 24,
                             elevation: 16,
-                            onChanged: logic.updatetown,
-                            items: logic.towns.map<DropdownMenuItem<RefJson>>(
+                            onChanged: logic.updateCity,
+                            items: logic.cities.map<DropdownMenuItem<RefJson>>(
                                 (RefJson value) {
                               return DropdownMenuItem<RefJson>(
                                 value: value,
@@ -335,10 +291,56 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                 ),
                               );
                             }).toList(),
-                          ))
-                    ],
-                  );
-                }),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 8.0, bottom: 8),
+                            child: Text(
+                              "Commune",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.deepOrange, width: 2),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: DropdownButton<RefJson>(
+                              isExpanded: true,
+                              underline: SizedBox(),
+                              hint: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 8.0, right: 10),
+                                child: Text("Commune"),
+                              ),
+                              value: logic.town,
+                              iconSize: 24,
+                              elevation: 16,
+                              onChanged: logic.updatetown,
+                              items: logic.towns.map<DropdownMenuItem<RefJson>>(
+                                  (RefJson value) {
+                                return DropdownMenuItem<RefJson>(
+                                  value: value,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8.0, right: 8),
+                                    child: Text(value.name),
+                                  ),
+                                );
+                              }).toList(),
+                            ))
+                      ],
+                    );
+                  }),
+                ),
                 Row(
                   children: [
                     Icon(Icons.call),

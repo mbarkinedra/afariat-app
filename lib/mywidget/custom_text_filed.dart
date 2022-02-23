@@ -34,7 +34,7 @@ class CustomTextFiled extends StatelessWidget {
       width: width,
 
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(8.0),
         child: TextFormField(
           onChanged: onchange,
           maxLines: maxLines,
@@ -51,7 +51,7 @@ class CustomTextFiled extends StatelessWidget {
       ),
       decoration: BoxDecoration(
           border: Border.all(color: color, width: 2),
-          borderRadius: BorderRadius.circular(15)),
+          borderRadius: BorderRadius.circular(10)),
     );
   }
 }

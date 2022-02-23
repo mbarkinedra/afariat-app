@@ -55,7 +55,7 @@ class TapPublishViewController extends GetxController {
   ModifAdsApi _modifAdsApi = ModifAdsApi();
 
   List<File> images = [];
-  List<String> EditAdsImages = [];
+  List<String> editAdsImages = [];
 
   List<Widget> radioList = [];
   List<RefJson> values = [
@@ -72,7 +72,7 @@ class TapPublishViewController extends GetxController {
   List<RefJson> mileages = [];
   List<RefJson> yearsModels = [];
   List<RefJson> rooms = [];
-  List<String> Nombredepieces = [
+  List<String> nombrePieces = [
     '1',
     '2',
     '3',
@@ -141,7 +141,7 @@ class TapPublishViewController extends GetxController {
   }
 
   deleditImage(String file) {
-    EditAdsImages.remove(file);
+    editAdsImages.remove(file);
     update();
   }
 
@@ -360,7 +360,7 @@ class TapPublishViewController extends GetxController {
               builder: (context) {
                 return CustomDialogueFelecitation(
                   Text2: " ",
-                  title: "Confirmation",
+                  title: "Félicitation",
                   function: () {
                     Get.find<TapMyadsViewController>().ads();
                     Get.find<HomeViwController>().changeSelectedValue(1);
@@ -380,7 +380,7 @@ class TapPublishViewController extends GetxController {
                     // Get.back();
                   },
                   description:
-                  "Êtes-vous sûr de  vouloir supprimer votre compt?؟",
+                  "Votre annonce est en cours de validation !",
                   buttonText: "Ok",
                   phone: false,
                 );
@@ -398,7 +398,7 @@ class TapPublishViewController extends GetxController {
                   builder: (context) {
                     return CustomDialogueFelecitation(
                       Text2: " ",
-                      title: "Confirmation",
+                      title: "Félicitation",
                       function: () {
                         Get.find<TapMyadsViewController>().ads();
                               Get.find<HomeViwController>().changeSelectedValue(1);
@@ -420,7 +420,7 @@ class TapPublishViewController extends GetxController {
                         //Get.back();
                       },
                       description:
-                      "Êtes-vous sûr de  vouloir supprimer votre compt?؟",
+                      "Votre annonce est en cours de validation !",
                       buttonText: "Ok",
                       phone: false,
                     );
@@ -556,11 +556,11 @@ class TapPublishViewController extends GetxController {
           print(subcat.toString());
         }
       }
-      EditAdsImages
+      editAdsImages
           .clear(); // categoryAndSubcategory.updateSupCategorie(subcat );
       modifAdsJson.photos.forEach((element) {
         print(element.path);
-        EditAdsImages.add(element.path);
+        editAdsImages.add(element.path);
       });
       update();
     });

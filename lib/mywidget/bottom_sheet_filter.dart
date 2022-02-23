@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:afariat/networking/json/ref_json.dart';
-import 'custmbutton.dart';
+import 'custom_button_1.dart';
 
 class BottomSheetFilter extends StatefulWidget {
   @override
@@ -227,7 +227,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
           }),
           Align(
             alignment: Alignment.center,
-            child: CustomButton(
+            child: CustomButton1(
               height: 50,
               width: _size.width * .4,
               function: () {

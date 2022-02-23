@@ -1,7 +1,7 @@
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/ads_item.dart';
-import 'package:afariat/mywidget/custmbutton.dart';
+import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

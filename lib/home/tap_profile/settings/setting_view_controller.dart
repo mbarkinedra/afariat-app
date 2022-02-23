@@ -14,7 +14,8 @@ class SettingViewController extends GetxController {
   TextEditingController newPassword = TextEditingController();
   TextEditingController oldPassword = TextEditingController();
   bool updatepasseword = false;
-  bool isVisiblePassword = true;
+  bool isVisiblePassword1 = true;
+  bool isVisiblePassword2 = true;
   bool tham = false;
   ChangePasswordApi changePasswordApi = ChangePasswordApi();
   UserApi _userApi = UserApi();
@@ -23,13 +24,18 @@ class SettingViewController extends GetxController {
   GetSaltApi _getSalt = GetSaltApi();
   AccountInfoStorage accountInfoStorage = AccountInfoStorage();
 
-  void showHidePassword() {
-    isVisiblePassword = !isVisiblePassword;
+  void showHidePassword1() {
+    isVisiblePassword1 = !isVisiblePassword1;
     print('pressed');
 
     update();
   }
+  void showHidePassword2() {
+    isVisiblePassword2 = !isVisiblePassword2;
+    print('pressed');
 
+    update();
+  }
 /*
   deleteuser() {
     _userApi.id = password1.text;//

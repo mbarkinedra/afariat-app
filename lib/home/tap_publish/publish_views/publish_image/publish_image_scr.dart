@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_publish/publish_views/apercu_publich.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
-import 'package:afariat/mywidget/custmbutton.dart';
+import 'package:afariat/mywidget/custom_button2.dart';
+import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -27,18 +28,24 @@ class PublishImageScr extends GetView<TapPublishViewController> {
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           actions: [
-            IconButton(
-              icon: Icon(Icons.add_a_photo),
-              iconSize: 40,
-              onPressed: () {
-                if (controller.images.length < 6) {
-                  showOptionsDialog(context);
-                } else {
-                  Get.snackbar("Erreur",
-                      "Vous ne pouvez ajouter que **6** photos par annonce");
-                }
-              },
-            )
+            GetBuilder<TapPublishViewController>(builder: (logic) {
+              return IconButton(
+                icon: Icon(
+                  Icons.add_a_photo,
+                  color:
+                      logic.images.length < 6 ? Colors.white : Colors.black45,
+                ),
+                iconSize: 40,
+                onPressed: () {
+                  if (controller.images.length < 6) {
+                    showOptionsDialog(context);
+                  } else {
+                    Get.snackbar("Erreur",
+                        "Vous ne pouvez ajouter que **6** photos par annonce");
+                  }
+                },
+              );
+            })
           ],
         ),
         body: Padding(
@@ -72,45 +79,48 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                 ),
                 GetBuilder<TapPublishViewController>(builder: (logic) {
                   return logic.dataAdverts
-                      ? logic.EditAdsImages.length > 0
+                      ? logic.editAdsImages.length > 0
                           ? Column(
                               mainAxisSize: MainAxisSize.max,
-                              children: logic.EditAdsImages.map((e) => Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              border:
-                                                  Border.all(color: framColor),
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          width: size.width * .8,
-                                          height: size.height * .3,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Image.network(
-                                              e,
-                                              fit: BoxFit.fill,
+                              children: logic.editAdsImages
+                                  .map((e) => Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: framColor),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              width: size.width * .8,
+                                              height: size.height * .3,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Image.network(
+                                                  e,
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Positioned(
+                                              right: 0,
+                                              child: InkWell(
+                                                  onTap: () {
+                                                    logic.deleditImage(e);
+                                                  },
+                                                  child: Icon(
+                                                    Icons.clear,
+                                                    size: 30,
+                                                    color: Colors.deepOrange,
+                                                  )),
+                                            ),
+                                          ],
                                         ),
-                                        Positioned(
-                                          right: 0,
-                                          child: InkWell(
-                                              onTap: () {
-                                                logic.deleditImage(e);
-                                              },
-                                              child: Icon(
-                                                Icons.clear,
-                                                size: 30,
-                                                color: Colors.deepOrange,
-                                              )),
-                                        ),
-                                      ],
-                                    ),
-                                  )).toList(),
+                                      ))
+                                  .toList(),
                             )
                           : Image.asset(
                               "assets/images/placeholder.png",
@@ -184,20 +194,24 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        CustomButton(
+                        CustomButton1(
                           width: MediaQuery.of(context).size.width * .35,
                           height: 45,
                           label: "Précédent",
                           labcolor: Colors.white,
+                          icon: Icons.arrow_back_rounded,
+                          iconcolor: Colors.white,
                           btcolor: buttonColor,
                           function: () {
                             Navigator.of(context).pop();
                           },
                         ),
-                        CustomButton(
+                        CustomButton2(
                             width: MediaQuery.of(context).size.width * .35,
                             height: 45,
                             label: "Suivant",
+                            icon: Icons.arrow_forward_rounded,
+                            iconcolor: Colors.white,
                             labcolor: Colors.white,
                             btcolor: buttonColor,
                             function: () {

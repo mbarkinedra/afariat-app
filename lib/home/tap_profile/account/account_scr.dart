@@ -1,6 +1,6 @@
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/loc_controller.dart';
-import 'package:afariat/mywidget/custmbutton.dart';
+import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
 import 'package:afariat/mywidget/profile_pic.dart';
@@ -105,7 +105,7 @@ class Account extends GetWidget<AccountViewController> {
               GetBuilder<AccountViewController>(builder: (logic) {
                 return logic.updateData
                     ? CircularProgressIndicator()
-                    : CustomButton(
+                    : CustomButton1(
                         height: 50,
                         label: "Mettre à jour",
                         icon: Icons.refresh_outlined,
@@ -118,7 +118,7 @@ class Account extends GetWidget<AccountViewController> {
                         },
                       );
               }),
-              CustomButton(
+              CustomButton1(
                 height: 50,
                 label: "Annuler",
                 icon: Icons.arrow_back_rounded,

@@ -1,9 +1,10 @@
 import 'package:afariat/config/utility.dart';
-import 'package:afariat/mywidget/custmbutton.dart';
+import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:afariat/mywidget/custom_dialogue_delete.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
 import 'package:afariat/mywidget/log_in_item.dart';
+import 'package:afariat/mywidget/parametres_item.dart';
 import 'package:afariat/mywidget/profile_pic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,64 +45,52 @@ class Setting extends GetWidget<SettingViewController> {
               height: 20,
             ),
             GetBuilder<SettingViewController>(builder: (logic) {
-              return LogInItem(
+              return ParametresItem(
                 label: "",
-
                 hint: "Ancien mot de passe",
-                // icon: Icons.lock_outline,
-                //Ajouter
-                obscureText: logic.isVisiblePassword,
+                obscureText: logic.isVisiblePassword1,
                 textEditingController: controller.oldPassword,
                 validator: (value) {
                   return controller.validateServer.validator(value, 'password');
                 },
                 suffixIcon: IconButton(
-                  onPressed: controller.showHidePassword,
-                  icon: Icon(logic.isVisiblePassword
-                      ? Icons.visibility_off
-                      : Icons.visibility),
+                  onPressed: controller.showHidePassword1,
+                  icon: Icon(
+                    logic.isVisiblePassword1
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                  ),
                 ),
               );
             }),
-            // CustomTextFiled(
-            //   color: framColor,
-            //   width: size.width * .8,
-            //   hintText: "Nouveau mot de passe",
-            //   textEditingController: controller.oldPassword,
-            // ),
+
             SizedBox(
               height: 12,
             ),
             GetBuilder<SettingViewController>(builder: (logic) {
-              return LogInItem(
+              return ParametresItem(
                 label: "",
                 hint: "Nouveau mot de passe",
-                // icon: Icons.lock_outline,
-                //Ajouter
-                obscureText: logic.isVisiblePassword,
+                obscureText: logic.isVisiblePassword2,
                 textEditingController: controller.newPassword,
                 validator: (value) {
                   return controller.validateServer.validator(value, 'password');
                 },
                 suffixIcon: IconButton(
-                  onPressed: controller.showHidePassword,
-                  icon: Icon(logic.isVisiblePassword
-                      ? Icons.visibility_off
-                      : Icons.visibility),
+                  onPressed: controller.showHidePassword2,
+                  icon: Icon(
+                    logic.isVisiblePassword2
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                  ),
                 ),
               );
             }),
-            // CustomTextFiled(
-            //   color: framColor,
-            //   width: size.width * .8,
-            //   hintText: "Ancien mot de passe",
-            //   textEditingController: controller.newPassword,
-            // ),
             SizedBox(
               height: 25,
             ),
             GetBuilder<SettingViewController>(builder: (logic) {
-              return CustomButton(
+              return CustomButton1(
                 height: 50,
                 label: "Mettre à jour",
                 icon: Icons.refresh_outlined,
@@ -119,12 +108,13 @@ class Setting extends GetWidget<SettingViewController> {
             SizedBox(
               height: 130,
             ),
-            CustomButton(
+            CustomButton1(
+              width: MediaQuery.of(context).size.width * .55,
               height: 50,
               label: "Supprimer mon compte",
               icon: Icons.delete_outline_sharp,
               iconcolor: Colors.white,
-              width: size.width * .5,
+
               btcolor: framColor,
               labcolor: Colors.white,
               function: () async {
@@ -140,7 +130,7 @@ class Setting extends GetWidget<SettingViewController> {
                         },
                         buttonText2: "Annuler",
                         description:
-                            "Êtes-vous sûr de  vouloir supprimer votre compt?؟",
+                            "Êtes-vous sûr de  vouloir supprimer votre compte ?",
                         buttonText: "Ok",
                         phone: false,
                       );
