@@ -10,6 +10,7 @@ import 'package:afariat/networking/json/ref_json.dart';
 import 'package:get/get.dart';
 
 class CategoryAndSubcategory extends GetxController {
+  int index = 0;
   final CategoriesGrouppedApi _categoriesGrouppedApi = CategoriesGrouppedApi();
   final tapHomeViewController = Get.find<TapHomeViewController>();
   Map<int, List<SubcategoryJson>> sc = {};
@@ -29,7 +30,10 @@ class CategoryAndSubcategory extends GetxController {
         sc[element.id] = element.subcategories;
       }
       // Inserez tout les categories index[0]
-      categoryGroupList.insert(0, CategoryGroupedJson(id: 0, name: ""));
+      if (index == 0) {
+        categoryGroupList.insert(0, CategoryGroupedJson(id: 0, name: ""));
+      }
+
       update();
     });
   }
@@ -56,11 +60,12 @@ class CategoryAndSubcategory extends GetxController {
       print(Filter.data.toString());
       categoryGroupedJson = categoryGrouped;
       tapPublishViewController.updateCategory(categoryGrouped);
-      tapPublishViewController
-          .updateGetView(null);
+      tapPublishViewController.updateGetView(null);
       subcategories1 = null;
       listeSubCategories = sc[categoryGrouped.id];
-      listeSubCategories.insert(0, SubcategoryJson(id: 0, name: ""));
+      if (index != 2) {
+        listeSubCategories.insert(0, SubcategoryJson(id: 0, name: ""));
+      }
     }
 
     update();
@@ -76,24 +81,23 @@ class CategoryAndSubcategory extends GetxController {
     //
     //   tapHomeViewController.filterUpdate();
     // } else {
-      subcategories1 = subCategorie;
-      tapHomeViewController.setSearch("category", subCategorie.id);
+    subcategories1 = subCategorie;
+    tapHomeViewController.setSearch("category", subCategorie.id);
 
-      tapPublishViewController.updateSubCategoryJson(subCategorie);
-      tapPublishViewController
-          .updateGetView(RefJson(id: subCategorie.id, name: subCategorie.name));
-      tapPublishViewController.myAds["category"] = subCategorie.id;
-      tapPublishViewController.myAdsView["category"] = subCategorie.name;
-      _categoriesGrouppedApi.categoryId = subCategorie.id;
-      _refApi.advertTypeId = subCategorie.id;
-      _refApi.getList().then((value) {
-        print(value.data);
-        Get.find<TapPublishViewController>().updateadvertTypes(value);
-        // listeSubCategories = value.data;
+    tapPublishViewController.updateSubCategoryJson(subCategorie);
+    tapPublishViewController
+        .updateGetView(RefJson(id: subCategorie.id, name: subCategorie.name));
+    tapPublishViewController.myAds["category"] = subCategorie.id;
+    tapPublishViewController.myAdsView["category"] = subCategorie.name;
+    _categoriesGrouppedApi.categoryId = subCategorie.id;
+    _refApi.advertTypeId = subCategorie.id;
+    _refApi.getList().then((value) {
+      print(value.data);
+      Get.find<TapPublishViewController>().updateadvertTypes(value);
+      // listeSubCategories = value.data;
 
-        // listeSubCategories.insert(0, SubcategoryJson(id: 0, name: ""));
-        update();
-      });
-    }
+      // listeSubCategories.insert(0, SubcategoryJson(id: 0, name: ""));
+      update();
+    });
   }
-
+}

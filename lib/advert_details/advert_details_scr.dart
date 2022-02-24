@@ -40,7 +40,8 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
         return logic.loading
             ? Center(child: CircularProgressIndicator())
             : Padding(
-                padding: const EdgeInsets.only(top: 8.0,bottom: 40,right: 8,left: 8),
+                padding: const EdgeInsets.only(
+                    top: 8.0, bottom: 40, right: 8, left: 8),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -239,7 +240,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                       SizedBox(
                         height: 8,
                       ),
-                      Text("Ajouter description",
+                      Text("Description",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -297,7 +298,6 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                                         "advert.userId   ${logic.advert.userId}");
 
                                     controller.showDialogue(context);
-
                                   }
                                 },
                                 height: 40,

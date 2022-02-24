@@ -21,8 +21,7 @@ class Home extends GetWidget<HomeViwController> {
 
     return GetBuilder<HomeViwController>(builder: (logic) {
       return PersistentTabView(
-        context,
-        controller: logic.controller,
+        context,onItemSelected: controller.changeItemFilter, controller: logic.controller,
         screens: logic.buildScreens,
         items: _navBarsItems(),
         selectedTabScreenContext: (BuildContext context) {

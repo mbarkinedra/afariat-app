@@ -11,15 +11,15 @@ class Rooms extends GetView<TapPublishViewController> {
       children: [
         Row(
           children: [
-            Text(
-              "Nombre de pièces",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Expanded(flex: 2,
+              child: Text(
+                "Nombre de pièces",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ),
-            SizedBox(
-              width: 8,
-            ),
+
             Expanded(
-              flex: 1,
+              flex:4,
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
                 return Container(
                   decoration: BoxDecoration(
@@ -31,7 +31,7 @@ class Rooms extends GetView<TapPublishViewController> {
                       isExpanded: true,
                       iconSize: 24,
                       elevation: 16,
-                      style: const TextStyle(color: Colors.deepPurple),
+                      style: const TextStyle(color: Colors.black),
                       underline: Container(),
                       onChanged: logic.updateNombredepieces,
                       items: logic.nombrePieces.map<DropdownMenuItem<String>>(
@@ -48,41 +48,54 @@ class Rooms extends GetView<TapPublishViewController> {
             ),
           ],
         ),
-        SizedBox(
-          height: 8,
-        ),
+
 
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+
           children: [
-            Text(
-              "Surface",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Flexible(
-              flex: 1,
-              child: CustomTextFiled(
-                padding: 0,
-                color: Colors.deepOrange,
-                textEditingController: controller.prix,
-                keyboardType: TextInputType.number,
+            Expanded(flex: 2,
+              child: Text(
+                "Surface",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
-            Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.deepOrange, width: 2),
-                  color: Colors.grey[100]),
-              child: Center(
-                child: Text(
-                  "m²",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            Expanded(
+              flex: 3,
+              child: Container(            decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Colors.deepOrange, width: 2),
+                      color: Colors.grey[100]),
+                child: Row(
+                  children: [
+                    Expanded(flex: 1,
+                      child: CustomTextFiled(
+                        padding: 0,
+                        color: Colors.deepOrange,
+                        textEditingController: controller.surface,
+                        keyboardType: TextInputType.number,
+                      ),
+                    ),
+                    Text(
+                      "m²",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ) ],
                 ),
               ),
-            )
+            ),
+            // Container(
+            //   height: 50,
+            //
+            //   decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(10),
+            //       border: Border.all(color: Colors.deepOrange, width: 2),
+            //       color: Colors.grey[100]),
+            //   child: Center(
+            //     child: Text(
+            //       "m²",
+            //       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            //     ),
+            //   ),
+            // )
           ],
         ),
         //   buildTitleFormField(),

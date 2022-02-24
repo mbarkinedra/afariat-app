@@ -14,7 +14,7 @@ class LocController extends GetxController {
   RefJson city;
   List<RefJson> towns = [];
   RefJson town;
-
+  int index = 0;
   @override
   void onInit() {
     super.onInit();
@@ -37,7 +37,6 @@ class LocController extends GetxController {
   updateCity(RefJson ci) {
     if (ci.id == 0) {
       if (Filter.data["city"] != null) {
-
         Filter.data.remove("city");
       }
       if (Filter.data["town"] != null) {
@@ -52,7 +51,9 @@ class LocController extends GetxController {
       tapHomeViewController.setSearch("city", ci.id);
       tapPublishViewController.myAds["city"] = ci.id;
       tapPublishViewController.myAdsView["city"] = ci.name;
-      tapHomeViewController. searchAddLinke= tapHomeViewController .searchAddLinke+"city=${ci.id}&";
+      tapHomeViewController.searchAddLinke =
+          tapHomeViewController.searchAddLinke + "city=${ci.id}&";
+
       updateTowns(ci.id);
       update();
     }
@@ -60,27 +61,31 @@ class LocController extends GetxController {
 
   updatetown(RefJson town) {
     if (town.id == 0) {
-
       if (Filter.data["town"] != null) {
         Filter.data.remove("town");
       }
       town = null;
       tapHomeViewController.filterUpdate();
     } else {
-    this.town = town;
-    tapHomeViewController. searchAddLinke= tapHomeViewController .searchAddLinke+"town=${town.id}&";
-    tapPublishViewController.town = town;
-    tapHomeViewController.setSearch("town", town.id);
-    tapPublishViewController.myAds["town"] = town.id;
-    tapPublishViewController.myAdsView["town"] = town.name;
-    update();
-  }}
+      this.town = town;
+      tapHomeViewController.searchAddLinke =
+          tapHomeViewController.searchAddLinke + "town=${town.id}&";
+      tapPublishViewController.town = town;
+      tapHomeViewController.setSearch("town", town.id);
+      tapPublishViewController.myAds["town"] = town.id;
+      tapPublishViewController.myAdsView["town"] = town.name;
+      update();
+    }
+  }
 
   Future updateTowns(id) async {
     _townsApi.cityId = id.toString();
     await _townsApi.getList().then((value) {
       towns = value.data;
-      towns.insert(0, RefJson(id: 0, name: ""));
+      if(index==0){
+        towns.insert(0, RefJson(id: 0, name: ""));
+      }
+
 
       update();
     });
