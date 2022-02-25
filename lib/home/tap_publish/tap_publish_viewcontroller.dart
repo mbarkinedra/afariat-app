@@ -3,9 +3,9 @@ import 'dart:developer' as devlog;
 import 'dart:convert';
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
- 
+
 import 'package:afariat/config/storage.dart';
- 
+
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
@@ -18,17 +18,17 @@ import 'package:afariat/networking/api/publish_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
 import 'package:afariat/networking/json/modif_ads_json.dart';
- 
+
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
- 
+
 import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
-  bool buttonPublier=false;
-  bool buttonModif=false;
+  bool buttonPublier = false;
+  bool buttonModif = false;
   bool buttonSupprimer = false;
 
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
@@ -97,7 +97,7 @@ class TapPublishViewController extends GetxController {
   RefJson citie;
   RefJson town;
   RefJson kilometrage;
-   
+
   VehicleBrandsApi _vehicleBrandsApi = VehicleBrandsApi();
   MotoBrandsApi _motoBrandsApi = MotoBrandsApi();
   VehicleModelApi _vehicleModelApi = VehicleModelApi();
@@ -174,7 +174,7 @@ class TapPublishViewController extends GetxController {
   }
 
   getEnergie() {
-    energie=null;
+    energie = null;
     _energieApi.getList().then((value) {
       print("eniytytyutytytytuytyutytutuyergy${value.data}");
       print("eniytytyutytytytuytyutytutuyergy${value}");
@@ -254,7 +254,7 @@ class TapPublishViewController extends GetxController {
     energie = newValue;
     myAds["energy"] = newValue.id;
     myAdsView["energie:"] = newValue.name;
-   // getEnergie();
+    // getEnergie();
     update();
   }
 
@@ -342,7 +342,7 @@ class TapPublishViewController extends GetxController {
   }
 
   postdata() async {
-    buttonPublier=true;
+    buttonPublier = true;
     update();
     for (var i in images) {
       photobase64Encode(i);
@@ -353,7 +353,7 @@ class TapPublishViewController extends GetxController {
 
     if (dataAdverts) {
       _modifAdsApi.id = modifAdsJson.id;
-      await _modifAdsApi.putData(dataToPost: myAds).then((value) async{
+      await _modifAdsApi.putData(dataToPost: myAds).then((value) async {
         if (value.statusCode == 204) {
           await showDialog<bool>(
               context: context,
@@ -368,31 +368,25 @@ class TapPublishViewController extends GetxController {
                     clearAllData();
                     Get.find<CategoryAndSubcategory>().clearData();
                     Get.find<LocController>().clearData();
-                    // int count = 0;
-                    // if (Navigator.canPop(context)) {
-                    //   Navigator.popUntil(context, (route) {
-                    //     return count++ == 1;
-                    //   });
-                    // }
-                    buttonPublier=false;
+
+                    buttonPublier = false;
                     Navigator.pop(context);
                     update();
                     // Get.back();
                   },
-                  description:
-                  "Votre annonce est en cours de validation !",
+                  description: "Votre annonce est en cours de validation !",
                   buttonText: "Ok",
                   phone: false,
                 );
-              });}
+              });
+        }
       });
     } else {
       devlog.log(jsonEncode(myAds));
 
-       
-          await publishApi.securePost(dataToPost: myAds).then((value) {
+      await publishApi.securePost(dataToPost: myAds).then((value) {
         _validateServer.validatorServer(
-            validate: ()async {
+            validate: () async {
               await showDialog<bool>(
                   context: context,
                   builder: (context) {
@@ -401,110 +395,30 @@ class TapPublishViewController extends GetxController {
                       title: "Félicitation",
                       function: () {
                         Get.find<TapMyadsViewController>().ads();
-                              Get.find<HomeViwController>().changeSelectedValue(1);
-                              Filter.data.clear();
-                              clearAllData();
-                              Get.find<CategoryAndSubcategory>().clearData();
-                              Get.find<LocController>().clearData();
-                              int count = 0;
-                              for(int ii=0;ii<2;ii++){
-                                Get.back();
-                              }
-                              // if (Navigator.canPop(context)) {
-                              //   Navigator.popUntil(context, (route) {
-                              //     return count++ == 2;
-                              //   });
-                              // }
-                    //    Navigator.pop(context);
-                              update();
-                        //Get.back();
+                        Get.find<HomeViwController>().changeSelectedValue(1);
+                        Filter.data.clear();
+                        clearAllData();
+                        Get.find<CategoryAndSubcategory>().clearData();
+                        Get.find<LocController>().clearData();
+                        int count = 0;
+                        for (int ii = 0; ii < 2; ii++) {
+                          Get.back();
+                        }
+                     //  Navigator.pop(context);
+                        update();
                       },
-                      description:
-                      "Votre annonce est en cours de validation !",
+                      description: "Votre annonce est en cours de validation !",
                       buttonText: "Ok",
                       phone: false,
                     );
                   });
-          //   Get.generalDialog(pageBuilder: pageBuilder);
-          //     Get.defaultDialog(
-          //       title: "Felécitation",
-          //       titlePadding: EdgeInsets.all(8),
-          //       content: Container(
-          //         height: 100,
-          //         child: Center(
-          //             child: Text(
-          //           "Votre annonce est encours de verification!",
-          //           style: TextStyle(fontSize: 25),
-          //         )),
-          //       ),
-          //       confirm: GestureDetector(
-          //         child: Text(
-          //           "ok",
-          //           style: TextStyle(
-          //               color: Colors.red,
-          //               fontWeight: FontWeight.bold,
-          //               fontSize: 40),
-          //         ),
-          //         onTap: () {
-          //           Get.find<TapMyadsViewController>().ads();
-          //           //Get.find<HomeViwController>().changeSelectedValue(1);
-          //           Filter.data.clear();
-          //           clearAllData();
-          //           Get.find<CategoryAndSubcategory>().clearData();
-          //           Get.find<LocController>().clearData();
-          //           int count = 0;
-          //           if (Navigator.canPop(context)) {
-          //             Navigator.popUntil(context, (route) {
-          //               return count++ == 2;
-          //             });
-          //           }
-          //
-          //           update();
-          //           Get.back();
-          //         },
-          //       ),
-          //       titleStyle: TextStyle(color: Colors.deepOrange),
-          //       middleTextStyle: TextStyle(color: Colors.deepOrange),
-          //     );
             },
             value: value);
 
-        /* if (value.statusCode == 201) {
-          Get.defaultDialog(
-            title: "Felécitation",
-            titlePadding: EdgeInsets.all(8),
-            content: Container(
-              height: 100,
-              child: Center(
-                  child: Text(
-                "Votre annonce est encours de verification!",
-                style: TextStyle(fontSize: 25),
-              )),
-            ),
-            confirm: GestureDetector(
-              child: Text(
-                "ok",
-                style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 40),
-              ),
-              onTap: () {
-                Filter.data.clear();
-                clearAllData();
-                Get.find<CategoryAndSubcategory>().clearData();
-                Get.find<LocController>().clearData();
+        buttonPublier = false;
 
-                Get.back();
-              },
-            ),
-            titleStyle: TextStyle(color: Colors.deepOrange),
-            middleTextStyle: TextStyle(color: Colors.deepOrange),
-          );
-        }*/
-        buttonPublier=false;
-
-        update();  });
+        update();
+      });
     }
 
     update();

@@ -75,7 +75,7 @@ class Motos extends GetView<TapPublishViewController> {
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
                 return Row(
                   children: [
-                    Expanded(flex: 1, child: Text("Kilométrage")),
+                    Expanded(flex: 1, child: Text("Km")),
                     Expanded(
                       flex: 3,
                       child:Container(

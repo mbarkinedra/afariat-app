@@ -27,7 +27,6 @@ abstract class ApiManager {
     await dioSingleton.dio
         .get(apiUrl(), queryParameters: filters)
         .then((value) {
-      print(value.data);
       data = value.data;
     });
     jsonList = fromJson(data);
@@ -154,7 +153,7 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
-    //  responseHeaders = value.headers;
+      //  responseHeaders = value.headers;
 
       return value;
     }).onError((error, stackTrace) {

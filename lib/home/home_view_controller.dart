@@ -100,25 +100,10 @@ class HomeViwController extends GetxController {
 
   changeItemFilter(v) {
     Get.find<TapPublishViewController>().updateGetView(null);
-    Get.find<CategoryAndSubcategory>().subcategories1 = null;
     Get.find<CategoryAndSubcategory>().categoryGroupedJson = null;
-    Get.find<LocController>().town=null;
-    Get.find<LocController>().city=null;
-    Get.find<CategoryAndSubcategory>().index = v;
-    Get.find<LocController>().index = v;
-    if (v == 0) {
-      Get.find<CategoryAndSubcategory>()
-          .categoryGroupList
-          .insert(0, CategoryGroupedJson(id: 0, name: ""));
-      Get.find<LocController>().cities.insert(0, RefJson(id: 0, name: ""));
-      Get.find<LocController>().towns.insert(0, RefJson(id: 0, name: ""));
-    } else if (v == 2) {
-      Get.find<CategoryAndSubcategory>().categoryGroupList.removeAt(0);
-      Get.find<LocController>().cities.removeAt(0);
-      print("22222222222222222222222222222222222222222222222");
-    } else if (v == 4) {
-     Get.find<LocController>().cities.removeAt(0);
-    }
+    Get.find<CategoryAndSubcategory>().subcategories1 = null;
+    Get.find<LocController>().town = null;
+    Get.find<LocController>().city = null;
   }
 
   Widget buildoffstageNavigator(String tabItem) {

@@ -199,7 +199,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
                 return Row(
                   children: [
-                    Expanded(flex: 1, child: Text("klm")),
+                    Expanded(flex: 1, child: Text("km")),
                     Expanded(
                       flex: 3,
                       child: Container(

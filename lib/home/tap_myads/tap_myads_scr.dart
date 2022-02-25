@@ -30,7 +30,7 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: 150,
+                        height: 175,
                       ),
                       Align(
                         alignment: Alignment.topCenter,

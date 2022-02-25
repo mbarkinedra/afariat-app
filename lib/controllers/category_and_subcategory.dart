@@ -14,10 +14,12 @@ class CategoryAndSubcategory extends GetxController {
   final CategoriesGrouppedApi _categoriesGrouppedApi = CategoriesGrouppedApi();
   final tapHomeViewController = Get.find<TapHomeViewController>();
   Map<int, List<SubcategoryJson>> sc = {};
+
   List<SubcategoryJson> listeSubCategories = [];
   SubcategoryJson subcategories1;
-  List<CategoryGroupedJson> categoryGroupList = [];
   CategoryGroupedJson categoryGroupedJson;
+  List<CategoryGroupedJson> categoryGroupList = [];
+
   AdvertTypesApi _refApi = AdvertTypesApi();
   final tapPublishViewController = Get.find<TapPublishViewController>();
 
@@ -26,13 +28,13 @@ class CategoryAndSubcategory extends GetxController {
     super.onInit();
     _categoriesGrouppedApi.getList().then((value) {
       categoryGroupList = value.data;
+
       for (var element in categoryGroupList) {
+        element.subcategories.insert(0, SubcategoryJson(id: 0, name: ""));
+
         sc[element.id] = element.subcategories;
       }
-      // Inserez tout les categories index[0]
-      if (index == 0) {
-        categoryGroupList.insert(0, CategoryGroupedJson(id: 0, name: ""));
-      }
+      categoryGroupList.insert(0, CategoryGroupedJson(id: 0, name: ""));
 
       update();
     });
@@ -62,25 +64,14 @@ class CategoryAndSubcategory extends GetxController {
       tapPublishViewController.updateCategory(categoryGrouped);
       tapPublishViewController.updateGetView(null);
       subcategories1 = null;
+
       listeSubCategories = sc[categoryGrouped.id];
-      if (index != 2) {
-        listeSubCategories.insert(0, SubcategoryJson(id: 0, name: ""));
-      }
     }
 
     update();
   }
 
   updateSubCategorie(SubcategoryJson subCategorie) {
-    // if (subcategories1.id == 0) {
-    //   if (Filter.data["category"] != null) {
-    //     tapHomeViewController.searchAddLinke =
-    //         tapHomeViewController.searchAddLinke +
-    //             "category=${categoryGroupedJson.id}&";
-    //   }
-    //
-    //   tapHomeViewController.filterUpdate();
-    // } else {
     subcategories1 = subCategorie;
     tapHomeViewController.setSearch("category", subCategorie.id);
 
@@ -94,9 +85,7 @@ class CategoryAndSubcategory extends GetxController {
     _refApi.getList().then((value) {
       print(value.data);
       Get.find<TapPublishViewController>().updateadvertTypes(value);
-      // listeSubCategories = value.data;
 
-      // listeSubCategories.insert(0, SubcategoryJson(id: 0, name: ""));
       update();
     });
   }

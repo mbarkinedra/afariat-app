@@ -46,10 +46,10 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10)),
+                                    topLeft: Radius.circular(35),
+                                    topRight: Radius.circular(35),
+                                    bottomLeft: Radius.circular(35),
+                                    bottomRight: Radius.circular(35)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey.withOpacity(0.5),
@@ -67,7 +67,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                 decoration: InputDecoration(
                                     prefixIcon: Icon(Icons.search),
                                     suffixIcon: IconButton(
-                                      icon: Icon(Icons.clear),
+                                      icon: Icon(Icons.clear,),
                                       onPressed: () {
                                         /* Clear the search field */
                                         controller.filterClear();
