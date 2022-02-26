@@ -49,7 +49,7 @@ class TapChatScr extends GetWidget<TapChatViewController> {
                             color: Colors.red,
                             child: Icon(
                               Icons.delete,
-                              size:35,
+                              size: 35,
                               color: Colors.white,
                             ),
                           ),

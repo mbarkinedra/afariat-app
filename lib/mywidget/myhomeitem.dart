@@ -31,7 +31,7 @@ class MyHomeItem extends StatelessWidget {
             ),
           ],
         ),
-        height: size.height * .3,
+        height: size.height * .25,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -39,7 +39,7 @@ class MyHomeItem extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Container(
-                height: size.height * .25,
+                height: size.height * .2,
                 child: Image.network(
                   adverts.photo,
                   fit: BoxFit.fill,

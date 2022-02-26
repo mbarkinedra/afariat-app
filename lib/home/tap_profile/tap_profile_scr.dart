@@ -23,7 +23,7 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
         child: Column(
 
           children: [
-            SizedBox(height: 60),
+            SizedBox(height: 40),
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image.asset(

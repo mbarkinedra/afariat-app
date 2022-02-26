@@ -108,73 +108,38 @@ class Setting extends GetWidget<SettingViewController> {
             SizedBox(
               height: 130,
             ),
-            CustomButton1(
-              width: MediaQuery.of(context).size.width * .55,
-              height: 50,
-              label: "Supprimer mon compte",
-              icon: Icons.delete_outline_sharp,
-              iconcolor: Colors.white,
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 8.0, bottom: 40, right: 8, left: 8),
+              child: CustomButton1(
+                width: MediaQuery.of(context).size.width * .6,
+                height: 50,
+                label: "Supprimer mon compte",
+                icon: Icons.delete_outline_sharp,
+                iconcolor: Colors.white,
 
-              btcolor: framColor,
-              labcolor: Colors.white,
-              function: () async {
-                CustomDialogueDelete custom = CustomDialogueDelete();
-                final value = await showDialog<bool>(
-                    context: context,
-                    builder: (context) {
-                      return CustomDialogueDelete(
-                        Text2: " ",
-                        title: "Confirmation",
-                        function: () {
-                          Navigator.of(context).pop(true);
-                        },
-                        buttonText2: "Annuler",
-                        description:
-                            "Êtes-vous sûr de  vouloir supprimer votre compte ?",
-                        buttonText: "Ok",
-                        phone: false,
-                      );
-                    });
+                btcolor: framColor,
+                labcolor: Colors.white,
+                function: () async {
+                  final value = await showDialog<bool>(
+                      context: context,
+                      builder: (context) {
+                        return CustomDialogueDelete(
+                          Text2: " ",
+                          title: "Confirmation",
+                          function: () {
+                            Navigator.of(context).pop(true);
+                          },
+                          buttonText2: "Annuler",
+                          description:
+                              "Êtes-vous sûr de  vouloir supprimer votre compte ?",
+                          buttonText: "Ok",
+                          phone: false,
+                        );
+                      });
 
-                // Get.defaultDialog(
-                //   cancel: GestureDetector(
-                //     child: Text(
-                //       "Annuler",
-                //       style: TextStyle(
-                //           color: Colors.red,
-                //           fontWeight: FontWeight.bold,
-                //           fontSize: 40),
-                //     ),
-                //     onTap: () {
-                //       Get.back();
-                //     },
-                //   ),
-                //   title: "Confiramtion",
-                //   titlePadding: EdgeInsets.all(8),
-                //   content: Container(
-                //     height: 100,
-                //     child: Center(
-                //         child: Text(
-                //       " Êtes-vous sûr de supprimer votre compte?",
-                //       style: TextStyle(fontSize: 20),
-                //     )),
-                //   ),
-                //   confirm: GestureDetector(
-                //     child: Text(
-                //       "ok",
-                //       style: TextStyle(
-                //           color: Colors.red,
-                //           fontWeight: FontWeight.bold,
-                //           fontSize: 40),
-                //     ),
-                //     onTap: () {
-                //       //  controller.deleteuser();
-                //     },
-                //   ),
-                //   titleStyle: TextStyle(color: Colors.deepOrange),
-                //   middleTextStyle: TextStyle(color: Colors.deepOrange),
-                // );
-              },
+                },
+              ),
             ),
           ],
         ),

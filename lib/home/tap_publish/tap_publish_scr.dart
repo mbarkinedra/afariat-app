@@ -44,6 +44,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GetBuilder<CategoryAndSubcategory>(builder: (logic) {
+
                     return Column(
                       children: [
                         Padding(
@@ -75,7 +76,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             iconSize: 24,
                             elevation: 16,
                             onChanged: logic.updateCategorie,
-                            items: logic.categoryGroupList
+                            items: logic.categoryGroupList.where((element) => element.name!="")
                                 .map<DropdownMenuItem<CategoryGroupedJson>>(
                                     (CategoryGroupedJson value) {
                               return DropdownMenuItem<CategoryGroupedJson>(
@@ -110,7 +111,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             iconSize: 24,
                             elevation: 16,
                             onChanged: logic.updateSubCategorie,
-                            items: logic.listeSubCategories
+                            items: logic.listeSubCategories.where((element) => element.name!="")
                                 .map<DropdownMenuItem<SubcategoryJson>>(
                                     (SubcategoryJson value) {
                               return DropdownMenuItem<SubcategoryJson>(
@@ -214,38 +215,43 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Row(
-                  children: [
-                    Container(
-                      width: size.width * .87,
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: Colors.deepOrange, width: 2),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0, right: 8),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: CustomTextFiled2(
-                                color: Colors.deepOrange,
-                                validator: controller.validator.validatePrice,
-                                hintText: "Prix",
-                                textEditingController: controller.prix,
-                                keyboardType: TextInputType.number,
-                              ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(flex: 1,
+                        child: Container(
+                         // width: size.width * .87,
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.deepOrange, width: 2),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Padding(
+                            padding: const EdgeInsets.only(left:8, right: 8),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: CustomTextFiled2(
+                                    color: Colors.deepOrange,
+                                    validator: controller.validator.validatePrice,
+                                    hintText: "Prix",
+                                    textEditingController: controller.prix,
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                ),
+                                Text(
+                                  "DT",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 20),
+                                ),
+                              ],
                             ),
-                            Text(
-                              "DT",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -280,7 +286,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             iconSize: 24,
                             elevation: 16,
                             onChanged: logic.updateCity,
-                            items: logic.cities.map<DropdownMenuItem<RefJson>>(
+                            items: logic.cities.where((element) => element.name!="").map<DropdownMenuItem<RefJson>>(
                                 (RefJson value) {
                               return DropdownMenuItem<RefJson>(
                                 value: value,
@@ -325,7 +331,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                               iconSize: 24,
                               elevation: 16,
                               onChanged: logic.updatetown,
-                              items: logic.towns.map<DropdownMenuItem<RefJson>>(
+                              items: logic.towns.where((element) => element.name!="").map<DropdownMenuItem<RefJson>>(
                                   (RefJson value) {
                                 return DropdownMenuItem<RefJson>(
                                   value: value,
