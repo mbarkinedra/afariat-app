@@ -118,17 +118,21 @@ class Account extends GetWidget<AccountViewController> {
                         },
                       );
               }),
-              CustomButton1(
-                height: 50,
-                label: "Annuler",
-                icon: Icons.arrow_back_rounded,
-                labcolor: Colors.white,
-                iconcolor: Colors.white,
-                width: size.width * .8,
-                btcolor: framColor,
-                function: () {
-                  Navigator.pop(context);
-                },
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 8.0, bottom: 40, right: 8, left: 8),
+                child: CustomButton1(
+                  height: 50,
+                  label: "Annuler",
+                  icon: Icons.arrow_back_rounded,
+                  labcolor: Colors.white,
+                  iconcolor: Colors.white,
+                  width: size.width * .8,
+                  btcolor: framColor,
+                  function: () {
+                    Navigator.pop(context);
+                  },
+                ),
               )
             ],
           );

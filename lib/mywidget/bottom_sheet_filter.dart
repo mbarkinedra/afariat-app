@@ -47,7 +47,8 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.deepOrange, width: 2),
                         borderRadius: BorderRadius.circular(10)),
-                    child: DropdownButton<CategoryGroupedJson>(   underline: SizedBox(),
+                    child: DropdownButton<CategoryGroupedJson>(
+                      underline: SizedBox(),
                       isExpanded: true,
                       hint: Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 8),
@@ -78,7 +79,8 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.deepOrange, width: 2),
                         borderRadius: BorderRadius.circular(10)),
-                    child: DropdownButton<SubcategoryJson>(   underline: SizedBox(),
+                    child: DropdownButton<SubcategoryJson>(
+                      underline: SizedBox(),
                       isExpanded: true,
                       hint: Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 8),
@@ -94,7 +96,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                         return DropdownMenuItem<SubcategoryJson>(
                           value: value,
                           child: Padding(
-                            padding:const EdgeInsets.only(left: 8.0, right: 8),
+                            padding: const EdgeInsets.only(left: 8.0, right: 8),
                             child: Text(value.name),
                           ),
                         );
@@ -126,32 +128,53 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
-                : SfRangeSlider(
-                    min: logic.minValue,
-                    max: logic.maxValue,
-                    activeColor: Colors.deepOrange,
-                    values: logic.values,
-                    interval: 1,
-                    showTicks: false,
-                    showLabels: true,
-                    enableTooltip: true,
-                    tooltipTextFormatterCallback:
-                        (dynamic actualValue, String formattedText) {
-                      return logic.prices[actualValue.toInt() - 1].name +
-                          " " +
-                          SettingsApp.moneySymbol;
-                    },
-                    labelFormatterCallback:
-                        (dynamic actualValue, String formattedText) {
-                      if (actualValue == 1 ||
-                          actualValue == logic.prices.length) {
-                        return logic.prices[actualValue.toInt() - 1].name +
-                            " " +
-                            SettingsApp.moneySymbol;
-                      }
-                      return '';
-                    },
-                    onChanged: logic.updateSlideValue,
+                : Column(
+                    children: [
+                      SfRangeSlider(
+                        min: logic.minValue,
+                        max: logic.maxValue,
+                        activeColor: Colors.deepOrange,
+                        values: logic.values,
+                        interval: 1,
+                        showTicks: false,
+                        showLabels: false,
+                        enableTooltip: true,
+                        tooltipTextFormatterCallback:
+                            (dynamic actualValue, String formattedText) {
+                          return logic.prices[actualValue.toInt() - 1].name +
+                              " " +
+                              SettingsApp.moneySymbol;
+                        },
+                        labelFormatterCallback:
+                            (dynamic actualValue, String formattedText) {
+                          if (actualValue == 1 ||
+                              actualValue == logic.prices.length) {
+                            return logic.prices[actualValue.toInt() - 1].name +
+                                " " +
+                                SettingsApp.moneySymbol;
+                          }
+                          return ' ';
+                        },
+                        labelPlacement: LabelPlacement.onTicks,
+                        onChanged: logic.updateSlideValue,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16, left: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(logic.prices[logic.values.start.toInt() - 1]
+                                    .name +
+                                " " +
+                                SettingsApp.moneySymbol),
+                            Text(logic
+                                    .prices[logic.values.end.toInt() - 1].name +
+                                " " +
+                                SettingsApp.moneySymbol)
+                          ],
+                        ),
+                      )
+                    ],
                   );
           }),
           const Padding(
@@ -169,10 +192,11 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.deepOrange, width: 2),
                       borderRadius: BorderRadius.circular(15)),
-                  child: DropdownButton<RefJson>(   underline: SizedBox(),
+                  child: DropdownButton<RefJson>(
+                    underline: SizedBox(),
                     isExpanded: true,
                     hint: Padding(
-                      padding:const EdgeInsets.only(left: 8.0, right: 8),
+                      padding: const EdgeInsets.only(left: 8.0, right: 8),
                       child: Text("Gouvernorat"),
                     ),
                     value: logic.city,
@@ -201,10 +225,11 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.deepOrange, width: 2),
                         borderRadius: BorderRadius.circular(15)),
-                    child: DropdownButton<RefJson>(   underline: SizedBox(),
+                    child: DropdownButton<RefJson>(
+                      underline: SizedBox(),
                       isExpanded: true,
                       hint: Padding(
-                        padding:const EdgeInsets.only(left: 8.0, right: 8),
+                        padding: const EdgeInsets.only(left: 8.0, right: 8),
                         child: Text("Ville"),
                       ),
                       value: logic.town,
@@ -231,7 +256,6 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
               height: 50,
               width: _size.width * .4,
               function: () {
-
                 Get.find<TapHomeViewController>().filterUpdate();
                 Navigator.pop(context);
               },
