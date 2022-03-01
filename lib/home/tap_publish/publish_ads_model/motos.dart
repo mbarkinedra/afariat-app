@@ -28,10 +28,10 @@ class Motos extends GetView<TapPublishViewController> {
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,
-                          value: logic.vehiculebrands,
+                          value: logic.motosBrand,
                           iconSize: 24,
                           elevation: 16,
-                          onChanged: logic.updateMarque,
+                          onChanged: logic.updateMarqueMoto,
                           items: logic.motosBrands
                               .map<DropdownMenuItem<RefJson>>((RefJson value) {
                             return DropdownMenuItem<RefJson>(

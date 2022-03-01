@@ -31,12 +31,12 @@ ads() {
     });
   }
 
-  deleteAds(int i) {
+ Future deleteAds(int i) async{
     deleteData = true;
     update();
     _deleteAds.id = i;
     print(_deleteAds.apiUrl());
-    _deleteAds.delPost().then((value) {
+   await _deleteAds.delPost().then((value) {
       ads();
       deleteData = false;
       update();

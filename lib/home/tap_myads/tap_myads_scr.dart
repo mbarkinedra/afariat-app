@@ -1,6 +1,7 @@
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/ads_item.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
+import 'package:afariat/mywidget/custom_dialogue_delete.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../home_view_controller.dart';
@@ -62,9 +63,30 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                         return AdsItem(
                           size: _size,
                           adverts: logic.adverts[pos],
-                          deleteAds: () {
+                          deleteAds: () async{
                             print(logic.adverts[pos].id);
-                            controller.deleteAds(logic.adverts[pos].id);
+
+                            await showDialog<bool>(
+                            context: context,
+                            builder: (context) {
+                            return CustomDialogueDelete(okFunction:()async{
+                              await   controller.deleteAds(logic.adverts[pos].id);
+                              Navigator.of(context).pop(true);
+                            } ,
+                            text2: " ",
+                            title: "Confirmation",
+                            function: ()async {
+
+                              Navigator.of(context).pop(true);
+                            },
+                            buttonText2: "Annuler",
+                            description:
+                            "Êtes-vous sûr de  vouloir supprimer votre annonce?",
+                            buttonText: "Ok",
+
+                            phone: false,
+                            );
+                            });
                           },
                           editAds: () {
                             Get.find<TapPublishViewController>().dataAdverts =

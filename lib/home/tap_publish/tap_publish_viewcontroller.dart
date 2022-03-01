@@ -259,14 +259,22 @@ class TapPublishViewController extends GetxController {
 
   updateMarque(RefJson newValue) {
     _vehicleModelApi.vehicleModelId = newValue.id;
-    myAds["vehiclebrand"] = newValue.id;
+    myAds["vehicleBrand"] = newValue.id;
     myAdsView["Marque:"] = newValue.name;
     vehiculebrands = newValue;
 
     getVehicleModel();
     update();
   }
+  updateMarqueMoto(RefJson newValue) {
+    _vehicleModelApi.vehicleModelId = newValue.id;
+    myAds["motoBrand"] = newValue.id;
+    myAdsView["Marque:"] = newValue.name;
+    motosBrand = newValue;
 
+    getVehicleModel();
+    update();
+  }
   updateKilometrage(RefJson newValue) {
     kilometrage = newValue;
 
@@ -393,16 +401,21 @@ class TapPublishViewController extends GetxController {
                       text2: " ",
                       title: "Félicitation",
                       function: () {
-                        Get.find<TapMyadsViewController>().ads();
-                        Get.find<HomeViwController>().changeSelectedValue(1);
+
                         Filter.data.clear();
                         clearAllData();
                         Get.find<CategoryAndSubcategory>().clearData();
                         Get.find<LocController>().clearData();
 
-                        for (int ii = 0; ii < 2; ii++) {
+                   for (int ii = 0; ii < 2; ii++) {
+
                           Get.back();
                         }
+
+
+                        Get.find<TapMyadsViewController>().ads();
+
+                        Get.find<HomeViwController>().changeSelectedValue(1);
                         //  Navigator.pop(context);
                         update();
                       },

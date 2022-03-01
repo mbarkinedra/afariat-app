@@ -4,6 +4,7 @@ class CustomDialogueDelete extends StatelessWidget {
   final String title, description, buttonText, buttonText2, text2;
   final Image image;
   final Function function;
+  final Function okFunction;
   final bool phone;
 
   CustomDialogueDelete({
@@ -14,7 +15,7 @@ class CustomDialogueDelete extends StatelessWidget {
     @required this.buttonText2,
     @required this.function,
     this.text2,
-    this.phone,
+    this.phone,@required  this.okFunction
   });
 
   @override
@@ -85,7 +86,7 @@ class CustomDialogueDelete extends StatelessWidget {
                 child: GestureDetector(
                   onTap: function,
                   child: Container(
-                    width: 80,
+                    width: 100,
                     height: 40,
                     decoration: BoxDecoration(
                       color:Colors.deepOrange,
@@ -105,7 +106,7 @@ class CustomDialogueDelete extends StatelessWidget {
                         //you can set more BoxShadow() here
                       ],
                     ),
-                    child: Center(child: Text(buttonText2)),
+                    child: Center(child: Text(buttonText2,style: TextStyle(color: Colors.white),)),
                   ),
                 ),
               ),
@@ -113,11 +114,9 @@ class CustomDialogueDelete extends StatelessWidget {
           bottom: 10,
           left: phone ? MediaQuery.of(context).size.width * .35 : 10,
           child: GestureDetector(
-            onTap: () {
-              Navigator.of(context, rootNavigator: true).pop();
-            },
+            onTap:okFunction,
             child: Container(
-              width: 60,
+              width: 100,
               height: 30,
               decoration: BoxDecoration(
                 color: Colors.white,

@@ -104,7 +104,7 @@ class CustomDialogueFelecitation extends StatelessWidget {
                   //you can set more BoxShadow() here
                 ],
               ),
-              child: Center(child: Text(buttonText)),
+              child: Center(child: Text(buttonText,style: TextStyle(color: Colors.white),)),
             ),
           ),
         ),
