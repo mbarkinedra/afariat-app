@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomApercuDescription extends StatelessWidget {
-  String label;
-  String data;
+final  String label;
+final  String data;
 
   CustomApercuDescription({this.data, this.label});
 

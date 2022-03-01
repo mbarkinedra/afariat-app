@@ -1,14 +1,12 @@
-import 'package:afariat/config/storage.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'home_view_controller.dart';
-import 'tap_home/tap_home_scr.dart';
-import 'tap_myads/tap_myads_scr.dart';
+
 import 'tap_profile/notification/notification_view_controller.dart';
-import 'tap_profile/settings/setting_view_controller.dart';
+
 
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -17,7 +15,7 @@ import 'tap_publish/tap_publish_viewcontroller.dart';
 class Home extends GetWidget<HomeViwController> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+
 
     return GetBuilder<HomeViwController>(builder: (logic) {
       return PersistentTabView(

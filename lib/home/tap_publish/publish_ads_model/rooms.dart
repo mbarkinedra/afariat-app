@@ -1,5 +1,4 @@
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
-import 'package:afariat/mywidget/custom_text_filed.dart';
 import 'package:afariat/mywidget/custom_text_filed2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +6,6 @@ import 'package:get/get.dart';
 class Rooms extends GetView<TapPublishViewController> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         Padding(
@@ -32,7 +30,6 @@ class Rooms extends GetView<TapPublishViewController> {
                         borderRadius: BorderRadius.circular(10)),
                     child: ListTile(
                       title: DropdownButton<String>(
-
                         value: logic.pieces,
                         isExpanded: true,
                         iconSize: 24,
@@ -71,9 +68,10 @@ class Rooms extends GetView<TapPublishViewController> {
                 flex: 4,
                 child: Row(
                   children: [
-                    Expanded(flex: 1,
+                    Expanded(
+                      flex: 1,
                       child: Container(
-                      // width: size.width * .55,
+                        // width: size.width * .55,
                         decoration: BoxDecoration(
                             border:
                                 Border.all(color: Colors.deepOrange, width: 2),
@@ -93,7 +91,7 @@ class Rooms extends GetView<TapPublishViewController> {
                                 ),
                               ),
                               Text(
-                                  "m²",
+                                "m²",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 20),
                               ),

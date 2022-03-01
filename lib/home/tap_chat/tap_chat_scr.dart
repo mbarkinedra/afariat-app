@@ -1,8 +1,7 @@
 import 'package:afariat/mywidget/chat_user.dart';
-import 'package:afariat/networking/api/get_message_api.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -11,7 +10,6 @@ import 'chat_user/chat_user_viewcontroller.dart';
 import 'tap_chat_viewcontroller.dart';
 import 'dart:convert';
 import 'dart:math';
-import 'package:flutter/material.dart';
 
 class TapChatScr extends GetWidget<TapChatViewController> {
   String randomString() {
@@ -22,7 +20,7 @@ class TapChatScr extends GetWidget<TapChatViewController> {
 
   @override
   Widget build(BuildContext context) {
-    Size _size = MediaQuery.of(context).size;
+
 
     return Scaffold(
         appBar: AppBar(

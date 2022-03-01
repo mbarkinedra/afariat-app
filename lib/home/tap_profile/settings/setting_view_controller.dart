@@ -3,10 +3,8 @@ import 'package:afariat/config/filter.dart';
 import 'package:afariat/config/storage.dart';
 import 'package:afariat/config/wsse.dart';
 import 'package:afariat/model/validate_server.dart';
-import 'package:afariat/mywidget/custom_dialogue_delete.dart';
 import 'package:afariat/networking/api/change_password_api.dart';
 import 'package:afariat/networking/api/get_salt_api.dart';
-import 'package:afariat/networking/api/user_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +16,6 @@ class SettingViewController extends GetxController {
   bool isVisiblePassword2 = true;
   bool tham = false;
   ChangePasswordApi changePasswordApi = ChangePasswordApi();
-  UserApi _userApi = UserApi();
   ValidateServer validateServer = ValidateServer();
   final storge = Get.find<SecureStorage>();
   GetSaltApi _getSalt = GetSaltApi();

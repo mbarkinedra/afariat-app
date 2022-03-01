@@ -1,13 +1,12 @@
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
-import 'package:afariat/config/storage.dart';
+
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_chat/tap_chat_scr.dart';
 import 'package:afariat/home/tap_home/tap_home_scr.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
-import 'package:afariat/networking/json/categories_grouped_json.dart';
-import 'package:afariat/networking/json/ref_json.dart';
+
 import 'package:afariat/sign_in/sign_in_scr.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

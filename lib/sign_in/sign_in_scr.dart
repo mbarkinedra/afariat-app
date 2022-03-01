@@ -11,7 +11,7 @@ class SignInScr extends GetWidget<SignInViewController> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
-    var _isLoading = false;
+
     return SafeArea(
         child: Scaffold(
             body: Padding(

@@ -1,23 +1,16 @@
-import 'dart:math';
 
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
-import 'package:afariat/home/home_view_controller.dart';
-import 'package:afariat/home/tap_chat/chat_user/chat_user_scr.dart';
-import 'package:afariat/home/tap_chat/chat_user/chat_user_viewcontroller.dart';
-import 'package:afariat/model/error_register.dart';
+
 
 import 'package:afariat/mywidget/custom_button_icon.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:email_launcher/email_launcher.dart' as mail;
-import 'package:photo_view/photo_view_gallery.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 import 'advert_details_viewcontroller.dart';
-import 'package:photo_view/photo_view.dart';
+
 
 class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
   @override

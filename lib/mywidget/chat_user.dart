@@ -2,7 +2,7 @@ import 'package:afariat/networking/json/conversation_json.dart';
 import 'package:flutter/material.dart';
 
 class ChatUser extends StatelessWidget {
-  Conversation conversation;
+ final Conversation conversation;
   final bool hasConversaton;
 
   ChatUser(
@@ -61,7 +61,7 @@ class ChatUser extends StatelessWidget {
                   BoxDecoration(shape: BoxShape.circle, color: Colors.red),
                   child: Center(
                       child:Text(
-                          conversation.totalUnreadMessagesCount.toString())),
+                          conversation.totalUnreadMessagesCount.toString(),style: TextStyle(color: Colors.white),)),
                   height: 20,
                   width: 20,
                 ),

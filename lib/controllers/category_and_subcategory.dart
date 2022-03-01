@@ -1,10 +1,8 @@
 import 'package:afariat/config/filter.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
-
 import 'package:afariat/networking/api/categories_groupped_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
-import 'package:afariat/networking/json/advert_details_json.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:get/get.dart';
@@ -46,7 +44,7 @@ class CategoryAndSubcategory extends GetxController {
     update();
   }
 
-  updateCategorie(CategoryGroupedJson categoryGrouped) {
+  updateCategory(CategoryGroupedJson categoryGrouped) {
     if (categoryGrouped.id == 0) {
       if (Filter.data["category"] != null) {
         Filter.data.remove("category");
@@ -71,7 +69,7 @@ class CategoryAndSubcategory extends GetxController {
     update();
   }
 
-  updateSubCategorie(SubcategoryJson subCategorie) {
+  updateSubCategory(SubcategoryJson subCategorie) {
     subcategories1 = subCategorie;
     tapHomeViewController.setSearch("category", subCategorie.id);
 

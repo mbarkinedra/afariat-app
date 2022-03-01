@@ -1,16 +1,11 @@
-import 'dart:io';
-
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_publish/publish_views/apercu_publich.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/custom_button2.dart';
 import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
-import 'publish_image_viewcontroller.dart';
 
 class PublishImageScr extends GetView<TapPublishViewController> {
   @override
@@ -125,7 +120,7 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                           : Image.asset(
                               "assets/images/placeholder.png",
                               width: size.width,
-                              height: size.height * .8,
+                              height: size.height * .5,
                             )
                       : logic.images.length > 0
                           ? Column(
@@ -182,7 +177,7 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                               child: Image.asset(
                                 "assets/images/placeholder.png",
                                 width: size.width,
-                                height: size.height * .8,
+                                height: size.height * .5,
                               ),
                             );
                 }),

@@ -12,7 +12,6 @@ import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
 import 'package:afariat/model/validate_server.dart';
 import 'package:afariat/model/validator.dart';
 import 'package:afariat/mywidget/custom_dialogue_felecitation.dart';
-import 'package:afariat/networking/api/get_salt_api.dart';
 import 'package:afariat/networking/api/modif_ads_api.dart';
 import 'package:afariat/networking/api/publish_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
@@ -176,8 +175,8 @@ class TapPublishViewController extends GetxController {
   getEnergie() {
     energie = null;
     _energieApi.getList().then((value) {
-      print("eniytytyutytytytuytyutytutuyergy${value.data}");
-      print("eniytytyutytytytuytyutytutuyergy${value}");
+      /*  print("eniytytyutytytytuytyutytutuyergy${value.data}");
+      print("eniytytyutytytytuytyutytutuyergy${value}");*/
       List<RefJson> refListJson = value.data;
       energies.clear();
       energies = refListJson;
@@ -295,7 +294,7 @@ class TapPublishViewController extends GetxController {
     lights = v;
     print(accountInfoStorage.readPhone());
 
-    myAds["showPhoneNumber"] = v ? "yes" : "no";
+    myAds["showPhoneNumber"] = v ? true:false;
     myAdsView["showPhoneNumber"] =
         v ? accountInfoStorage.readPhone() : accountInfoStorage.readPhone();
     update();
@@ -359,7 +358,7 @@ class TapPublishViewController extends GetxController {
               context: context,
               builder: (context) {
                 return CustomDialogueFelecitation(
-                  Text2: " ",
+                  text2: " ",
                   title: "Félicitation",
                   function: () {
                     Get.find<TapMyadsViewController>().ads();
@@ -391,7 +390,7 @@ class TapPublishViewController extends GetxController {
                   context: context,
                   builder: (context) {
                     return CustomDialogueFelecitation(
-                      Text2: " ",
+                      text2: " ",
                       title: "Félicitation",
                       function: () {
                         Get.find<TapMyadsViewController>().ads();
@@ -400,11 +399,11 @@ class TapPublishViewController extends GetxController {
                         clearAllData();
                         Get.find<CategoryAndSubcategory>().clearData();
                         Get.find<LocController>().clearData();
-                        int count = 0;
+
                         for (int ii = 0; ii < 2; ii++) {
                           Get.back();
                         }
-                     //  Navigator.pop(context);
+                        //  Navigator.pop(context);
                         update();
                       },
                       description: "Votre annonce est en cours de validation !",
@@ -432,7 +431,7 @@ class TapPublishViewController extends GetxController {
       title.text = modifAdsJson.title;
       description.text = modifAdsJson.description;
       prix.text = modifAdsJson.price.toString();
-      lights = modifAdsJson.showPhoneNumber == "yes" ? true : false;
+      lights = modifAdsJson.showPhoneNumber == true? true : false;
       for (int i = 0; i < Get.find<LocController>().cities.length; i++) {
         if (Get.find<LocController>().cities[i].id ==
             modifAdsJson.city.toJson()["id"]) {
@@ -446,7 +445,7 @@ class TapPublishViewController extends GetxController {
               if (Get.find<LocController>().towns[i].id ==
                   modifAdsJson.town.toJson()["id"]) {
                 Get.find<LocController>()
-                    .updatetown(Get.find<LocController>().towns[i]);
+                    .updateTown(Get.find<LocController>().towns[i]);
               }
             }
           });
@@ -459,14 +458,14 @@ class TapPublishViewController extends GetxController {
           category++) {
         if (Get.find<CategoryAndSubcategory>().categoryGroupList[category].id ==
             modifAdsJson.category.group.id) {
-          Get.find<CategoryAndSubcategory>().updateCategorie(
+          Get.find<CategoryAndSubcategory>().updateCategory(
               Get.find<CategoryAndSubcategory>().categoryGroupList[category]);
           SubcategoryJson subcat = Get.find<CategoryAndSubcategory>()
               .sc[modifAdsJson.category.group.id]
               .where((element) => element.id == modifAdsJson.category.id)
               .first;
           updateSubCategoryJson(subcat);
-          Get.find<CategoryAndSubcategory>().updateSubCategorie(subcat);
+          Get.find<CategoryAndSubcategory>().updateSubCategory(subcat);
           print(subcat.toString());
         }
       }

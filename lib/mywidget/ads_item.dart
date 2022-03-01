@@ -1,17 +1,15 @@
 import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
 import 'package:afariat/networking/json/my_ads_json.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class AdsItem extends StatelessWidget {
   final Size size;
-  Adverts adverts;
-  Function deleteAds;
-  Function EditAds;
+ final Adverts adverts;
+  final Function deleteAds;
+final  Function editAds;
 
-  AdsItem({this.size, this.adverts, this.deleteAds, this.EditAds});
+  AdsItem({this.size, this.adverts, this.deleteAds, this.editAds});
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +94,7 @@ class AdsItem extends StatelessWidget {
                                   ));
                         }),
                         InkWell(
-                          onTap: EditAds,
+                          onTap: editAds,
                           child: Icon(
                             Icons.edit,
                             color: Colors.deepOrange,

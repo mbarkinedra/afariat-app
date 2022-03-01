@@ -3,18 +3,15 @@ import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_publish/publish_views/publish_image/publish_image_scr.dart';
-import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
 import 'package:afariat/mywidget/custom_text_filed2.dart';
 import 'package:afariat/mywidget/widget_publish.dart';
-import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'tap_publish_viewcontroller.dart';
 
 class TapPublishScr extends GetWidget<TapPublishViewController> {
@@ -75,7 +72,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             value: logic.categoryGroupedJson,
                             iconSize: 24,
                             elevation: 16,
-                            onChanged: logic.updateCategorie,
+                            onChanged: logic.updateCategory,
                             items: logic.categoryGroupList.where((element) => element.name!="")
                                 .map<DropdownMenuItem<CategoryGroupedJson>>(
                                     (CategoryGroupedJson value) {
@@ -110,7 +107,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             value: logic.subcategories1,
                             iconSize: 24,
                             elevation: 16,
-                            onChanged: logic.updateSubCategorie,
+                            onChanged: logic.updateSubCategory,
                             items: logic.listeSubCategories.where((element) => element.name!="")
                                 .map<DropdownMenuItem<SubcategoryJson>>(
                                     (SubcategoryJson value) {
@@ -176,6 +173,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0, right: 8),
                   child: CustomTextFiled(
+                  width: size.width * .8,
                     color: framColor,
                     validator: controller.validator.validatetitle,
                     hintText: "Titre",
@@ -200,6 +198,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                   child: CustomTextFiled(
                     maxLines: 5,
                     color: framColor,
+             width: size.width * .8,
                     validator: controller.validator.validateDescription,
                     hintText: "Description",
                     textEditingController: controller.description,
@@ -330,7 +329,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                               value: logic.town,
                               iconSize: 24,
                               elevation: 16,
-                              onChanged: logic.updatetown,
+                              onChanged: logic.updateTown,
                               items: logic.towns.where((element) => element.name!="").map<DropdownMenuItem<RefJson>>(
                                   (RefJson value) {
                                 return DropdownMenuItem<RefJson>(

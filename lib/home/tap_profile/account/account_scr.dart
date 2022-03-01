@@ -1,14 +1,10 @@
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/mywidget/custom_button_1.dart';
-import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
-import 'package:afariat/mywidget/profile_pic.dart';
 import 'package:afariat/networking/json/ref_json.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'account_view_controller.dart';
 
 class Account extends GetWidget<AccountViewController> {

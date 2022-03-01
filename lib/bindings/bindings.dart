@@ -1,6 +1,3 @@
-import 'dart:developer';
-import 'dart:ffi';
-
 import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/storage.dart';
@@ -42,7 +39,7 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => PublishImageViewController(), fenix: true);
     Get.lazyPut(() => ForgotPasswordViewController());
     Get.lazyPut(() => SettingViewController());
-    Get.lazyPut(() => NotificationViewController(),fenix: true);
+    Get.lazyPut(() => NotificationViewController(), fenix: true);
     Get.lazyPut(() => ChatUserViewController());
     Get.lazyPut(() => TapChatViewController());
   }

@@ -58,7 +58,7 @@ class MyHomeItem extends StatelessWidget {
                       child: Text(
                         adverts.title,
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
+                            fontWeight: FontWeight.bold, fontSize: 13),
                       ),
                     ),
                     SizedBox(

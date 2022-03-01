@@ -69,8 +69,6 @@ class TapHomeViewController extends GetxController {
     }
   }
 
-  getFirstPage() {}
-
   updateData() async {
     await _advertApi.getList().then((value) {
       adverts = value.embedded.adverts;
@@ -141,10 +139,6 @@ class TapHomeViewController extends GetxController {
     values = value;
     Filter.data["minPrice="] = prices[values.start.toInt() - 1].id;
     Filter.data["maxPrice="] = prices[values.end.toInt() - 1].id;
-    print("bbbbbbbbbbbbbbbbbbbbbb ${values.start.toInt().toString()}");
-
-    print("bbbbbbbbbbbbbbbbbbbbbb ${prices[values.start.toInt() - 1].id}");
-    print("bbbbbbbbbbbbbbbbbbbbbb ${values.end.toInt().toString()}");
     priceSearch =
         "minPrice=${values.start.toInt().toString()}&maxPrice=${values.end.toInt().toString()}&";
     update();

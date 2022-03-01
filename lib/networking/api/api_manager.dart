@@ -1,14 +1,12 @@
 import 'dart:convert';
 
 import 'package:afariat/config/dio_singleton.dart';
-import 'package:afariat/config/filter.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/storage.dart';
 import 'package:afariat/config/wsse.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as a;
-import 'dart:developer';
 
 abstract class ApiManager {
   final DioSingleton dioSingleton = DioSingleton();
@@ -37,18 +35,16 @@ abstract class ApiManager {
   /// POST DATA TO SERVER
   Future<Response<dynamic>> post(dataToPost) async {
     print(jsonEncode(dataToPost));
-    Options options = Options(
-      headers: {
-        "Accept": "application/json",
-        'apikey': SettingsApp.apiKey,
-        'Content-Type': 'application/json',
-      },
-    );
     return dioSingleton.dio
         .post(
       apiUrl(),
       data: jsonEncode(dataToPost),
       options: Options(
+          headers: {
+            "Accept": "application/json",
+            'apikey': SettingsApp.apiKey,
+            'Content-Type': 'application/json',
+          },
           followRedirects: false,
           validateStatus: (status) {
             return status < 500;
@@ -89,12 +85,11 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
-      // responseHeaders = value.headers;
-      // String v=responseHeaders['location'][0];
-      // print(v.split("/").last);
+
       return value;
     }).onError((error, stackTrace) {
-      print(error.toString());
+      return error;
+
     });
   }
 
@@ -126,7 +121,8 @@ abstract class ApiManager {
         .then((value) {
       return value;
     }).onError((error, stackTrace) {
-      print(error.toString());
+      return error;
+
     });
   }
 
@@ -158,6 +154,7 @@ abstract class ApiManager {
       return value;
     }).onError((error, stackTrace) {
       print(error.toString());
+      return error;
     });
   }
 
@@ -184,6 +181,7 @@ abstract class ApiManager {
       return value;
     }).onError((error, stackTrace) {
       print(error.toString());
+      return error;
     });
   }
 
@@ -202,6 +200,7 @@ abstract class ApiManager {
       return value;
     }).onError((error, stackTrace) {
       print(error.toString());
+      return error;
     });
   }
 
@@ -210,10 +209,8 @@ abstract class ApiManager {
     //generer le wsse
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
-    print("000000000000àààààààààààààààààààààààààààà00000");
     print(apiUrl());
     print(wsse);
-    print("000000000000àààààààààààààààààààààààààààà00000");
     Options options = Options(headers: {
       "Accept": "application/json",
       'apikey': SettingsApp.apiKey,
@@ -223,7 +220,8 @@ abstract class ApiManager {
     return dioSingleton.dio.delete(apiUrl(), options: options).then((value) {
       return value;
     }).onError((error, stackTrace) {
-      print(error.toString());
+      return error;
+
     });
   }
 }

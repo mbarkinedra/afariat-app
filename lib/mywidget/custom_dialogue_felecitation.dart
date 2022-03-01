@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomDialogueFelecitation extends StatelessWidget {
-  final String title, description, buttonText, Text2;
+  final String title, description, buttonText, text2;
   final Image image;
   final Function function;
   final bool phone;
@@ -14,7 +13,7 @@ class CustomDialogueFelecitation extends StatelessWidget {
     this.image,
     // @required this.buttonText2,
     @required this.function,
-    this.Text2,
+    this.text2,
     this.phone,
   });
 

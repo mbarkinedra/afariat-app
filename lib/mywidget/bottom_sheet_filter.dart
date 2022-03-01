@@ -4,7 +4,6 @@ import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
-import 'package:afariat/mywidget/custom_text_filed.dart';
 import 'package:afariat/mywidget/widget_publish.dart';
 
 import 'package:afariat/networking/json/categories_grouped_json.dart';
@@ -57,7 +56,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       value: logic.categoryGroupedJson,
                       iconSize: 24,
                       elevation: 16,
-                      onChanged: logic.updateCategorie,
+                      onChanged: logic.updateCategory,
                       items: logic.categoryGroupList
                           .map<DropdownMenuItem<CategoryGroupedJson>>(
                               (CategoryGroupedJson value) {
@@ -89,7 +88,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       value: logic.subcategories1,
                       iconSize: 24,
                       elevation: 16,
-                      onChanged: logic.updateSubCategorie,
+                      onChanged: logic.updateSubCategory,
                       items: logic.listeSubCategories
                           .map<DropdownMenuItem<SubcategoryJson>>(
                               (SubcategoryJson value) {
@@ -235,7 +234,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       value: logic.town,
                       iconSize: 24,
                       elevation: 16,
-                      onChanged: logic.updatetown,
+                      onChanged: logic.updateTown,
                       items: logic.towns
                           .map<DropdownMenuItem<RefJson>>((RefJson value) {
                         return DropdownMenuItem<RefJson>(

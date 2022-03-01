@@ -4,7 +4,7 @@ import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:flutter/material.dart';
 
 class SignUpSucces extends StatefulWidget {
-  String message;
+ final String message;
 
   SignUpSucces(this.message);
 

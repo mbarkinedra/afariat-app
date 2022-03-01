@@ -60,7 +60,7 @@ class ModifAdsJson extends AbstractJsonResource{
     city = json['city'] != null ? new Group.fromJson(json['city']) : null;
     town = json['town'] != null ? new Group.fromJson(json['town']) : null;
     if (json['photos'] != null) {
-      photos = new List<Photos>();
+      photos = <Photos>[];
       json['photos'].forEach((v) {
         photos.add(new Photos.fromJson(v));
       });

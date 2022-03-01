@@ -15,12 +15,12 @@ class LocController extends GetxController {
   List<RefJson> towns = [];
   RefJson town;
   int index = 0;
+
   @override
   void onInit() {
     super.onInit();
     _cityApi.getList().then((value) {
       cities = value.data;
-      // Inserez tout les villes index[0]
 
       cities.insert(0, RefJson(id: 0, name: ""));
       update();
@@ -59,7 +59,7 @@ class LocController extends GetxController {
     }
   }
 
-  updatetown(RefJson town) {
+  updateTown(RefJson town) {
     if (town.id == 0) {
       if (Filter.data["town"] != null) {
         Filter.data.remove("town");
@@ -82,10 +82,9 @@ class LocController extends GetxController {
     _townsApi.cityId = id.toString();
     await _townsApi.getList().then((value) {
       towns = value.data;
-      if(index==0){
+      if (index == 0) {
         towns.insert(0, RefJson(id: 0, name: ""));
       }
-
 
       update();
     });

@@ -5,7 +5,7 @@ import 'package:afariat/home/tap_publish/publish_ads_model/vehicle-brands.dart';
 import 'package:flutter/material.dart';
 
 class WidgetPublish extends StatelessWidget {
-  String categorie;
+  final String categorie;
 
   WidgetPublish(this.categorie);
 

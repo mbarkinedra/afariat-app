@@ -1,19 +1,16 @@
-import 'package:afariat/config/utility.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFiled2 extends StatelessWidget {
   final TextEditingController textEditingController;
   final Color color;
-  final double width;
 
-  // final IconData icon;
   final bool obscureText;
   final TextInputType keyboardType;
   final String hintText;
-  Function onchange;
-  Function validator;
-  double padding;
-  int maxLines;
+  final Function onchange;
+  final Function validator;
+  final double padding;
+  final int maxLines;
 
   CustomTextFiled2(
       {@required this.textEditingController,
@@ -21,7 +18,7 @@ class CustomTextFiled2 extends StatelessWidget {
       this.onchange,
       @required this.color,
       this.padding = 4.0,
-      @required this.width,
+      //  @required this.width,
       this.validator,
       //this.icon,
       this.maxLines,

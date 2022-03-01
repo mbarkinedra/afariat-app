@@ -16,18 +16,8 @@ class User {
       this.first,
       this.second});
 
-/*  Map<String, dynamic> toMap() {
-    return {
-      'name': this.name,
-      'city': this.city,
-      'type': this.type,
-      'phone': this.phone,
-      'email': this.email,
-      'plainPassword': this.plainPassword,
-    };
-  }*/
 
-  @override
+
   Map<String, dynamic> toJson() => {
         "email": email,
         "plainPassword": {'first': first, 'second': second},

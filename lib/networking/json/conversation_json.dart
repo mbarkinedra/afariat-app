@@ -94,7 +94,7 @@ class Embedded {
 
   Embedded.fromJson(Map<String, dynamic> json) {
     if (json['conversation'] != null) {
-      conversation = new List<Conversation>();
+      conversation = <Conversation>[];
       json['conversation'].forEach((v) {
         conversation.add(new Conversation.fromJson(v));
       });

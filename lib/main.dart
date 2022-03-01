@@ -2,13 +2,9 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
 import 'bindings/bindings.dart';
-import 'config/storage.dart';
-import 'controllers/category_and_subcategory.dart';
 import 'home/home_view.dart';
-import 'home/tap_chat/chat_user/test_chatScr.dart';
-import 'home/tap_profile/settings/setting_view_controller.dart';
+
 
 void main() async {
   await GetStorage.init();

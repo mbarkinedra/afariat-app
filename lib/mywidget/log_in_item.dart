@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class LogInItem extends StatelessWidget {
-  String label;
-  TextEditingController textEditingController;
-  String hint;
-  bool obscureText;
-  IconData icon;
-  Function validator;
-  IconButton suffixIcon;
+  final String label;
+ final TextEditingController textEditingController;
+ final String hint;
+ final bool obscureText;
+ final IconData icon;
+ final Function validator;
+ final IconButton suffixIcon;
 
   LogInItem(
       {this.label,

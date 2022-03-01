@@ -1,9 +1,6 @@
-import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
-import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
-import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:afariat/mywidget/custom_apercu.dart';
 import 'package:afariat/mywidget/custom_apercu_description.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';

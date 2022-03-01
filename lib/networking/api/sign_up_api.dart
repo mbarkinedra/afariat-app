@@ -10,10 +10,6 @@ class SignUpApi extends ApiManager {
     return SettingsApp.registerUrl;
   }
 
-  @override
-  Map dataToPost() {
-    return data;
-  }
 
   @override
   AbstractJsonResource fromJson(data) {

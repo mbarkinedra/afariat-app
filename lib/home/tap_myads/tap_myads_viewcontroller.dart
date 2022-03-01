@@ -1,11 +1,8 @@
 import 'package:afariat/config/AccountInfoStorage.dart';
-import 'package:afariat/config/filter.dart';
 import 'package:afariat/config/storage.dart';
 import 'package:afariat/networking/api/delete_ads.dart';
 import 'package:afariat/networking/api/my_ads_api.dart';
-import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:afariat/networking/json/my_ads_json.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TapMyadsViewController extends GetxController {
@@ -21,7 +18,7 @@ class TapMyadsViewController extends GetxController {
     ads();
   }
 
-  List<AdvertListJson> ads() {
+ads() {
     print("_myAdsApi get add");
     _myAdsApi.userId = Get.find<AccountInfoStorage>().readUserId();
     print("_myAdsApi.userId ${_myAdsApi.userId}");
