@@ -23,20 +23,14 @@ class PublishImageViewController extends GetxController {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (i == 1) {
       if (pickedFile != null) {
-        print(' image selected.');
         image = File(pickedFile.path);
         update();
-      } else {
-        print('No image selected.');
-      }
+      } else {}
     } else {
       if (pickedFile != null) {
-        print(' image selected.');
         image2 = File(pickedFile.path);
         update();
-      } else {
-        print('No image selected.');
-      }
+      } else {}
     }
   }
 }

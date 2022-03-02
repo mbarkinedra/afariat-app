@@ -32,7 +32,7 @@ class SignInViewController extends GetxController {
 
   void showHidePassword() {
     isVisiblePassword = !isVisiblePassword;
-    print('pressed');
+
 
     update();
   }
@@ -46,9 +46,7 @@ class SignInViewController extends GetxController {
           validate: () {
             String hashedPassword =
                 Wsse.hashPassword(password.text, value.data["salt"]);
-            print("Hashed Password: $hashedPassword");
             String wsse = Wsse.generateWsseHeader(email.text, hashedPassword);
-            print("WSSE: $wsse");
             Get.find<AccountInfoStorage>().saveEmail(email.text);
             Get.find<AccountInfoStorage>().saveHashedPassword(hashedPassword);
             //Try to login user
@@ -56,7 +54,6 @@ class SignInViewController extends GetxController {
               validateServer.validatorServer(
                   value: value,
                   validate: () {
-                    print("User ID: ${value.data["user_id"]}");
                     //save user info to local storage
 
                     Get.find<AccountInfoStorage>()

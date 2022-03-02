@@ -26,7 +26,7 @@ class SignUpViewController extends GetxController {
 
   void showHidePassword() {
     isVisiblePassword = !isVisiblePassword;
-    print('pressed');
+
 
     update();
   }
@@ -53,7 +53,7 @@ class SignUpViewController extends GetxController {
         email: email.text);
 
     await _signUpApi.post(user).then((value) {
-      print(value.statusCode);
+
       validateServer.validatorServer(
           validate: () {
             Navigator.push(

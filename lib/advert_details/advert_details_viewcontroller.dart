@@ -123,7 +123,7 @@ class AdvertDetailsViewcontroller extends GetxController {
                           TextButton(
                               onPressed: () {
                                 Filter.data.clear();
-                                print("advert.userId   ${advert.userId}");
+
                                 Filter.data["message"] =
                                     textEditingController.text;
                                 Filter.data["advert"] = advert.id;
@@ -131,7 +131,7 @@ class AdvertDetailsViewcontroller extends GetxController {
                                     .securePost(dataToPost: Filter.data)
                                     .then((value) {
                                   Headers responseHeaders = value.headers;
-                                  print(responseHeaders.map);
+
                                   String v = responseHeaders['location'][0];
                                   Get.find<ChatUserViewController>().name =
                                       advert.username;

@@ -34,7 +34,7 @@ abstract class ApiManager {
 
   /// POST DATA TO SERVER
   Future<Response<dynamic>> post(dataToPost) async {
-    print(jsonEncode(dataToPost));
+
     return dioSingleton.dio
         .post(
       apiUrl(),
@@ -66,8 +66,7 @@ abstract class ApiManager {
     Wsse xwsse = Wsse();
 
     String wsse = xwsse.generateWsseFromStorage();
-    print(wsse);
-    print(jsonEncode(dataToPost));
+
     return dioSingleton.dio
         .post(
       apiUrl(),
@@ -100,8 +99,7 @@ abstract class ApiManager {
     Wsse xwsse = Wsse();
 
     String wsse = xwsse.generateWsseFromStorage();
-    print(jsonEncode(dataToPost));
-    print(wsse);
+
 
     return dioSingleton.dio
         .get(
@@ -128,10 +126,10 @@ abstract class ApiManager {
 
   Future<Response<dynamic>> putData({dataToPost}) async {
     //generer le wsse
-    print(jsonEncode(dataToPost));
+
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
-    print(wsse);
+
     return dioSingleton.dio
         .put(
       apiUrl(),
@@ -153,7 +151,7 @@ abstract class ApiManager {
 
       return value;
     }).onError((error, stackTrace) {
-      print(error.toString());
+
       return error;
     });
   }
@@ -180,7 +178,7 @@ abstract class ApiManager {
         .then((value) {
       return value;
     }).onError((error, stackTrace) {
-      print(error.toString());
+
       return error;
     });
   }
@@ -199,7 +197,7 @@ abstract class ApiManager {
     return dioSingleton.dio.delete(apiUrl(), options: options).then((value) {
       return value;
     }).onError((error, stackTrace) {
-      print(error.toString());
+
       return error;
     });
   }
@@ -209,8 +207,7 @@ abstract class ApiManager {
     //generer le wsse
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
-    print(apiUrl());
-    print(wsse);
+
     Options options = Options(headers: {
       "Accept": "application/json",
       'apikey': SettingsApp.apiKey,

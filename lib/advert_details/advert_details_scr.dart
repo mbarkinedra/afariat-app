@@ -284,13 +284,12 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                               CustomButtonIcon(
                                 btcolor: buttonColor,
                                 function: () async {
-                                  print(controller.advert.id);
+
                                   if (controller.advert.isRegistredUser &&
                                       Get.find<AccountInfoStorage>()
                                               .readUserId() !=
                                           null) {
-                                    print(
-                                        "advert.userId   ${logic.advert.userId}");
+
 
                                     controller.showDialogue(context);
                                   }

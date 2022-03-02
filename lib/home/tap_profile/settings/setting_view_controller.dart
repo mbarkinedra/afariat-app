@@ -23,23 +23,16 @@ class SettingViewController extends GetxController {
 
   void showHidePassword1() {
     isVisiblePassword1 = !isVisiblePassword1;
-    print('pressed');
+
 
     update();
   }
   void showHidePassword2() {
     isVisiblePassword2 = !isVisiblePassword2;
-    print('pressed');
+
 
     update();
   }
-/*
-  deleteuser() {
-    _userApi.id = password1.text;//
-    _userApi.deleteUser().then((value) {
-      print(value.data);
-    });
-  }*/
 
   changePassword() {
     updatepasseword=true;
@@ -56,10 +49,10 @@ class SettingViewController extends GetxController {
               (value) {
             String hashedPassword =
                 Wsse.hashPassword(newPassword.text, value.data["salt"]);
-            print("Hashed Password: $hashedPassword");
+
             String wsse = Wsse.generateWsseHeader(
                 accountInfoStorage.readEmail(), hashedPassword);
-            print("WSSE: $wsse");
+
             Get.find<AccountInfoStorage>()
                 .saveEmail(accountInfoStorage.readEmail());
             Get.find<AccountInfoStorage>().saveHashedPassword(hashedPassword);
@@ -67,7 +60,7 @@ class SettingViewController extends GetxController {
             update();  });
           Get.snackbar("", value.data);
 
-          print(value.data);
+
         },
         value: value,
       );

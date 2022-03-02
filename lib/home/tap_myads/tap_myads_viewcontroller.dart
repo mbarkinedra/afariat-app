@@ -19,9 +19,9 @@ class TapMyadsViewController extends GetxController {
   }
 
 ads() {
-    print("_myAdsApi get add");
+
     _myAdsApi.userId = Get.find<AccountInfoStorage>().readUserId();
-    print("_myAdsApi.userId ${_myAdsApi.userId}");
+
     _myAdsApi.getList().then((value) {
       MyAdsJson myAdsJson = MyAdsJson();
       myAdsJson = value;
@@ -35,7 +35,7 @@ ads() {
     deleteData = true;
     update();
     _deleteAds.id = i;
-    print(_deleteAds.apiUrl());
+
    await _deleteAds.delPost().then((value) {
       ads();
       deleteData = false;

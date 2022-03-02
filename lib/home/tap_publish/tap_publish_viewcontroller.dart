@@ -115,7 +115,7 @@ class TapPublishViewController extends GetxController {
     var imgCamera = await picker.getImage(source: ImageSource.camera);
 
     if (imgCamera != null) {
-      print(' image selected.');
+
       images.add(File(imgCamera.path));
       update();
     }
@@ -126,7 +126,7 @@ class TapPublishViewController extends GetxController {
   void openGallery() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      print(' image selected.');
+
       images.add(File(pickedFile.path));
       update();
     }
@@ -175,8 +175,7 @@ class TapPublishViewController extends GetxController {
   getEnergie() {
     energie = null;
     _energieApi.getList().then((value) {
-      /*  print("eniytytyutytytytuytyutytutuyergy${value.data}");
-      print("eniytytyutytytytuytyutytutuyergy${value}");*/
+
       List<RefJson> refListJson = value.data;
       energies.clear();
       energies = refListJson;
@@ -300,7 +299,7 @@ class TapPublishViewController extends GetxController {
 
   updateLight(v) {
     lights = v;
-    print(accountInfoStorage.readPhone());
+
 
     myAds["showPhoneNumber"] = v ? true:false;
     myAdsView["showPhoneNumber"] =
@@ -355,7 +354,7 @@ class TapPublishViewController extends GetxController {
       photobase64Encode(i);
     }
     myAds["photos"] = photos;
-    print(photos.length);
+
     PublishApi publishApi = PublishApi();
 
     if (dataAdverts) {
@@ -479,13 +478,13 @@ class TapPublishViewController extends GetxController {
               .first;
           updateSubCategoryJson(subcat);
           Get.find<CategoryAndSubcategory>().updateSubCategory(subcat);
-          print(subcat.toString());
+
         }
       }
       editAdsImages
           .clear(); // categoryAndSubcategory.updateSupCategorie(subcat );
       modifAdsJson.photos.forEach((element) {
-        print(element.path);
+
         editAdsImages.add(element.path);
       });
       update();

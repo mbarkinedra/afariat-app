@@ -56,7 +56,7 @@ class NotificationViewController extends GetxController {
 
     _countNotificationApi.getdata(Filter.data).then((value) {
       notifCount.value = value.data["totalUnread"];
-      print("totalUnread$value");
+
     });
   }
 }

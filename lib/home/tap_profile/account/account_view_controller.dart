@@ -40,10 +40,10 @@ class AccountViewController extends GetxController {
     Filter.data["city"] = localisation.city.id;
 
     _userApi.id = Get.find<AccountInfoStorage>().readUserId();
-    print(_userApi.apiUrl());
+
     _userApi.putData(dataToPost: Filter.data).then(
       (value) {
-        print(value.data);
+
         validateServer.validatorServer(
             validate: () {
               Get.snackbar("", "mise à jours avec succés ");
@@ -53,12 +53,11 @@ class AccountViewController extends GetxController {
             },
             value: value);
 
-        print(value.data);
       },
     ).catchError((e) {
       updateData = false;
       update();
-      print(e.toString());
+
     });
   }
 
@@ -76,10 +75,7 @@ class AccountViewController extends GetxController {
 
       phone.text = _userJson.phone;
 
-      print(_userJson.phone);
-      print(_userJson.username);
-      print(_userJson.city.id);
-      print(_userJson.id);
+
 
       localisation.cities.forEach((element) {
         if (element.id == _userJson.city.id) {

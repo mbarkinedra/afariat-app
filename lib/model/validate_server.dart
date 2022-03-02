@@ -38,11 +38,10 @@ class ValidateServer {
         validate();
         break;
       case 400:
-        print('------------------------------');
+
         serverErrors = value.data;
         value.data.forEach((key, value) {
-          print('Key: $key');
-          print('------------------------------');
+
         });
         registerFormKey.currentState.validate();
         Get.snackbar(
@@ -57,8 +56,7 @@ class ValidateServer {
       case 401:
         serverErrors = value.data;
         value.data.forEach((key, value) {
-          print('Key: $key');
-          print('------------------------------');
+
         });
 
         Get.snackbar(
@@ -72,8 +70,7 @@ class ValidateServer {
       case 403:
         serverErrors = value.data;
         value.data.forEach((key, value) {
-          print('Key: $key');
-          print('------------------------------');
+
         });
 
         Get.snackbar(
@@ -85,11 +82,9 @@ class ValidateServer {
         break;
       case 404:
         serverErrors = value.data;
-        print(value.data);
-        print(value.data['error']['message']);
+
         value.data.forEach((key, value) {
-          print('Key: $key');
-          print('------------------------------');
+
         });
 
         Get.snackbar(

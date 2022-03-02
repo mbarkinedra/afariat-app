@@ -23,7 +23,7 @@ class AdvertListJson extends AbstractJsonResource {
     limit = json['limit'];
     pages = json['pages'];
     total = json['total'];
-    print("_links  ${json['_links']}");
+
     links = Links.fromJson(json['_links']);
     embedded = Embedded.fromJson(json['_embedded']);
   }
@@ -44,9 +44,6 @@ class Links {
 
   Links.fromJson(Map<String, dynamic> json) {
     self = Link.fromJson(json['self']);
-    /*first = Link.fromJson(json["first"]);
-    last = Link.fromJson(json['last']);
-    next = Link.fromJson(json['next']);*/
 
   }
 }
@@ -106,7 +103,7 @@ class AdvertJson {
   AdvertJson.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     categoryGroup = CategoryGroup.fromJson(json['categoryGroup']);
-    photo = SettingsApp.baseUrl +"/"+ json['photo'];
+    photo = SettingsApp.baseUrl + "/" + json['photo'];
     description = json['description'];
     title = json['title'];
     price = json['price'];
@@ -116,7 +113,6 @@ class AdvertJson {
     modifiedAt = json['modified_at'];
     links = Links.fromJson(json['_links']);
   }
-
 }
 
 class CategoryGroup {
@@ -216,5 +212,4 @@ class Town {
     order = json['order'];
     links = Links.fromJson(json['_links']);
   }
-
 }

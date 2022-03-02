@@ -70,17 +70,10 @@ class ChatUserViewController extends GetxController {
     await _getMessageApi.secureGet().then((value) {
       ConversationJson conversationJson = ConversationJson.fromJson(value.data);
 
-      print("ttttttttttttttttttttttttttttttttttttttttttest");
-      print(value.data);
-      print("ttttttttttttttttttttttttttttttttttttttttttest");
+
       conversations = conversationJson.eEmbedded.conversation;
       messages.clear();
       conversations.forEach((element) {
-        print("ttttttttttttttttttttttttttttttttttttttttttest");
-        // print(_accountInfoStorage.readUserId() == element.from.id.toString());
-        // print(_accountInfoStorage.readUserId());
-         print(element.toJson());
-        print("ttttttttttttttttttttttttttttttttttttttttttest");
 
         final textMessage = types.TextMessage(
             author: types.User(
@@ -105,7 +98,7 @@ class ChatUserViewController extends GetxController {
         .securePost(dataToPost: {"message": message}).then((value) async {
       await getMessage();
       update();
-      print(value.data);
+
     });
   }
 

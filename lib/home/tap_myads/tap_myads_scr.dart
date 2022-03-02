@@ -64,7 +64,7 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                           size: _size,
                           adverts: logic.adverts[pos],
                           deleteAds: () async{
-                            print(logic.adverts[pos].id);
+
 
                             await showDialog<bool>(
                             context: context,
@@ -91,7 +91,7 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                           editAds: () {
                             Get.find<TapPublishViewController>().dataAdverts =
                                 true;
-                            print(logic.adverts[pos].id);
+
                             Get.find<TapPublishViewController>()
                                 .getModifAds(logic.adverts[pos].id);
                             Get.find<HomeViwController>()

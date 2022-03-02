@@ -53,7 +53,7 @@ class TapHomeViewController extends GetxController {
     try {
       _advertPageApi.page = page;
       page++;
-      print(_advertPageApi.page);
+
       final data = await _advertPageApi.getList();
       final newItems = data.embedded.adverts;
       final isLastPage = newItems.length < _pageSize;
@@ -95,8 +95,7 @@ class TapHomeViewController extends GetxController {
     searchAddLinke = searchAddLinke + priceSearch;
     SearchApi searchApi = SearchApi(search);
     searchApi.searchData = searchAddLinke;
-    print(Filter.data.toString());
-    print(searchApi.apiUrl());
+
     searchApi.getList(filters: Filter.data).then((value) {
       clearPrice();
       pagingController.itemList.clear();
@@ -105,7 +104,7 @@ class TapHomeViewController extends GetxController {
       pagingController.appendLastPage(adverts);
       Get.find<LocController>().clearData();
       Get.find<CategoryAndSubcategory>().clearData();
-      print(value.embedded.adverts.toString());
+
       searchAddLinke = "?";
       update();
     });

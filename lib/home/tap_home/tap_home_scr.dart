@@ -46,11 +46,10 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                     bottomRight: Radius.circular(35)),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
+                                    color: Colors.grey,
+                                    spreadRadius: 1,
+                                    blurRadius: 1,
+                                   // changes position of shadow
                                   ),
                                 ],
                               ),
@@ -129,7 +128,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                       logic.searchWord.text.toLowerCase())) {
                                 return InkWell(
                                   onTap: () {
-                                    print(item.id);
+
                                     Get.find<AdvertDetailsViewcontroller>()
                                         .loading = true;
                                     Get.find<AdvertDetailsViewcontroller>()

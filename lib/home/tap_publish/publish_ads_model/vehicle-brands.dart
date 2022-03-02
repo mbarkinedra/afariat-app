@@ -46,30 +46,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                   ],
                 );
 
-                // return ListTile(
-                //   leading: Text("Marque"),
-                //   title: Container(
-                //     padding: const EdgeInsets.all(3.0),
-                //     decoration: BoxDecoration(
-                //         borderRadius: BorderRadius.circular(15),
-                //         border: Border.all(color: Colors.deepOrange, width: 2)),
-                //     child: DropdownButton<RefJson>(
-                //       underline: SizedBox(),
-                //       isExpanded: true,
-                //       value: logic.vehiculebrands,
-                //       iconSize: 24,
-                //       elevation: 16,
-                //       onChanged: logic.updateMarque,
-                //       items: logic.vehiculeBrands
-                //           .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                //         return DropdownMenuItem<RefJson>(
-                //           value: value,
-                //           child: Text(value.name),
-                //         );
-                //       }).toList(),
-                //     ),
-                //   ),
-                // );
+
               }),
             ),
             Padding(
@@ -106,30 +83,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                   ],
                 );
 
-                // return ListTile(
-                //   leading: Text("Modèle"),
-                //   title: Container(
-                //     padding: const EdgeInsets.all(3.0),
-                //     decoration: BoxDecoration(
-                //         borderRadius: BorderRadius.circular(15),
-                //         border: Border.all(color: Colors.deepOrange, width: 2)),
-                //     child: DropdownButton<RefJson>(
-                //       underline: SizedBox(),
-                //       isExpanded: true,
-                //       value: logic.vehiculeModel,
-                //       iconSize: 24,
-                //       elevation: 16,
-                //       onChanged: logic.updateModel,
-                //       items: logic.vehiculeModels
-                //           .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                //         return DropdownMenuItem<RefJson>(
-                //           value: value,
-                //           child: Text(value.name),
-                //         );
-                //       }).toList(),
-                //     ),
-                //   ),
-                // );
+
               }),
             ),
             Padding(
@@ -155,7 +109,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                           onChanged: logic.updateEnergie,
                           items: logic.energies
                               .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            print(value);
+
                             return DropdownMenuItem<RefJson>(
                               value: value,
                               child: Text(value.name),
@@ -167,31 +121,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                   ],
                 );
 
-                // return ListTile(
-                //   leading: Text("Energie"),
-                //   title: Container(
-                //     padding: const EdgeInsets.all(3.0),
-                //     decoration: BoxDecoration(
-                //         borderRadius: BorderRadius.circular(15),
-                //         border: Border.all(color: Colors.deepOrange, width: 2)),
-                //     child: DropdownButton<RefJson>(
-                //       underline: SizedBox(),
-                //       isExpanded: true,
-                //       value: logic.energie,
-                //       iconSize: 24,
-                //       elevation: 16,
-                //       onChanged: logic.updateEnergie,
-                //       items: logic.energies
-                //           .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                //         print(value);
-                //         return DropdownMenuItem<RefJson>(
-                //           value: value,
-                //           child: Text(value.name),
-                //         );
-                //       }).toList(),
-                //     ),
-                //   ),
-                // );
+
               }),
             ),
             Padding(

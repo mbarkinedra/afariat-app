@@ -19,7 +19,7 @@ class TapChatViewController extends GetxController {
     try {
       _getConvertionsApi.page = page;
       page++;
-      print(_getConvertionsApi.page);
+
       final data = await _getConvertionsApi.secureGet();
       ConversationJson conversationJson = ConversationJson.fromJson(data.data);
       final newItems = conversationJson.eEmbedded.conversation;
@@ -48,11 +48,11 @@ class TapChatViewController extends GetxController {
 
   getAllConversations() {
     _getConvertionsApi.secureGet().then((value) {
-      print("tttttt${value.data}");
+
 
       ConversationJson conversationJson = ConversationJson.fromJson(value.data);
       conversations = conversationJson.eEmbedded.conversation;
-      print("conversation${conversationJson.eEmbedded.conversation}");
+
       getData = false;
 
       update();
@@ -64,8 +64,7 @@ class TapChatViewController extends GetxController {
     conversations.remove(item);
     _deleteConversationApi.id = id.toString();
     _deleteConversationApi.deleteData().then((value) {
-      print(value.data);
-      print("conversation deleted");
+
 
       update();
     });

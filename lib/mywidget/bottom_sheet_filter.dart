@@ -121,8 +121,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
             ),
           ),
           GetBuilder<TapHomeViewController>(builder: (logic) {
-            print(logic.maxValue);
-            print(logic.minValue);
+
             return logic.loadPrice
                 ? Center(
                     child: CircularProgressIndicator(),

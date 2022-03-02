@@ -40,6 +40,6 @@ class Validator {
 
   isvala() {
     final isv = globalKey.currentState.validate();
-    print(isv);
+
   }
 }
