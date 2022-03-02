@@ -17,7 +17,7 @@ class SignInScr extends GetWidget<SignInViewController> {
             body: Padding(
       padding: const EdgeInsets.all(16.0),
       child: Form(
-       key: controller.signInFormKey,
+        // key: controller.signInFormKey,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
