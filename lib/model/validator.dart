@@ -39,7 +39,7 @@ class Validator {
   }
 
   isvala() {
-    final isv = globalKey.currentState.validate();
+  globalKey.currentState.validate();
 
   }
 }

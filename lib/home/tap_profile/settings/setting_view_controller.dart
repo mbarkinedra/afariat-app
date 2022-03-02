@@ -24,18 +24,17 @@ class SettingViewController extends GetxController {
   void showHidePassword1() {
     isVisiblePassword1 = !isVisiblePassword1;
 
-
     update();
   }
+
   void showHidePassword2() {
     isVisiblePassword2 = !isVisiblePassword2;
-
 
     update();
   }
 
   changePassword() {
-    updatepasseword=true;
+    updatepasseword = true;
     update();
     Filter.data = {
       "currentPassword": oldPassword.text.toString(),
@@ -49,18 +48,16 @@ class SettingViewController extends GetxController {
               (value) {
             String hashedPassword =
                 Wsse.hashPassword(newPassword.text, value.data["salt"]);
-
-            String wsse = Wsse.generateWsseHeader(
+            Wsse.generateWsseHeader(
                 accountInfoStorage.readEmail(), hashedPassword);
 
             Get.find<AccountInfoStorage>()
                 .saveEmail(accountInfoStorage.readEmail());
             Get.find<AccountInfoStorage>().saveHashedPassword(hashedPassword);
-            updatepasseword=false;
-            update();  });
+            updatepasseword = false;
+            update();
+          });
           Get.snackbar("", value.data);
-
-
         },
         value: value,
       );
