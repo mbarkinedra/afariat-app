@@ -1,17 +1,11 @@
 import 'package:afariat/advert_details/advert_details_scr.dart';
 import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
-
 import 'package:afariat/config/filter.dart';
-import 'package:afariat/config/utility.dart';
 import 'package:afariat/mywidget/bottom_sheet_filter.dart';
-import 'package:afariat/mywidget/custom_text_filed.dart';
 import 'package:afariat/mywidget/myhomeitem.dart';
-import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-
 import 'tap_home_viewcontroller.dart';
 
 class TapHomeScr extends GetWidget<TapHomeViewController> {
@@ -46,10 +40,10 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10)),
+                                    topLeft: Radius.circular(35),
+                                    topRight: Radius.circular(35),
+                                    bottomLeft: Radius.circular(35),
+                                    bottomRight: Radius.circular(35)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey.withOpacity(0.5),
@@ -67,7 +61,9 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                 decoration: InputDecoration(
                                     prefixIcon: Icon(Icons.search),
                                     suffixIcon: IconButton(
-                                      icon: Icon(Icons.clear),
+                                      icon: Icon(
+                                        Icons.clear,
+                                      ),
                                       onPressed: () {
                                         /* Clear the search field */
                                         controller.filterClear();
@@ -125,7 +121,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                         ),
                         child: PagedListView<int, dynamic>(
                           pagingController: controller.pagingController,
-                          //,scrollController: controller.scrollController,
                           builderDelegate: PagedChildBuilderDelegate<dynamic>(
                             itemBuilder: (context, item, index) {
                               if (item.description.toLowerCase().contains(
@@ -148,7 +143,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                   },
                                   child: MyHomeItem(
                                     size: _size,
-                                    adverts: item, //logic.adverts[index],
+                                    adverts: item,
                                   ),
                                 );
                               } else {

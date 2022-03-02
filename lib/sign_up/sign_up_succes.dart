@@ -1,10 +1,10 @@
 import 'package:afariat/config/utility.dart';
 
-import 'package:afariat/mywidget/custmbutton.dart';
+import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:flutter/material.dart';
 
 class SignUpSucces extends StatefulWidget {
-  String message;
+ final String message;
 
   SignUpSucces(this.message);
 
@@ -75,7 +75,7 @@ class _SignUpSuccesState extends State<SignUpSucces> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(
-                child: CustomButton(
+                child: CustomButton1(
               btcolor: buttonColor,
               labcolor: Colors.white,
               fontWeight: FontWeight.bold,

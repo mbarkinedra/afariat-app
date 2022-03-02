@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/model/type_register.dart';
 import 'package:afariat/model/user.dart';
@@ -54,7 +52,7 @@ class SignUpViewController extends GetxController {
         name: name.text,
         email: email.text);
 
-    var response = await _signUpApi.post(user).then((value) {
+    await _signUpApi.post(user).then((value) {
       print(value.statusCode);
       validateServer.validatorServer(
           validate: () {
@@ -67,7 +65,7 @@ class SignUpViewController extends GetxController {
           value: value,
           registerFormKey: registerFormKey);
     }).catchError((e) {
-      Get.snackbar("Erreur", "${e}");
+      Get.snackbar("Erreur", "$e");
     });
   }
 }

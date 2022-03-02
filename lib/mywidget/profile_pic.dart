@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfilePic extends StatelessWidget {
-  String pic;
+  final String pic;
 
   ProfilePic(this.pic);
 

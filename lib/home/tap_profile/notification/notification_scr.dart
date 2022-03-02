@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'notification_view_controller.dart';
 
 class NotificationSrc extends GetWidget<NotificationViewController> {

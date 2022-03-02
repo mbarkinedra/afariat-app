@@ -8,7 +8,7 @@ class ValidateServer {
   String validator(String value, String field) {
     //1st validate the front entered fields, then validate the errors from server
     //
-    String errorMessage = null;
+    String errorMessage;
 
     //validating server errors
     serverErrors.forEach((key, elementErrors) {

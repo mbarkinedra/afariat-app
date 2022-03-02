@@ -1,11 +1,11 @@
-class Error_Register {
+class ErrorRegister {
   List<String> errors;
   Email email;
   Email phone;
 
-  Error_Register({this.errors, this.email, this.phone});
+  ErrorRegister({this.errors, this.email, this.phone});
 
-  Error_Register.fromJson(Map<String, dynamic> json) {
+  ErrorRegister.fromJson(Map<String, dynamic> json) {
     errors = json['errors'] ;
     email = json['email'] != null ? new Email.fromJson(json['email']) : null;
     phone = json['phone'] != null ? new Email.fromJson(json['phone']) : null;

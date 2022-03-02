@@ -15,7 +15,7 @@ class SecureStorage extends GetxController {
   }
 
   deleteSecureData(String key) {
-    var deleteData = box.remove(key);
+    box.remove(key);
     // return deleteData;
   }
 

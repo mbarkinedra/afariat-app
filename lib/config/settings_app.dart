@@ -1,6 +1,7 @@
 class SettingsApp {
   static const apiKey =
       '850f2303a496c53746d52ba751efcdbe8ce9636d27eb805455ad5e0c02cb5750';
+  static const String locale = 'fr_TN';
   static const moneySymbol = 'DT';
   static const String baseUrl = 'https://afariat.com';
   static const String baseApiUrl = '$baseUrl/api/v1';

@@ -14,15 +14,15 @@ class LocController extends GetxController {
   RefJson city;
   List<RefJson> towns = [];
   RefJson town;
+  int index = 0;
 
   @override
   void onInit() {
     super.onInit();
     _cityApi.getList().then((value) {
       cities = value.data;
-      // Inserez tout les villes index[0]
 
-      cities.insert(0, RefJson(id: 0, name: "city"));
+      cities.insert(0, RefJson(id: 0, name: ""));
       update();
     });
   }
@@ -42,7 +42,7 @@ class LocController extends GetxController {
       if (Filter.data["town"] != null) {
         Filter.data.remove("town");
       }
-
+      town = null;
       tapHomeViewController.filterUpdate();
     } else {
       city = ci;
@@ -51,26 +51,41 @@ class LocController extends GetxController {
       tapHomeViewController.setSearch("city", ci.id);
       tapPublishViewController.myAds["city"] = ci.id;
       tapPublishViewController.myAdsView["city"] = ci.name;
-      tapHomeViewController. searchAddLinke= tapHomeViewController .searchAddLinke+"city=${ci.id}&";
+      tapHomeViewController.searchAddLinke =
+          tapHomeViewController.searchAddLinke + "city=${ci.id}&";
+
       updateTowns(ci.id);
       update();
     }
   }
 
-  updatetown(RefJson town) {
-    this.town = town;
-    tapHomeViewController. searchAddLinke= tapHomeViewController .searchAddLinke+"town=${town.id}&";
-    tapPublishViewController.town = town;
-    tapHomeViewController.setSearch("town", town.id);
-    tapPublishViewController.myAds["town"] = town.id;
-    tapPublishViewController.myAdsView["town"] = town.name;
-    update();
+  updateTown(RefJson town) {
+    if (town.id == 0) {
+      if (Filter.data["town"] != null) {
+        Filter.data.remove("town");
+      }
+      town = null;
+      tapHomeViewController.filterUpdate();
+    } else {
+      this.town = town;
+      tapHomeViewController.searchAddLinke =
+          tapHomeViewController.searchAddLinke + "town=${town.id}&";
+      tapPublishViewController.town = town;
+      tapHomeViewController.setSearch("town", town.id);
+      tapPublishViewController.myAds["town"] = town.id;
+      tapPublishViewController.myAdsView["town"] = town.name;
+      update();
+    }
   }
 
   Future updateTowns(id) async {
     _townsApi.cityId = id.toString();
     await _townsApi.getList().then((value) {
       towns = value.data;
+      if (index == 0) {
+        towns.insert(0, RefJson(id: 0, name: ""));
+      }
+
       update();
     });
   }

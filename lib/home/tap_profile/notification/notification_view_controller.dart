@@ -21,10 +21,8 @@ class NotificationViewController extends GetxController {
 
     deleteNotificationApi.id = id.toString();
     deleteNotificationApi.deleteData().then((value) {
-      print("Votre notification est supprimé");
       update();
     });
-    // update( );
     Get.snackbar("", "Votre notification est supprimé");
   }
 
@@ -32,8 +30,6 @@ class NotificationViewController extends GetxController {
     PutNotificationApi putNotificationApi = PutNotificationApi();
     putNotificationApi.id = id.toString();
     putNotificationApi.putData(dataToPost: Filter.data).then((value) {
-      print("uuuuuuuuuuuuuuuuuuuuuu$value");
-
       getAllNotification();
     });
   }
@@ -50,8 +46,6 @@ class NotificationViewController extends GetxController {
     _notificationApi.secureGet().then((value) {
       NotificationJson notificationJson = NotificationJson.fromJson(value.data);
       notifications = notificationJson.eEmbedded.notification;
-      print("tttttttttttttttttttt${notificationJson.eEmbedded.notification}");
-
       notifications.forEach((element) {
         if (!element.read) {
           hasNotification.value = true;

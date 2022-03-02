@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
-import 'package:afariat/model/user.dart';
 import 'package:afariat/networking/api/conversations_api.dart';
 import 'package:afariat/networking/api/conversationsreply.dart';
 import 'package:afariat/networking/api/get_message_api.dart';
@@ -43,7 +42,7 @@ class ChatUserViewController extends GetxController {
     messages.clear();
   }
 
-  Future<void> _fetchPage(int pageKey) async {
+  Future<void> fetchPage(int pageKey) async {
     try {
       _getMessageApi.page = page;
       page++;

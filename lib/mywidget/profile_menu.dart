@@ -1,7 +1,6 @@
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_profile/notification/notification_view_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ProfileMenu extends StatelessWidget {
@@ -72,7 +71,7 @@ class ProfileMenu extends StatelessWidget {
                               .notifCount
                               .value
                               .toString()
-                          : " "))),
+                          : " ",style: TextStyle(color: Colors.white),))),
               height: 20,
               width: 20,
             ),

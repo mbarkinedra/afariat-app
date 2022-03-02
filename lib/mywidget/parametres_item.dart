@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
-class LogInItem extends StatelessWidget {
-  final String label;
+class ParametresItem extends StatelessWidget {
+ final String label;
  final TextEditingController textEditingController;
  final String hint;
  final bool obscureText;
  final IconData icon;
  final Function validator;
  final IconButton suffixIcon;
-
-  LogInItem(
+  final Color iconcolor;
+  ParametresItem(
       {this.label,
-      this.textEditingController,
-      this.hint,
-      this.obscureText = false,
-      this.icon,
-      this.validator,
-      this.suffixIcon});
+        this.textEditingController,
+        this.hint,
+        this.obscureText = false,
+        this.icon,
+        this.validator,
+        this.suffixIcon,this.iconcolor});
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +25,8 @@ class LogInItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(label),
-        Container( decoration: BoxDecoration(
-
+        Container( width: MediaQuery.of(context).size.width*.7, decoration: BoxDecoration(
+            border: Border.all(color: Colors.deepOrange, width: 2),
             borderRadius: BorderRadius.circular(15)),
           child: TextFormField(
             controller: textEditingController,
@@ -35,6 +35,7 @@ class LogInItem extends StatelessWidget {
             decoration: InputDecoration(
                 icon: Icon(icon),
                 border: InputBorder.none,
+                iconColor: Colors.deepOrange,
                 hintText: hint,
                 suffixIcon: suffixIcon),
           ),

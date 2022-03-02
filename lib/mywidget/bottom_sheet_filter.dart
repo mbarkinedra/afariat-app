@@ -4,7 +4,6 @@ import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
-import 'package:afariat/mywidget/custom_text_filed.dart';
 import 'package:afariat/mywidget/widget_publish.dart';
 
 import 'package:afariat/networking/json/categories_grouped_json.dart';
@@ -13,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:afariat/networking/json/ref_json.dart';
-import 'custmbutton.dart';
+import 'custom_button_1.dart';
 
 class BottomSheetFilter extends StatefulWidget {
   @override
@@ -47,7 +46,8 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.deepOrange, width: 2),
                         borderRadius: BorderRadius.circular(10)),
-                    child: DropdownButton<CategoryGroupedJson>(   underline: SizedBox(),
+                    child: DropdownButton<CategoryGroupedJson>(
+                      underline: SizedBox(),
                       isExpanded: true,
                       hint: Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 8),
@@ -56,7 +56,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       value: logic.categoryGroupedJson,
                       iconSize: 24,
                       elevation: 16,
-                      onChanged: logic.updateCategorie,
+                      onChanged: logic.updateCategory,
                       items: logic.categoryGroupList
                           .map<DropdownMenuItem<CategoryGroupedJson>>(
                               (CategoryGroupedJson value) {
@@ -78,7 +78,8 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.deepOrange, width: 2),
                         borderRadius: BorderRadius.circular(10)),
-                    child: DropdownButton<SubcategoryJson>(   underline: SizedBox(),
+                    child: DropdownButton<SubcategoryJson>(
+                      underline: SizedBox(),
                       isExpanded: true,
                       hint: Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 8),
@@ -87,14 +88,14 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       value: logic.subcategories1,
                       iconSize: 24,
                       elevation: 16,
-                      onChanged: logic.updateSubCategorie,
+                      onChanged: logic.updateSubCategory,
                       items: logic.listeSubCategories
                           .map<DropdownMenuItem<SubcategoryJson>>(
                               (SubcategoryJson value) {
                         return DropdownMenuItem<SubcategoryJson>(
                           value: value,
                           child: Padding(
-                            padding:const EdgeInsets.only(left: 8.0, right: 8),
+                            padding: const EdgeInsets.only(left: 8.0, right: 8),
                             child: Text(value.name),
                           ),
                         );
@@ -126,32 +127,53 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
-                : SfRangeSlider(
-                    min: logic.minValue,
-                    max: logic.maxValue,
-                    activeColor: Colors.deepOrange,
-                    values: logic.values,
-                    interval: 1,
-                    showTicks: false,
-                    showLabels: true,
-                    enableTooltip: true,
-                    tooltipTextFormatterCallback:
-                        (dynamic actualValue, String formattedText) {
-                      return logic.prices[actualValue.toInt() - 1].name +
-                          " " +
-                          SettingsApp.moneySymbol;
-                    },
-                    labelFormatterCallback:
-                        (dynamic actualValue, String formattedText) {
-                      if (actualValue == 1 ||
-                          actualValue == logic.prices.length) {
-                        return logic.prices[actualValue.toInt() - 1].name +
-                            " " +
-                            SettingsApp.moneySymbol;
-                      }
-                      return '';
-                    },
-                    onChanged: logic.updateSlideValue,
+                : Column(
+                    children: [
+                      SfRangeSlider(
+                        min: logic.minValue,
+                        max: logic.maxValue,
+                        activeColor: Colors.deepOrange,
+                        values: logic.values,
+                        interval: 1,
+                        showTicks: false,
+                        showLabels: false,
+                        enableTooltip: true,
+                        tooltipTextFormatterCallback:
+                            (dynamic actualValue, String formattedText) {
+                          return logic.prices[actualValue.toInt() - 1].name +
+                              " " +
+                              SettingsApp.moneySymbol;
+                        },
+                        labelFormatterCallback:
+                            (dynamic actualValue, String formattedText) {
+                          if (actualValue == 1 ||
+                              actualValue == logic.prices.length) {
+                            return logic.prices[actualValue.toInt() - 1].name +
+                                " " +
+                                SettingsApp.moneySymbol;
+                          }
+                          return ' ';
+                        },
+                        labelPlacement: LabelPlacement.onTicks,
+                        onChanged: logic.updateSlideValue,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16, left: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(logic.prices[logic.values.start.toInt() - 1]
+                                    .name +
+                                " " +
+                                SettingsApp.moneySymbol),
+                            Text(logic
+                                    .prices[logic.values.end.toInt() - 1].name +
+                                " " +
+                                SettingsApp.moneySymbol)
+                          ],
+                        ),
+                      )
+                    ],
                   );
           }),
           const Padding(
@@ -168,11 +190,12 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.deepOrange, width: 2),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: DropdownButton<RefJson>(   underline: SizedBox(),
+                      borderRadius: BorderRadius.circular(15)),
+                  child: DropdownButton<RefJson>(
+                    underline: SizedBox(),
                     isExpanded: true,
                     hint: Padding(
-                      padding:const EdgeInsets.only(left: 8.0, right: 8),
+                      padding: const EdgeInsets.only(left: 8.0, right: 8),
                       child: Text("Gouvernorat"),
                     ),
                     value: logic.city,
@@ -200,17 +223,18 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.deepOrange, width: 2),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: DropdownButton<RefJson>(   underline: SizedBox(),
+                        borderRadius: BorderRadius.circular(15)),
+                    child: DropdownButton<RefJson>(
+                      underline: SizedBox(),
                       isExpanded: true,
                       hint: Padding(
-                        padding:const EdgeInsets.only(left: 8.0, right: 8),
+                        padding: const EdgeInsets.only(left: 8.0, right: 8),
                         child: Text("Ville"),
                       ),
                       value: logic.town,
                       iconSize: 24,
                       elevation: 16,
-                      onChanged: logic.updatetown,
+                      onChanged: logic.updateTown,
                       items: logic.towns
                           .map<DropdownMenuItem<RefJson>>((RefJson value) {
                         return DropdownMenuItem<RefJson>(
@@ -227,11 +251,10 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
           }),
           Align(
             alignment: Alignment.center,
-            child: CustomButton(
+            child: CustomButton1(
               height: 50,
               width: _size.width * .4,
               function: () {
-
                 Get.find<TapHomeViewController>().filterUpdate();
                 Navigator.pop(context);
               },

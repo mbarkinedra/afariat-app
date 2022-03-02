@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomButton extends StatelessWidget {
+class CustomButton2 extends StatelessWidget {
   final Color btcolor;
   final Color labcolor;
   final Color iconcolor;
@@ -25,6 +25,13 @@ class CustomButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                      color: labcolor,
+                      fontSize: fontSize,
+                      fontWeight: fontWeight),
+                ),
                 if (icon != null)
                   Icon(
                     icon,
@@ -33,13 +40,7 @@ class CustomButton extends StatelessWidget {
                 SizedBox(
                   width: 8,
                 ),
-                Text(
-                  label,
-                  style: TextStyle(
-                      color: labcolor,
-                      fontSize: fontSize,
-                      fontWeight: fontWeight),
-                ),
+
               ],
             ),
           ),
@@ -61,15 +62,15 @@ class CustomButton extends StatelessWidget {
     );
   }
 
-  CustomButton(
+  CustomButton2(
       {@required this.btcolor,
-      this.icon,
-      this.iconcolor,
-      @required this.function,
-      @required this.labcolor,
-      @required this.label,
-      @required this.height,
-      @required this.width,
-      this.fontSize = 16,
-      this.fontWeight = FontWeight.normal});
+        this.icon,
+        this.iconcolor,
+        @required this.function,
+        @required this.labcolor,
+        @required this.label,
+        @required this.height,
+        @required this.width,
+        this.fontSize = 16,
+        this.fontWeight = FontWeight.normal});
 }

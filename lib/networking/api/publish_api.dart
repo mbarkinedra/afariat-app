@@ -9,10 +9,7 @@ class PublishApi extends ApiManager {
   String apiUrl() {
     return SettingsApp.publishURL;
   }
-  @override
-  Map dataToPost() {
-    return data;
-  }
+
 
   @override
   AbstractJsonResource fromJson(data) {

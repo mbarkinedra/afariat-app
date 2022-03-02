@@ -1,11 +1,9 @@
-import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/ads_item.dart';
-import 'package:afariat/mywidget/custmbutton.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
+import 'package:afariat/mywidget/custom_dialogue_delete.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../home_view_controller.dart';
 import 'tap_myads_viewcontroller.dart';
 
@@ -19,7 +17,8 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
         appBar: AppBar(
           title: Text(
             "Mes annonces",
-            style: TextStyle( color:Colors.white,fontWeight: FontWeight.bold, fontSize: 20),
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
           ),
           backgroundColor: Colors.deepOrange,
         ),
@@ -30,10 +29,10 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: 15,
+                        height: 175,
                       ),
                       Align(
-                        alignment: Alignment.topLeft,
+                        alignment: Alignment.topCenter,
                         child: Text("Vous n'avez déposé aucune annonce",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -57,27 +56,50 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                   ),
                 )
               : Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: ListView.builder(
-                    itemCount: logic.adverts.length,
-                    itemBuilder: (context, pos) {
-                      return AdsItem(
-                        size: _size,
-                        adverts: logic.adverts[pos],
-                        deleteAds: () {
-                          print(logic.adverts[pos].id);
-                          controller.deleteAds(logic.adverts[pos].id);
-                        },
-                        EditAds: () {
-                          Get.find<TapPublishViewController>().dataAdverts = true;
-                          print(logic.adverts[pos].id);
-                          Get.find<TapPublishViewController>()
-                              .getModifAds(logic.adverts[pos].id);
-                          Get.find<HomeViwController>().changeSelectedValue(2);
-                        },
-                      );
-                    }),
-              );
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: ListView.builder(
+                      itemCount: logic.adverts.length,
+                      itemBuilder: (context, pos) {
+                        return AdsItem(
+                          size: _size,
+                          adverts: logic.adverts[pos],
+                          deleteAds: () async{
+                            print(logic.adverts[pos].id);
+
+                            await showDialog<bool>(
+                            context: context,
+                            builder: (context) {
+                            return CustomDialogueDelete(okFunction:()async{
+                              await   controller.deleteAds(logic.adverts[pos].id);
+                              Navigator.of(context).pop(true);
+                            } ,
+                            text2: " ",
+                            title: "Confirmation",
+                            function: ()async {
+
+                              Navigator.of(context).pop(true);
+                            },
+                            buttonText2: "Annuler",
+                            description:
+                            "Êtes-vous sûr de  vouloir supprimer votre annonce?",
+                            buttonText: "Ok",
+
+                            phone: false,
+                            );
+                            });
+                          },
+                          editAds: () {
+                            Get.find<TapPublishViewController>().dataAdverts =
+                                true;
+                            print(logic.adverts[pos].id);
+                            Get.find<TapPublishViewController>()
+                                .getModifAds(logic.adverts[pos].id);
+                            Get.find<HomeViwController>()
+                                .changeSelectedValue(2);
+                          },
+                        );
+                      }),
+                );
         }),
       ),
     );

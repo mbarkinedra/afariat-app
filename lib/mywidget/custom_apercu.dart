@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomApercu extends StatelessWidget {
-  String label;
-  String data;
+final  String label;
+ final String data;
 
   CustomApercu({this.label, this.data});
 
@@ -15,7 +15,7 @@ class CustomApercu extends StatelessWidget {
           Expanded(
               child: Text(
             label,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           )),
           Expanded(
             child: Text(data),

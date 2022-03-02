@@ -12,5 +12,7 @@ class DeleteAds extends ApiManager {
   }
 
   @override
-  AbstractJsonResource fromJson(data) {}
+  AbstractJsonResource fromJson(data) {
+    return data;
+  }
 }

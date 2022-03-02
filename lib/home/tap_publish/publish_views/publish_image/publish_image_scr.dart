@@ -1,15 +1,11 @@
-import 'dart:io';
-
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_publish/publish_views/apercu_publich.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
-import 'package:afariat/mywidget/custmbutton.dart';
+import 'package:afariat/mywidget/custom_button2.dart';
+import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
-import 'publish_image_viewcontroller.dart';
 
 class PublishImageScr extends GetView<TapPublishViewController> {
   @override
@@ -27,13 +23,24 @@ class PublishImageScr extends GetView<TapPublishViewController> {
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           actions: [
-            IconButton(
-              icon: Icon(Icons.add_a_photo),
-              iconSize: 40,
-              onPressed: () {
-                showOptionsDialog(context);
-              },
-            )
+            GetBuilder<TapPublishViewController>(builder: (logic) {
+              return IconButton(
+                icon: Icon(
+                  Icons.add_a_photo,
+                  color:
+                      logic.images.length < 6 ? Colors.white : Colors.black45,
+                ),
+                iconSize: 40,
+                onPressed: () {
+                  if (controller.images.length < 6) {
+                    showOptionsDialog(context);
+                  } else {
+                    Get.snackbar("Erreur",
+                        "Vous ne pouvez ajouter que **6** photos par annonce");
+                  }
+                },
+              );
+            })
           ],
         ),
         body: Padding(
@@ -43,58 +50,77 @@ class PublishImageScr extends GetView<TapPublishViewController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Selectionner des images : ",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    )),
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "Rajouter des photos :",
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Text(
+                          "Une annonce avec des images attire beaucoup l'attention des internautes.Utilisez une image réelle de votre objet, et non de catalogues",
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 GetBuilder<TapPublishViewController>(builder: (logic) {
                   return logic.dataAdverts
-                      ? logic.EditAdsImages.length > 0
+                      ? logic.editAdsImages.length > 0
                           ? Column(
                               mainAxisSize: MainAxisSize.max,
-                              children: logic.EditAdsImages.map((e) => Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              border:
-                                                  Border.all(color: framColor),
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          width: size.width * .8,
-                                          height: size.height * .3,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Image.network(
-                                              e,
-                                              fit: BoxFit.fill,
+                              children: logic.editAdsImages
+                                  .map((e) => Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: framColor),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              width: size.width * .8,
+                                              height: size.height * .3,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Image.network(
+                                                  e,
+                                                  fit: BoxFit.fill,
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Positioned(
+                                              right: 0,
+                                              child: InkWell(
+                                                  onTap: () {
+                                                    logic.deleditImage(e);
+                                                  },
+                                                  child: Icon(
+                                                    Icons.clear,
+                                                    size: 30,
+                                                    color: Colors.deepOrange,
+                                                  )),
+                                            ),
+                                          ],
                                         ),
-                                        Positioned(
-                                          right: 0,
-                                          child: InkWell(
-                                              onTap: () {
-                                                logic.deleditImage(e);
-                                              },
-                                              child: Icon(
-                                                Icons.clear,
-                                                size: 30,
-                                                color: Colors.deepOrange,
-                                              )),
-                                        ),
-                                      ],
-                                    ),
-                                  )).toList(),
+                                      ))
+                                  .toList(),
                             )
                           : Image.asset(
                               "assets/images/placeholder.png",
                               width: size.width,
-                              height: size.height * .8,
+                              height: size.height * .5,
                             )
                       : logic.images.length > 0
                           ? Column(
@@ -139,41 +165,59 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                                       ))
                                   .toList(),
                             )
-                          : Image.asset(
-                              "assets/images/placeholder.png",
-                              width: size.width,
-                              height: size.height * .8,
+                          : GestureDetector(
+                              onTap: () {
+                                if (controller.images.length < 6) {
+                                  showOptionsDialog(context);
+                                } else {
+                                  Get.snackbar("Erreur",
+                                      "Vous ne pouvez ajouter que **6** photos par annonce");
+                                }
+                              },
+                              child: Image.asset(
+                                "assets/images/placeholder.png",
+                                width: size.width,
+                                height: size.height * .5,
+                              ),
                             );
                 }),
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CustomButton(
-                        width: MediaQuery.of(context).size.width * .35,
-                        height: 45,
-                        label: "Précédent",
-                        labcolor: Colors.white,
-                        btcolor: buttonColor,
-                        function: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      CustomButton(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 8.0, bottom: 40, right: 8, left: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CustomButton1(
                           width: MediaQuery.of(context).size.width * .35,
                           height: 45,
-                          label: "Suivant",
+                          label: "Précédent",
                           labcolor: Colors.white,
+                          icon: Icons.arrow_back_rounded,
+                          iconcolor: Colors.white,
                           btcolor: buttonColor,
                           function: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (
-                              context,
-                            ) =>
-                                    ApercuPublich()));
-                          }),
-                    ],
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        CustomButton2(
+                            width: MediaQuery.of(context).size.width * .35,
+                            height: 45,
+                            label: "Suivant",
+                            icon: Icons.arrow_forward_rounded,
+                            iconcolor: Colors.white,
+                            labcolor: Colors.white,
+                            btcolor: buttonColor,
+                            function: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (
+                                context,
+                              ) =>
+                                      ApercuPublich()));
+                            }),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -187,7 +231,10 @@ class PublishImageScr extends GetView<TapPublishViewController> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Selectionner votre options :",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+            title: Text(
+              "Selectionner votre options :",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: [

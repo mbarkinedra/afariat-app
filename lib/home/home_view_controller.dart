@@ -1,11 +1,12 @@
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
-import 'package:afariat/config/storage.dart';
+
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_chat/tap_chat_scr.dart';
 import 'package:afariat/home/tap_home/tap_home_scr.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
+
 import 'package:afariat/sign_in/sign_in_scr.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -92,8 +93,16 @@ class HomeViwController extends GetxController {
       naigatorKey: _navigatorKey,
       tabItem: _currentPage,
     );
-    print(controller.index);
+
     update();
+  }
+
+  changeItemFilter(v) {
+    Get.find<TapPublishViewController>().updateGetView(null);
+    Get.find<CategoryAndSubcategory>().categoryGroupedJson = null;
+    Get.find<CategoryAndSubcategory>().subcategories1 = null;
+    Get.find<LocController>().town = null;
+    Get.find<LocController>().city = null;
   }
 
   Widget buildoffstageNavigator(String tabItem) {
@@ -106,9 +115,9 @@ class HomeViwController extends GetxController {
     );
   }
 
-  // gotomun() {
-  //   // Get.to(() => MenuView());
-  // }
+// gotomun() {
+//   // Get.to(() => MenuView());
+// }
 }
 
 class PageToView extends StatelessWidget {

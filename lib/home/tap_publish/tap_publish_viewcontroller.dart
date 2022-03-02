@@ -3,31 +3,31 @@ import 'dart:developer' as devlog;
 import 'dart:convert';
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
-import 'package:afariat/config/settings_app.dart';
+
 import 'package:afariat/config/storage.dart';
-import 'package:afariat/config/wsse.dart';
+
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
 import 'package:afariat/model/validate_server.dart';
 import 'package:afariat/model/validator.dart';
-import 'package:afariat/networking/api/get_salt_api.dart';
+import 'package:afariat/mywidget/custom_dialogue_felecitation.dart';
 import 'package:afariat/networking/api/modif_ads_api.dart';
 import 'package:afariat/networking/api/publish_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
 import 'package:afariat/networking/json/modif_ads_json.dart';
-import 'package:afariat/networking/json/my_ads_json.dart';
+
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
+
 import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
-  bool buttonPublier=false;
-  bool buttonModif=false;
+  bool buttonPublier = false;
+  bool buttonModif = false;
   bool buttonSupprimer = false;
 
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
@@ -54,11 +54,11 @@ class TapPublishViewController extends GetxController {
   ModifAdsApi _modifAdsApi = ModifAdsApi();
 
   List<File> images = [];
-  List<String> EditAdsImages = [];
+  List<String> editAdsImages = [];
 
   List<Widget> radioList = [];
   List<RefJson> values = [
-    RefJson(name: "Offer", id: 1),
+    RefJson(name: "Offre", id: 1),
     RefJson(name: "Demande", id: 2),
     RefJson(name: "Offre de location", id: 3)
   ];
@@ -71,7 +71,7 @@ class TapPublishViewController extends GetxController {
   List<RefJson> mileages = [];
   List<RefJson> yearsModels = [];
   List<RefJson> rooms = [];
-  List<String> Nombredepieces = [
+  List<String> nombrePieces = [
     '1',
     '2',
     '3',
@@ -96,7 +96,7 @@ class TapPublishViewController extends GetxController {
   RefJson citie;
   RefJson town;
   RefJson kilometrage;
-  GetSaltApi _getSalt = GetSaltApi();
+
   VehicleBrandsApi _vehicleBrandsApi = VehicleBrandsApi();
   MotoBrandsApi _motoBrandsApi = MotoBrandsApi();
   VehicleModelApi _vehicleModelApi = VehicleModelApi();
@@ -140,7 +140,7 @@ class TapPublishViewController extends GetxController {
   }
 
   deleditImage(String file) {
-    EditAdsImages.remove(file);
+    editAdsImages.remove(file);
     update();
   }
 
@@ -173,10 +173,10 @@ class TapPublishViewController extends GetxController {
   }
 
   getEnergie() {
-    energie=null;
+    energie = null;
     _energieApi.getList().then((value) {
-      print("eniytytyutytytytuytyutytutuyergy${value.data}");
-      print("eniytytyutytytytuytyutytutuyergy${value}");
+      /*  print("eniytytyutytytytuytyutytutuyergy${value.data}");
+      print("eniytytyutytytytuytyutytutuyergy${value}");*/
       List<RefJson> refListJson = value.data;
       energies.clear();
       energies = refListJson;
@@ -253,20 +253,28 @@ class TapPublishViewController extends GetxController {
     energie = newValue;
     myAds["energy"] = newValue.id;
     myAdsView["energie:"] = newValue.name;
-   // getEnergie();
+    // getEnergie();
     update();
   }
 
   updateMarque(RefJson newValue) {
     _vehicleModelApi.vehicleModelId = newValue.id;
-    myAds["vehiclebrand"] = newValue.id;
+    myAds["vehicleBrand"] = newValue.id;
     myAdsView["Marque:"] = newValue.name;
     vehiculebrands = newValue;
 
     getVehicleModel();
     update();
   }
+  updateMarqueMoto(RefJson newValue) {
+    _vehicleModelApi.vehicleModelId = newValue.id;
+    myAds["motoBrand"] = newValue.id;
+    myAdsView["Marque:"] = newValue.name;
+    motosBrand = newValue;
 
+    getVehicleModel();
+    update();
+  }
   updateKilometrage(RefJson newValue) {
     kilometrage = newValue;
 
@@ -294,7 +302,7 @@ class TapPublishViewController extends GetxController {
     lights = v;
     print(accountInfoStorage.readPhone());
 
-    myAds["showPhoneNumber"] = v ? "yes" : "no";
+    myAds["showPhoneNumber"] = v ? true:false;
     myAdsView["showPhoneNumber"] =
         v ? accountInfoStorage.readPhone() : accountInfoStorage.readPhone();
     update();
@@ -341,7 +349,7 @@ class TapPublishViewController extends GetxController {
   }
 
   postdata() async {
-    buttonPublier=true;
+    buttonPublier = true;
     update();
     for (var i in images) {
       photobase64Encode(i);
@@ -352,136 +360,77 @@ class TapPublishViewController extends GetxController {
 
     if (dataAdverts) {
       _modifAdsApi.id = modifAdsJson.id;
-      await _modifAdsApi.putData(dataToPost: myAds).then((value) {
+      await _modifAdsApi.putData(dataToPost: myAds).then((value) async {
         if (value.statusCode == 204) {
-          Get.defaultDialog(
-            title: "Felécitation",
-            titlePadding: EdgeInsets.all(8),
-            content: Container(
-              height: 100,
-              child: Center(
-                  child: Text(
-                "Votre annonce est encours de verification!",
-                style: TextStyle(fontSize: 30),
-              )),
-            ),
-            confirm: GestureDetector(
-              child: Text(
-                "ok",
-                style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 40),
-              ),
-              onTap: () {
-                Get.find<TapMyadsViewController>().ads();
-                Get.find<HomeViwController>().changeSelectedValue(1);
-                Filter.data.clear();
-                clearAllData();
-                Get.find<CategoryAndSubcategory>().clearData();
-                Get.find<LocController>().clearData();
-                int count = 0;
-                if (Navigator.canPop(context)) {
-                  Navigator.popUntil(context, (route) {
-                    return count++ == 2;
-                  });
-                }
-                update();
-                //  Get.back();
-                Navigator.pop(context);
-              },
-            ),
-            titleStyle: TextStyle(color: Colors.deepOrange),
-            middleTextStyle: TextStyle(color: Colors.deepOrange),
-          );
-        }
-      });
-    } else {
-      devlog.log(jsonEncode(myAds));
-
-      final postData =
-          await publishApi.securePost(dataToPost: myAds).then((value) {
-        _validateServer.validatorServer(
-            validate: () {
-              Get.defaultDialog(
-                title: "Felécitation",
-                titlePadding: EdgeInsets.all(8),
-                content: Container(
-                  height: 100,
-                  child: Center(
-                      child: Text(
-                    "Votre annonce est encours de verification!",
-                    style: TextStyle(fontSize: 25),
-                  )),
-                ),
-                confirm: GestureDetector(
-                  child: Text(
-                    "ok",
-                    style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 40),
-                  ),
-                  onTap: () {
+          await showDialog<bool>(
+              context: context,
+              builder: (context) {
+                return CustomDialogueFelecitation(
+                  text2: " ",
+                  title: "Félicitation",
+                  function: () {
                     Get.find<TapMyadsViewController>().ads();
                     Get.find<HomeViwController>().changeSelectedValue(1);
                     Filter.data.clear();
                     clearAllData();
                     Get.find<CategoryAndSubcategory>().clearData();
                     Get.find<LocController>().clearData();
-                    int count = 0;
-                    if (Navigator.canPop(context)) {
-                      Navigator.popUntil(context, (route) {
-                        return count++ == 2;
-                      });
-                    }
 
+                    buttonPublier = false;
+                    Navigator.pop(context);
                     update();
-                    Get.back();
+                    // Get.back();
                   },
-                ),
-                titleStyle: TextStyle(color: Colors.deepOrange),
-                middleTextStyle: TextStyle(color: Colors.deepOrange),
-              );
+                  description: "Votre annonce est en cours de validation !",
+                  buttonText: "Ok",
+                  phone: false,
+                );
+              });
+        }
+      });
+    } else {
+      devlog.log(jsonEncode(myAds));
+
+      await publishApi.securePost(dataToPost: myAds).then((value) {
+        _validateServer.validatorServer(
+            validate: () async {
+              await showDialog<bool>(
+                  context: context,
+                  builder: (context) {
+                    return CustomDialogueFelecitation(
+                      text2: " ",
+                      title: "Félicitation",
+                      function: () {
+
+                        Filter.data.clear();
+                        clearAllData();
+                        Get.find<CategoryAndSubcategory>().clearData();
+                        Get.find<LocController>().clearData();
+
+                   for (int ii = 0; ii < 2; ii++) {
+
+                          Get.back();
+                        }
+
+
+                        Get.find<TapMyadsViewController>().ads();
+
+                        Get.find<HomeViwController>().changeSelectedValue(1);
+                        //  Navigator.pop(context);
+                        update();
+                      },
+                      description: "Votre annonce est en cours de validation !",
+                      buttonText: "Ok",
+                      phone: false,
+                    );
+                  });
             },
             value: value);
 
-        /* if (value.statusCode == 201) {
-          Get.defaultDialog(
-            title: "Felécitation",
-            titlePadding: EdgeInsets.all(8),
-            content: Container(
-              height: 100,
-              child: Center(
-                  child: Text(
-                "Votre annonce est encours de verification!",
-                style: TextStyle(fontSize: 25),
-              )),
-            ),
-            confirm: GestureDetector(
-              child: Text(
-                "ok",
-                style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 40),
-              ),
-              onTap: () {
-                Filter.data.clear();
-                clearAllData();
-                Get.find<CategoryAndSubcategory>().clearData();
-                Get.find<LocController>().clearData();
+        buttonPublier = false;
 
-                Get.back();
-              },
-            ),
-            titleStyle: TextStyle(color: Colors.deepOrange),
-            middleTextStyle: TextStyle(color: Colors.deepOrange),
-          );
-        }*/
-        buttonPublier=false;
-
-        update();  });
+        update();
+      });
     }
 
     update();
@@ -495,7 +444,7 @@ class TapPublishViewController extends GetxController {
       title.text = modifAdsJson.title;
       description.text = modifAdsJson.description;
       prix.text = modifAdsJson.price.toString();
-      lights = modifAdsJson.showPhoneNumber == "yes" ? true : false;
+      lights = modifAdsJson.showPhoneNumber == true? true : false;
       for (int i = 0; i < Get.find<LocController>().cities.length; i++) {
         if (Get.find<LocController>().cities[i].id ==
             modifAdsJson.city.toJson()["id"]) {
@@ -509,7 +458,7 @@ class TapPublishViewController extends GetxController {
               if (Get.find<LocController>().towns[i].id ==
                   modifAdsJson.town.toJson()["id"]) {
                 Get.find<LocController>()
-                    .updatetown(Get.find<LocController>().towns[i]);
+                    .updateTown(Get.find<LocController>().towns[i]);
               }
             }
           });
@@ -522,22 +471,22 @@ class TapPublishViewController extends GetxController {
           category++) {
         if (Get.find<CategoryAndSubcategory>().categoryGroupList[category].id ==
             modifAdsJson.category.group.id) {
-          Get.find<CategoryAndSubcategory>().updateCategorie(
+          Get.find<CategoryAndSubcategory>().updateCategory(
               Get.find<CategoryAndSubcategory>().categoryGroupList[category]);
           SubcategoryJson subcat = Get.find<CategoryAndSubcategory>()
               .sc[modifAdsJson.category.group.id]
               .where((element) => element.id == modifAdsJson.category.id)
               .first;
           updateSubCategoryJson(subcat);
-          Get.find<CategoryAndSubcategory>().updateSubCategorie(subcat);
+          Get.find<CategoryAndSubcategory>().updateSubCategory(subcat);
           print(subcat.toString());
         }
       }
-      EditAdsImages
+      editAdsImages
           .clear(); // categoryAndSubcategory.updateSupCategorie(subcat );
       modifAdsJson.photos.forEach((element) {
         print(element.path);
-        EditAdsImages.add(element.path);
+        editAdsImages.add(element.path);
       });
       update();
     });

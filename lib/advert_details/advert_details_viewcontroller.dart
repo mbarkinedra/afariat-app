@@ -1,20 +1,16 @@
 import 'package:afariat/config/filter.dart';
-import 'package:afariat/home/home_view_controller.dart';
 import 'package:afariat/home/tap_chat/chat_user/chat_user_scr.dart';
 import 'package:afariat/home/tap_chat/chat_user/chat_user_viewcontroller.dart';
 import 'package:afariat/networking/api/advert_details_api.dart';
 import 'package:afariat/networking/api/conversations_api.dart';
 import 'package:afariat/networking/json/advert_details_json.dart';
-import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'dart:developer' as devlog;
 
 class AdvertDetailsViewcontroller extends GetxController {
   AdvertDetailsJson advert;
@@ -40,7 +36,7 @@ class AdvertDetailsViewcontroller extends GetxController {
     photoViewController = PhotoViewController();
   }
 
-  bool havePhoneNumber() {
+  havePhoneNumber() {
     if (!loading && advert != null) {
       return advert.showPhoneNumber;
     }
@@ -82,7 +78,6 @@ class AdvertDetailsViewcontroller extends GetxController {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-
                   color: Colors.deepOrange,
                   padding: EdgeInsets.all(8),
                   child: FittedBox(

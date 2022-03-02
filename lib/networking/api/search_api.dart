@@ -23,8 +23,5 @@ class SearchApi extends ApiManager {
     return AdvertListJson.fromJson(data);
   }
 
-  @override
-  Map<String, dynamic> queryParameters() {
-    return map;
-  }
+
 }

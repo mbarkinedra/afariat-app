@@ -7,7 +7,6 @@ import 'package:afariat/networking/api/get_salt_api.dart';
 import 'package:afariat/networking/api/sign_in_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class SignInViewController extends GetxController {
@@ -20,9 +19,10 @@ class SignInViewController extends GetxController {
   ValidateServer validateServer = ValidateServer();
   final registerFormKey = GlobalKey<FormState>();
   String validEmail = "";
+  bool buttonConnceter = false;
 
   String validateEmail(String value) {
-    String val = null;
+    String val;
     if (true) {
       val = "Votre e_mail est incorrect";
     }
@@ -37,9 +37,11 @@ class SignInViewController extends GetxController {
     update();
   }
 
-  login() {
-    //GET the user SALT
-    _getSalt.post({"login": "${email.text}"}).then((value) {
+  login()async {
+    //GET the user
+    buttonConnceter = true;
+    update();
+  await  _getSalt.post({"login": "${email.text}"}).then((value) {
       validateServer.validatorServer(
           validate: () {
             String hashedPassword =
@@ -67,20 +69,19 @@ class SignInViewController extends GetxController {
                   });
               //TODO: Process error cases: bad salt, bad login/pwd
             }).catchError((e) {
-              // print("bbbbbbbbbbbbbbbbbbbbbbbbbb")
               Get.snackbar("Erreur", "Votre password est incorrect");
             });
-          },
+             },
           value: value,
           registerFormKey: registerFormKey);
+
     }).catchError((e) {
-      //validateServer.validator(value, field)
-      // registerFormKey.currentWidget.key.
+
       validEmail = email.text;
       validateEmail(validEmail);
       registerFormKey.currentState.validate();
-      print("Votre e_mail est incorrect");
       Get.snackbar("Erreur", "Votre e_mail est incorrect");
     });
-  }
+    buttonConnceter = false;
+    update();  }
 }

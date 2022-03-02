@@ -1,5 +1,5 @@
 import 'package:afariat/config/utility.dart';
-import 'package:afariat/mywidget/custmbutton.dart';
+import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:afariat/mywidget/log_in_item.dart';
 import 'package:afariat/sign_in/sign_in_viewcontroller.dart';
 import 'package:afariat/sign_up/sign_up_scr.dart';
@@ -11,13 +11,13 @@ class SignInScr extends GetWidget<SignInViewController> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
-    var _isLoading = false;
+
     return SafeArea(
         child: Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-    child: Form(
-    key: controller.registerFormKey,
+            body: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Form(
+        key: controller.registerFormKey,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -35,14 +35,13 @@ class SignInScr extends GetWidget<SignInViewController> {
                 height: _size.height * .05,
               ),
               LogInItem(
-                label: "Email",
-                hint: "Votre E-mail",
-                icon: Icons.email,
-                textEditingController: controller.email,
-                  validator: (v){
-                 return controller.validateEmail(v );
-                  }
-              ),
+                  label: "Email",
+                  hint: "Votre E-mail",
+                  icon: Icons.email,
+                  textEditingController: controller.email,
+                  validator: (v) {
+                    return controller.validateEmail(v);
+                  }),
               SizedBox(
                 height: _size.height * .05,
               ),
@@ -84,21 +83,24 @@ class SignInScr extends GetWidget<SignInViewController> {
               SizedBox(
                 height: _size.height * .05,
               ),
-              Center(
-                  child: CustomButton(
-                height: 50,
-                width: _size.width * .8,
-                btcolor: buttonColor,
-                icon: Icons.login,
-                iconcolor: Colors.white,
-                label: "Se connecter",
-                labcolor: textbuttonColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                function: () {
-                  controller.login();
-                },
-              )),
+              GetBuilder<SignInViewController>(builder: (logic) {
+                return logic.buttonConnceter
+                    ? Center(child: CircularProgressIndicator())
+                    : CustomButton1(
+                        height: 50,
+                        width: _size.width * .8,
+                        btcolor: buttonColor,
+                        icon: Icons.login,
+                        iconcolor: Colors.white,
+                        label: "Se connecter",
+                        labcolor: textbuttonColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        function: () {
+                          controller.login();
+                        },
+                      );
+              }),
               SizedBox(
                 height: _size.height * .05,
               ),
@@ -117,7 +119,9 @@ class SignInScr extends GetWidget<SignInViewController> {
                       children: const <TextSpan>[
                         TextSpan(
                             text: 'Créer un compte',
-                            style: TextStyle(fontWeight: FontWeight.bold,color: Colors.deepOrange))
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.deepOrange))
                       ],
                     ),
                   ),

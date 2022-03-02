@@ -94,7 +94,7 @@ class Embedded {
 
   Embedded.fromJson(Map<String, dynamic> json) {
     if (json['notification'] != null) {
-      notification = new List<Notification>();
+      notification = <Notification>[];
       json['notification'].forEach((v) {
         notification.add(new Notification.fromJson(v));
       });
