@@ -8,6 +8,7 @@ import 'package:afariat/mywidget/custom_button_icon.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import 'advert_details_viewcontroller.dart';
 
@@ -16,6 +17,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
+    final numberFormat = NumberFormat("###,##0", SettingsApp.locale);
 
     return Scaffold(
       appBar: AppBar(
@@ -97,7 +99,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                         ],
                       ),
                       SizedBox(height: 10),
-                      Text("${logic.advert.price} " + SettingsApp.moneySymbol,
+                      Text(numberFormat.format(logic.advert.price) + ' ' + SettingsApp.moneySymbol,
                           style: TextStyle(
                               color: Colors.deepOrange,
                               fontWeight: FontWeight.bold,

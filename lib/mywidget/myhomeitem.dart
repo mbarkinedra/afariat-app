@@ -1,6 +1,7 @@
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MyHomeItem extends StatelessWidget {
   final Size size;
@@ -8,6 +9,8 @@ class MyHomeItem extends StatelessWidget {
   MyHomeItem({this.size, this.adverts});
 
   final AdvertJson adverts;
+
+  final numberFormat = NumberFormat("###,##0", SettingsApp.locale);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,8 @@ class MyHomeItem extends StatelessWidget {
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
               bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10)),
+              bottomRight: Radius.circular(10)
+          ),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
@@ -31,7 +35,7 @@ class MyHomeItem extends StatelessWidget {
             ),
           ],
         ),
-        height: size.height * .25,
+        height: size.height * .26,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -65,7 +69,7 @@ class MyHomeItem extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      "${adverts.price} " + SettingsApp.moneySymbol,
+                      numberFormat.format(adverts.price) + ' ' + SettingsApp.moneySymbol,
                       style: TextStyle(
                           color: Colors.deepOrange,
                           fontWeight: FontWeight.bold,
