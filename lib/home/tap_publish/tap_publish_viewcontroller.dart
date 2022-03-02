@@ -58,7 +58,7 @@ class TapPublishViewController extends GetxController {
 
   List<Widget> radioList = [];
   List<RefJson> values = [
-    RefJson(name: "Offer", id: 1),
+    RefJson(name: "Offre", id: 1),
     RefJson(name: "Demande", id: 2),
     RefJson(name: "Offre de location", id: 3)
   ];

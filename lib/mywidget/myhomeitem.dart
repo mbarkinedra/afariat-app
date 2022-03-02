@@ -56,7 +56,7 @@ class MyHomeItem extends StatelessWidget {
                   children: [
                     Container(
                       child: Text(
-                        adverts.title,maxLines: 2,overflow: TextOverflow.ellipsis,
+                        adverts.title,maxLines: 3,overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 13),
                       ),
@@ -86,7 +86,7 @@ class MyHomeItem extends StatelessWidget {
                           child: Text(
                             "${adverts.town.name}, ${adverts.city.name}",
                             softWrap: true,
-                            style: TextStyle(color: Colors.grey),
+                            style: TextStyle(color: Colors.grey, fontSize: 12),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 4,
                           ),
