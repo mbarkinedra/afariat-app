@@ -56,7 +56,7 @@ class MyHomeItem extends StatelessWidget {
                   children: [
                     Container(
                       child: Text(
-                        adverts.title,
+                        adverts.title,maxLines: 2,overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 13),
                       ),

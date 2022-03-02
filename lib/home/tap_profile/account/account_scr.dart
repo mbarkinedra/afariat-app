@@ -80,10 +80,10 @@ class Account extends GetWidget<AccountViewController> {
                         iconSize: 24,
                         elevation: 16,
                         onChanged: logic.updateCity,
-                        items: logic.cities
-                            .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                          return DropdownMenuItem<RefJson>(
-                              value: value,
+                        items: logic.cities.where((element) => element.name!="").map<DropdownMenuItem<RefJson>>(
+                                (RefJson value) {
+                              return DropdownMenuItem<RefJson>(
+                                  value: value,
                               child: Padding(
                                 padding:
                                     const EdgeInsets.only(left: 15.0, right: 8),

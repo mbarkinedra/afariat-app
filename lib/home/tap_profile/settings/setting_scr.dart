@@ -129,7 +129,7 @@ class Setting extends GetWidget<SettingViewController> {
                           description:
                               "Êtes-vous sûr de  vouloir supprimer votre compte ?",
                           buttonText: "Ok",
-                          phone: false,
+                          phone: false, okFunction: null,
                         );
                       });
 
