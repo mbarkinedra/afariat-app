@@ -24,7 +24,8 @@ class MyHomeItem extends StatelessWidget {
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
               bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10)),
+              bottomRight: Radius.circular(10)
+          ),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
@@ -34,7 +35,7 @@ class MyHomeItem extends StatelessWidget {
             ),
           ],
         ),
-        height: size.height * .25,
+        height: size.height * .26,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
