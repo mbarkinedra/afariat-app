@@ -9,7 +9,7 @@ class PublishImageViewController extends GetxController {
   final picker = ImagePicker();
 
   void openCamera(int i) async {
-    var imgCamera = await picker.getImage(source: ImageSource.camera);
+    var imgCamera = await picker.pickImage(source: ImageSource.camera);
     if (i == 1) {
       image = File(imgCamera.path);
       update();
@@ -20,7 +20,7 @@ class PublishImageViewController extends GetxController {
   }
 
   void openGallery(int i) async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (i == 1) {
       if (pickedFile != null) {
         image = File(pickedFile.path);

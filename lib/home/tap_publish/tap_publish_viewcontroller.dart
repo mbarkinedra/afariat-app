@@ -112,7 +112,7 @@ class TapPublishViewController extends GetxController {
   }
 
   void openCamera() async {
-    var imgCamera = await picker.getImage(source: ImageSource.camera);
+    var imgCamera = await picker.pickImage(source: ImageSource.camera);
 
     if (imgCamera != null) {
 
@@ -124,7 +124,7 @@ class TapPublishViewController extends GetxController {
   }
 
   void openGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
 
       images.add(File(pickedFile.path));
