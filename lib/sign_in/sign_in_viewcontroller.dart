@@ -17,7 +17,7 @@ class SignInViewController extends GetxController {
   SignInApi _signInApi = SignInApi();
   bool isVisiblePassword = true;
   ValidateServer validateServer = ValidateServer();
-  final registerFormKey = GlobalKey<FormState>();
+  final signInFormKey = GlobalKey<FormState>();
   String validEmail = "";
   bool buttonConnceter = false;
 
@@ -70,13 +70,13 @@ class SignInViewController extends GetxController {
             });
              },
           value: value,
-          registerFormKey: registerFormKey);
+          registerFormKey: signInFormKey);
 
     }).catchError((e) {
 
       validEmail = email.text;
       validateEmail(validEmail);
-      registerFormKey.currentState.validate();
+      signInFormKey.currentState.validate();
       Get.snackbar("Erreur", "Votre e_mail est incorrect");
     });
     buttonConnceter = false;

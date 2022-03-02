@@ -47,7 +47,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey,
-                                    spreadRadius: 1,
+                                    spreadRadius:1,
                                     blurRadius: 1,
                                    // changes position of shadow
                                   ),

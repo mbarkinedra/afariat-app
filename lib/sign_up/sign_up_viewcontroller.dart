@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SignUpViewController extends GetxController {
+ // final registerFormKey = GlobalKey<FormState>();
   final registerFormKey = GlobalKey<FormState>();
   final tapHomeViewController = Get.find<LocController>();
   TextEditingController name = TextEditingController();
