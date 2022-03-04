@@ -97,7 +97,17 @@ class SignInScr extends GetWidget<SignInViewController> {
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                         function: () {
-                          controller.login();
+                          if( GetUtils.isEmail(controller.email.text)){
+                            if(controller.password.text.length>5){
+                              controller.login();
+                            }else{
+                              Get.snackbar("Oups !", "Veuillez saisie votre password");
+                            }
+
+                          }else{
+                            Get.snackbar("Oups !", "Veuillez saisie votre email");
+                          }
+
                         },
                       );
               }),

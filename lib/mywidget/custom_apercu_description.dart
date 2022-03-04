@@ -13,9 +13,12 @@ final  String data;
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            label,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0,bottom: 8),
+            child: Text(
+              label,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            ),
           ),
           Container(padding: EdgeInsets.all(15),
             width: MediaQuery.of(context).size.width * 0.9,

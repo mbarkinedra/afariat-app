@@ -91,7 +91,8 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                           editAds: () {
                             Get.find<TapPublishViewController>().dataAdverts =
                                 true;
-
+                            Get.find<TapPublishViewController>().modifAds =
+                            true;
                             Get.find<TapPublishViewController>()
                                 .getModifAds(logic.adverts[pos].id);
                             Get.find<HomeViwController>()

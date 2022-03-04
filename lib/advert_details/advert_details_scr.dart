@@ -1,8 +1,6 @@
-
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
-
 
 import 'package:afariat/mywidget/custom_button_icon.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -11,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import 'advert_details_viewcontroller.dart';
-
 
 class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
   @override
@@ -43,28 +40,29 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 20),
-                      CarouselSlider(
-                        options: CarouselOptions(
-                          height: _size.height * .3,
-                          viewportFraction: .7,
-                          aspectRatio: 9 / 12,
-                          enlargeCenterPage: true,
-                          autoPlay: true,
+                      if (logic.advert.photos.length > 0)
+                        CarouselSlider(
+                          options: CarouselOptions(
+                            height: _size.height * .3,
+                            viewportFraction: .7,
+                            aspectRatio: 9 / 12,
+                            enlargeCenterPage: true,
+                            autoPlay: true,
+                          ),
+                          items: logic.advert.photos
+                              .map((item) => InkWell(
+                                    onTap: () {
+                                      logic.displayDialogue(context);
+                                    },
+                                    child: Image.network(
+                                      item.path,
+                                      height: _size.height * .25,
+                                      width: _size.width * .8,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ))
+                              .toList(),
                         ),
-                        items: logic.advert.photos
-                            .map((item) => InkWell(
-                                  onTap: () {
-                                    logic.displayDialogue(context);
-                                  },
-                                  child: Image.network(
-                                    item.path,
-                                    height: _size.height * .25,
-                                    width: _size.width * .8,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ))
-                            .toList(),
-                      ),
                       SizedBox(height: 10),
                       Row(
                         children: [
@@ -99,7 +97,10 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                         ],
                       ),
                       SizedBox(height: 10),
-                      Text(numberFormat.format(logic.advert.price) + ' ' + SettingsApp.moneySymbol,
+                      Text(
+                          numberFormat.format(logic.advert.price) +
+                              ' ' +
+                              SettingsApp.moneySymbol,
                           style: TextStyle(
                               color: Colors.deepOrange,
                               fontWeight: FontWeight.bold,
@@ -284,13 +285,10 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                               CustomButtonIcon(
                                 btcolor: buttonColor,
                                 function: () async {
-
                                   if (controller.advert.isRegistredUser &&
                                       Get.find<AccountInfoStorage>()
                                               .readUserId() !=
                                           null) {
-
-
                                     controller.showDialogue(context);
                                   }
                                 },

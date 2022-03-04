@@ -51,6 +51,7 @@ class LocController extends GetxController {
       tapHomeViewController.setSearch("city", ci.id);
       tapPublishViewController.myAds["city"] = ci.id;
       tapPublishViewController.myAdsView["city"] = ci.name;
+
       tapHomeViewController.searchAddLinke =
           tapHomeViewController.searchAddLinke + "city=${ci.id}&";
 
@@ -79,6 +80,7 @@ class LocController extends GetxController {
   }
 
   Future updateTowns(id) async {
+    tapPublishViewController.town = null;
     _townsApi.cityId = id.toString();
     await _townsApi.getList().then((value) {
       towns = value.data;

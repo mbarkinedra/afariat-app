@@ -25,7 +25,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
         ),
         backgroundColor: Colors.deepOrange,
         title: Text(
-          "Déposer une annonce",
+         controller. modifAds?"Mettre à jour l'annonce":  "Déposer une annonce",
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),
@@ -41,7 +41,6 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GetBuilder<CategoryAndSubcategory>(builder: (logic) {
-
                     return Column(
                       children: [
                         Padding(
@@ -73,7 +72,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             iconSize: 24,
                             elevation: 16,
                             onChanged: logic.updateCategory,
-                            items: logic.categoryGroupList.where((element) => element.name!="")
+                            items: logic.categoryGroupList
+                                .where((element) => element.name != "")
                                 .map<DropdownMenuItem<CategoryGroupedJson>>(
                                     (CategoryGroupedJson value) {
                               return DropdownMenuItem<CategoryGroupedJson>(
@@ -108,7 +108,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             iconSize: 24,
                             elevation: 16,
                             onChanged: logic.updateSubCategory,
-                            items: logic.listeSubCategories.where((element) => element.name!="")
+                            items: logic.listeSubCategories
+                                .where((element) => element.name != "")
                                 .map<DropdownMenuItem<SubcategoryJson>>(
                                     (SubcategoryJson value) {
                               return DropdownMenuItem<SubcategoryJson>(
@@ -173,7 +174,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0, right: 8),
                   child: CustomTextFiled(
-                  width: size.width * .8,
+                    width: size.width * .8,
                     color: framColor,
                     validator: controller.validator.validatetitle,
                     hintText: "Titre",
@@ -198,7 +199,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                   child: CustomTextFiled(
                     maxLines: 5,
                     color: framColor,
-             width: size.width * .8,
+                    width: size.width * .8,
                     validator: controller.validator.validateDescription,
                     hintText: "Description",
                     textEditingController: controller.description,
@@ -218,31 +219,33 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-                      Expanded(flex: 1,
+                      Expanded(
+                        flex: 1,
                         child: Container(
-                         // width: size.width * .87,
+                          // width: size.width * .87,
                           decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: Colors.deepOrange, width: 2),
+                              border: Border.all(
+                                  color: Colors.deepOrange, width: 2),
                               borderRadius: BorderRadius.circular(10)),
                           child: Padding(
-                            padding: const EdgeInsets.only(left:8, right: 8),
+                            padding: const EdgeInsets.only(left: 8, right: 8),
                             child: Row(
                               children: [
                                 Expanded(
                                   flex: 1,
                                   child: CustomTextFiled2(
-                                    color: Colors.deepOrange,
-                                    validator: controller.validator.validatePrice,
-                                    hintText: "Prix",
-                                    textEditingController: controller.prix,
-                                    keyboardType: TextInputType.number,
-                                  ),
+                                      color: Colors.deepOrange,
+                                      validator:
+                                          controller.validator.validatePrice,
+                                      hintText: "Prix",
+                                      textEditingController: controller.prix,
+                                      keyboardType: TextInputType.number),
                                 ),
                                 Text(
                                   "DT",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 20),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
                                 ),
                               ],
                             ),
@@ -285,8 +288,10 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             iconSize: 24,
                             elevation: 16,
                             onChanged: logic.updateCity,
-                            items: logic.cities.where((element) => element.name!="").map<DropdownMenuItem<RefJson>>(
-                                (RefJson value) {
+                            items: logic.cities
+                                .where((element) => element.name != "")
+                                .map<DropdownMenuItem<RefJson>>(
+                                    (RefJson value) {
                               return DropdownMenuItem<RefJson>(
                                 value: value,
                                 child: Padding(
@@ -330,8 +335,10 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                               iconSize: 24,
                               elevation: 16,
                               onChanged: logic.updateTown,
-                              items: logic.towns.where((element) => element.name!="").map<DropdownMenuItem<RefJson>>(
-                                  (RefJson value) {
+                              items: logic.towns
+                                  .where((element) => element.name != "")
+                                  .map<DropdownMenuItem<RefJson>>(
+                                      (RefJson value) {
                                 return DropdownMenuItem<RefJson>(
                                   value: value,
                                   child: Padding(
@@ -382,37 +389,71 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                           btColor: buttonColor,
                           function: () {
                             //postAdvert(cities1,town1,advertType,price,description,title,photo)
+                            if (controller.subCategories.name == "Voitures" ||
+                                controller.subCategories.name ==
+                                    "Voitures professionnelles" ||
+                                controller.subCategories.name == "Motos") {
+                              if (controller.vehiculebrands != null &&
+                                  controller.vehiculeModel != null &&
+                                  controller.energie != null &&
+                                  controller.kilometrage != null &&
+                                  controller.yearsmodele != null) {
+                             /*   controller.myAdsView["Kilométrage"] = controller.kilometrage.name+" "+"km";
+                                controller.myAds["Kilométrage"] = controller.kilometrage.name;*/
+                                validateOptions(context);
+                              } else {
+                                Get.snackbar("ero", "Some values are empty");
+                              }
+                            } else if (controller.subCategories.name ==
+                                    "Appartements" ||
+                                controller.subCategories.name == "Maison" ||
+                                controller.subCategories.name ==
+                                    "Bureaux et locaux commerciaux") {
+                              if (controller.pieces != null &&
+                                  controller.surface != null) {
 
-                            if (controller.globalKey.currentState.validate() &&
-                                controller.subCategories != null &&
-                                controller.town != null) {
-                              controller.myAdsView["prix"] =
-                                  controller.prix.text +
-                                      SettingsApp.moneySymbol;
-                              controller.myAds["price"] = controller.prix.text;
+                                controller.myAdsView["surface"] = controller.surface.text.replaceAll("-", "") +
+                                    " "+"m²";
+                                controller.myAds["surface"] = controller.surface.text;
 
-                              controller.myAdsView["title"] =
-                                  controller.title.text;
-                              controller.myAds["title"] = controller.title.text;
-
-                              controller.myAdsView["description"] =
-                                  controller.description.text;
-                              controller.myAds["description"] =
-                                  controller.description.text;
-                              controller.myAds["showPhoneNumber"] =
-                                  controller.lights ? "yes" : "no";
-                              controller.myAdsView["showPhoneNumber"] =
-                                  controller.lights ? "Check" : "no";
-
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (
-                                context,
-                              ) =>
-                                      PublishImageScr()));
+                                validateOptions(context);
+                              } else {
+                                Get.snackbar("ero", "Some values are empty");
+                              }
                             } else {
-                              Get.snackbar("Oups !",
-                                  "Merci de corriger les erreurs ci-dessous.");
+                              validateOptions(context);
                             }
+                            // if (controller.globalKey.currentState.validate() &&
+                            //     controller.subCategories != null &&
+                            //     controller.town != null) {
+                            //   controller.myAdsView["prix"] =
+                            //       controller.prix.text.replaceAll("-", "") +
+                            //           " " +
+                            //           SettingsApp.moneySymbol;
+                            //   controller.myAds["price"] = controller.prix.text;
+                            //
+                            //   controller.myAdsView["title"] =
+                            //       controller.title.text;
+                            //   controller.myAds["title"] = controller.title.text;
+                            //
+                            //   controller.myAdsView["description"] =
+                            //       controller.description.text;
+                            //   controller.myAds["description"] =
+                            //       controller.description.text;
+                            //   controller.myAds["showPhoneNumber"] =
+                            //       controller.lights ? "yes" : "no";
+                            //   controller.myAdsView["showPhoneNumber"] =
+                            //       controller.lights ? "Check" : "no";
+                            //
+                            //   Navigator.of(context).push(MaterialPageRoute(
+                            //       builder: (
+                            //     context,
+                            //   ) =>
+                            //           PublishImageScr()));
+                            // } else {
+                            //   Get.snackbar("Oups !",
+                            //       "Merci de corriger les erreurs ci-dessous.");
+                            // }
                           }),
                     ],
                   ),
@@ -423,5 +464,33 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
         ),
       ),
     );
+  }
+
+  void validateOptions(context) {
+    if (controller.globalKey.currentState.validate() &&
+        controller.subCategories != null &&
+        controller.town != null) {
+      controller.myAdsView["prix"] = controller.prix.text.replaceAll("-", "") +
+          " " +
+          SettingsApp.moneySymbol;
+      controller.myAds["price"] = controller.prix.text;
+
+      controller.myAdsView["title"] = controller.title.text;
+      controller.myAds["title"] = controller.title.text;
+
+      controller.myAdsView["description"] = controller.description.text;
+      controller.myAds["description"] = controller.description.text;
+      controller.myAds["showPhoneNumber"] = controller.lights ? "yes" : "no";
+      controller.myAdsView["showPhoneNumber"] =
+          controller.lights ? "Check" : "no";
+
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (
+        context,
+      ) =>
+              PublishImageScr()));
+    } else {
+      Get.snackbar("Oups !", "Merci de corriger les erreurs ci-dessous.");
+    }
   }
 }

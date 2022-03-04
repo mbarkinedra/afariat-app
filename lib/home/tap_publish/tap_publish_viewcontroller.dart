@@ -29,6 +29,7 @@ class TapPublishViewController extends GetxController {
   bool buttonPublier = false;
   bool buttonModif = false;
   bool buttonSupprimer = false;
+  bool modifAds = false;
 
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   final storge = Get.find<SecureStorage>();
@@ -275,10 +276,11 @@ class TapPublishViewController extends GetxController {
     update();
   }
   updateKilometrage(RefJson newValue) {
+
     kilometrage = newValue;
 
     myAds["mileage"] = newValue.id;
-    myAdsView["Kilométrage:"] = newValue.name;
+    myAdsView["Kilométrage:"] = newValue.name +" "+"Km";
     update();
   }
 

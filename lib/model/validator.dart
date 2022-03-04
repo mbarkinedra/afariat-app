@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Validator {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
@@ -16,11 +17,13 @@ class Validator {
 
   String validatePrice(String value) {
     if (value.isNotEmpty) {
-      if (double.parse(value) == 0) {
+      if (double.tryParse(value) == 0) {
         return "Le prix doit être supérieur à 0 ";
       }
     } else if (value.isEmpty) {
       return " Veuillez renseigner le prix.";
+    } else if (value.contains("-")) {
+      return " Le prix doit être positif";
     }
 
     return null;
@@ -39,7 +42,12 @@ class Validator {
   }
 
   isvala() {
-  globalKey.currentState.validate();
-
+    globalKey.currentState.validate();
+  }
+  String validateEmail(String value) {
+    if (!GetUtils.isEmail(value)) {
+      return "9çççççççççççççççççççççççççççççççççççççççççççç";
+    }
+    return null;
   }
 }

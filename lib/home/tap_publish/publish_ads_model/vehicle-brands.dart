@@ -20,7 +20,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     Expanded(flex: 1, child: Text("Marque")),
                     Expanded(
                       flex: 3,
-                      child: Container(
+                      child: Container(height: 55,
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
@@ -57,7 +57,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     Expanded(flex: 1, child: Text("Modèle")),
                     Expanded(
                       flex: 3,
-                      child: Container(
+                      child: Container(height: 55,
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
@@ -94,7 +94,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     Expanded(flex: 1, child: Text("Energie")),
                     Expanded(
                       flex: 3,
-                      child: Container(
+                      child: Container(height: 55,
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
@@ -132,7 +132,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     Expanded(flex: 1, child: Text("km")),
                     Expanded(
                       flex: 3,
-                      child: Container(
+                      child: Container(height: 55,
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
@@ -169,7 +169,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     Expanded(flex: 1, child: Text("Année")),
                     Expanded(
                       flex: 3,
-                      child: Container(
+                      child: Container(height: 55,
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),

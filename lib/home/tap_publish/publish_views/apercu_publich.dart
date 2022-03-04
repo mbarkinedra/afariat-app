@@ -1,3 +1,4 @@
+import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
@@ -7,11 +8,12 @@ import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ApercuPublich extends GetWidget<TapPublishViewController> {
   final categoryAndSubcategory = Get.find<CategoryAndSubcategory>();
   final locController = Get.find<LocController>();
-
+  final numberFormat = NumberFormat("###,##0", SettingsApp.locale);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -60,6 +62,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
             ),
             CustomApercuDescription(
               label: "Description de l'annonce :",
+
               data: controller.myAdsView["description"],
             ),
             CustomApercu(
@@ -94,7 +97,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                     entry.key == "advertType" ||
                     entry.key == "description" ||
                     entry.key == "town" ||
-                    entry.key == "city" ||
+                    entry.key == "city" ||  entry.key == "prix" ||
                     entry.key == "showPhoneNumber") {
                   return SizedBox();
                 } else {
@@ -104,6 +107,11 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                   );
                 }
               }).toList(),
+            ),
+            CustomApercu(
+              label: "prix :",
+              data: numberFormat.format(int.tryParse( controller.myAdsView["prix"].replaceAll(" DT", "")) ) + ' ' + SettingsApp.moneySymbol,
+              //controller.myAdsView["prix"],
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -210,6 +218,8 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                               labColor: Colors.white,
                               btColor: Colors.deepOrange,
                               function: () {
+                                Get.find<TapPublishViewController>().modifAds =
+                                false;
                                 controller.postdata();
                               });
                     })

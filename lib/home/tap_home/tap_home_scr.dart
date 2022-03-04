@@ -47,30 +47,38 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey,
-                                    spreadRadius:1,
+                                    spreadRadius: 1,
                                     blurRadius: 1,
-                                   // changes position of shadow
+                                    // changes position of shadow
                                   ),
                                 ],
                               ),
-                              child: TextField(
-                                controller: controller.searchWord,
-                                keyboardType: TextInputType.text,
-                                onChanged: controller.filterWord,
-                                decoration: InputDecoration(
-                                    prefixIcon: Icon(Icons.search),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(
-                                        Icons.clear,
-                                      ),
-                                      onPressed: () {
-                                        /* Clear the search field */
-                                        controller.filterClear();
-                                      },
-                                    ),
-                                    hintText: 'Rechercher...',
-                                    border: InputBorder.none),
-                              ),
+                              child: GetBuilder<TapHomeViewController>(
+                                  builder: (logic) {
+                                return TextField(
+                                  controller: controller.searchWord,
+                                  keyboardType: TextInputType.text,
+                                  onChanged: controller.filterWord,
+                                  decoration: InputDecoration(
+                                      prefixIcon: Icon(Icons.search),
+                                      suffixIcon: logic.searchWord.text
+                                                  .toString()
+                                                  .length >
+                                              0
+                                          ? IconButton(
+                                              icon: Icon(
+                                                Icons.clear,
+                                              ),
+                                              onPressed: () {
+                                                /* Clear the search field */
+                                                controller.filterClear();
+                                              },
+                                            )
+                                          : null,
+                                      hintText: 'Rechercher...',
+                                      border: InputBorder.none),
+                                );
+                              }),
                             )),
                       ),
                       SizedBox(
@@ -128,7 +136,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                       logic.searchWord.text.toLowerCase())) {
                                 return InkWell(
                                   onTap: () {
-
                                     Get.find<AdvertDetailsViewcontroller>()
                                         .loading = true;
                                     Get.find<AdvertDetailsViewcontroller>()
