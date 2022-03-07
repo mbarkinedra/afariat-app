@@ -23,7 +23,9 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
           backgroundColor: Colors.deepOrange,
         ),
         body: GetBuilder<TapMyadsViewController>(builder: (logic) {
-          return logic.adverts.length == 0
+          return controller.getAdsFromServer?Center(child: CircularProgressIndicator(),):
+
+            logic.adverts.length == 0
               ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,

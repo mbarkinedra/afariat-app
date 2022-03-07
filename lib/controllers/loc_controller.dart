@@ -36,10 +36,12 @@ class LocController extends GetxController {
 
   updateCity(RefJson ci) {
     if (ci.id == 0) {
-      if (Filter.data["city"] != null) {
+      if (Get.find<TapHomeViewController>().search["city"] != null) {
+        Get.find<TapHomeViewController>().search.remove("city");
         Filter.data.remove("city");
       }
-      if (Filter.data["town"] != null) {
+      if (Get.find<TapHomeViewController>().search["town"] != null) {
+        Get.find<TapHomeViewController>().search.remove("town");
         Filter.data.remove("town");
       }
       town = null;
@@ -51,9 +53,9 @@ class LocController extends GetxController {
       tapHomeViewController.setSearch("city", ci.id);
       tapPublishViewController.myAds["city"] = ci.id;
       tapPublishViewController.myAdsView["city"] = ci.name;
-
+      Get.find<TapHomeViewController>().setSearch("city", ci.id.toString());
       tapHomeViewController.searchAddLinke =
-          tapHomeViewController.searchAddLinke + "city=${ci.id}&";
+          tapHomeViewController.searchAddLinke + "&city=${ci.id}";
 
       updateTowns(ci.id);
       update();
@@ -62,15 +64,17 @@ class LocController extends GetxController {
 
   updateTown(RefJson town) {
     if (town.id == 0) {
-      if (Filter.data["town"] != null) {
+      if (Get.find<TapHomeViewController>().search["town"] != null) {
         Filter.data.remove("town");
+        Get.find<TapHomeViewController>().search.remove("town");
       }
       town = null;
       tapHomeViewController.filterUpdate();
     } else {
       this.town = town;
+      Get.find<TapHomeViewController>().setSearch("town", town.id.toString());
       tapHomeViewController.searchAddLinke =
-          tapHomeViewController.searchAddLinke + "town=${town.id}&";
+          tapHomeViewController.searchAddLinke + "&town=${town.id}";
       tapPublishViewController.town = town;
       tapHomeViewController.setSearch("town", town.id);
       tapPublishViewController.myAds["town"] = town.id;

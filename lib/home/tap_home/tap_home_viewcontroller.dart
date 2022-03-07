@@ -13,6 +13,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class TapHomeViewController extends GetxController {
+  SearchApi searchApi = SearchApi();
   TextEditingController searchWord = TextEditingController();
   RxBool showSearch = false.obs;
   AdvertApi _advertApi = AdvertApi();
@@ -28,7 +29,7 @@ class TapHomeViewController extends GetxController {
   Map<String, dynamic> search = {};
   bool loadPrice = true;
   static const _pageSize = 20;
-  String searchAddLinke = "?";
+  String searchAddLinke = "";
   String priceSearch = "";
   final PagingController<int, dynamic> pagingController =
       PagingController(firstPageKey: 0);
@@ -90,13 +91,14 @@ class TapHomeViewController extends GetxController {
   filterUpdate() {
     if (searchWord.text.isNotEmpty) {
       setSearch("search", searchWord.text.toString());
-      searchAddLinke = searchAddLinke + "search=${searchWord.text}&";
+      searchAddLinke = searchAddLinke + "&search=${searchWord.text}";
     }
     searchAddLinke = searchAddLinke + priceSearch;
-    SearchApi searchApi = SearchApi(search);
-    searchApi.searchData = searchAddLinke;
 
-    searchApi.getList(filters: Filter.data).then((value) {
+
+   // searchApi.searchData = searchAddLinke;
+
+    searchApi.getList( ).then((value) {
       clearPrice();
       pagingController.itemList.clear();
       adverts.clear();
@@ -104,8 +106,8 @@ class TapHomeViewController extends GetxController {
       pagingController.appendLastPage(adverts);
       Get.find<LocController>().clearData();
       Get.find<CategoryAndSubcategory>().clearData();
-
-      searchAddLinke = "?";
+      Get.find<TapHomeViewController>().search.clear();
+      searchAddLinke = "";
       update();
     });
   }
@@ -139,7 +141,9 @@ class TapHomeViewController extends GetxController {
     Filter.data["minPrice="] = prices[values.start.toInt() - 1].id;
     Filter.data["maxPrice="] = prices[values.end.toInt() - 1].id;
     priceSearch =
-        "minPrice=${values.start.toInt().toString()}&maxPrice=${values.end.toInt().toString()}&";
+        "minPrice=${values.start.toInt().toString()}&maxPrice=${values.end.toInt().toString()}";
+  Get.find<TapHomeViewController>()  .setSearch("minPrice", values.start.toInt().toString());
+    Get.find<TapHomeViewController>()  .setSearch("maxPrice",values.end.toInt().toString());
     update();
   }
 

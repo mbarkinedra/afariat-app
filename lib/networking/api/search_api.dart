@@ -9,13 +9,13 @@ class SearchApi extends ApiManager {
   Map<String, dynamic> map = {};
 
   String searchData="";
-  SearchApi(this.map) {
-    Filter.data = map;
-  }
+  // SearchApi(this.map) {
+  //   Filter.data = map;
+  // }
 
   @override
   String apiUrl() {
-    return SettingsApp.advertUrl+searchData;
+    return SettingsApp.advertPageUrl+searchData;
   }
 
   @override

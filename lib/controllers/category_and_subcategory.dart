@@ -48,13 +48,15 @@ class CategoryAndSubcategory extends GetxController {
     if (categoryGrouped.id == 0) {
       if (Filter.data["category"] != null) {
         Filter.data.remove("category");
+        tapHomeViewController.search.remove("category");
       }
-
+      categoryGroupedJson = categoryGrouped;
       tapHomeViewController.filterUpdate();
+      update();
     } else {
-      tapHomeViewController.searchAddLinke =
-          tapHomeViewController.searchAddLinke +
-              "category=${categoryGrouped.id}&";
+      // tapHomeViewController.searchAddLinke =
+      //     tapHomeViewController.searchAddLinke +
+      //         "&category=${categoryGrouped.id}";
       Filter.data["category"] = categoryGrouped.id;
       tapHomeViewController.setSearch("category", categoryGrouped.id);
 
@@ -70,21 +72,30 @@ class CategoryAndSubcategory extends GetxController {
   }
 
   updateSubCategory(SubcategoryJson subCategorie) {
-    subcategories1 = subCategorie;
-    tapHomeViewController.setSearch("category", subCategorie.id);
+    if (subCategorie.id == 0) {
+      tapHomeViewController.setSearch("category", categoryGroupedJson.id);
+      subcategories1 = subCategorie;
 
-    tapPublishViewController.updateSubCategoryJson(subCategorie);
-    tapPublishViewController
-        .updateGetView(RefJson(id: subCategorie.id, name: subCategorie.name));
-    tapPublishViewController.myAds["category"] = subCategorie.id;
-    tapPublishViewController.myAdsView["category"] = subCategorie.name;
-    _categoriesGrouppedApi.categoryId = subCategorie.id;
-    _refApi.advertTypeId = subCategorie.id;
-    _refApi.getList().then((value) {
-
-      Get.find<TapPublishViewController>().updateadvertTypes(value);
-
+      tapPublishViewController
+          .updateGetView(RefJson(id: subCategorie.id, name: subCategorie.name));
+      tapPublishViewController.updateSubCategoryJson(subCategorie);
       update();
-    });
+    } else {
+      subcategories1 = subCategorie;
+      tapHomeViewController.setSearch("category", subCategorie.id);
+
+      tapPublishViewController.updateSubCategoryJson(subCategorie);
+      tapPublishViewController
+          .updateGetView(RefJson(id: subCategorie.id, name: subCategorie.name));
+      tapPublishViewController.myAds["category"] = subCategorie.id;
+      tapPublishViewController.myAdsView["category"] = subCategorie.name;
+      _categoriesGrouppedApi.categoryId = subCategorie.id;
+      _refApi.advertTypeId = subCategorie.id;
+      _refApi.getList().then((value) {
+        Get.find<TapPublishViewController>().updateadvertTypes(value);
+
+        update();
+      });
+    }
   }
 }

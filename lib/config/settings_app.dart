@@ -11,7 +11,7 @@ class SettingsApp {
   static const String changePasswordUrl = baseApiUrl + '/users/change-password';
   static const String getSaltUrl = baseApiUrl + '/users/get-salt';
   static const String advertUrl = baseApiUrl + '/adverts';
-  static const String advertPageUrl = baseApiUrl + '/adverts.json';
+  static const String advertPageUrl = baseApiUrl + '/adverts.json?';
   static const String publishURL = baseApiUrl + '/adverts';
   static const String SearchUrl = baseApiUrl + '/adverts';
   static const String advertDeatilsUrl = baseApiUrl + '/adverts';

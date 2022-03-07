@@ -20,6 +20,9 @@ abstract class ApiManager {
   AbstractJsonResource fromJson(data);
 
   Future<dynamic> getList({Map<String, dynamic> filters}) async {
+    print(  "search00000000000000000000000");
+    print(apiUrl());
+    print(  "search00000000000000000000000");
     AbstractJsonResource jsonList;
     var data;
     await dioSingleton.dio
@@ -66,7 +69,7 @@ abstract class ApiManager {
     Wsse xwsse = Wsse();
 
     String wsse = xwsse.generateWsseFromStorage();
-
+    print(wsse);
     return dioSingleton.dio
         .post(
       apiUrl(),
@@ -99,7 +102,7 @@ abstract class ApiManager {
     Wsse xwsse = Wsse();
 
     String wsse = xwsse.generateWsseFromStorage();
-
+    print(wsse);
 
     return dioSingleton.dio
         .get(
@@ -129,7 +132,7 @@ abstract class ApiManager {
 
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
-
+    print(wsse);
     return dioSingleton.dio
         .put(
       apiUrl(),
@@ -159,7 +162,7 @@ abstract class ApiManager {
   Future getdata(Map<String, dynamic> dataToPost) async {
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
-
+    print(wsse);
     return dioSingleton.dio
         .get(
       apiUrl(),
@@ -188,6 +191,7 @@ abstract class ApiManager {
     //generer le wsse
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
+    print(wsse);
     Options options = Options(headers: {
       "Accept": "application/json",
       'apikey': SettingsApp.apiKey,
@@ -207,7 +211,7 @@ abstract class ApiManager {
     //generer le wsse
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
-
+    print(wsse);
     Options options = Options(headers: {
       "Accept": "application/json",
       'apikey': SettingsApp.apiKey,

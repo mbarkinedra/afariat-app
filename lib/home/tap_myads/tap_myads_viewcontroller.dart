@@ -11,7 +11,7 @@ class TapMyadsViewController extends GetxController {
   final storge = Get.find<SecureStorage>();
   List<Adverts> adverts = [];
   bool deleteData = false;
-
+  bool getAdsFromServer = false;
   @override
   void onInit() {
     super.onInit();
@@ -21,12 +21,14 @@ class TapMyadsViewController extends GetxController {
 ads() {
 
     _myAdsApi.userId = Get.find<AccountInfoStorage>().readUserId();
-
+    getAdsFromServer = true;
+    update();
     _myAdsApi.getList().then((value) {
       MyAdsJson myAdsJson = MyAdsJson();
       myAdsJson = value;
       adverts = myAdsJson.eEmbedded.adverts;
 
+      getAdsFromServer = false;
       update();
     });
   }

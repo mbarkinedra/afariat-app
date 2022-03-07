@@ -121,7 +121,6 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
             ),
           ),
           GetBuilder<TapHomeViewController>(builder: (logic) {
-
             return logic.loadPrice
                 ? Center(
                     child: CircularProgressIndicator(),
@@ -254,6 +253,20 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
               height: 50,
               width: _size.width * .4,
               function: () {
+                String link = "";
+                int index = 0;
+                Get.find<TapHomeViewController>().search.forEach((key, value) {
+                  if (index == 0) {
+                    link = link + "$key=$value";
+                  } else {
+                    link = link + "&$key=$value";
+                  }
+
+                  index++;
+                });
+
+                print(link);
+             Get.find<TapHomeViewController>().searchApi.searchData=link;
                 Get.find<TapHomeViewController>().filterUpdate();
                 Navigator.pop(context);
               },
