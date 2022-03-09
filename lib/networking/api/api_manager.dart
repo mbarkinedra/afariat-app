@@ -6,8 +6,10 @@ import 'package:afariat/config/storage.dart';
 import 'package:afariat/config/wsse.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart' as a;
 
+import 'package:logger/logger.dart';
 abstract class ApiManager {
   final DioSingleton dioSingleton = DioSingleton();
   final storge = a.Get.find<SecureStorage>();
@@ -20,15 +22,18 @@ abstract class ApiManager {
   AbstractJsonResource fromJson(data);
 
   Future<dynamic> getList({Map<String, dynamic> filters}) async {
-    print(  "search00000000000000000000000");
-    print(apiUrl());
-    print(  "search00000000000000000000000");
+
     AbstractJsonResource jsonList;
     var data;
     await dioSingleton.dio
         .get(apiUrl(), queryParameters: filters)
         .then((value) {
-      data = value.data;
+      // print("value.dabbbbbbbbbbbbbbbbbbbbbbbbbbta");
+      // var logger = Logger();
+      //
+      // logger.d(value.data);
+      //devlog.log(value.data.toString() );
+     data = value.data;
     });
     jsonList = fromJson(data);
 
@@ -120,6 +125,8 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
+      print(value.data);
+
       return value;
     }).onError((error, stackTrace) {
       return error;
@@ -151,7 +158,7 @@ abstract class ApiManager {
     )
         .then((value) {
       //  responseHeaders = value.headers;
-
+    //  print(value.data);
       return value;
     }).onError((error, stackTrace) {
 

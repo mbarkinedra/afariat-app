@@ -2,6 +2,7 @@ import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/storage.dart';
 import 'package:afariat/config/wsse.dart';
 import 'package:afariat/home/home_view_controller.dart';
+import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/model/validate_server.dart';
 import 'package:afariat/networking/api/get_salt_api.dart';
 import 'package:afariat/networking/api/sign_in_api.dart';
@@ -63,7 +64,7 @@ class SignInViewController extends GetxController {
                     Get.find<HomeViwController>().updatelist();
                     Get.find<HomeViwController>().controller =
                         PersistentTabController(initialIndex: 0);
-                  });
+              Get.find<TapHomeViewController>().setUserName(email.text); });
               //TODO: Process error cases: bad salt, bad login/pwd
             }).catchError((e) {
               Get.snackbar("Erreur", "Votre password est incorrect");

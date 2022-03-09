@@ -50,6 +50,8 @@ dependencies:
   bubble: ^1.2.1
   platform: ^3.1.0
   intl: ^0.17.0
+  logger: ^1.1.0
+
 
 
 
@@ -83,6 +85,7 @@ flutter:
     - assets/images/Splash_2.png
     - assets/images/Splash_3.png
     - assets/images/Splash_5.png
+    - assets/images/Splash_6.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

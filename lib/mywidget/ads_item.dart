@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
 import 'package:afariat/networking/json/my_ads_json.dart';
@@ -67,15 +65,17 @@ class AdsItem extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
-
                     Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: Text(
                         adverts.description,
-                        maxLines:3,overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
@@ -90,7 +90,8 @@ class AdsItem extends StatelessWidget {
                               fontSize: 15),
                         ),
                       ),
-                    ),   SizedBox(
+                    ),
+                    SizedBox(
                       height: 20,
                     ),
                     Align(
@@ -107,17 +108,22 @@ class AdsItem extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(),
-                          GetBuilder<TapMyadsViewController>(builder: (logic) {
-                            return logic.deleteData
-                                ? CircularProgressIndicator()
-                                : InkWell(
-                                    onTap: deleteAds,
-                                    child: Icon(
-                                      Icons.delete,
-                                      color: Colors.deepOrange,
-                                    ));
-                          }),
+                          SizedBox(), InkWell(
+                        onTap: deleteAds,
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.deepOrange,
+                        ))
+                          // GetBuilder<TapMyadsViewController>(builder: (logic) {
+                          //   return logic.deleteData
+                          //       ? CircularProgressIndicator()
+                          //       : InkWell(
+                          //           onTap: deleteAds,
+                          //           child: Icon(
+                          //             Icons.delete,
+                          //             color: Colors.deepOrange,
+                          //           ));
+                          // }),
                           // InkWell(
                           //   onTap: editAds,
                           //   child: Icon(

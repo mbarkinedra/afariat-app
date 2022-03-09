@@ -1,4 +1,5 @@
 import 'package:afariat/config/AccountInfoStorage.dart';
+import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_profile/notification/notification_scr.dart';
 import 'package:afariat/mywidget/profile_menu.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +15,7 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-
         child: Column(
-
           children: [
             SizedBox(height: 40),
             ClipRRect(
@@ -70,19 +69,13 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
               },
             ),
             ProfileMenu(
-              iconProfile: Icons.help_center,
-              text: "Centre d'aide",
-              press: () {
-                controller.launchURL("https://afariat.com/aide.html");
-              },
-            ),
-            ProfileMenu(
               iconProfile: Icons.logout,
               text: "Déconnexion",
               press: () {
                 Get.find<AccountInfoStorage>().removeHashedPassword();
                 Get.find<HomeViwController>().changeSelectedValue(0);
                 Get.find<AccountInfoStorage>().logout();
+               Get.find<TapHomeViewController>().setUserName("");
               },
             ),
           ],

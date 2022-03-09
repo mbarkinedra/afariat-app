@@ -1,5 +1,6 @@
 import 'package:afariat/advert_details/advert_details_scr.dart';
 import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
+import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
 import 'package:afariat/mywidget/bottom_sheet_filter.dart';
 import 'package:afariat/mywidget/myhomeitem.dart';
@@ -14,9 +15,11 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
     Size _size = MediaQuery.of(context).size;
 
     return Scaffold(
+      key: controller.scaffoldKey,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0), // here the desired height
           child: AppBar(
+              automaticallyImplyLeading: false,
               backgroundColor: Colors.white,
               title: Container(
                 height: 60,
@@ -25,9 +28,12 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                     children: <Widget>[
                       SizedBox(
                         width: _size.width * .13,
-                        child: Image.asset(
-                          "assets/images/Splash_2.png",
-                          fit: BoxFit.fill,
+                        child: InkWell(
+                          onTap: controller.openDrawer,
+                          child: Image.asset(
+                            "assets/images/Splash_2.png",
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -162,6 +168,61 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
               }),
             )
           ],
+        ),
+      ),
+      drawer: Container(
+        width: _size.width * .6,
+        child: Drawer(
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.deepOrangeAccent,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset("assets/images/Splash_6.png",height: _size.height*.1,width: _size.width*.3,),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child:  GetBuilder<TapHomeViewController>(builder: (logic) {
+                          return Text(
+                            logic.name,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold));
+                        }
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+         // SizedBox(height: 35,),
+              ListTile(
+                leading: Icon(Icons.help_center),
+                title: const Text(
+                  "Centre d'aide",
+                  style: TextStyle(
+                      color: Colors.black45, fontWeight: FontWeight.bold),
+                ),
+                onTap: () {
+                  controller.launchURL("https://afariat.com/aide.html");
+                  // Navigator.pop(context);
+                },
+              ),
+      /*        ListTile(
+                title: const Text('Item 2'),
+                onTap: () {
+                  // Update the state of the app
+                  // ...
+                  // Then close the drawer
+                  Navigator.pop(context);
+                },
+              ),*/
+            ],
+          ),
         ),
       ),
     );

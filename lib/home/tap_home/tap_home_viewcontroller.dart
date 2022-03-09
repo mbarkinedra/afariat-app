@@ -1,3 +1,4 @@
+import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
@@ -7,12 +8,15 @@ import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/api/search_api.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TapHomeViewController extends GetxController {
+  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   SearchApi searchApi = SearchApi();
   TextEditingController searchWord = TextEditingController();
   RxBool showSearch = false.obs;
@@ -31,6 +35,7 @@ class TapHomeViewController extends GetxController {
   static const _pageSize = 20;
   String searchAddLinke = "";
   String priceSearch = "";
+  String name = "";
   final PagingController<int, dynamic> pagingController =
       PagingController(firstPageKey: 0);
   ScrollController scrollController = ScrollController();
@@ -47,7 +52,15 @@ class TapHomeViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
     getAllAds();
+
+    setUserName(Get.find<AccountInfoStorage>().readName() ?? "");
+  }
+
+  setUserName(String v) {
+    name = v;
+    update();
   }
 
   Future<void> _fetchPage(int pageKey) async {
@@ -95,10 +108,9 @@ class TapHomeViewController extends GetxController {
     }
     searchAddLinke = searchAddLinke + priceSearch;
 
+    // searchApi.searchData = searchAddLinke;
 
-   // searchApi.searchData = searchAddLinke;
-
-    searchApi.getList( ).then((value) {
+    searchApi.getList().then((value) {
       clearPrice();
       pagingController.itemList.clear();
       adverts.clear();
@@ -142,14 +154,24 @@ class TapHomeViewController extends GetxController {
     Filter.data["maxPrice="] = prices[values.end.toInt() - 1].id;
     priceSearch =
         "minPrice=${values.start.toInt().toString()}&maxPrice=${values.end.toInt().toString()}";
-  Get.find<TapHomeViewController>()  .setSearch("minPrice", values.start.toInt().toString());
-    Get.find<TapHomeViewController>()  .setSearch("maxPrice",values.end.toInt().toString());
+    Get.find<TapHomeViewController>()
+        .setSearch("minPrice", values.start.toInt().toString());
+    Get.find<TapHomeViewController>()
+        .setSearch("maxPrice", values.end.toInt().toString());
     update();
+  }
+
+  openDrawer() {
+    scaffoldKey.currentState.openDrawer();
   }
 
   @override
   void dispose() {
     pagingController.dispose();
     super.dispose();
+  }
+
+  launchURL(url) async {
+    if (!await launch(url)) throw 'Could not launch $url';
   }
 }

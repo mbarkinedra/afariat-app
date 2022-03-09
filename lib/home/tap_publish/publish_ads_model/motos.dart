@@ -31,8 +31,8 @@ class Motos extends GetView<TapPublishViewController> {
                           value: logic.motosBrand,
                           iconSize: 24,
                           elevation: 16,
-                          onChanged: logic.updateMarqueMoto,
-                          items: logic.motosBrands
+                          onChanged: controller.updateMarqueMoto,
+                          items: controller.motosBrands
                               .map<DropdownMenuItem<RefJson>>((RefJson value) {
                             return DropdownMenuItem<RefJson>(
                               value: value,
@@ -49,6 +49,8 @@ class Motos extends GetView<TapPublishViewController> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
+                print("objectKmKmKmKmKmKmKmKmKm");
+                print(logic.kilometrage);
                 return Row(
                   children: [
                     Expanded(flex: 1, child: Text("Km")),
@@ -66,8 +68,8 @@ class Motos extends GetView<TapPublishViewController> {
                           value: logic.kilometrage,
                           iconSize: 24,
                           elevation: 16,
-                          onChanged: logic.updateKilometrage,
-                          items: logic.mileages
+                          onChanged: controller.updateKilometrage,
+                          items: controller.mileages
                               .map<DropdownMenuItem<RefJson>>((RefJson value) {
                             return DropdownMenuItem<RefJson>(
                               value: value,
@@ -101,8 +103,8 @@ class Motos extends GetView<TapPublishViewController> {
                           value: logic.yearsmodele,
                           iconSize: 24,
                           elevation: 16,
-                          onChanged: logic.updateAnnee,
-                          items: logic.yearsModels
+                          onChanged: controller.updateAnnee,
+                          items: controller.yearsModels
                               .map<DropdownMenuItem<RefJson>>((RefJson value) {
                             return DropdownMenuItem<RefJson>(
                               value: value,

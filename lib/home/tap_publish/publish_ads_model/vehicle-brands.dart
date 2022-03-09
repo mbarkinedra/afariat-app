@@ -15,6 +15,8 @@ class VehicleBrands extends GetView<TapPublishViewController> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
+                //print("vehiculebrandsvehiculebrandsvehiculebrandsvehiculebrandsvehiculebrands");
+                //print(controller.vehiculebrands);
                 return Row(
                   children: [
                     Expanded(flex: 1, child: Text("Marque")),
@@ -29,10 +31,10 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,
-                          value: logic.vehiculebrands,
+                          value: controller.vehiculebrands,
                           iconSize: 24,
                           elevation: 16,
-                          onChanged: logic.updateMarque,
+                          onChanged: controller.updateMarque,
                           items: logic.vehiculeBrands
                               .map<DropdownMenuItem<RefJson>>((RefJson value) {
                             return DropdownMenuItem<RefJson>(
@@ -52,6 +54,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
+
                 return Row(
                   children: [
                     Expanded(flex: 1, child: Text("Modèle")),
@@ -66,11 +69,11 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,
-                          value: logic.vehiculeModel,
+                          value: controller.vehiculeModel,
                           iconSize: 24,
                           elevation: 16,
-                          onChanged: logic.updateModel,
-                          items: logic.vehiculeModels
+                          onChanged: controller.updateModel,
+                          items: controller.vehiculeModels
                               .map<DropdownMenuItem<RefJson>>((RefJson value) {
                             return DropdownMenuItem<RefJson>(
                               value: value,

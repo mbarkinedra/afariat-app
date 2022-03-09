@@ -43,7 +43,7 @@ class AccountViewController extends GetxController {
 
     _userApi.putData(dataToPost: Filter.data).then(
       (value) {
-
+Get.find<AccountInfoStorage>().saveName(name.text);
         validateServer.validatorServer(
             validate: () {
               Get.snackbar("", "mise à jours avec succés ");
@@ -74,7 +74,7 @@ class AccountViewController extends GetxController {
       name.text = _userJson.name;
 
       phone.text = _userJson.phone;
-
+      Get.find<AccountInfoStorage>().saveName(_userJson.name);
 
 
       localisation.cities.forEach((element) {

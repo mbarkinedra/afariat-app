@@ -25,7 +25,9 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
         ),
         backgroundColor: Colors.deepOrange,
         title: Text(
-         controller. modifAds?"Mettre à jour l'annonce":  "Déposer une annonce",
+          controller.modifAds
+              ? "Mettre à jour l'annonce"
+              : "Déposer une annonce",
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),
@@ -388,21 +390,28 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                           labColor: Colors.white,
                           btColor: buttonColor,
                           function: () {
-                            //postAdvert(cities1,town1,advertType,price,description,title,photo)
                             if (controller.subCategories.name == "Voitures" ||
                                 controller.subCategories.name ==
-                                    "Voitures professionnelles" ||
-                                controller.subCategories.name == "Motos") {
+                                    "Voitures professionnelles") {
                               if (controller.vehiculebrands != null &&
                                   controller.vehiculeModel != null &&
                                   controller.energie != null &&
                                   controller.kilometrage != null &&
                                   controller.yearsmodele != null) {
-                             /*   controller.myAdsView["Kilométrage"] = controller.kilometrage.name+" "+"km";
-                                controller.myAds["Kilométrage"] = controller.kilometrage.name;*/
                                 validateOptions(context);
                               } else {
-                                Get.snackbar("ero", "Some values are empty");
+                                Get.snackbar("Oups !",
+                                    "merci de bien vouloir compléter les champs ci dessous.");
+                              }
+                            }
+                            if (controller.subCategories.name == "Motos") {
+                              if (controller.motosBrand != null &&
+                                  controller.kilometrage != null &&
+                                  controller.yearsmodele != null) {
+                                validateOptions(context);
+                              } else {
+                                Get.snackbar("Oups !",
+                                    "merci de bien vouloir compléter les champs ci dessous.");
                               }
                             } else if (controller.subCategories.name ==
                                     "Appartements" ||
@@ -411,49 +420,22 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                     "Bureaux et locaux commerciaux") {
                               if (controller.pieces != null &&
                                   controller.surface != null) {
-
-                                controller.myAdsView["surface"] = controller.surface.text.replaceAll("-", "") +
-                                    " "+"m²";
-                                controller.myAds["surface"] = controller.surface.text;
+                                controller.myAdsView["surface"] = controller
+                                        .surface.text
+                                        .replaceAll("-", "") +
+                                    " " +
+                                    "m²";
+                                // controller.myAds["Surface"] =
+                                //     controller.surface.text;
 
                                 validateOptions(context);
                               } else {
-                                Get.snackbar("ero", "Some values are empty");
+                                Get.snackbar("Oups !",
+                                    "merci de bien vouloir compléter les champs ci dessous.");
                               }
                             } else {
                               validateOptions(context);
                             }
-                            // if (controller.globalKey.currentState.validate() &&
-                            //     controller.subCategories != null &&
-                            //     controller.town != null) {
-                            //   controller.myAdsView["prix"] =
-                            //       controller.prix.text.replaceAll("-", "") +
-                            //           " " +
-                            //           SettingsApp.moneySymbol;
-                            //   controller.myAds["price"] = controller.prix.text;
-                            //
-                            //   controller.myAdsView["title"] =
-                            //       controller.title.text;
-                            //   controller.myAds["title"] = controller.title.text;
-                            //
-                            //   controller.myAdsView["description"] =
-                            //       controller.description.text;
-                            //   controller.myAds["description"] =
-                            //       controller.description.text;
-                            //   controller.myAds["showPhoneNumber"] =
-                            //       controller.lights ? "yes" : "no";
-                            //   controller.myAdsView["showPhoneNumber"] =
-                            //       controller.lights ? "Check" : "no";
-                            //
-                            //   Navigator.of(context).push(MaterialPageRoute(
-                            //       builder: (
-                            //     context,
-                            //   ) =>
-                            //           PublishImageScr()));
-                            // } else {
-                            //   Get.snackbar("Oups !",
-                            //       "Merci de corriger les erreurs ci-dessous.");
-                            // }
                           }),
                     ],
                   ),
