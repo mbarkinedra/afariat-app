@@ -86,6 +86,8 @@ class Rooms extends GetView<TapPublishViewController> {
                                   padding: 0,
                                   color: Colors.deepOrange,
                                   hintText: "Surface",
+                                  validator:
+                                  controller.validator.validateSurface,
                                   textEditingController: controller.surface,
                                   keyboardType: TextInputType.number,
                                 ),

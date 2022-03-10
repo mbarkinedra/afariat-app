@@ -390,51 +390,56 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                           labColor: Colors.white,
                           btColor: buttonColor,
                           function: () {
-                            if (controller.subCategories.name == "Voitures" ||
-                                controller.subCategories.name ==
-                                    "Voitures professionnelles") {
-                              if (controller.vehiculebrands != null &&
-                                  controller.vehiculeModel != null &&
-                                  controller.energie != null &&
-                                  controller.kilometrage != null &&
-                                  controller.yearsmodele != null) {
-                                validateOptions(context);
-                              } else {
-                                Get.snackbar("Oups !",
-                                    "merci de bien vouloir compléter les champs ci dessous.");
+                            if (controller.subCategories != null) {
+                              if (controller.subCategories.name == "Voitures" ||
+                                  controller.subCategories.name ==
+                                      "Voitures professionnelles") {
+                                if (controller.vehiculebrands != null &&
+                                    controller.vehiculeModel != null &&
+                                    controller.energie != null &&
+                                    controller.kilometrage != null &&
+                                    controller.yearsmodele != null) {
+                                  validateOptions(context);
+                                } else {
+                                  Get.snackbar("Oups !",
+                                      "merci de bien vouloir compléter les champs ci dessous.");
+                                }
                               }
-                            }
-                            if (controller.subCategories.name == "Motos") {
-                              if (controller.motosBrand != null &&
-                                  controller.kilometrage != null &&
-                                  controller.yearsmodele != null) {
-                                validateOptions(context);
-                              } else {
-                                Get.snackbar("Oups !",
-                                    "merci de bien vouloir compléter les champs ci dessous.");
-                              }
-                            } else if (controller.subCategories.name ==
-                                    "Appartements" ||
-                                controller.subCategories.name == "Maison" ||
-                                controller.subCategories.name ==
-                                    "Bureaux et locaux commerciaux") {
-                              if (controller.pieces != null &&
-                                  controller.surface != null) {
-                                controller.myAdsView["surface"] = controller
-                                        .surface.text
-                                        .replaceAll("-", "") +
-                                    " " +
-                                    "m²";
-                                // controller.myAds["Surface"] =
-                                //     controller.surface.text;
+                              if (controller.subCategories.name == "Motos") {
+                                if (controller.motosBrand != null &&
+                                    controller.kilometrage != null &&
+                                    controller.yearsmodele != null) {
+                                  validateOptions(context);
+                                } else {
+                                  Get.snackbar("Oups !",
+                                      "merci de bien vouloir compléter les champs ci dessous.");
+                                }
+                              } else if (controller.subCategories.name ==
+                                      "Appartements" ||
+                                  controller.subCategories.name == "Maison" ||
+                                  controller.subCategories.name ==
+                                      "Bureaux et locaux commerciaux") {
+                                if (controller.pieces != null &&
+                                    controller.surface != null) {
+                                  controller.myAdsView["surface"] = controller
+                                          .surface.text
+                                          .replaceAll("-", "") +
+                                      " " +
+                                      "m²";
+                                  // controller.myAds["Surface"] =
+                                  //     controller.surface.text;
 
-                                validateOptions(context);
+                                  validateOptions(context);
+                                } else {
+                                  Get.snackbar("Oups !",
+                                      "merci de bien vouloir compléter les champs ci dessous.");
+                                }
                               } else {
-                                Get.snackbar("Oups !",
-                                    "merci de bien vouloir compléter les champs ci dessous.");
+                                validateOptions(context);
                               }
                             } else {
-                              validateOptions(context);
+                              Get.snackbar("Oups !",
+                                  "merci de bien vouloir compléter les champs ci dessous.");
                             }
                           }),
                     ],

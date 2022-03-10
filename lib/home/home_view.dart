@@ -90,7 +90,7 @@ class Home extends GetWidget<HomeViwController> {
         icon: Stack(
           children: [
             Icon(
-              Icons.menu,
+              Icons.person,
             ),
             Obx(() =>
                 Get.find<NotificationViewController>().hasNotification.value
@@ -103,7 +103,7 @@ class Home extends GetWidget<HomeViwController> {
                     : SizedBox())
           ],
         ),
-        title: ("Menu"),
+        title: ("Profile"),
         activeColorPrimary: Colors.deepOrange,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),

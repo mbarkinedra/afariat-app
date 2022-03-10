@@ -65,16 +65,16 @@ class AdsItem extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Padding(
+                 /*   Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: Text(
                         adverts.description,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                       ),
-                    ),
+                    ),*/
                     SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
@@ -92,7 +92,7 @@ class AdsItem extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 30,
                     ),
                     Align(
                       alignment: Alignment.topLeft,

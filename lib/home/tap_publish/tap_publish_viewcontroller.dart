@@ -202,16 +202,15 @@ class TapPublishViewController extends GetxController {
   }
 
   getVehicleModel() {
+    vehiculeModel = null;
     _vehicleModelApi.getList().then((value) {
       vehiculeModels = value.data;
+
       if (modifAdsJson.vehicleModel != null) {
         vehiculeModels.forEach((element) {
-          // print(element.name);
-          // print(modifAdsJson.vehicleModel.value);
-          // print(element.name == modifAdsJson.vehicleModel.value);
           if (element.name == modifAdsJson.vehicleModel.value) {
             print(element.name);
-            // vehiculeModel = element;
+
             updateModel(element);
           }
         });
@@ -269,7 +268,6 @@ class TapPublishViewController extends GetxController {
     myAdsView["Marque:"] = newValue.name;
     vehiculebrands = newValue;
 
-    ///if(e){}
 
     getVehicleModel();
 
@@ -305,10 +303,7 @@ class TapPublishViewController extends GetxController {
     energie = newValue;
     myAds["energy"] = newValue.id;
     myAdsView["energie:"] = newValue.name;
-    //
-    if (!dataAdverts) {
-      getEnergie();
-    }
+
     update();
   }
 

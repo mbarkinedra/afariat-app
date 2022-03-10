@@ -101,7 +101,7 @@ class SignInScr extends GetWidget<SignInViewController> {
                             if(controller.password.text.length>5){
                               controller.login();
                             }else{
-                              Get.snackbar("Oups !", "Veuillez saisie votre password");
+                              Get.snackbar("Oups !", "Veuillez saisir votre mot de passe");
                             }
 
                           }else{

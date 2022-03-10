@@ -6,6 +6,7 @@ import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_chat/tap_chat_scr.dart';
 import 'package:afariat/home/tap_home/tap_home_scr.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
+import 'package:afariat/networking/json/categories_grouped_json.dart';
 
 import 'package:afariat/sign_in/sign_in_scr.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +56,7 @@ class HomeViwController extends GetxController {
   @override
   void onInit() {
     controller = PersistentTabController(initialIndex: 0);
+    controller.addListener(() {});
     super.onInit();
     currentScreen = PageToView(
       naigatorKey: _navigatorKeys[_pageKeys[0]],
@@ -98,6 +100,28 @@ class HomeViwController extends GetxController {
   }
 
   changeItemFilter(v) {
+    print("uuiuuiuiuuiuiuiuiuiuiuiuiuiiuiuiiuyuiyyuuyui");
+    print(v);
+    if (Get.find<TapPublishViewController>().modifAds == true && v != 2) {
+      Get.find<TapPublishViewController>().dataAdverts = false;
+      Get.find<TapPublishViewController>().modifAds = false;
+      Get.find<TapPublishViewController>().updateCategoryToNull();
+      Get.find<TapPublishViewController>().updateSubcategoryToNull();
+      Get.find<TapPublishViewController>().myAdsView.clear();
+      Get.find<TapPublishViewController>().myAds.clear();
+      Get.find<TapPublishViewController>().title.clear();
+      Get.find<TapPublishViewController>().description.clear();
+      Get.find<TapPublishViewController>().prix.clear();
+
+      CategoryGroupedJson categoryGrouped =
+          CategoryGroupedJson(id: 0, name: "");
+      Get.find<CategoryAndSubcategory>().updateCategory(categoryGrouped);
+      Get.find<LocController>().town = null;
+      Get.find<LocController>().city = null;
+
+      Get.find<TapPublishViewController>().update();
+    }
+
     Get.find<TapPublishViewController>().updateGetView(null);
     Get.find<CategoryAndSubcategory>().categoryGroupedJson = null;
     Get.find<CategoryAndSubcategory>().subcategories1 = null;
@@ -115,9 +139,7 @@ class HomeViwController extends GetxController {
     );
   }
 
-// gotomun() {
-//   // Get.to(() => MenuView());
-// }
+
 }
 
 class PageToView extends StatelessWidget {
