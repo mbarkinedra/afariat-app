@@ -1,8 +1,8 @@
 import 'package:afariat/config/settings_app.dart';
-import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
+
 import 'package:afariat/networking/json/my_ads_json.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:intl/intl.dart';
 
 class AdsItem extends StatelessWidget {

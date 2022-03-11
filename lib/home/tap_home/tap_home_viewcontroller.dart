@@ -7,7 +7,7 @@ import 'package:afariat/networking/api/advert_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/api/search_api.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';

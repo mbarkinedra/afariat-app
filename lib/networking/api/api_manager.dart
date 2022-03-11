@@ -6,10 +6,10 @@ import 'package:afariat/config/storage.dart';
 import 'package:afariat/config/wsse.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+
 import 'package:get/get.dart' as a;
 
-import 'package:logger/logger.dart';
+
 abstract class ApiManager {
   final DioSingleton dioSingleton = DioSingleton();
   final storge = a.Get.find<SecureStorage>();

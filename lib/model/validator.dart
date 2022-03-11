@@ -23,11 +23,19 @@ class Validator {
     }
     return null;
   }
+
+  String validateMarque(String value) {
+    if (value.isEmpty) {
+      return " Veuillez renseigner le prix.";
+    }
+    return null;
+  }
+
   String validateSurface(String value) {
     if (value.isEmpty) {
       return " Veuillez renseigner le prix.";
     } else if (int.tryParse(value) < 0) {
-      return "Le prix doit être supérieur ou égale à 0 ";
+      return "La superficie doit être positive  ";
     }
     return null;
   }
@@ -54,4 +62,6 @@ class Validator {
     }
     return null;
   }
+
+
 }

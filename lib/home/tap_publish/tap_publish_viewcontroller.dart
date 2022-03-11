@@ -30,10 +30,18 @@ class TapPublishViewController extends GetxController {
   bool buttonModif = false;
   bool buttonSupprimer = false;
   bool modifAds = false;
+  bool getDataFromServer = false;
+  RxString validateTown = "".obs;
+  RxString validateMarque = "".obs;
+  RxString validateModele = "".obs;
+  RxString validateEnergie = "".obs;
+  RxString validateYears = "".obs;
+  RxString validateKm = "".obs;
 
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   final storge = Get.find<SecureStorage>();
   final accountInfoStorage = Get.find<AccountInfoStorage>();
+//  LocController _locController=  Get.find<LocController>();
   final picker = ImagePicker();
 
   Validator validator = Validator();
@@ -267,9 +275,10 @@ class TapPublishViewController extends GetxController {
     myAds["vehicleBrand"] = newValue.id;
     myAdsView["Marque:"] = newValue.name;
     vehiculebrands = newValue;
+if(!modifAds){
+  getVehicleModel();
+}
 
-
-    getVehicleModel();
 
     update();
   }
@@ -312,7 +321,7 @@ class TapPublishViewController extends GetxController {
     myAds["motoBrand"] = newValue.id;
     myAdsView["Marque:"] = newValue.name;
     motosBrand = newValue;
-    if (!dataAdverts) {
+    if (!modifAds) {
       getVehicleModel();
     }
 
@@ -352,8 +361,11 @@ class TapPublishViewController extends GetxController {
   }
 
   clearAllData() {
-    category = null;
-    subCategories = null;
+    // category = null;
+    // subCategories = null;
+   RefJson refJson = RefJson(id: 0, name: "");
+   Get.find<LocController>().updateTown(refJson);
+   Get.find<LocController>().updateCity(refJson);
     yearsmodele = null;
     getView = null;
     vehiculebrands = null;
@@ -397,7 +409,7 @@ class TapPublishViewController extends GetxController {
                   title: "Félicitation",
                   function: () {
                     Get.find<TapMyadsViewController>().ads();
-                    Get.find<HomeViwController>().changeSelectedValue(1);
+                    Get.find<HomeViwController>().changeItemFilter(1);
                     Filter.data.clear();
                     clearAllData();
                     Get.find<CategoryAndSubcategory>().clearData();
@@ -439,7 +451,7 @@ class TapPublishViewController extends GetxController {
 
                         Get.find<TapMyadsViewController>().ads();
 
-                        Get.find<HomeViwController>().changeSelectedValue(1);
+                        Get.find<HomeViwController>().changeItemFilter(1);
                         //  Navigator.pop(context);
                         update();
                       },
@@ -460,10 +472,12 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
-  getModifAds(int id) {
+  getModifAds(int id)async {
+    // getDataFromServer=true;
+    // update();
     _modifAdsApi.id = id;
 
-    _modifAdsApi.getList().then((value) {
+  await  _modifAdsApi.getList().then((value) {
       modifAdsJson = value;
       print("id000000000000000000000");
       print(value);
@@ -477,9 +491,8 @@ class TapPublishViewController extends GetxController {
       for (int i = 0; i < Get.find<LocController>().cities.length; i++) {
         if (Get.find<LocController>().cities[i].id ==
             modifAdsJson.city.toJson()["id"]) {
-          Get.find<LocController>().city = Get.find<LocController>().cities[i];
-          Get.find<LocController>()
-              .updateCity(Get.find<LocController>().cities[i]);
+         Get.find<LocController>().city = Get.find<LocController>().cities[i];
+
           Get.find<LocController>()
               .updateTowns(Get.find<LocController>().cities[i].id)
               .then((value) {
@@ -497,39 +510,36 @@ class TapPublishViewController extends GetxController {
       if (modifAdsJson.vehicleBrand != null) {
         vehiculeBrands.forEach((element) {
           if (element.name == modifAdsJson.vehicleBrand.value) {
-            //  vehiculebrands = element;
-            updateMarque(element);
+            //vehiculebrands = element;
+           updateMarque(element);
           }
         });
-      }
+    }
       if (modifAdsJson.mileage != null) {
-        print("000000000000000000000000");
-        print(modifAdsJson.mileage != null);
+
         mileages.forEach((element) {
           if (element.name == modifAdsJson.mileage.value) {
-            print("000000000000000000000000");
-            print(element.name);
-            print(modifAdsJson.mileage.value);
-            kilometrage = element;
-            updateKilometrage(element);
-            update();
+
+            //kilometrage = element;
+           updateKilometrage(element);
+        //    update();
           }
         });
       }
       if (modifAdsJson.yearModel != null) {
         yearsModels.forEach((element) {
           if (element.name == modifAdsJson.yearModel.value) {
-            yearsmodele = element;
-            updateAnnee(yearsmodele);
+           // yearsmodele = element;
+         updateAnnee(element);
           }
         });
-      }
+        }
 
       if (modifAdsJson.motoBrand != null) {
         motosBrands.forEach((element) {
           if (element.name == modifAdsJson.motoBrand.value) {
-            motosBrand = element;
-            updateMarqueMoto(motosBrand);
+           // motosBrand = element;
+            updateMarqueMoto(element);
           }
         });
       }
@@ -547,7 +557,7 @@ class TapPublishViewController extends GetxController {
               .where((element) => element.id == modifAdsJson.category.id)
               .first;
           updateSubCategoryJson(subcat);
-          Get.find<CategoryAndSubcategory>().updateSubCategory(subcat);
+         Get.find<CategoryAndSubcategory>().updateSubCategory(subcat);
         }
       }
 
@@ -555,7 +565,8 @@ class TapPublishViewController extends GetxController {
       modifAdsJson.photos.forEach((element) {
         editAdsImages.add(element.path);
       });
-      update();
+      //getDataFromServer=false;
+     //
     });
-  }
+     }
 }

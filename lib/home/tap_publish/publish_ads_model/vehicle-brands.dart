@@ -27,7 +27,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
+                            Border.all(color: Colors.deepOrange, width: 2)),
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,
@@ -47,14 +47,17 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     )
                   ],
                 );
-
-
               }),
-            ),
+            )
+            , Align(alignment: Alignment.center, child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Obx(() =>
+                  Text(controller.validateMarque.value,
+                    style: TextStyle(color: Colors.red),)),
+            )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
-
                 return Row(
                   children: [
                     Expanded(flex: 1, child: Text("Modèle")),
@@ -65,7 +68,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
+                            Border.all(color: Colors.deepOrange, width: 2)),
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,
@@ -85,10 +88,14 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     )
                   ],
                 );
-
-
               }),
             ),
+            Align(alignment: Alignment.center, child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Obx(() =>
+                  Text(controller.validateModele.value,
+                    style: TextStyle(color: Colors.red),)),
+            )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
@@ -102,7 +109,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
+                            Border.all(color: Colors.deepOrange, width: 2)),
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,
@@ -112,7 +119,6 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                           onChanged: logic.updateEnergie,
                           items: logic.energies
                               .map<DropdownMenuItem<RefJson>>((RefJson value) {
-
                             return DropdownMenuItem<RefJson>(
                               value: value,
                               child: Text(value.name),
@@ -123,10 +129,14 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     )
                   ],
                 );
-
-
               }),
             ),
+            Align(alignment: Alignment.center, child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Obx(() =>
+                  Text(controller.validateEnergie.value,
+                    style: TextStyle(color: Colors.red),)),
+            )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
@@ -140,7 +150,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
+                            Border.all(color: Colors.deepOrange, width: 2)),
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,
@@ -160,10 +170,14 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     )
                   ],
                 );
-
-
               }),
             ),
+            Align(alignment: Alignment.center, child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Obx(() =>
+                  Text(controller.validateKm.value,
+                    style: TextStyle(color: Colors.red),)),
+            )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
@@ -177,7 +191,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
+                            Border.all(color: Colors.deepOrange, width: 2)),
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,
@@ -197,10 +211,14 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     )
                   ],
                 );
-
-
               }),
-            )
+            ),
+            Align(alignment: Alignment.center, child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Obx(() =>
+                  Text(controller.validateYears.value,
+                    style: TextStyle(color: Colors.red),)),
+            )),
           ],
         ),
       ),

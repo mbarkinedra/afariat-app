@@ -72,6 +72,7 @@ class LocController extends GetxController {
       tapHomeViewController.filterUpdate();
     } else {
       this.town = town;
+      tapPublishViewController.validateTown.value="";
       Get.find<TapHomeViewController>().setSearch("town", town.id.toString());
       tapHomeViewController.searchAddLinke =
           tapHomeViewController.searchAddLinke + "&town=${town.id}";

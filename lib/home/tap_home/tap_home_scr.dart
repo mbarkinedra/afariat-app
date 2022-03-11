@@ -1,6 +1,6 @@
 import 'package:afariat/advert_details/advert_details_scr.dart';
 import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
-import 'package:afariat/config/AccountInfoStorage.dart';
+
 import 'package:afariat/config/filter.dart';
 import 'package:afariat/mywidget/bottom_sheet_filter.dart';
 import 'package:afariat/mywidget/myhomeitem.dart';

@@ -46,7 +46,7 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                       ),
                       CustomButtonWithoutIcon(
                         function: () {
-                          Get.find<HomeViwController>().changeSelectedValue(2);
+                          Get.find<HomeViwController>().changeItemFilter(2);
                         },
                         labColor: Colors.white,
                         height: 50,
@@ -98,7 +98,7 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                             Get.find<TapPublishViewController>()
                                 .getModifAds(logic.adverts[pos].id);
                             Get.find<HomeViwController>()
-                                .changeSelectedValue(2);
+                                .changeItemFilter(2);
                           },
                         );
                       }),
