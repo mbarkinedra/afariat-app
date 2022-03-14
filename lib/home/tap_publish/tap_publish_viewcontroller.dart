@@ -29,7 +29,7 @@ class TapPublishViewController extends GetxController {
   bool buttonPublier = false;
   bool buttonModif = false;
   bool buttonSupprimer = false;
-  bool modifAds = false;
+  RxBool modifAds = false.obs;
   bool getDataFromServer = false;
   RxString validateTown = "".obs;
   RxString validateMarque = "".obs;
@@ -41,9 +41,7 @@ class TapPublishViewController extends GetxController {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   final storge = Get.find<SecureStorage>();
   final accountInfoStorage = Get.find<AccountInfoStorage>();
-//  LocController _locController=  Get.find<LocController>();
   final picker = ImagePicker();
-
   Validator validator = Validator();
   bool dataAdverts = false;
   ModifAdsJson modifAdsJson = ModifAdsJson();
@@ -65,14 +63,13 @@ class TapPublishViewController extends GetxController {
   List<File> images = [];
   List<String> editAdsImages = [];
 
-  List<Widget> radioList = [];
   List<RefJson> values = [
     RefJson(name: "Offre", id: 1),
     RefJson(name: "Demande", id: 2),
     RefJson(name: "Offre de location", id: 3)
   ];
   RefJson advertType;
-  RefJson yearsmodele;
+  RefJson yearsModele;
   RefJson getView;
   RefJson vehiculebrands;
   RefJson motosBrand;
@@ -102,9 +99,6 @@ class TapPublishViewController extends GetxController {
     '10+'
   ];
   List<String> photos = [];
-
-  // List<String> energies = ['Diesel', 'Essence', 'Electrique', 'LPG'];
-
   VehicleBrandsApi _vehicleBrandsApi = VehicleBrandsApi();
   MotoBrandsApi _motoBrandsApi = MotoBrandsApi();
   VehicleModelApi _vehicleModelApi = VehicleModelApi();
@@ -189,7 +183,6 @@ class TapPublishViewController extends GetxController {
         if (modifAdsJson.energy != null) {
           energies.forEach((element) {
             if (element.name == modifAdsJson.energy.value) {
-              // energie = element;
               updateEnergie(element);
             }
           });
@@ -199,11 +192,12 @@ class TapPublishViewController extends GetxController {
     });
   }
 
-  getVehicleBrand() {
-    _vehicleBrandsApi.getList().then((value) {
+  Future getVehicleBrand() async {
+    await _vehicleBrandsApi.getList().then((value) {
       vehiculeModel = null;
 
       vehiculeBrands = value.data;
+      vehiculeBrands.forEach((element) {});
 
       update();
     });
@@ -217,8 +211,6 @@ class TapPublishViewController extends GetxController {
       if (modifAdsJson.vehicleModel != null) {
         vehiculeModels.forEach((element) {
           if (element.name == modifAdsJson.vehicleModel.value) {
-            print(element.name);
-
             updateModel(element);
           }
         });
@@ -236,13 +228,9 @@ class TapPublishViewController extends GetxController {
     });
   }
 
-  getMotosBrand() {
-    getMileages();
-    getYearsModels();
-    _motoBrandsApi.getList().then((value) {
+  getMotosBrand() async {
+    await _motoBrandsApi.getList().then((value) {
       motosBrands = value.data;
-
-      update();
     });
   }
 
@@ -261,12 +249,11 @@ class TapPublishViewController extends GetxController {
       vehiculebrands = null;
       vehiculeModel = null;
       motosBrand = null;
-      yearsmodele = null;
+      yearsModele = null;
       kilometrage = null;
       getVehicleBrand();
       getMotosBrand();
     }
-
     update();
   }
 
@@ -275,16 +262,22 @@ class TapPublishViewController extends GetxController {
     myAds["vehicleBrand"] = newValue.id;
     myAdsView["Marque:"] = newValue.name;
     vehiculebrands = newValue;
-if(!modifAds){
-  getVehicleModel();
-}
 
+    getVehicleModel();
+
+    update();
+  }
+
+  updateMarqueMoto(RefJson newValue) {
+    _vehicleModelApi.vehicleModelId = newValue.id;
+    myAds["motoBrand"] = newValue.id;
+    myAdsView["Marque:"] = newValue.name;
+    motosBrand = newValue;
 
     update();
   }
 
   updateModel(RefJson newValue) {
-    //print("vehicleModel ${newValue.name}  ");
     vehiculeModel = newValue;
 
     myAds["vehicleModel"] = newValue.id;
@@ -301,7 +294,7 @@ if(!modifAds){
   }
 
   updateAnnee(RefJson newValue) {
-    yearsmodele = newValue;
+    yearsModele = newValue;
     myAds["yearModel"] = newValue.id;
     myAdsView["Année:"] = newValue.name;
 
@@ -312,18 +305,6 @@ if(!modifAds){
     energie = newValue;
     myAds["energy"] = newValue.id;
     myAdsView["energie:"] = newValue.name;
-
-    update();
-  }
-
-  updateMarqueMoto(RefJson newValue) {
-    _vehicleModelApi.vehicleModelId = newValue.id;
-    myAds["motoBrand"] = newValue.id;
-    myAdsView["Marque:"] = newValue.name;
-    motosBrand = newValue;
-    if (!modifAds) {
-      getVehicleModel();
-    }
 
     update();
   }
@@ -361,13 +342,13 @@ if(!modifAds){
   }
 
   clearAllData() {
-    // category = null;
-    // subCategories = null;
-   RefJson refJson = RefJson(id: 0, name: "");
-   Get.find<LocController>().updateTown(refJson);
-   Get.find<LocController>().updateCity(refJson);
-    yearsmodele = null;
-    getView = null;
+    category = null;
+    subCategories = null;
+    RefJson refJson = RefJson(id: 0, name: "");
+    updateGetView(refJson);
+    Get.find<LocController>().updateCity(refJson);
+    modifAds.value = false;
+    yearsModele = null;
     vehiculebrands = null;
     motosBrand = null;
     vehiculeModel = null;
@@ -418,7 +399,6 @@ if(!modifAds){
                     buttonPublier = false;
                     Navigator.pop(context);
                     update();
-                    // Get.back();
                   },
                   description: "Votre annonce est en cours de validation !",
                   buttonText: "Ok",
@@ -452,7 +432,6 @@ if(!modifAds){
                         Get.find<TapMyadsViewController>().ads();
 
                         Get.find<HomeViwController>().changeItemFilter(1);
-                        //  Navigator.pop(context);
                         update();
                       },
                       description: "Votre annonce est en cours de validation !",
@@ -472,17 +451,11 @@ if(!modifAds){
     update();
   }
 
-  getModifAds(int id)async {
-    // getDataFromServer=true;
-    // update();
+  getModifAds(int id) async {
     _modifAdsApi.id = id;
-
-  await  _modifAdsApi.getList().then((value) {
+    await _modifAdsApi.getList().then((value) async {
       modifAdsJson = value;
-      print("id000000000000000000000");
-      print(value);
 
-      print("id000000000000000000000");
       title.text = modifAdsJson.title;
       description.text = modifAdsJson.description;
       prix.text = modifAdsJson.price.toString();
@@ -491,7 +464,8 @@ if(!modifAds){
       for (int i = 0; i < Get.find<LocController>().cities.length; i++) {
         if (Get.find<LocController>().cities[i].id ==
             modifAdsJson.city.toJson()["id"]) {
-         Get.find<LocController>().city = Get.find<LocController>().cities[i];
+          Get.find<LocController>().city = Get.find<LocController>().cities[i];
+          citie = Get.find<LocController>().cities[i];
 
           Get.find<LocController>()
               .updateTowns(Get.find<LocController>().cities[i].id)
@@ -501,63 +475,81 @@ if(!modifAds){
                   modifAdsJson.town.toJson()["id"]) {
                 Get.find<LocController>()
                     .updateTown(Get.find<LocController>().towns[i]);
+                town = Get.find<LocController>().towns[i];
               }
             }
           });
         }
       }
+      if (modifAdsJson.motoBrand != null) {
+        await getMotosBrand();
 
-      if (modifAdsJson.vehicleBrand != null) {
-        vehiculeBrands.forEach((element) {
-          if (element.name == modifAdsJson.vehicleBrand.value) {
-            //vehiculebrands = element;
-           updateMarque(element);
+        for (int i = 0; i < motosBrands.length; i++) {
+          if (motosBrands[i].name == modifAdsJson.motoBrand.value) {
+            motosBrand = null;
+            updateMarqueMoto(motosBrands[i]);
           }
-        });
-    }
-      if (modifAdsJson.mileage != null) {
+        }
+      }
+      if (modifAdsJson.vehicleBrand != null) {
+        await getVehicleBrand();
 
+        for (int i = 0; i < vehiculeBrands.length; i++) {
+          if (vehiculeBrands[i].name == modifAdsJson.vehicleBrand.value) {
+            vehiculebrands = null;
+            updateMarque(vehiculeBrands[i]);
+          }
+        }
+      }
+      if (modifAdsJson.mileage != null) {
         mileages.forEach((element) {
           if (element.name == modifAdsJson.mileage.value) {
-
-            //kilometrage = element;
-           updateKilometrage(element);
-        //    update();
+            updateKilometrage(element);
           }
         });
       }
-      if (modifAdsJson.yearModel != null) {
-        yearsModels.forEach((element) {
-          if (element.name == modifAdsJson.yearModel.value) {
-           // yearsmodele = element;
-         updateAnnee(element);
-          }
-        });
-        }
 
       if (modifAdsJson.motoBrand != null) {
-        motosBrands.forEach((element) {
-          if (element.name == modifAdsJson.motoBrand.value) {
-           // motosBrand = element;
-            updateMarqueMoto(element);
+        for (int i = 0; i < motosBrands.length; i++) {
+          if (motosBrands[i].name == modifAdsJson.motoBrand.value) {
+            updateMarqueMoto(motosBrands[i]);
           }
-        });
+        }
       }
-
-      for (int category = 0;
-          category <
-              Get.find<CategoryAndSubcategory>().categoryGroupList.length;
-          category++) {
-        if (Get.find<CategoryAndSubcategory>().categoryGroupList[category].id ==
+      if (modifAdsJson.yearModel != null) {
+        for (int i = 0; i < yearsModels.length; i++) {
+          if (yearsModels[i].name == modifAdsJson.yearModel.value) {
+            updateAnnee(yearsModels[i]);
+          }
+        }
+      }
+      for (int cat = 0;
+          cat < Get.find<CategoryAndSubcategory>().categoryGroupList.length;
+          cat++) {
+        if (Get.find<CategoryAndSubcategory>().categoryGroupList[cat].id ==
             modifAdsJson.category.group.id) {
           Get.find<CategoryAndSubcategory>().updateCategory(
-              Get.find<CategoryAndSubcategory>().categoryGroupList[category]);
-          SubcategoryJson subcat = Get.find<CategoryAndSubcategory>()
-              .sc[modifAdsJson.category.group.id]
-              .where((element) => element.id == modifAdsJson.category.id)
-              .first;
-          updateSubCategoryJson(subcat);
-         Get.find<CategoryAndSubcategory>().updateSubCategory(subcat);
+              Get.find<CategoryAndSubcategory>().categoryGroupList[cat]);
+
+          category = Get.find<CategoryAndSubcategory>().categoryGroupList[cat];
+
+          for (int sub = 0;
+              sub <
+                  Get.find<CategoryAndSubcategory>()
+                      .sc[modifAdsJson.category.group.id]
+                      .length;
+              sub++) {
+            if (Get.find<CategoryAndSubcategory>()
+                    .sc[modifAdsJson.category.group.id][sub]
+                    .id ==
+                modifAdsJson.category.id) {
+              updateSubCategoryJson(Get.find<CategoryAndSubcategory>()
+                  .sc[modifAdsJson.category.group.id][sub]);
+              Get.find<CategoryAndSubcategory>().updateSubCategory(
+                  Get.find<CategoryAndSubcategory>()
+                      .sc[modifAdsJson.category.group.id][sub]);
+            }
+          }
         }
       }
 
@@ -565,8 +557,7 @@ if(!modifAds){
       modifAdsJson.photos.forEach((element) {
         editAdsImages.add(element.path);
       });
-      //getDataFromServer=false;
-     //
+      update();
     });
-     }
+  }
 }

@@ -1,13 +1,8 @@
 import 'package:afariat/config/AccountInfoStorage.dart';
-import 'package:afariat/config/filter.dart';
 
-import 'package:afariat/controllers/category_and_subcategory.dart';
-import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_chat/tap_chat_scr.dart';
 import 'package:afariat/home/tap_home/tap_home_scr.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
-import 'package:afariat/networking/json/categories_grouped_json.dart';
-import 'package:afariat/networking/json/ref_json.dart';
 
 import 'package:afariat/sign_in/sign_in_scr.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +15,7 @@ import 'tap_publish/tap_publish_scr.dart';
 
 class HomeViwController extends GetxController {
   PersistentTabController controller;
-
+int newPublish=0;
   int _navigatorValue = 0;
   String _currentPage = 'Page1';
   var _navigatorKey;
@@ -78,72 +73,25 @@ class HomeViwController extends GetxController {
       buildScreens[4] = SignInScr();
     }
   }
+  
 
-  /// Selected Navigation bar
-  // changeSelectedValue(int selectedValue) {
-  //   updatelist();
-  //  //controller.index = selectedValue;
-  //   update();
-  //   Filter.data.clear();
-  //   Get.find<TapPublishViewController>().clearAllData();
-  //   Get.find<CategoryAndSubcategory>().clearData();
-  //   Get.find<LocController>().clearData();
-  //   _navigatorValue = selectedValue;
-  //   _currentPage = _pageKeys[selectedValue];
-  //   _navigatorKey = _navigatorKeys[_currentPage];
-  //
-  //   currentScreen = PageToView(
-  //     naigatorKey: _navigatorKey,
-  //     tabItem: _currentPage,
-  //   );
-  //
-  //   update();
-  // }
+  changeItemFilter(value) {
 
-  changeItemFilter(v) {
-    print("88899999999999999999988887788888$v");
-   controller.index = v;
-       // update();
-   if (v != 2) {
+     
+   if (value != 2||newPublish>=2) {
+     newPublish=1;
+   
+     Get.find<TapPublishViewController>().  clearAllData();
+ 
 
-      //  Get.find<TapPublishViewController>().dataAdverts = false;
-    //  Get.find<TapPublishViewController>().modifAdsJson = null;
-      Get.find<TapPublishViewController>().  clearAllData();
-      Get.find<TapPublishViewController>().dataAdverts = false;
-      Get.find<TapPublishViewController>().modifAds == false;
-      Get.find<TapPublishViewController>().modifAdsJson = null;
+     controller.index = value;
+   }else{
+     newPublish++;
 
-      // Get.find<TapPublishViewController>().modifAds = false;
-      // Get.find<TapPublishViewController>().updateCategoryToNull();
-      // Get.find<TapPublishViewController>().updateSubcategoryToNull();
-      // Get.find<TapPublishViewController>().myAdsView.clear();
-      // Get.find<TapPublishViewController>().myAds.clear();
-      // Get.find<TapPublishViewController>().title.clear();
-      // Get.find<TapPublishViewController>().description.clear();
-      // Get.find<TapPublishViewController>().prix.clear();
+     controller.index = value;
+   }
 
-      // CategoryGroupedJson categoryGrouped =
-      //     CategoryGroupedJson(id: 0, name: "");
-      // Get.find<CategoryAndSubcategory>().updateCategory(categoryGrouped);
-      // RefJson refJson = RefJson(id: 0, name: "");
-      // Get.find<LocController>().updateTown(refJson);
-      // Get.find<LocController>().updateCity(refJson);
-
-      //
-      // Get.find<CategoryAndSubcategory>().categoryGroupedJson = null;
-      // Get.find<CategoryAndSubcategory>().subcategories1 = null;
-      // Get.find<LocController>().town = null;
-      // Get.find<LocController>().city = null;
-      // Get.find<TapPublishViewController>().updateGetView(null);
-      // Get.find<TapPublishViewController>().update();
-    }
-   // else if(v != 2){
-   //   Get.find<TapPublishViewController>().dataAdverts = false;
-   //   Get.find<TapPublishViewController>().modifAds == false;
-   //   Get.find<TapPublishViewController>().modifAdsJson = null;
-   //   Get.find<TapPublishViewController>().  clearAllData();
-   // }
-  }
+ }
 
   Widget buildoffstageNavigator(String tabItem) {
     return Offstage(

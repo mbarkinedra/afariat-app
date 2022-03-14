@@ -41,8 +41,8 @@ class Home extends GetWidget<HomeViwController> {
         popActionScreens: PopActionScreensType.all,
         itemAnimationProperties: ItemAnimationProperties(
           // Navigation Bar's items animation properties.
-          duration: Duration(milliseconds: 200),
-          curve: Curves.ease,
+          duration: Duration(seconds: 1),
+          curve: Curves.easeInCubic,
         ),
         screenTransitionAnimation: ScreenTransitionAnimation(
           // Screen transition animation on change of selected tab.

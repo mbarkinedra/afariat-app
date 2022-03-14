@@ -20,438 +20,414 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: Colors.white, //change your color here
-          ),
-          backgroundColor: Colors.deepOrange,
-          title: Text(
-            controller.modifAds
-                ? "Mettre à jour l'annonce"
-                : "Déposer une annonce",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-        ),
+            leading: Obx(() => controller.modifAds.value
+                ? Icon(Icons.arrow_back)
+                : SizedBox()),
+            iconTheme: IconThemeData(
+              color: Colors.white, //change your color here
+            ),
+            backgroundColor: Colors.deepOrange,
+            title: Obx(
+              () => Text(
+                controller.modifAds.value
+                    ? "Mettre à jour l'annonce"
+                    : "Déposer une annonce",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            )),
         body:
-        GetBuilder<TapPublishViewController>(builder: (logic) {
-       return
-         controller.getDataFromServer
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              :
-         Container(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: 25, left: 25, right: 25, top: 8),
-                    child: Form(
-                      key: controller.globalKey,
-                      child: ListView(
-                        //  padding: EdgeInsets.all(4),
-                        children: <Widget>[
+            //  GetBuilder<TapPublishViewController>(builder: (logic) {
+            // return
+            //   controller.getDataFromServer
+            //        ? Center(
+            //            child: CircularProgressIndicator(),
+            //          )
+            //        :
+            Container(
+          child: Padding(
+            padding:
+                const EdgeInsets.only(bottom: 25, left: 25, right: 25, top: 8),
+            child: Form(
+              key: controller.globalKey,
+              child: ListView(
+                //  padding: EdgeInsets.all(4),
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GetBuilder<CategoryAndSubcategory>(builder: (logic) {
+                      return Column(
+                        children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: GetBuilder<CategoryAndSubcategory>(
-                                builder: (logic) {
-                              return Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        "Catégorie",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.deepOrange, width: 2),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: DropdownButton<CategoryGroupedJson>(
-                                      underline: SizedBox(),
-                                      isExpanded: true,
-                                      hint: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 8.0, right: 8),
-                                        child: Text("Catégorie"),
-                                      ),
-                                      value: logic.categoryGroupedJson,
-                                      iconSize: 24,
-                                      elevation: 16,
-                                      onChanged: logic.updateCategory,
-                                      items: logic.categoryGroupList
-                                          .where(
-                                              (element) => element.name != "")
-                                          .map<
-                                                  DropdownMenuItem<
-                                                      CategoryGroupedJson>>(
-                                              (CategoryGroupedJson value) {
-                                        return DropdownMenuItem<
-                                            CategoryGroupedJson>(
-                                          value: value,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.0, right: 8),
-                                            child: Text(value.name),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.deepOrange, width: 2),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: DropdownButton<SubcategoryJson>(
-                                      isExpanded: true,
-                                      underline: SizedBox(),
-                                      hint: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 8.0, right: 8),
-                                        child: Text("Sous catégorie"),
-                                      ),
-                                      value: logic.subcategories1,
-                                      iconSize: 24,
-                                      elevation: 16,
-                                      onChanged: logic.updateSubCategory,
-                                      items: logic.listeSubCategories
-                                          .where(
-                                              (element) => element.name != "")
-                                          .map<
-                                                  DropdownMenuItem<
-                                                      SubcategoryJson>>(
-                                              (SubcategoryJson value) {
-                                        return DropdownMenuItem<
-                                            SubcategoryJson>(
-                                          value: value,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.0, right: 8),
-                                            child: Text(value.name),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  )
-                                ],
-                              );
-                            }),
-                          ),
-                          Row(
-                            children: [
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "Type d'annonce",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "Catégorie",
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
                               ),
-                            ],
+                            ),
                           ),
-                          GetBuilder<TapPublishViewController>(
-                              builder: (logic) {
-                            return Column(
-                              children: logic.values.map((e) {
-                                return RadioListTile(
-                                    activeColor: Colors.deepOrange,
-                                    title: Text(e.name),
-                                    value: e,
-                                    groupValue: logic.advertType,
-                                    onChanged: logic.updateRadioButton);
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.deepOrange, width: 2),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: DropdownButton<CategoryGroupedJson>(
+                              underline: SizedBox(),
+                              isExpanded: true,
+                              hint: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 8.0, right: 8),
+                                child: Text("Catégorie"),
+                              ),
+                              value: logic.categoryGroupedJson,
+                              iconSize: 24,
+                              elevation: 16,
+                              onChanged: logic.updateCategory,
+                              items: logic.categoryGroupList
+                                  .where((element) => element.name != "")
+                                  .map<DropdownMenuItem<CategoryGroupedJson>>(
+                                      (CategoryGroupedJson value) {
+                                return DropdownMenuItem<CategoryGroupedJson>(
+                                  value: value,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8.0, right: 8),
+                                    child: Text(value.name),
+                                  ),
+                                );
                               }).toList(),
-                            );
-                          }),
-                          GetBuilder<TapPublishViewController>(
-                              builder: (logic) {
-                            return logic.getView != null
-                                ? WidgetPublish(
-                                    logic.getView.name,
-                                  )
-                                : SizedBox();
-                          }),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Titre de l'annonce",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8),
-                            child: CustomTextFiled(
-                              width: size.width * .8,
-                              color: framColor,
-                              validator: controller.validator.validatetitle,
-                              hintText: "Titre",
-                              textEditingController: controller.title,
                             ),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Description",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8),
-                            child: CustomTextFiled(
-                              maxLines: 5,
-                              color: framColor,
-                              width: size.width * .8,
-                              validator:
-                                  controller.validator.validateDescription,
-                              hintText: "Description",
-                              textEditingController: controller.description,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              "Prix",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    // width: size.width * .87,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.deepOrange, width: 2),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 8, right: 8),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 1,
-                                            child: CustomTextFiled2(
-                                                color: Colors.deepOrange,
-                                                validator: controller
-                                                    .validator.validatePrice,
-                                                hintText: "Prix",
-                                                textEditingController:
-                                                    controller.prix,
-                                                keyboardType:
-                                                    TextInputType.number),
-                                          ),
-                                          Text(
-                                            "DT",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Gouvernorat",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8),
-                            child: GetBuilder<LocController>(builder: (logic) {
-                              return Column(
-                                children: [
-                                  Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.deepOrange, width: 2),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: DropdownButton<RefJson>(
-                                      isExpanded: true,
-                                      underline: SizedBox(),
-                                      hint: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 8.0, right: 8),
-                                        child: Text("Gouvernorat"),
-                                      ),
-                                      value: logic.city,
-                                      iconSize: 24,
-                                      elevation: 16,
-                                      onChanged: logic.updateCity,
-                                      items: logic.cities
-                                          .where(
-                                              (element) => element.name != "")
-                                          .map<DropdownMenuItem<RefJson>>(
-                                              (RefJson value) {
-                                        return DropdownMenuItem<RefJson>(
-                                          value: value,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.0, right: 8),
-                                            child: Text(value.name),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 8.0, bottom: 8),
-                                      child: Text(
-                                        "Commune",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Colors.deepOrange,
-                                              width: 2),
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      child: DropdownButton<RefJson>(
-                                        isExpanded: true,
-                                        underline: SizedBox(),
-                                        hint: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 8.0, right: 10),
-                                          child: Text("Commune"),
-                                        ),
-                                        value: logic.town,
-                                        iconSize: 24,
-                                        elevation: 16,
-                                        onChanged: logic.updateTown,
-                                        items: logic.towns
-                                            .where(
-                                                (element) => element.name != "")
-                                            .map<DropdownMenuItem<RefJson>>(
-                                                (RefJson value) {
-                                          return DropdownMenuItem<RefJson>(
-                                            value: value,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 8.0, right: 8),
-                                              child: Text(value.name),
-                                            ),
-                                          );
-                                        }).toList(),
-                                      )),
-                                  Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 8.0),
-                                        child: Obx(() => Text(
-                                              controller.validateTown.value,
-                                              style:
-                                                  TextStyle(color: Colors.red),
-                                            )),
-                                      ))
-                                ],
-                              );
-                            }),
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.call),
-                              Flexible(
-                                flex: 1,
-                                child: GetBuilder<TapPublishViewController>(
-                                    builder: (logic) {
-                                  return ListTile(
-                                    title: const Text('Afficher N° Tél'),
-                                    trailing: CupertinoSwitch(
-                                      value: logic.lights,
-                                      activeColor: Colors.deepOrange,
-                                      onChanged: logic.updateLight,
-                                    ),
-                                    onTap: () {
-                                      logic.lights = !logic.lights;
-                                    },
-                                  );
-                                }),
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.deepOrange, width: 2),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: DropdownButton<SubcategoryJson>(
+                              isExpanded: true,
+                              underline: SizedBox(),
+                              hint: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 8.0, right: 8),
+                                child: Text("Sous catégorie"),
                               ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 8.0, bottom: 40, right: 8, left: 8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                CustomButtonWithoutIcon(
-                                    width:
-                                        MediaQuery.of(context).size.width * .35,
-                                    height: 50,
-                                    label: "Suivant",
-                                    labColor: Colors.white,
-                                    btColor: buttonColor,
-                                    function: () {
-                                      validateGetView(context);
-                                    }),
-                              ],
+                              value: logic.subcategories1,
+                              iconSize: 24,
+                              elevation: 16,
+                              onChanged: logic.updateSubCategory,
+                              items: logic.listeSubCategories
+                                  .where((element) => element.name != "")
+                                  .map<DropdownMenuItem<SubcategoryJson>>(
+                                      (SubcategoryJson value) {
+                                return DropdownMenuItem<SubcategoryJson>(
+                                  value: value,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8.0, right: 8),
+                                    child: Text(value.name),
+                                  ),
+                                );
+                              }).toList(),
                             ),
-                          ),
+                          )
                         ],
+                      );
+                    }),
+                  ),
+                  Row(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Type d'annonce",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
+                    ],
+                  ),
+                  GetBuilder<TapPublishViewController>(builder: (logic) {
+                    return Column(
+                      children: logic.values.map((e) {
+                        return RadioListTile(
+                            activeColor: Colors.deepOrange,
+                            title: Text(e.name),
+                            value: e,
+                            groupValue: logic.advertType,
+                            onChanged: logic.updateRadioButton);
+                      }).toList(),
+                    );
+                  }),
+                  GetBuilder<TapPublishViewController>(builder: (logic) {
+                    return logic.getView != null
+                        ? WidgetPublish(
+                            logic.getView.name,
+                          )
+                        : SizedBox();
+                  }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Titre de l'annonce",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
-                );
-        }));
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8),
+                    child: CustomTextFiled(
+                      width: size.width * .8,
+                      color: framColor,
+                      validator: controller.validator.validatetitle,
+                      hintText: "Titre",
+                      textEditingController: controller.title,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Description",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8),
+                    child: CustomTextFiled(
+                      maxLines: 5,
+                      color: framColor,
+                      width: size.width * .8,
+                      validator: controller.validator.validateDescription,
+                      hintText: "Description",
+                      textEditingController: controller.description,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      "Prix",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            // width: size.width * .87,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.deepOrange, width: 2),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8, right: 8),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: CustomTextFiled2(
+                                        color: Colors.deepOrange,
+                                        validator:
+                                            controller.validator.validatePrice,
+                                        hintText: "Prix",
+                                        textEditingController: controller.prix,
+                                        keyboardType: TextInputType.number),
+                                  ),
+                                  Text(
+                                    "DT",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Gouvernorat",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8),
+                    child: GetBuilder<LocController>(builder: (logic) {
+                      return Column(
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.deepOrange, width: 2),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: DropdownButton<RefJson>(
+                              isExpanded: true,
+                              underline: SizedBox(),
+                              hint: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 8.0, right: 8),
+                                child: Text("Gouvernorat"),
+                              ),
+                              value: logic.city,
+                              iconSize: 24,
+                              elevation: 16,
+                              onChanged: logic.updateCity,
+                              items: logic.cities
+                                  .where((element) => element.name != "")
+                                  .map<DropdownMenuItem<RefJson>>(
+                                      (RefJson value) {
+                                return DropdownMenuItem<RefJson>(
+                                  value: value,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8.0, right: 8),
+                                    child: Text(value.name),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 8.0, bottom: 8),
+                              child: Text(
+                                "Commune",
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                          Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.deepOrange, width: 2),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: DropdownButton<RefJson>(
+                                isExpanded: true,
+                                underline: SizedBox(),
+                                hint: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 8.0, right: 10),
+                                  child: Text("Commune"),
+                                ),
+                                value: logic.town,
+                                iconSize: 24,
+                                elevation: 16,
+                                onChanged: logic.updateTown,
+                                items: logic.towns
+                                    .where((element) => element.name != "")
+                                    .map<DropdownMenuItem<RefJson>>(
+                                        (RefJson value) {
+                                  return DropdownMenuItem<RefJson>(
+                                    value: value,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8.0, right: 8),
+                                      child: Text(value.name),
+                                    ),
+                                  );
+                                }).toList(),
+                              )),
+                          Align(
+                              alignment: Alignment.topLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Obx(() => Text(
+                                      controller.validateTown.value,
+                                      style: TextStyle(color: Colors.red),
+                                    )),
+                              ))
+                        ],
+                      );
+                    }),
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.call),
+                      Flexible(
+                        flex: 1,
+                        child: GetBuilder<TapPublishViewController>(
+                            builder: (logic) {
+                          return ListTile(
+                            title: const Text('Afficher N° Tél'),
+                            trailing: CupertinoSwitch(
+                              value: logic.lights,
+                              activeColor: Colors.deepOrange,
+                              onChanged: logic.updateLight,
+                            ),
+                            onTap: () {
+                              logic.lights = !logic.lights;
+                            },
+                          );
+                        }),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 8.0, bottom: 40, right: 8, left: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CustomButtonWithoutIcon(
+                            width: MediaQuery.of(context).size.width * .35,
+                            height: 50,
+                            label: "Suivant",
+                            labColor: Colors.white,
+                            btColor: buttonColor,
+                            function: () {
+                              validateGetView(context);
+                            }),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+        //})
+        );
   }
 
   void validateOptions(context) {
@@ -495,7 +471,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
     if (controller.energie == null) {
       controller.validateEnergie.value = "L'energie st obligatoire";
     }
-    if (controller.yearsmodele == null) {
+    if (controller.yearsModele == null) {
       controller.validateYears.value = " L'année est obligatoire";
     }
 
@@ -509,7 +485,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
             controller.vehiculeModel != null &&
             controller.energie != null &&
             controller.kilometrage != null &&
-            controller.yearsmodele != null) {
+            controller.yearsModele != null) {
           validateOptions(context);
         } else {
           Get.snackbar("Oups !",
@@ -518,7 +494,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
       } else if (controller.subCategories.name == "Motos") {
         if (controller.motosBrand != null &&
             controller.kilometrage != null &&
-            controller.yearsmodele != null) {
+            controller.yearsModele != null) {
           validateOptions(context);
         } else {
           Get.snackbar("Oups !",

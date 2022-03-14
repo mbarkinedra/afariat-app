@@ -46,6 +46,7 @@ class LocController extends GetxController {
       }
       town = null;
       tapHomeViewController.filterUpdate();
+      update();
     } else {
       city = ci;
       tapPublishViewController.citie = ci;
@@ -58,9 +59,9 @@ class LocController extends GetxController {
           tapHomeViewController.searchAddLinke + "&city=${ci.id}";
 
       updateTowns(ci.id);
-      update();
+
     }
-  }
+    update();}
 
   updateTown(RefJson town) {
     if (town.id == 0) {

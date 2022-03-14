@@ -49,8 +49,6 @@ class Motos extends GetView<TapPublishViewController> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
-                print("objectKmKmKmKmKmKmKmKmKm");
-                print(logic.kilometrage);
                 return Row(
                   children: [
                     Expanded(flex: 1, child: Text("Km")),
@@ -100,7 +98,7 @@ class Motos extends GetView<TapPublishViewController> {
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,
-                          value: logic.yearsmodele,
+                          value: logic.yearsModele,
                           iconSize: 24,
                           elevation: 16,
                           onChanged: controller.updateAnnee,

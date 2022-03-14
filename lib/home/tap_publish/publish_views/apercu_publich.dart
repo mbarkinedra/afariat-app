@@ -14,6 +14,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
   final categoryAndSubcategory = Get.find<CategoryAndSubcategory>();
   final locController = Get.find<LocController>();
   final numberFormat = NumberFormat("###,##0", SettingsApp.locale);
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -62,7 +63,6 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
             ),
             CustomApercuDescription(
               label: "Description de l'annonce :",
-
               data: controller.myAdsView["description"],
             ),
             CustomApercu(
@@ -97,7 +97,8 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                     entry.key == "advertType" ||
                     entry.key == "description" ||
                     entry.key == "town" ||
-                    entry.key == "city" ||  entry.key == "prix" ||
+                    entry.key == "city" ||
+                    entry.key == "prix" ||
                     entry.key == "showPhoneNumber") {
                   return SizedBox();
                 } else {
@@ -110,7 +111,10 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
             ),
             CustomApercu(
               label: "prix :",
-              data: numberFormat.format(int.tryParse( controller.myAdsView["prix"].replaceAll(" DT", "")) ) + ' ' + SettingsApp.moneySymbol,
+              data: numberFormat.format(int.tryParse(
+                      controller.myAdsView["prix"].replaceAll(" DT", ""))) +
+                  ' ' +
+                  SettingsApp.moneySymbol,
               //controller.myAdsView["prix"],
             ),
             Padding(
@@ -218,8 +222,9 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                               labColor: Colors.white,
                               btColor: Colors.deepOrange,
                               function: () {
-                                Get.find<TapPublishViewController>().modifAds =
-                                false;
+                                Get.find<TapPublishViewController>()
+                                    .modifAds
+                                    .value = false;
                                 controller.postdata();
                               });
                     })
