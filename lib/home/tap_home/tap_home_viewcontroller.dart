@@ -87,6 +87,9 @@ class TapHomeViewController extends GetxController {
     await _advertApi.getList().then((value) {
       adverts = value.embedded.adverts;
 
+
+
+
       getDataFromWeb = false;
     });
     update();

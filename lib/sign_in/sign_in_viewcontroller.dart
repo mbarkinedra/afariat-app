@@ -64,7 +64,9 @@ class SignInViewController extends GetxController {
                     Get.find<HomeViwController>().updatelist();
                     Get.find<HomeViwController>().controller =
                         PersistentTabController(initialIndex: 0);
-              Get.find<TapHomeViewController>().setUserName(email.text); });
+              Get.find<TapHomeViewController>().setUserName(email.text);
+                  email.clear();
+                  password.clear();});
               //TODO: Process error cases: bad salt, bad login/pwd
             }).catchError((e) {
               Get.snackbar("Erreur", "Votre password est incorrect");

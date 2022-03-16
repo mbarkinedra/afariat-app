@@ -89,7 +89,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       iconSize: 24,
                       elevation: 16,
                       onChanged: logic.updateSubCategory,
-                      items: logic.listeSubCategories
+                      items: logic.listSubCategories
                           .map<DropdownMenuItem<SubcategoryJson>>(
                               (SubcategoryJson value) {
                         return DropdownMenuItem<SubcategoryJson>(
@@ -265,7 +265,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                   index++;
                 });
 
-                print(link);
+               print(link);
              Get.find<TapHomeViewController>().searchApi.searchData=link;
                 Get.find<TapHomeViewController>().filterUpdate();
                 Navigator.pop(context);

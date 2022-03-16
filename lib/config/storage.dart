@@ -14,8 +14,8 @@ class SecureStorage extends GetxController {
     return readData;
   }
 
-  deleteSecureData(String key) {
-    box.remove(key);
+ Future deleteSecureData(String key) async{
+  await  box.remove(key);
     // return deleteData;
   }
 

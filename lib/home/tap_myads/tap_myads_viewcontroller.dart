@@ -41,9 +41,11 @@ ads() {
    await _deleteAds.delPost().then((value) {
       ads();
       deleteData = false;
+      print("ok deleete" );
+
       update();
     });
-
+print("not ok delete" );
     update();
   }
 }

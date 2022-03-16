@@ -13,7 +13,7 @@ class CategoryAndSubcategory extends GetxController {
   final tapHomeViewController = Get.find<TapHomeViewController>();
   Map<int, List<SubcategoryJson>> sc = {};
 
-  List<SubcategoryJson> listeSubCategories = [];
+  List<SubcategoryJson> listSubCategories = [];
   SubcategoryJson subcategories1;
   CategoryGroupedJson categoryGroupedJson;
   List<CategoryGroupedJson> categoryGroupList = [];
@@ -54,26 +54,25 @@ class CategoryAndSubcategory extends GetxController {
       tapHomeViewController.filterUpdate();
       update();
     } else {
-print("categor i get up date now ${categoryGrouped.name}");
+      print("category ${categoryGrouped.name}");
 
       Filter.data["category"] = categoryGrouped.id;
-      tapHomeViewController.setSearch("categoryGroup", categoryGrouped.id);
+      tapHomeViewController.setSearch("category", categoryGrouped.id);
 
       categoryGroupedJson = categoryGrouped;
       tapPublishViewController.updateCategory(categoryGrouped);
       tapPublishViewController.updateGetView(null);
       subcategories1 = null;
 
-      listeSubCategories = sc[categoryGrouped.id];
-print("end ${categoryGrouped.name}");
-update();}
-
-
+      listSubCategories = sc[categoryGrouped.id];
+      print("end ${categoryGrouped.name}");
+      update();
+    }
   }
 
   updateSubCategory(SubcategoryJson subCategorie) {
     if (subCategorie.id == 0) {
-      tapHomeViewController.setSearch("categoryGroup", categoryGroupedJson.id);
+      tapHomeViewController.setSearch("category", categoryGroupedJson.id);
       subcategories1 = subCategorie;
 
       // tapPublishViewController
@@ -82,7 +81,7 @@ update();}
       update();
     } else {
       subcategories1 = subCategorie;
-      tapHomeViewController.setSearch("categoryGroup", subCategorie.id);
+      tapHomeViewController.setSearch("category", subCategorie.id);
 
       tapPublishViewController.updateSubCategoryJson(subCategorie);
       tapPublishViewController

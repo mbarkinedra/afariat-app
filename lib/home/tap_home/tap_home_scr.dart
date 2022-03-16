@@ -2,6 +2,7 @@ import 'package:afariat/advert_details/advert_details_scr.dart';
 import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
 
 import 'package:afariat/config/filter.dart';
+import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/bottom_sheet_filter.dart';
 import 'package:afariat/mywidget/myhomeitem.dart';
 import 'package:flutter/material.dart';
@@ -91,6 +92,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                         width: _size.width * .1,
                         child: InkWell(
                           onTap: () {
+                           Get.find<TapPublishViewController>().isButtonSheet=true;
                             Get.bottomSheet(
                                 Container(
                                     decoration: const BoxDecoration(
@@ -108,6 +110,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                   topLeft: Radius.circular(30.0),
                                   topRight: Radius.circular(30.0),
                                 )));
+                           Get.find<TapPublishViewController>().isButtonSheet=false;
+                           Get.find<TapPublishViewController>().   clearAllData();
                             Filter.data.clear();
                           },
                           child: const Icon(

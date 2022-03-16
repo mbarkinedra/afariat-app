@@ -101,7 +101,7 @@ abstract class ApiManager {
   }
 
   /// Get Data  User From Server
-  Future<Response<dynamic>> secureGet({dataToPost}) async {
+  Future<Response<dynamic> > secureGet({dataToPost}) async {
     //generer le wsse
 
     Wsse xwsse = Wsse();
@@ -125,7 +125,7 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
-      print(value.data);
+     // print(value.data);
 
       return value;
     }).onError((error, stackTrace) {
@@ -228,6 +228,7 @@ abstract class ApiManager {
     return dioSingleton.dio.delete(apiUrl(), options: options).then((value) {
       return value;
     }).onError((error, stackTrace) {
+      print(error);
       return error;
 
     });

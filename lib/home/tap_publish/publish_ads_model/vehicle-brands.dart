@@ -139,7 +139,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               }),
             ),
             Align(
-                alignment: Alignment.center,
+                alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Obx(() => Text(

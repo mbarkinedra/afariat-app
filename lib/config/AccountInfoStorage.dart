@@ -1,4 +1,5 @@
 import 'package:afariat/config/storage.dart';
+import 'package:afariat/home/home_view_controller.dart';
 import 'package:get/get.dart';
 
 class AccountInfoStorage extends GetxController {
@@ -60,7 +61,7 @@ class AccountInfoStorage extends GetxController {
   }
 
   /// Removes the hashed password from the secure storage, so user is no longer loggen in.
-  String removeHashedPassword() {
+   removeHashedPassword() {
     return _secureStorage.deleteSecureData(_key_hashedPassword);
   }
 
@@ -69,6 +70,7 @@ class AccountInfoStorage extends GetxController {
     _secureStorage.deleteSecureData(_key_phone);
     _secureStorage.deleteSecureData(_key_user_id);
     _secureStorage.deleteSecureData(_key_name);
+    Get.find<HomeViwController>(). updatelist();
   }
 
   bool isLoggedIn() {

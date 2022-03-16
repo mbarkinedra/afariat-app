@@ -12,6 +12,7 @@ import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../home_view_controller.dart';
 import 'tap_publish_viewcontroller.dart';
 
 class TapPublishScr extends GetWidget<TapPublishViewController> {
@@ -21,7 +22,11 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
     return Scaffold(
         appBar: AppBar(
             leading: Obx(() => controller.modifAds.value
-                ? Icon(Icons.arrow_back)
+                ? InkWell(
+                    onTap: () {
+                      Get.find<HomeViwController>().changeItemFilter(1);
+                    },
+                    child: Icon(Icons.arrow_back))
                 : SizedBox()),
             iconTheme: IconThemeData(
               color: Colors.white, //change your color here
@@ -122,7 +127,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                               iconSize: 24,
                               elevation: 16,
                               onChanged: logic.updateSubCategory,
-                              items: logic.listeSubCategories
+                              items: logic.listSubCategories
                                   .where((element) => element.name != "")
                                   .map<DropdownMenuItem<SubcategoryJson>>(
                                       (SubcategoryJson value) {
@@ -461,22 +466,39 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
   void validateGetView(context) {
     if (controller.town == null) {
       controller.validateTown.value = " La commune est obligatoire";
+    } else {
+      controller.validateTown.value = "";
     }
-    if (controller.vehiculebrands == null) {
+    if (controller.pieces == null ) {
+      controller.validatePiece.value = " Nombre des pieces sont obligatoires ";
+    } else {
+      controller.validatePiece.value = "";
+    }
+    if (controller.vehiculebrands == null && !controller.isButtonSheet) {
       controller.validateMarque.value = " la marque est obligatoire";
+    } else {
+      controller.validateMarque.value = "";
     }
     if (controller.vehiculeModel == null) {
       controller.validateModele.value = " Le modele est obligatoire";
+    } else {
+      controller.validateModele.value = "";
     }
     if (controller.energie == null) {
       controller.validateEnergie.value = "L'energie st obligatoire";
+    } else {
+      controller.validateEnergie.value = "";
     }
     if (controller.yearsModele == null) {
       controller.validateYears.value = " L'année est obligatoire";
+    } else {
+      controller.validateYears.value = " ";
     }
 
     if (controller.kilometrage == null) {
       controller.validateKm.value = "Kilometrage est obligatoire";
+    } else {
+      controller.validateKm.value = "";
     }
     if (controller.subCategories != null) {
       if (controller.subCategories.name == "Voitures" ||
@@ -505,7 +527,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
           controller.subCategories.name == "Bureaux et locaux commerciaux") {
         if (controller.pieces != null && controller.surface != null) {
           controller.myAdsView["surface"] =
-              controller.surface.text.replaceAll("-", "") + " " + "m²";
+              controller.surface.text + " " + "m²";
           // controller.myAds["Surface"] =
           //     controller.surface.text;
 

@@ -20,8 +20,6 @@ class TapChatScr extends GetWidget<TapChatViewController> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -42,40 +40,49 @@ class TapChatScr extends GetWidget<TapChatViewController> {
                     pagingController: controller.pagingController,
                     builderDelegate: PagedChildBuilderDelegate<dynamic>(
                       itemBuilder: (context, item, index) {
-                        return Dismissible(
-                          background: Container(
-                            color: Colors.red,
-                            child: Icon(
-                              Icons.delete,
-                              size: 35,
-                              color: Colors.white,
-                            ),
-                          ),
-                          key: UniqueKey(),
-                          onDismissed: (direction) {
-                            controller.deleteConversation(item.id, item);
-                          },
-                          child: GestureDetector(
-                              onTap: () {
-                                Get.find<ChatUserViewController>().name =
-                                    item.to.username;
-                                Get.find<ChatUserViewController>().id =
-                                    item.id.toString();
-                                Get.find<ChatUserViewController>()
-                                    .messages
-                                    .clear();
-                                Get.find<ChatUserViewController>().getMessage();
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ChatUserScr()));
-                              },
-                              child: ChatUser(
-                                conversation: item,
-                                hasConversaton:
-                                    item.totalUnreadMessagesCount > 0,
-                              )),
-                        );
+                        print("controller ${controller.conversations.length}");
+                        return controller.conversations.length == 0
+                            ? Container(
+                                child: Center(
+                                child: Text("Pas des conversation."),
+                              ))
+                            : Dismissible(
+                                background: Container(
+                                  color: Colors.red,
+                                  child: Icon(
+                                    Icons.delete,
+                                    size: 35,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                key: Key(
+                                    item.id.toString()), // key: UniqueKey(),
+                                onDismissed: (direction) {
+                                  controller.deleteConversation(item.id, item);
+                                },
+                                child: GestureDetector(
+                                    onTap: () {
+                                      Get.find<ChatUserViewController>().name =
+                                          item.to.username;
+                                      Get.find<ChatUserViewController>().id =
+                                          item.id.toString();
+                                      Get.find<ChatUserViewController>()
+                                          .messages
+                                          .clear();
+                                      Get.find<ChatUserViewController>()
+                                          .getMessage();
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ChatUserScr()));
+                                    },
+                                    child: ChatUser(
+                                      conversation: item,
+                                      hasConversaton:
+                                          item.totalUnreadMessagesCount > 0,
+                                    )),
+                              );
                       },
                     ),
                   ),

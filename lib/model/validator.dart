@@ -16,28 +16,28 @@ class Validator {
   }
 
   String validatePrice(String value) {
+    print(value);
+    print("prix");
     if (value.isEmpty) {
       return " Veuillez renseigner le prix.";
     } else if (int.tryParse(value) < 0) {
-      return "Le prix doit être supérieur ou égale à 0 ";
+      return "Le prix doit être supérieur à 0 ";
     }
     return null;
   }
 
-  String validateMarque(String value) {
-    if (value.isEmpty) {
-      return " Veuillez renseigner le prix.";
-    }
-    return null;
-  }
+
 
   String validateSurface(String value) {
+    print(value);
+    print("ggggggggggggggg");
     if (value.isEmpty) {
-      return " Veuillez renseigner le prix.";
-    } else if (int.tryParse(value) < 0) {
-      return "La superficie doit être positive  ";
+      return " Veuillez renseigner la surface.";
     }
-    return null;
+ else if (int.tryParse(value) < 0) {
+
+      return "La surface doit être positive  ";
+    }
   }
 
   String validateDescription(String value) {
@@ -62,6 +62,4 @@ class Validator {
     }
     return null;
   }
-
-
 }

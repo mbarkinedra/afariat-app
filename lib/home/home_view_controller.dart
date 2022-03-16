@@ -15,7 +15,7 @@ import 'tap_publish/tap_publish_scr.dart';
 
 class HomeViwController extends GetxController {
   PersistentTabController controller;
-int newPublish=0;
+  int newPublish = 0;
   int _navigatorValue = 0;
   String _currentPage = 'Page1';
   var _navigatorKey;
@@ -73,25 +73,23 @@ int newPublish=0;
       buildScreens[4] = SignInScr();
     }
   }
-  
 
   changeItemFilter(value) {
+    if (value != 2 || newPublish >= 2) {
+      newPublish = 1;
 
-     
-   if (value != 2||newPublish>=2) {
-     newPublish=1;
-   
-     Get.find<TapPublishViewController>().  clearAllData();
- 
+      Get.find<TapPublishViewController>().clearAllData();
 
-     controller.index = value;
-   }else{
-     newPublish++;
+   //   controller.index = value;
+    } else if (!Get.find<TapPublishViewController>().modifAds.value) {
+      Get.find<TapPublishViewController>().clearAllData();
+    } else {
+      newPublish++;
 
-     controller.index = value;
-   }
-
- }
+    //  controller.index = value;
+    }
+    controller.index = value;
+ update(); }
 
   Widget buildoffstageNavigator(String tabItem) {
     return Offstage(

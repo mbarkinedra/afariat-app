@@ -52,7 +52,15 @@ class Rooms extends GetView<TapPublishViewController> {
             ],
           ),
         ),
-
+        Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Obx(() => Text(
+                controller.validatePiece.value,
+                style: TextStyle(color: Colors.red),
+              )),
+            )),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -71,7 +79,6 @@ class Rooms extends GetView<TapPublishViewController> {
                     Expanded(
                       flex: 1,
                       child: Container(
-                        // width: size.width * .55,
                         decoration: BoxDecoration(
                             border:
                                 Border.all(color: Colors.deepOrange, width: 2),
@@ -85,12 +92,14 @@ class Rooms extends GetView<TapPublishViewController> {
                                 child: CustomTextFiled2(
                                   padding: 0,
                                   color: Colors.deepOrange,
-                                  hintText: "Surface",
-                                  validator:
-                                  controller.validator.validateSurface,
-                                  textEditingController: controller.surface,
-                                  keyboardType: TextInputType.number,
+                                    hintText: "Surface",
+                                    validator:
+                                    controller.validator.validateSurface,
+
+                                    textEditingController: controller.surface,
+                                    keyboardType: TextInputType.number
                                 ),
+
                               ),
                               Text(
                                 "m²",
@@ -105,47 +114,10 @@ class Rooms extends GetView<TapPublishViewController> {
                   ],
                 ),
 
-                /*    child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 8),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: CustomTextFiled2(
-                              padding: 0,
-                              color: Colors.deepOrange,
-                              textEditingController: controller.surface,
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
-                          Text(
-                            "m²",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),*/
+
               ),
 
-              // Container(
-              //   height: 50,
-              //
-              //   decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(10),
-              //       border: Border.all(color: Colors.deepOrange, width: 2),
-              //       color: Colors.grey[100]),
-              //   child: Center(
-              //     child: Text(
-              //       "m²",
-              //       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              //     ),
-              //   ),
-              // )
+
             ],
           ),
         ),

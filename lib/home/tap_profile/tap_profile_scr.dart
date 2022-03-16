@@ -71,11 +71,11 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
             ProfileMenu(
               iconProfile: Icons.logout,
               text: "Déconnexion",
-              press: () {
-                Get.find<AccountInfoStorage>().removeHashedPassword();
+              press: () async {
+                await Get.find<AccountInfoStorage>().removeHashedPassword();
                 Get.find<HomeViwController>().changeItemFilter(0);
                 Get.find<AccountInfoStorage>().logout();
-               Get.find<TapHomeViewController>().setUserName("");
+                Get.find<TapHomeViewController>().setUserName("");
               },
             ),
           ],

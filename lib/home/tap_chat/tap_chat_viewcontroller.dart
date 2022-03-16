@@ -26,7 +26,6 @@ class TapChatViewController extends GetxController {
       final isLastPage = newItems.length < _pageSize;
 
       if (isLastPage) {
-
         pagingController.appendLastPage(newItems);
       } else {
         final nextPageKey = pageKey + newItems.length;
@@ -48,8 +47,6 @@ class TapChatViewController extends GetxController {
 
   getAllConversations() {
     _getConvertionsApi.secureGet().then((value) {
-
-
       ConversationJson conversationJson = ConversationJson.fromJson(value.data);
       conversations = conversationJson.eEmbedded.conversation;
 
@@ -64,9 +61,8 @@ class TapChatViewController extends GetxController {
     conversations.remove(item);
     _deleteConversationApi.id = id.toString();
     _deleteConversationApi.deleteData().then((value) {
-
-
       update();
     });
+    update();
   }
 }

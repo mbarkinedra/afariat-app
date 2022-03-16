@@ -33,6 +33,8 @@ class TapPublishViewController extends GetxController {
   bool getDataFromServer = false;
   RxString validateTown = "".obs;
   RxString validateMarque = "".obs;
+  RxString validatePiece = "".obs;
+
   RxString validateModele = "".obs;
   RxString validateEnergie = "".obs;
   RxString validateYears = "".obs;
@@ -48,6 +50,7 @@ class TapPublishViewController extends GetxController {
   CategoryGroupedJson category;
   SubcategoryJson subCategories;
   bool lights = true;
+  bool isButtonSheet = false;
   String pieces;
   BuildContext context;
   RefJson energie;
@@ -342,6 +345,12 @@ class TapPublishViewController extends GetxController {
   }
 
   clearAllData() {
+    validateTown.value = "";
+    validateMarque.value = "";
+    validateModele.value = "";
+    validateEnergie.value = "";
+    validateYears.value = "";
+    validateKm.value = "";
     category = null;
     subCategories = null;
     RefJson refJson = RefJson(id: 0, name: "");
