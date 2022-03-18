@@ -212,8 +212,8 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                         });
                       },
                     ),
-                    GetBuilder<TapPublishViewController>(builder: (logic) {
-                      return logic.buttonPublier
+                    Obx(  () {
+                      return controller.buttonPublier.value
                           ? CircularProgressIndicator()
                           : CustomButtonWithoutIcon(
                               width: MediaQuery.of(context).size.width * .25,

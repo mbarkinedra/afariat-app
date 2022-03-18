@@ -2,6 +2,7 @@ import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/storage.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
+import 'package:afariat/controllers/connexion_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/home_view_controller.dart';
 import 'package:afariat/home/tap_chat/chat_user/chat_user_viewcontroller.dart';
@@ -22,6 +23,8 @@ import 'package:get/get.dart';
 class AllBindings extends Bindings {
   @override
   void dependencies() async {
+
+    Get.put(NetWorkController(), permanent: true);
     Get.lazyPut(() => AccountViewController());
     Get.lazyPut(() => TapHomeViewController(), fenix: true);
     Get.lazyPut(() => HomeViwController(), fenix: true);
@@ -44,3 +47,4 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => TapChatViewController());
   }
 }
+

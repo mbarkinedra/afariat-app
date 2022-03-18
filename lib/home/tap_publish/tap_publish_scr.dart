@@ -291,7 +291,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0, right: 8),
                     child: GetBuilder<LocController>(builder: (logic) {
-                      return Column(
+                      return logic.getCity?Center(child: CircularProgressIndicator(),):Column(
                         children: [
                           Container(
                             width: double.infinity,
@@ -326,6 +326,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                               }).toList(),
                             ),
                           ),
+
                           const SizedBox(
                             height: 8,
                           ),
@@ -436,10 +437,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
   }
 
   void validateOptions(context) {
-    if (controller.globalKey.currentState.validate() &&
-        controller.subCategories != null &&
-        controller.town != null) {
-      controller.myAdsView["prix"] = controller.prix.text.replaceAll("-", "") +
+    if (controller.globalKey.currentState.validate() ) {
+      controller.myAdsView["prix"] = controller.prix.text +
           " " +
           SettingsApp.moneySymbol;
       controller.myAds["price"] = controller.prix.text;
@@ -474,7 +473,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
     } else {
       controller.validatePiece.value = "";
     }
-    if (controller.vehiculebrands == null && !controller.isButtonSheet) {
+    if (controller.vehiculebrands == null  ) {
       controller.validateMarque.value = " la marque est obligatoire";
     } else {
       controller.validateMarque.value = "";
@@ -526,10 +525,10 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
           controller.subCategories.name == "Maison" ||
           controller.subCategories.name == "Bureaux et locaux commerciaux") {
         if (controller.pieces != null && controller.surface != null) {
-          controller.myAdsView["surface"] =
-              controller.surface.text + " " + "m²";
-          // controller.myAds["Surface"] =
-          //     controller.surface.text;
+          controller.myAdsView["Superficie"] =
+              controller.surface.text.replaceAll("-", "")+ " " + "m²";
+           controller.myAds["area"] =
+               controller.surface.text;
 
           validateOptions(context);
         } else {

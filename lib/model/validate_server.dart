@@ -44,6 +44,7 @@ class ValidateServer {
 
         });
         registerFormKey.currentState.validateTown();
+
         Get.snackbar(
           'Erreur',
           'Veuillez corriger les erreurs ci-dessous.',

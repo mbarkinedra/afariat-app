@@ -75,21 +75,23 @@ class HomeViwController extends GetxController {
   }
 
   changeItemFilter(value) {
+    TapPublishViewController tapPublishViewController=    Get.find<TapPublishViewController>();
     if (value != 2 || newPublish >= 2) {
       newPublish = 1;
 
-      Get.find<TapPublishViewController>().clearAllData();
+      tapPublishViewController.clearAllData();
 
-   //   controller.index = value;
-    } else if (!Get.find<TapPublishViewController>().modifAds.value) {
-      Get.find<TapPublishViewController>().clearAllData();
+     //controller.index = value;
+    } else if (!tapPublishViewController.modifAds.value) {
+      tapPublishViewController.clearAllData();
     } else {
       newPublish++;
 
-    //  controller.index = value;
+     //controller.index = value;
     }
-    controller.index = value;
- update(); }
+   controller.index = value;
+    update();
+  }
 
   Widget buildoffstageNavigator(String tabItem) {
     return Offstage(

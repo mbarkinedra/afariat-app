@@ -26,7 +26,7 @@ import 'package:image_picker/image_picker.dart';
 import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
-  bool buttonPublier = false;
+  RxBool buttonPublier = false.obs;
   bool buttonModif = false;
   bool buttonSupprimer = false;
   RxBool modifAds = false.obs;
@@ -87,7 +87,8 @@ class TapPublishViewController extends GetxController {
   List<RefJson> vehiculeModels = [];
   List<RefJson> mileages = [];
   List<RefJson> yearsModels = [];
-  List<RefJson> rooms = [];
+
+  // List<RefJson> rooms = [];
   List<String> nombrePieces = [
     '1',
     '2',
@@ -121,7 +122,7 @@ class TapPublishViewController extends GetxController {
 
     if (imgCamera != null) {
       images.add(File(imgCamera.path));
-      update();
+   //   update();
     }
 
     update();
@@ -131,7 +132,7 @@ class TapPublishViewController extends GetxController {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       images.add(File(pickedFile.path));
-      update();
+     // update();
     }
 
     update();
@@ -315,7 +316,7 @@ class TapPublishViewController extends GetxController {
   updateNombredepieces(newValue) {
     pieces = newValue;
     myAds["roomsNumber"] = newValue;
-    myAdsView["roomsNumber"] = newValue;
+    myAdsView["Nombre de pièces"] = newValue;
     update();
   }
 
@@ -350,7 +351,8 @@ class TapPublishViewController extends GetxController {
     validateModele.value = "";
     validateEnergie.value = "";
     validateYears.value = "";
-    validateKm.value = "";
+    validatePiece.value = "";
+
     category = null;
     subCategories = null;
     RefJson refJson = RefJson(id: 0, name: "");
@@ -378,8 +380,8 @@ class TapPublishViewController extends GetxController {
   }
 
   postdata() async {
-    buttonPublier = true;
-    update();
+    buttonPublier.value = true;
+
     for (var i in images) {
       photobase64Encode(i);
     }
@@ -390,7 +392,16 @@ class TapPublishViewController extends GetxController {
     if (dataAdverts) {
       _modifAdsApi.id = modifAdsJson.id;
       await _modifAdsApi.putData(dataToPost: myAds).then((value) async {
+        buttonPublier.value = false;
+
         if (value.statusCode == 204) {
+          Get.find<TapMyadsViewController>().ads();
+          Get.find<HomeViwController>().changeItemFilter(1);
+          Filter.data.clear();
+          clearAllData();
+          Get.find<CategoryAndSubcategory>().clearData();
+          Get.find<LocController>().clearData();
+          images.clear();
           await showDialog<bool>(
               context: context,
               builder: (context) {
@@ -398,14 +409,8 @@ class TapPublishViewController extends GetxController {
                   text2: " ",
                   title: "Félicitation",
                   function: () {
-                    Get.find<TapMyadsViewController>().ads();
-                    Get.find<HomeViwController>().changeItemFilter(1);
-                    Filter.data.clear();
-                    clearAllData();
-                    Get.find<CategoryAndSubcategory>().clearData();
-                    Get.find<LocController>().clearData();
 
-                    buttonPublier = false;
+
                     Navigator.pop(context);
                     update();
                   },
@@ -420,8 +425,18 @@ class TapPublishViewController extends GetxController {
       devlog.log(jsonEncode(myAds));
 
       await publishApi.securePost(dataToPost: myAds).then((value) {
+        buttonPublier.value = false;
+        print("000000000000000000000000000");
+print(value.data);
         _validateServer.validatorServer(
             validate: () async {
+              Filter.data.clear();
+
+              clearAllData();
+              images.clear();
+              print("images.clear   ${images.length} ");
+              Get.find<CategoryAndSubcategory>().clearData();
+              Get.find<LocController>().clearData();
               await showDialog<bool>(
                   context: context,
                   builder: (context) {
@@ -429,10 +444,7 @@ class TapPublishViewController extends GetxController {
                       text2: " ",
                       title: "Félicitation",
                       function: () {
-                        Filter.data.clear();
-                        clearAllData();
-                        Get.find<CategoryAndSubcategory>().clearData();
-                        Get.find<LocController>().clearData();
+
 
                         for (int i = 0; i < 2; i++) {
                           Get.back();
@@ -441,7 +453,7 @@ class TapPublishViewController extends GetxController {
                         Get.find<TapMyadsViewController>().ads();
 
                         Get.find<HomeViwController>().changeItemFilter(1);
-                        update();
+                        //update();
                       },
                       description: "Votre annonce est en cours de validation !",
                       buttonText: "Ok",
@@ -450,10 +462,6 @@ class TapPublishViewController extends GetxController {
                   });
             },
             value: value);
-
-        buttonPublier = false;
-
-        update();
       });
     }
 
@@ -475,7 +483,8 @@ class TapPublishViewController extends GetxController {
             modifAdsJson.city.toJson()["id"]) {
           Get.find<LocController>().city = Get.find<LocController>().cities[i];
           citie = Get.find<LocController>().cities[i];
-
+          myAds["city"] = Get.find<LocController>().cities[i].id;
+          myAdsView["city"] = Get.find<LocController>().cities[i].name;
           Get.find<LocController>()
               .updateTowns(Get.find<LocController>().cities[i].id)
               .then((value) {

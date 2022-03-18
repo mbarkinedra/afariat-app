@@ -31,14 +31,14 @@ class Validator {
   String validateSurface(String value) {
     print(value);
     print("ggggggggggggggg");
-    if (value.isEmpty) {
+    if (value.isEmpty||value==null) {
       return " Veuillez renseigner la surface.";
     }
  else if (int.tryParse(value) < 0) {
 
       return "La surface doit être positive  ";
     }
-  }
+    return null;}
 
   String validateDescription(String value) {
     if (value.isNotEmpty) {

@@ -2,6 +2,7 @@ import 'package:afariat/advert_details/advert_details_scr.dart';
 import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
 
 import 'package:afariat/config/filter.dart';
+import 'package:afariat/controllers/connexion_controller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/bottom_sheet_filter.dart';
 import 'package:afariat/mywidget/myhomeitem.dart';
@@ -123,57 +124,60 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                       )
                     ]),
               ))),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Expanded(
-              flex: 1,
-              child: GetBuilder<TapHomeViewController>(builder: (logic) {
-                return logic.getDataFromWeb
-                    ? Center(child: const CircularProgressIndicator())
-                    : RefreshIndicator(
-                        onRefresh: () => Future.sync(
+      body:   Obx((){
+        return Get.find<NetWorkController>().connectionStatus.value?
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: GetBuilder<TapHomeViewController>(builder: (logic) {
+                  return logic.getDataFromWeb
+                      ? Center(child: const CircularProgressIndicator())
+                      : RefreshIndicator(
+                    onRefresh: () => Future.sync(
                           () => controller.pagingController.refresh(),
-                        ),
-                        child: PagedListView<int, dynamic>(
-                          pagingController: controller.pagingController,
-                          builderDelegate: PagedChildBuilderDelegate<dynamic>(
-                            itemBuilder: (context, item, index) {
-                              if (item.description.toLowerCase().contains(
-                                      logic.searchWord.text.toLowerCase()) ||
-                                  item.title.toLowerCase().contains(
-                                      logic.searchWord.text.toLowerCase())) {
-                                return InkWell(
-                                  onTap: () {
-                                    Get.find<AdvertDetailsViewcontroller>()
-                                        .loading = true;
-                                    Get.find<AdvertDetailsViewcontroller>()
-                                        .getAdvertDetails(item.id);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              AdvertDetatilsScr()),
-                                    );
-                                  },
-                                  child: MyHomeItem(
-                                    size: _size,
-                                    adverts: item,
-                                  ),
+                    ),
+                    child: PagedListView<int, dynamic>(
+                      pagingController: controller.pagingController,
+                      builderDelegate: PagedChildBuilderDelegate<dynamic>(
+                        itemBuilder: (context, item, index) {
+                          if (item.description.toLowerCase().contains(
+                              logic.searchWord.text.toLowerCase()) ||
+                              item.title.toLowerCase().contains(
+                                  logic.searchWord.text.toLowerCase())) {
+                            return InkWell(
+                              onTap: () {
+                                Get.find<AdvertDetailsViewcontroller>()
+                                    .loading = true;
+                                Get.find<AdvertDetailsViewcontroller>()
+                                    .getAdvertDetails(item.id);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AdvertDetatilsScr()),
                                 );
-                              } else {
-                                return const SizedBox();
-                              }
-                            },
-                          ),
-                        ),
-                      );
-              }),
-            )
-          ],
-        ),
-      ),
+                              },
+                              child: MyHomeItem(
+                                size: _size,
+                                adverts: item,
+                              ),
+                            );
+                          } else {
+                            return const SizedBox();
+                          }
+                        },
+                      ),
+                    ),
+                  );
+                }),
+              )
+            ],
+          ),
+        ):Center(child: Text("y have not connection "),);
+      })   ,
       drawer: Container(
         width: _size.width * .6,
         child: Drawer(

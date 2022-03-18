@@ -49,7 +49,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               }),
             ),
             Align(
-                alignment: Alignment.center,
+                alignment: Alignment.topCenter,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Obx(() => Text(
@@ -139,7 +139,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               }),
             ),
             Align(
-                alignment: Alignment.centerLeft,
+                alignment: Alignment.topCenter,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Obx(() => Text(
@@ -184,7 +184,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               }),
             ),
             Align(
-                alignment: Alignment.center,
+                alignment: Alignment.topCenter,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Obx(() => Text(
@@ -229,7 +229,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
               }),
             ),
             Align(
-                alignment: Alignment.center,
+                alignment: Alignment.topCenter,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Obx(() => Text(

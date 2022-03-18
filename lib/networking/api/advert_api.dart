@@ -12,4 +12,11 @@ class AdvertApi extends ApiManager {
   fromJson(data) {
     return AdvertListJson.fromJson(data);
   }
+
+  // @override
+  // void processNetworkErro(error){
+  //   super.processNetworkErro(error);
+  //
+  //   // show the submit button
+  // }
 }

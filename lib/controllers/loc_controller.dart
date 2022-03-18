@@ -15,7 +15,7 @@ class LocController extends GetxController {
   List<RefJson> towns = [];
   RefJson town;
   int index = 0;
-
+bool getCity=true;
   @override
   void onInit() {
     super.onInit();
@@ -23,6 +23,7 @@ class LocController extends GetxController {
       cities = value.data;
 
       cities.insert(0, RefJson(id: 0, name: ""));
+      getCity=false;
       update();
     });
   }
