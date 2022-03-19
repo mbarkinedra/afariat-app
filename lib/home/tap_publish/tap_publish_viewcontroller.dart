@@ -7,6 +7,7 @@ import 'package:afariat/config/filter.dart';
 import 'package:afariat/config/storage.dart';
 
 import 'package:afariat/controllers/category_and_subcategory.dart';
+import 'package:afariat/controllers/connexion_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
 import 'package:afariat/model/validate_server.dart';
@@ -122,7 +123,7 @@ class TapPublishViewController extends GetxController {
 
     if (imgCamera != null) {
       images.add(File(imgCamera.path));
-   //   update();
+      //   update();
     }
 
     update();
@@ -132,7 +133,7 @@ class TapPublishViewController extends GetxController {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       images.add(File(pickedFile.path));
-     // update();
+      // update();
     }
 
     update();
@@ -172,8 +173,10 @@ class TapPublishViewController extends GetxController {
     advertType = values[0];
     myAds["advertType"] = values[0].name;
     myAdsView["advertType"] = values[0].name;
-    getMileages();
-    getYearsModels();
+    if (Get.find<NetWorkController>().connectionStatus.value) {
+      getMileages();
+      getYearsModels();
+    }
   }
 
   getEnergie() {
@@ -255,8 +258,10 @@ class TapPublishViewController extends GetxController {
       motosBrand = null;
       yearsModele = null;
       kilometrage = null;
-      getVehicleBrand();
-      getMotosBrand();
+      if (Get.find<NetWorkController>().connectionStatus.value) {
+        getVehicleBrand();
+        getMotosBrand();
+      }
     }
     update();
   }
@@ -346,37 +351,39 @@ class TapPublishViewController extends GetxController {
   }
 
   clearAllData() {
-    validateTown.value = "";
-    validateMarque.value = "";
-    validateModele.value = "";
-    validateEnergie.value = "";
-    validateYears.value = "";
-    validatePiece.value = "";
+    if (Get.find<NetWorkController>().connectionStatus.value) {
+      validateTown.value = "";
+      validateMarque.value = "";
+      validateModele.value = "";
+      validateEnergie.value = "";
+      validateYears.value = "";
+      validatePiece.value = "";
 
-    category = null;
-    subCategories = null;
-    RefJson refJson = RefJson(id: 0, name: "");
-    updateGetView(refJson);
-    Get.find<LocController>().updateCity(refJson);
-    modifAds.value = false;
-    yearsModele = null;
-    vehiculebrands = null;
-    motosBrand = null;
-    vehiculeModel = null;
-    energie = null;
-    kilometrage = null;
-    pieces = null;
-    town = null;
-    citie = null;
+      category = null;
+      subCategories = null;
+      RefJson refJson = RefJson(id: 0, name: "");
+      updateGetView(refJson);
+      Get.find<LocController>().updateCity(refJson);
+      modifAds.value = false;
+      yearsModele = null;
+      vehiculebrands = null;
+      motosBrand = null;
+      vehiculeModel = null;
+      energie = null;
+      kilometrage = null;
+      pieces = null;
+      town = null;
+      citie = null;
 
-    myAds = {};
-    myAdsView = {};
-    title.text = "";
-    description.text = "";
-    prix.text = "";
-    surface.text = "";
+      myAds = {};
+      myAdsView = {};
+      title.text = "";
+      description.text = "";
+      prix.text = "";
+      surface.text = "";
 
-    update();
+      update();
+    }
   }
 
   postdata() async {
@@ -409,8 +416,6 @@ class TapPublishViewController extends GetxController {
                   text2: " ",
                   title: "Félicitation",
                   function: () {
-
-
                     Navigator.pop(context);
                     update();
                   },
@@ -427,7 +432,7 @@ class TapPublishViewController extends GetxController {
       await publishApi.securePost(dataToPost: myAds).then((value) {
         buttonPublier.value = false;
         print("000000000000000000000000000");
-print(value.data);
+        print(value.data);
         _validateServer.validatorServer(
             validate: () async {
               Filter.data.clear();
@@ -444,8 +449,6 @@ print(value.data);
                       text2: " ",
                       title: "Félicitation",
                       function: () {
-
-
                         for (int i = 0; i < 2; i++) {
                           Get.back();
                         }

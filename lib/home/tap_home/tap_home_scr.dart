@@ -7,6 +7,7 @@ import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/bottom_sheet_filter.dart';
 import 'package:afariat/mywidget/myhomeitem.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'tap_home_viewcontroller.dart';
@@ -93,7 +94,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                         width: _size.width * .1,
                         child: InkWell(
                           onTap: () {
-                           Get.find<TapPublishViewController>().isButtonSheet=true;
+                            Get.find<TapPublishViewController>().isButtonSheet =
+                                true;
                             Get.bottomSheet(
                                 Container(
                                     decoration: const BoxDecoration(
@@ -111,8 +113,9 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                   topLeft: Radius.circular(30.0),
                                   topRight: Radius.circular(30.0),
                                 )));
-                           Get.find<TapPublishViewController>().isButtonSheet=false;
-                           Get.find<TapPublishViewController>().   clearAllData();
+                            Get.find<TapPublishViewController>().isButtonSheet =
+                                false;
+                            Get.find<TapPublishViewController>().clearAllData();
                             Filter.data.clear();
                           },
                           child: const Icon(
@@ -124,60 +127,82 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                       )
                     ]),
               ))),
-      body:   Obx((){
-        return Get.find<NetWorkController>().connectionStatus.value?
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Expanded(
-                flex: 1,
-                child: GetBuilder<TapHomeViewController>(builder: (logic) {
-                  return logic.getDataFromWeb
-                      ? Center(child: const CircularProgressIndicator())
-                      : RefreshIndicator(
-                    onRefresh: () => Future.sync(
-                          () => controller.pagingController.refresh(),
-                    ),
-                    child: PagedListView<int, dynamic>(
-                      pagingController: controller.pagingController,
-                      builderDelegate: PagedChildBuilderDelegate<dynamic>(
-                        itemBuilder: (context, item, index) {
-                          if (item.description.toLowerCase().contains(
-                              logic.searchWord.text.toLowerCase()) ||
-                              item.title.toLowerCase().contains(
-                                  logic.searchWord.text.toLowerCase())) {
-                            return InkWell(
-                              onTap: () {
-                                Get.find<AdvertDetailsViewcontroller>()
-                                    .loading = true;
-                                Get.find<AdvertDetailsViewcontroller>()
-                                    .getAdvertDetails(item.id);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          AdvertDetatilsScr()),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Obx(() => Column(
+              children: [
+                Get.find<NetWorkController>().connectionStatus.value == false
+                    ? Container(
+                        child: Center(child: CircularProgressIndicator()),
+                        height: 50,
+                        width: 50,
+                      )
+                    : SizedBox(),
+                Get.find<NetWorkController>().connectionStatus.value
+                    ? Expanded(
+                        flex: 1,
+                        child:
+                            GetBuilder<TapHomeViewController>(builder: (logic) {
+                          return logic.getDataFromWeb
+                              ? Center(child: const CircularProgressIndicator())
+                              : RefreshIndicator(
+                                  onRefresh: () => Future.sync(
+                                    () => controller.pagingController.refresh(),
+                                  ),
+                                  child: PagedListView<int, dynamic>(
+                                    pagingController:
+                                        controller.pagingController,
+                                    builderDelegate:
+                                        PagedChildBuilderDelegate<dynamic>(
+                                      itemBuilder: (context, item, index) {
+                                        if (item.description
+                                                .toLowerCase()
+                                                .contains(logic.searchWord.text
+                                                    .toLowerCase()) ||
+                                            item.title.toLowerCase().contains(
+                                                logic.searchWord.text
+                                                    .toLowerCase())) {
+                                          return InkWell(
+                                            onTap: () {
+                                              Get.find<
+                                                      AdvertDetailsViewcontroller>()
+                                                  .loading = true;
+                                              Get.find<
+                                                      AdvertDetailsViewcontroller>()
+                                                  .getAdvertDetails(item.id);
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        AdvertDetatilsScr()),
+                                              );
+                                            },
+                                            child: MyHomeItem(
+                                              size: _size,
+                                              adverts: item,
+                                            ),
+                                          );
+                                        } else {
+                                          return const SizedBox();
+                                        }
+                                      },
+                                    ),
+                                  ),
                                 );
-                              },
-                              child: MyHomeItem(
-                                size: _size,
-                                adverts: item,
-                              ),
-                            );
-                          } else {
-                            return const SizedBox();
-                          }
-                        },
-                      ),
-                    ),
-                  );
-                }),
-              )
-            ],
-          ),
-        ):Center(child: Text("y have not connection "),);
-      })   ,
+                        }),
+                      )
+                    : Expanded(
+                        child: Container(
+                        child: Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                         Icon(Icons.wifi_off_rounded,size: 80,color: Colors.deepOrangeAccent,),
+                        Text("Pas de connexion internet",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black45),) ,
+                         /*   Text("Connect_toi a internet et réessaie.",style: TextStyle(color: Colors.black45),)*/],
+                        )),
+                      ))
+              ],
+            )),
+      ),
       drawer: Container(
         width: _size.width * .6,
         child: Drawer(
@@ -190,24 +215,28 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   color: Colors.deepOrangeAccent,
                 ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset("assets/images/Splash_6.png",height: _size.height*.1,width: _size.width*.3,),
+                    Image.asset(
+                      "assets/images/Splash_6.png",
+                      height: _size.height * .1,
+                      width: _size.width * .3,
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child:  GetBuilder<TapHomeViewController>(builder: (logic) {
-                          return Text(
-                            logic.name,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold));
-                        }
-                      ),
+                      child:
+                          GetBuilder<TapHomeViewController>(builder: (logic) {
+                        return Text(logic.name,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold));
+                      }),
                     ),
                   ],
                 ),
               ),
-         // SizedBox(height: 35,),
+              // SizedBox(height: 35,),
               ListTile(
                 leading: Icon(Icons.help_center),
                 title: const Text(
@@ -220,7 +249,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   // Navigator.pop(context);
                 },
               ),
-      /*        ListTile(
+              /*        ListTile(
                 title: const Text('Item 2'),
                 onTap: () {
                   // Update the state of the app

@@ -1,6 +1,7 @@
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
+import 'package:afariat/controllers/connexion_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/networking/api/advertPage_api.dart';
 import 'package:afariat/networking/api/advert_api.dart';
@@ -42,18 +43,27 @@ class TapHomeViewController extends GetxController {
   int page = 1;
 
   getAllAds() {
-    pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(page);
-    });
-    updateData();
-    getPriceList();
+if(Get.find<NetWorkController>().connectionStatus.value){
+  pagingController.addPageRequestListener((pageKey) {
+    _fetchPage(page);
+  });
+  updateData();
+  getPriceList();
+}
+
   }
 
   @override
   void onInit() {
     super.onInit();
+     if( Get.find<NetWorkController>().connectionStatus.value)      {
+      getAllAds();
+    }
+    // else{
+    //   //Get.snackbar("99", "99");
+    //   print("9888897876665565575755454545459");
+    // }
 
-    getAllAds();
 
     setUserName(Get.find<AccountInfoStorage>().readName() ?? "");
   }

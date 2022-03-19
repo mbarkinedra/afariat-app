@@ -7,6 +7,8 @@ import 'package:afariat/networking/json/categories_grouped_json.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:get/get.dart';
 
+import 'connexion_controller.dart';
+
 class CategoryAndSubcategory extends GetxController {
   int index = 0;
   final CategoriesGrouppedApi _categoriesGrouppedApi = CategoriesGrouppedApi();
@@ -24,6 +26,10 @@ class CategoryAndSubcategory extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getCategoriesGrouppedApi();
+  }
+getCategoriesGrouppedApi(){
+  if(Get.find<NetWorkController>().connectionStatus.value){
     _categoriesGrouppedApi.getList().then((value) {
       categoryGroupList = value.data;
 
@@ -37,7 +43,7 @@ class CategoryAndSubcategory extends GetxController {
       update();
     });
   }
-
+}
   clearData() {
     categoryGroupedJson = null;
     subcategories1 = null;

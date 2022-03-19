@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 
+import 'connexion_controller.dart';
+
 class LocController extends GetxController {
   final tapHomeViewController = Get.find<TapHomeViewController>();
   final tapPublishViewController = Get.find<TapPublishViewController>();
@@ -19,6 +21,10 @@ bool getCity=true;
   @override
   void onInit() {
     super.onInit();
+    getCitylist();
+  }
+getCitylist(){
+  if(Get.find<NetWorkController>().connectionStatus.value){
     _cityApi.getList().then((value) {
       cities = value.data;
 
@@ -27,7 +33,7 @@ bool getCity=true;
       update();
     });
   }
-
+}
   clearData() {
     city = null;
 

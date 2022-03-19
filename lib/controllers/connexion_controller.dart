@@ -1,7 +1,12 @@
 import 'dart:async';
 
+import 'package:afariat/home/tap_chat/tap_chat_viewcontroller.dart';
+import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
+
+import 'category_and_subcategory.dart';
+import 'loc_controller.dart';
 class NetWorkController extends GetxController{
   var connectionStatus=false.obs;
   final Connectivity _connectivity=Connectivity();
@@ -37,13 +42,24 @@ class NetWorkController extends GetxController{
 
   _updateConnectionStatus(ConnectivityResult value) {
 
-
+    TapHomeViewController tapHomeViewController=Get.find<TapHomeViewController>();
     switch(value){
       case ConnectivityResult.wifi:
+
         connectionStatus.value=true;
+        tapHomeViewController.getAllAds();
+        Get.find<TapChatViewController>().getAllConversations();
+        Get.find<LocController>().getCitylist();
+        Get.find<CategoryAndSubcategory>().getCategoriesGrouppedApi();
         break;
       case ConnectivityResult.mobile:
+
+
         connectionStatus.value=true;
+        tapHomeViewController.getAllAds();
+        Get.find<TapChatViewController>().getAllConversations();
+        Get.find<LocController>().getCitylist();
+        Get.find<CategoryAndSubcategory>().getCategoriesGrouppedApi();
         break;
       case ConnectivityResult.none:
         connectionStatus.value=false;

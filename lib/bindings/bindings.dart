@@ -23,13 +23,13 @@ import 'package:get/get.dart';
 class AllBindings extends Bindings {
   @override
   void dependencies() async {
-
+    Get.put(SecureStorage());
+    Get.put(AccountInfoStorage());
     Get.put(NetWorkController(), permanent: true);
     Get.lazyPut(() => AccountViewController());
     Get.lazyPut(() => TapHomeViewController(), fenix: true);
     Get.lazyPut(() => HomeViwController(), fenix: true);
-    Get.put(SecureStorage());
-    Get.put(AccountInfoStorage());
+
     Get.put(TapPublishViewController());
     Get.put(CategoryAndSubcategory());
     Get.put(LocController());

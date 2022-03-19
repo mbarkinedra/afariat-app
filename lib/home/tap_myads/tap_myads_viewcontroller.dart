@@ -1,5 +1,6 @@
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/storage.dart';
+import 'package:afariat/controllers/connexion_controller.dart';
 import 'package:afariat/networking/api/delete_ads.dart';
 import 'package:afariat/networking/api/my_ads_api.dart';
 import 'package:afariat/networking/json/my_ads_json.dart';
@@ -15,11 +16,15 @@ class TapMyadsViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    ads();
+
+      print("999999999999999");
+      ads();
+
+
   }
 
 ads() {
-
+  if(Get.find<NetWorkController>().connectionStatus.value ){
     _myAdsApi.userId = Get.find<AccountInfoStorage>().readUserId();
     getAdsFromServer = true;
     update();
@@ -31,7 +36,7 @@ ads() {
       getAdsFromServer = false;
       update();
     });
-  }
+  }}
 
  Future deleteAds(int i) async{
     deleteData = true;
