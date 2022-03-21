@@ -1,7 +1,7 @@
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
-import 'package:afariat/controllers/connexion_controller.dart';
+import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_publish/publish_views/publish_image/publish_image_scr.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
@@ -17,6 +17,7 @@ import '../home_view_controller.dart';
 import 'tap_publish_viewcontroller.dart';
 
 class TapPublishScr extends GetWidget<TapPublishViewController> {
+  int p=0;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -42,13 +43,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
               ),
             )),
         body:
-            //  GetBuilder<TapPublishViewController>(builder: (logic) {
-            // return
-            //   controller.getDataFromServer
-            //        ? Center(
-            //            child: CircularProgressIndicator(),
-            //          )
-            //        :
+
+
             Container(
           child: Obx(() =>
             Column(

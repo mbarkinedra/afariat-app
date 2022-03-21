@@ -1,7 +1,7 @@
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
-import 'package:afariat/controllers/connexion_controller.dart';
+import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/networking/api/advertPage_api.dart';
 import 'package:afariat/networking/api/advert_api.dart';

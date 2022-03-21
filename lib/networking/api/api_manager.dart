@@ -4,7 +4,7 @@ import 'package:afariat/config/dio_singleton.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/storage.dart';
 import 'package:afariat/config/wsse.dart';
-import 'package:afariat/controllers/connexion_controller.dart';
+import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 import 'package:dio/dio.dart';
 

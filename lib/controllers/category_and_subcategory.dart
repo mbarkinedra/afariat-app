@@ -7,7 +7,7 @@ import 'package:afariat/networking/json/categories_grouped_json.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:get/get.dart';
 
-import 'connexion_controller.dart';
+import 'network_controller.dart';
 
 class CategoryAndSubcategory extends GetxController {
   int index = 0;
@@ -58,7 +58,7 @@ getCategoriesGrouppedApi(){
       }
       categoryGroupedJson = categoryGrouped;
       tapHomeViewController.filterUpdate();
-      update();
+    //  update();
     } else {
       print("category ${categoryGrouped.name}");
 
@@ -72,9 +72,9 @@ getCategoriesGrouppedApi(){
 
       listSubCategories = sc[categoryGrouped.id];
       print("end ${categoryGrouped.name}");
-      update();
+
     }
-  }
+    update();  }
 
   updateSubCategory(SubcategoryJson subCategorie) {
     if (subCategorie.id == 0) {

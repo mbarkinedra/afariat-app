@@ -1,11 +1,12 @@
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:crypto/crypto.dart';
+import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:convert'; // for the utf8.encode method
 
 class Wsse {
 
-
+  AccountInfoStorage _accountInfoStorage=Get.find<AccountInfoStorage>();
   /// Hashs the given password with given salt.
   static String hashPassword(String password, String salt) {
     //combine plain password with salt
@@ -23,7 +24,7 @@ class Wsse {
     // return the digest as bas64 encoded string
     return base64.encode(digest.bytes);
   }
-  AccountInfoStorage _accountInfoStorage=AccountInfoStorage();
+
   /// Generates the WSSE header based on [username] and the [hashedPassword]
   static String generateWsseHeader(String username, String hashedPassword) {
     var uuid = const Uuid();

@@ -75,21 +75,23 @@ class HomeViwController extends GetxController {
   }
 
   changeItemFilter(value) {
-    TapPublishViewController tapPublishViewController=    Get.find<TapPublishViewController>();
+    TapPublishViewController tapPublishViewController =
+        Get.find<TapPublishViewController>();
     if (value != 2 || newPublish >= 2) {
       newPublish = 1;
 
       tapPublishViewController.clearAllData();
 
-     //controller.index = value;
+      //controller.index = value;
     } else if (!tapPublishViewController.modifAds.value) {
+      newPublish = 1;
       tapPublishViewController.clearAllData();
     } else {
       newPublish++;
 
-     //controller.index = value;
+      //controller.index = value;
     }
-   controller.index = value;
+    controller.index = value;
     update();
   }
 

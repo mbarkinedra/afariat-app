@@ -1,4 +1,4 @@
-import 'package:afariat/controllers/connexion_controller.dart';
+import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/api/conversations_api.dart';
 import 'package:afariat/networking/api/delete_conversation_api.dart';
 import 'package:afariat/networking/json/conversation_json.dart';
@@ -41,14 +41,20 @@ class TapChatViewController extends GetxController {
   void onInit() {
     super.onInit();
 
-    pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(page);
-    });
-    getAllConversations();
+
+  }
+
+  @override
+  void onReady() {
+super.onReady();
+pagingController.addPageRequestListener((pageKey) {
+  _fetchPage(page);
+});
+getAllConversations();
   }
 
   getAllConversations() {
-    if(Get.find<NetWorkController>().connectionStatus.value){
+   // if(Get.find<NetWorkController>().connectionStatus.value){
     _getConvertionsApi.secureGet().then((value) {
       ConversationJson conversationJson = ConversationJson.fromJson(value.data);
       conversations = conversationJson.eEmbedded.conversation;
@@ -57,7 +63,8 @@ class TapChatViewController extends GetxController {
 
       update();
     });
-  }}
+ //  }
+}
 
   deleteConversation(int id, item) {
     pagingController.itemList.remove(item);

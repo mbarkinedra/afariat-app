@@ -7,7 +7,7 @@ import 'package:afariat/config/filter.dart';
 import 'package:afariat/config/storage.dart';
 
 import 'package:afariat/controllers/category_and_subcategory.dart';
-import 'package:afariat/controllers/connexion_controller.dart';
+import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
 import 'package:afariat/model/validate_server.dart';
@@ -47,6 +47,7 @@ class TapPublishViewController extends GetxController {
   final picker = ImagePicker();
   Validator validator = Validator();
   bool dataAdverts = false;
+  bool dataEditFromServer = false;
   ModifAdsJson modifAdsJson = ModifAdsJson();
   CategoryGroupedJson category;
   SubcategoryJson subCategories;
@@ -123,7 +124,7 @@ class TapPublishViewController extends GetxController {
 
     if (imgCamera != null) {
       images.add(File(imgCamera.path));
-      //   update();
+      update();
     }
 
     update();
@@ -133,7 +134,7 @@ class TapPublishViewController extends GetxController {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       images.add(File(pickedFile.path));
-      // update();
+      update();
     }
 
     update();
@@ -227,12 +228,11 @@ class TapPublishViewController extends GetxController {
     });
   }
 
-  getMileages() {
-    _mileagesApi.getList().then((value) {
+  getMileages() async {
+    await _mileagesApi.getList().then((value) {
       mileages = value.data;
-
-      update();
     });
+    update();
   }
 
   getMotosBrand() async {
@@ -241,12 +241,11 @@ class TapPublishViewController extends GetxController {
     });
   }
 
-  getYearsModels() {
-    _yearsModelsApi.getList().then((value) {
+  getYearsModels() async {
+    await _yearsModelsApi.getList().then((value) {
       yearsModels = value.data;
-
-      update();
     });
+    update();
   }
 
   updateGetView(RefJson data) async {
@@ -352,6 +351,14 @@ class TapPublishViewController extends GetxController {
 
   clearAllData() {
     if (Get.find<NetWorkController>().connectionStatus.value) {
+      RefJson refJson = RefJson(id: 0, name: "");
+      updateGetView(refJson);
+      Get.find<LocController>().city = null;
+      Get.find<LocController>().town = null;
+      Get.find<LocController>().update();
+      Get.find<CategoryAndSubcategory>().categoryGroupedJson = null;
+      Get.find<CategoryAndSubcategory>().subcategories1 = null;
+      Get.find<CategoryAndSubcategory>().update();
       validateTown.value = "";
       validateMarque.value = "";
       validateModele.value = "";
@@ -361,9 +368,9 @@ class TapPublishViewController extends GetxController {
 
       category = null;
       subCategories = null;
-      RefJson refJson = RefJson(id: 0, name: "");
-      updateGetView(refJson);
-      Get.find<LocController>().updateCity(refJson);
+      town = null;
+      citie = null;
+
       modifAds.value = false;
       yearsModele = null;
       vehiculebrands = null;
@@ -372,8 +379,6 @@ class TapPublishViewController extends GetxController {
       energie = null;
       kilometrage = null;
       pieces = null;
-      town = null;
-      citie = null;
 
       myAds = {};
       myAdsView = {};
@@ -386,7 +391,7 @@ class TapPublishViewController extends GetxController {
     }
   }
 
-  postdata() async {
+  postdata(con) async {
     buttonPublier.value = true;
 
     for (var i in images) {
@@ -403,12 +408,14 @@ class TapPublishViewController extends GetxController {
 
         if (value.statusCode == 204) {
           Get.find<TapMyadsViewController>().ads();
-          Get.find<HomeViwController>().changeItemFilter(1);
+
           Filter.data.clear();
           clearAllData();
           Get.find<CategoryAndSubcategory>().clearData();
           Get.find<LocController>().clearData();
           images.clear();
+          editAdsImages.clear();
+          Get.find<HomeViwController>().changeItemFilter(1);
           await showDialog<bool>(
               context: context,
               builder: (context) {
@@ -416,7 +423,15 @@ class TapPublishViewController extends GetxController {
                   text2: " ",
                   title: "Félicitation",
                   function: () {
+                    int i = 0;
+                    while (i < 2) {
+                      Navigator.pop(con);
+                      i++;
+                    }
                     Navigator.pop(context);
+                    Get.find<TapMyadsViewController>().ads();
+                    Get.find<TapPublishViewController>().clearAllData();
+                    Get.find<HomeViwController>().changeItemFilter(1);
                     update();
                   },
                   description: "Votre annonce est en cours de validation !",
@@ -431,7 +446,6 @@ class TapPublishViewController extends GetxController {
 
       await publishApi.securePost(dataToPost: myAds).then((value) {
         buttonPublier.value = false;
-        print("000000000000000000000000000");
         print(value.data);
         _validateServer.validatorServer(
             validate: () async {
@@ -439,6 +453,7 @@ class TapPublishViewController extends GetxController {
 
               clearAllData();
               images.clear();
+              editAdsImages.clear();
               print("images.clear   ${images.length} ");
               Get.find<CategoryAndSubcategory>().clearData();
               Get.find<LocController>().clearData();
@@ -449,13 +464,17 @@ class TapPublishViewController extends GetxController {
                       text2: " ",
                       title: "Félicitation",
                       function: () {
-                        for (int i = 0; i < 2; i++) {
-                          Get.back();
+                        int i = 0;
+                        while (i < 2) {
+                          Navigator.pop(con);
+                          i++;
                         }
+                        Navigator.pop(context);
+                        Get.find<TapPublishViewController>().clearAllData();
 
                         Get.find<TapMyadsViewController>().ads();
-
                         Get.find<HomeViwController>().changeItemFilter(1);
+
                         //update();
                       },
                       description: "Votre annonce est en cours de validation !",
@@ -480,7 +499,35 @@ class TapPublishViewController extends GetxController {
       description.text = modifAdsJson.description;
       prix.text = modifAdsJson.price.toString();
       lights = modifAdsJson.showPhoneNumber == true ? true : false;
+      for (int cat = 0;
+          cat < Get.find<CategoryAndSubcategory>().categoryGroupList.length;
+          cat++) {
+        if (Get.find<CategoryAndSubcategory>().categoryGroupList[cat].id ==
+            modifAdsJson.category.group.id) {
+          Get.find<CategoryAndSubcategory>().updateCategory(
+              Get.find<CategoryAndSubcategory>().categoryGroupList[cat]);
 
+          category = Get.find<CategoryAndSubcategory>().categoryGroupList[cat];
+
+          for (int sub = 0;
+              sub <
+                  Get.find<CategoryAndSubcategory>()
+                      .sc[modifAdsJson.category.group.id]
+                      .length;
+              sub++) {
+            if (Get.find<CategoryAndSubcategory>()
+                    .sc[modifAdsJson.category.group.id][sub]
+                    .id ==
+                modifAdsJson.category.id) {
+              updateSubCategoryJson(Get.find<CategoryAndSubcategory>()
+                  .sc[modifAdsJson.category.group.id][sub]);
+              Get.find<CategoryAndSubcategory>().updateSubCategory(
+                  Get.find<CategoryAndSubcategory>()
+                      .sc[modifAdsJson.category.group.id][sub]);
+            }
+          }
+        }
+      }
       for (int i = 0; i < Get.find<LocController>().cities.length; i++) {
         if (Get.find<LocController>().cities[i].id ==
             modifAdsJson.city.toJson()["id"]) {
@@ -544,41 +591,13 @@ class TapPublishViewController extends GetxController {
           }
         }
       }
-      for (int cat = 0;
-          cat < Get.find<CategoryAndSubcategory>().categoryGroupList.length;
-          cat++) {
-        if (Get.find<CategoryAndSubcategory>().categoryGroupList[cat].id ==
-            modifAdsJson.category.group.id) {
-          Get.find<CategoryAndSubcategory>().updateCategory(
-              Get.find<CategoryAndSubcategory>().categoryGroupList[cat]);
-
-          category = Get.find<CategoryAndSubcategory>().categoryGroupList[cat];
-
-          for (int sub = 0;
-              sub <
-                  Get.find<CategoryAndSubcategory>()
-                      .sc[modifAdsJson.category.group.id]
-                      .length;
-              sub++) {
-            if (Get.find<CategoryAndSubcategory>()
-                    .sc[modifAdsJson.category.group.id][sub]
-                    .id ==
-                modifAdsJson.category.id) {
-              updateSubCategoryJson(Get.find<CategoryAndSubcategory>()
-                  .sc[modifAdsJson.category.group.id][sub]);
-              Get.find<CategoryAndSubcategory>().updateSubCategory(
-                  Get.find<CategoryAndSubcategory>()
-                      .sc[modifAdsJson.category.group.id][sub]);
-            }
-          }
-        }
-      }
 
       editAdsImages.clear();
       modifAdsJson.photos.forEach((element) {
         editAdsImages.add(element.path);
       });
-      update();
+//    dataEditFromServer=false;
+      //  update();
     });
   }
 }

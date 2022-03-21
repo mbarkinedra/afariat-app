@@ -1,4 +1,4 @@
-import 'package:afariat/controllers/connexion_controller.dart';
+import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/mywidget/chat_user.dart';
 
 import 'package:flutter/material.dart';
@@ -13,11 +13,7 @@ import 'dart:convert';
 import 'dart:math';
 
 class TapChatScr extends GetWidget<TapChatViewController> {
-  // String randomString() {
-  //   final random = Random.secure();
-  //   final values = List<int>.generate(16, (i) => random.nextInt(255));
-  //   return base64UrlEncode(values);
-  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +126,6 @@ class TapChatScr extends GetWidget<TapChatViewController> {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black45),
                           ),
-                          /*   Text("Connect_toi a internet et réessaie.",style: TextStyle(color: Colors.black45),)*/
                         ],
                       )),
                     )),

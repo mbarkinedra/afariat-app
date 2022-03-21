@@ -1,4 +1,4 @@
-import 'package:afariat/controllers/connexion_controller.dart';
+import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/ads_item.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
@@ -120,11 +120,16 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                                                       TapPublishViewController>();
                                               tapPublishViewController
                                                   .dataAdverts = true;
+                                         /*     tapPublishViewController
+                                                  .dataEditFromServer = true;*/
                                               tapPublishViewController
                                                   .modifAds.value = true;
                                               tapPublishViewController
                                                   .getModifAds(
                                                       logic.adverts[pos].id);
+                                             /* Future.delayed(Duration(seconds: 3)).then((value) {
+
+                                              });*/
                                               Get.find<HomeViwController>()
                                                   .changeItemFilter(2);
                                             },

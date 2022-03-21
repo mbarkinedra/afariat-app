@@ -10,7 +10,7 @@ class AccountInfoStorage extends GetxController {
   static const _key_password = 'password';
 
   static const _key_phone = 'phone';
-  SecureStorage _secureStorage = SecureStorage();
+  SecureStorage _secureStorage =Get.find< SecureStorage>();
 
   saveEmail(String email) {
     _secureStorage.writeSecureData(_key_email, email);
@@ -37,7 +37,10 @@ class AccountInfoStorage extends GetxController {
   }
 
   String readEmail() {
-    return _secureStorage.readSecureData(_key_email);
+    String email= _secureStorage.readSecureData(_key_email);
+    print(" emailemail $email");
+
+ return email;
   }
 
   String readName() {

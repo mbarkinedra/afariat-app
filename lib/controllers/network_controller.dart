@@ -2,81 +2,63 @@ import 'dart:async';
 
 import 'package:afariat/home/tap_chat/tap_chat_viewcontroller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
+import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 
 import 'category_and_subcategory.dart';
 import 'loc_controller.dart';
-class NetWorkController extends GetxController{
-  var connectionStatus=false.obs;
-  final Connectivity _connectivity=Connectivity();
-  StreamSubscription<ConnectivityResult>_connectivitysubscription;
+
+class NetWorkController extends GetxController {
+  var connectionStatus = false.obs;
+  final Connectivity _connectivity = Connectivity();
+  StreamSubscription<ConnectivityResult> _connectivitysubscription;
+
   @override
   void onInit() {
     super.onInit();
 
-    initConnctivity();
-    _connectivitysubscription=_connectivity.onConnectivityChanged.listen((_updateConnectionStatus ));
-
-
-
+    initConnectivity();
+    _connectivitysubscription =
+        _connectivity.onConnectivityChanged.listen((_updateConnectionStatus));
   }
 
-  Future<void>   initConnctivity()async {
-
-
+  Future<void> initConnectivity() async {
     ConnectivityResult result;
-    try{
-
+    try {
       _connectivity.checkConnectivity().then((value) {
-
         _updateConnectionStatus(value);
-
       });
-    }catch(e){
+    } catch (e) {
       print(e.toString());
     }
-
-
   }
 
   _updateConnectionStatus(ConnectivityResult value) {
-
-    TapHomeViewController tapHomeViewController=Get.find<TapHomeViewController>();
-    switch(value){
+    TapHomeViewController tapHomeViewController =
+        Get.find<TapHomeViewController>();
+    switch (value) {
       case ConnectivityResult.wifi:
-
-        connectionStatus.value=true;
+        connectionStatus.value = true;
         tapHomeViewController.getAllAds();
-        Get.find<TapChatViewController>().getAllConversations();
+        Get.find<TapPublishViewController>().getMileages();
+        Get.find<TapPublishViewController>().getYearsModels();
+
         Get.find<LocController>().getCitylist();
         Get.find<CategoryAndSubcategory>().getCategoriesGrouppedApi();
         break;
       case ConnectivityResult.mobile:
-
-
-        connectionStatus.value=true;
+        connectionStatus.value = true;
         tapHomeViewController.getAllAds();
-        Get.find<TapChatViewController>().getAllConversations();
+        Get.find<TapPublishViewController>().getMileages();
+        Get.find<TapPublishViewController>().getYearsModels();
         Get.find<LocController>().getCitylist();
         Get.find<CategoryAndSubcategory>().getCategoriesGrouppedApi();
+
         break;
       case ConnectivityResult.none:
-        connectionStatus.value=false;
+        connectionStatus.value = false;
         break;
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

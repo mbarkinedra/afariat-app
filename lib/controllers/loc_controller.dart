@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 
-import 'connexion_controller.dart';
+import 'network_controller.dart';
 
 class LocController extends GetxController {
   final tapHomeViewController = Get.find<TapHomeViewController>();
@@ -66,9 +66,9 @@ getCitylist(){
           tapHomeViewController.searchAddLinke + "&city=${ci.id}";
 
       updateTowns(ci.id);
-
+      update();
     }
-    update();}
+}
 
   updateTown(RefJson town) {
     if (town.id == 0) {

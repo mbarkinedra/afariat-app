@@ -2,7 +2,7 @@ import 'package:afariat/advert_details/advert_details_scr.dart';
 import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
 
 import 'package:afariat/config/filter.dart';
-import 'package:afariat/controllers/connexion_controller.dart';
+import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/bottom_sheet_filter.dart';
 import 'package:afariat/mywidget/myhomeitem.dart';

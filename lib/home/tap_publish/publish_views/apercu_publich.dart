@@ -1,4 +1,5 @@
 import 'package:afariat/config/settings_app.dart';
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
@@ -19,6 +20,84 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
+    List<Widget>list= controller.editAdsImages
+        .map((e) => Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                border: Border.all(
+                    color: framColor),
+                borderRadius:
+                BorderRadius.circular(
+                    10)),
+            width: size.width * .3,
+            height: size.height * .2,
+            child: ClipRRect(
+              borderRadius:
+              BorderRadius.circular(10),
+              child: Image.network(
+                e,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          Positioned(
+            right: 0,
+            child: InkWell(
+                onTap: () {
+                  controller.deleditImage(e);
+                },
+                child: Icon(
+                  Icons.clear,
+                  size: 30,
+                  color: Colors.deepOrange,
+                )),
+          ),
+        ],
+      ),
+    ))
+        .toList();
+    List<Widget>list2=controller.images
+        .map((e) => Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                border: Border.all(
+                    color: framColor),
+                borderRadius:
+                BorderRadius.circular(
+                    10)),
+            width: size.width * .3,
+            height: size.height * .2,
+            child: ClipRRect(
+              borderRadius:
+              BorderRadius.circular(10),
+              child: Image.file(
+                e,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          Positioned(
+            right: 0,
+            child: InkWell(
+                onTap: () {
+                controller.deleteImage(e);
+                },
+                child: Icon(
+                  Icons.clear,
+                  size: 30,
+                  color: Colors.deepOrange,
+                )),
+          ),
+        ],
+      ),
+    ))
+        .toList();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -123,31 +202,9 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: controller.images
-                        .map((e) => Padding(
-                              padding: const EdgeInsets.all(3.0),
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        border:
-                                            Border.all(color: Colors.black54),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    width: size.width * .3,
-                                    height: size.height * .2,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Image.file(
-                                        e,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ))
-                        .toList()),
+                    children: [...list2,...list]
+
+    ),
               ),
             ),
             Padding(
@@ -225,7 +282,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                                 Get.find<TapPublishViewController>()
                                     .modifAds
                                     .value = false;
-                                controller.postdata();
+                                controller.postdata(context);
                               });
                     })
                   ],
