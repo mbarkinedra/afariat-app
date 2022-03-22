@@ -28,22 +28,24 @@ class CategoryAndSubcategory extends GetxController {
     super.onInit();
     getCategoriesGrouppedApi();
   }
-getCategoriesGrouppedApi(){
-  if(Get.find<NetWorkController>().connectionStatus.value){
-    _categoriesGrouppedApi.getList().then((value) {
-      categoryGroupList = value.data;
 
-      for (var element in categoryGroupList) {
-        element.subcategories.insert(0, SubcategoryJson(id: 0, name: ""));
+  getCategoriesGrouppedApi() {
+    if (Get.find<NetWorkController>().connectionStatus.value) {
+      _categoriesGrouppedApi.getList().then((value) {
+        categoryGroupList = value.data;
 
-        sc[element.id] = element.subcategories;
-      }
-      categoryGroupList.insert(0, CategoryGroupedJson(id: 0, name: ""));
+        for (var element in categoryGroupList) {
+          element.subcategories.insert(0, SubcategoryJson(id: 0, name: ""));
 
-      update();
-    });
+          sc[element.id] = element.subcategories;
+        }
+        categoryGroupList.insert(0, CategoryGroupedJson(id: 0, name: ""));
+
+        update();
+      });
+    }
   }
-}
+
   clearData() {
     categoryGroupedJson = null;
     subcategories1 = null;
@@ -52,18 +54,18 @@ getCategoriesGrouppedApi(){
 
   updateCategory(CategoryGroupedJson categoryGrouped) {
     if (categoryGrouped.id == 0) {
-      if (Filter.data["category"] != null) {
-        Filter.data.remove("category");
-        tapHomeViewController.search.remove("category");
+      if (Filter.data["categoryGroup"] != null) {
+        Filter.data.remove("categoryGroup");
+        tapHomeViewController.search.remove("categoryGroup");
       }
       categoryGroupedJson = categoryGrouped;
       tapHomeViewController.filterUpdate();
-    //  update();
+      //  update();
     } else {
-      print("category ${categoryGrouped.name}");
+      print("categoryGroup ${categoryGrouped.name}");
 
-      Filter.data["category"] = categoryGrouped.id;
-      tapHomeViewController.setSearch("category", categoryGrouped.id);
+      Filter.data["categoryGroup"] = categoryGrouped.id;
+      tapHomeViewController.setSearch("categoryGroup", categoryGrouped.id);
 
       categoryGroupedJson = categoryGrouped;
       tapPublishViewController.updateCategory(categoryGrouped);
@@ -72,14 +74,17 @@ getCategoriesGrouppedApi(){
 
       listSubCategories = sc[categoryGrouped.id];
       print("end ${categoryGrouped.name}");
-
     }
-    update();  }
+    update();
+  }
 
   updateSubCategory(SubcategoryJson subCategorie) {
     if (subCategorie.id == 0) {
-      tapHomeViewController.setSearch("category", categoryGroupedJson.id);
+      tapHomeViewController.setSearch("categoryGroup", categoryGroupedJson.id);
       subcategories1 = subCategorie;
+      if (tapHomeViewController.search["category"] != null) {
+        tapHomeViewController.search.remove("category");
+      }
 
       // tapPublishViewController
       //     .updateRadioButton(null);
@@ -88,7 +93,7 @@ getCategoriesGrouppedApi(){
     } else {
       subcategories1 = subCategorie;
       tapHomeViewController.setSearch("category", subCategorie.id);
-
+      tapHomeViewController.search.remove("categoryGroup");
       tapPublishViewController.updateSubCategoryJson(subCategorie);
       tapPublishViewController
           .updateGetView(RefJson(id: subCategorie.id, name: subCategorie.name));
@@ -97,7 +102,7 @@ getCategoriesGrouppedApi(){
       _categoriesGrouppedApi.categoryId = subCategorie.id;
       _refApi.advertTypeId = subCategorie.id;
       _refApi.getList().then((value) {
-        Get.find<TapPublishViewController>().updateadvertTypes(value);
+        Get.find<TapPublishViewController>().updateAdvertTypes(value);
 
         update();
       });

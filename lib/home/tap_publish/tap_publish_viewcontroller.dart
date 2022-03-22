@@ -317,7 +317,7 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
-  updateNombredepieces(newValue) {
+  updateNombrePieces(newValue) {
     pieces = newValue;
     myAds["roomsNumber"] = newValue;
     myAdsView["Nombre de pièces"] = newValue;
@@ -333,7 +333,7 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
-  updateadvertTypes(v) {
+  updateAdvertTypes(v) {
     values = v.data;
     advertType = values[0];
     myAds["advertType"] = advertType.id;
@@ -391,7 +391,7 @@ class TapPublishViewController extends GetxController {
     }
   }
 
-  postdata(con) async {
+  postData(con) async {
     buttonPublier.value = true;
 
     for (var i in images) {
@@ -454,7 +454,6 @@ class TapPublishViewController extends GetxController {
               clearAllData();
               images.clear();
               editAdsImages.clear();
-              print("images.clear   ${images.length} ");
               Get.find<CategoryAndSubcategory>().clearData();
               Get.find<LocController>().clearData();
               await showDialog<bool>(
@@ -474,8 +473,6 @@ class TapPublishViewController extends GetxController {
 
                         Get.find<TapMyadsViewController>().ads();
                         Get.find<HomeViwController>().changeItemFilter(1);
-
-                        //update();
                       },
                       description: "Votre annonce est en cours de validation !",
                       buttonText: "Ok",

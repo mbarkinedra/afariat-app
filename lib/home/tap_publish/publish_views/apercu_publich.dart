@@ -282,7 +282,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                                 Get.find<TapPublishViewController>()
                                     .modifAds
                                     .value = false;
-                                controller.postdata(context);
+                                controller.postData(context);
                               });
                     })
                   ],
