@@ -1,4 +1,3 @@
-
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 
@@ -26,7 +25,15 @@ class AdvertListJson extends AbstractJsonResource {
     total = json['total'];
 
     links = Links.fromJson(json['_links']);
+    print('self: ${links.self.href}');
+    print('next: ${links.next.href}');
+    print('first: ${links.first.href}');
+    print('last: ${links.last.href}');
     embedded = Embedded.fromJson(json['_embedded']);
+  }
+
+  List<AdvertJson> adverts() {
+    return embedded != null ? embedded.adverts : null;
   }
 }
 
@@ -35,23 +42,37 @@ class Links {
   Link first;
   Link last;
   Link next;
+  Link previous;
 
-  Links({
-    this.self,
-    this.first,
-    this.last,
-    this.next,
-  });
+  Links({this.self, this.first, this.last, this.next, this.previous});
 
   Links.fromJson(Map<String, dynamic> json) {
-    self = Link.fromJson(json['self']);
-    // print('s989898889888899elf');
-    // print(json['self']);
-    //   first = Link.fromJson(json['first']);
-    // // print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
-    // // print(json['first']);
-    //  last = Link.fromJson(json['last']);
-    // next = Link.fromJson(json['next']);
+    self = json['self'] != null ? Link.fromJson(json['self']) : null;
+    first = json['first'] != null ? Link.fromJson(json['first']) : null;
+    last = json['last'] != null ? Link.fromJson(json['last']) : null;
+    next = json['next'] != null ? Link.fromJson(json['next']) : null;
+    previous =
+        json['previous'] != null ? Link.fromJson(json['previous']) : null;
+  }
+
+  String getFirstUrl() {
+    return (first != null) ? first.href : null;
+  }
+
+  String getNextUrl() {
+    return (next != null) ? next.href : null;
+  }
+
+  String getPreviousUrl() {
+    return (previous != null) ? previous.href : null;
+  }
+
+  String getLastUrl() {
+    return (last != null) ? last.href : null;
+  }
+
+  String getSelfUrl() {
+    return (self != null) ? self.href : null;
   }
 }
 
@@ -63,6 +84,9 @@ class Link {
   String href;
 
   Link.fromJson(Map<String, dynamic> json) {
+    if (json == null) {
+      return;
+    }
     href = json['href'];
   }
 }
@@ -524,4 +548,3 @@ class Town {
 //     return data;
 //   }
 // }*/
-

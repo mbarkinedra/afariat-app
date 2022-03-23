@@ -1,3 +1,4 @@
+import 'package:afariat/config/filter.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
@@ -253,20 +254,12 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
               height: 50,
               width: _size.width * .4,
               function: () {
-                String link = "";
-                int index = 0;
                 Get.find<TapHomeViewController>().search.forEach((key, value) {
-                  if (index == 0) {
-                    link = link + "$key=$value";
-                  } else {
-                    link = link + "&$key=$value";
-                  }
-
-                  index++;
+                  //add filter values to URL parameters
+                  Filter.data[key] = value;
                 });
 
-               print(link);
-             Get.find<TapHomeViewController>().searchApi.searchData=link;
+                //Get.find<TapHomeViewController>().searchApi.searchData=link;
                 Get.find<TapHomeViewController>().filterUpdate();
                 Navigator.pop(context);
               },

@@ -18,15 +18,15 @@ import 'package:url_launcher/url_launcher.dart';
 
 class TapHomeViewController extends GetxController {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
-  SearchApi searchApi = SearchApi();
   TextEditingController searchWord = TextEditingController();
   RxBool showSearch = false.obs;
   AdvertApi _advertApi = AdvertApi();
   PriceApi _pricesApi = PriceApi();
-  AdvertPageApi _advertPageApi = AdvertPageApi();
   var box = GetStorage();
   bool getDataFromWeb = true;
-  List<AdvertJson> adverts = [];
+
+  //List<AdvertJson> adverts = [];
+  AdvertListJson advertListJson;
   List<dynamic> prices = [];
   int maxValue = 20;
   int minValue = 0;
@@ -35,35 +35,70 @@ class TapHomeViewController extends GetxController {
   bool loadPrice = true;
   static const _pageSize = 20;
   String searchAddLinke = "";
-  String priceSearch = "";
+
   String name = "";
   final PagingController<int, dynamic> pagingController =
       PagingController(firstPageKey: 0);
   ScrollController scrollController = ScrollController();
-  int page = 1;
+  String url = '';
 
   getAllAds() {
-if(Get.find<NetWorkController>().connectionStatus.value){
-  pagingController.addPageRequestListener((pageKey) {
-    _fetchPage(page);
-  });
-  updateData();
-  getPriceList();
-}
+    if (Get.find<NetWorkController>().connectionStatus.value) {
+      pagingController.addPageRequestListener((pageKey) {
+        print("99999999999999999  $pageKey");
 
+        /**
+         * if advertListJson is null, utiliser le par defaut: _advertApi.apiUrl()
+         * else
+         * utiliser advertListJson.links.getNextUrl() etc...
+         *
+         */
+        _fetchPage(_advertApi.apiUrl());
+      });
+      updateData();
+      getPriceList();
+    }
+  }
+
+  onSwipeUp() {
+    if (advertListJson.links.next == null) {
+      _fetchPage(advertListJson.links.getLastUrl());
+    } else {
+      _fetchPage(advertListJson.links.getNextUrl());
+    }
+  }
+
+  onSwipeDown() {
+    pagingController.itemList.clear();
+    if (advertListJson.links.previous == null) {
+      _fetchPage(advertListJson.links.getFirstUrl());
+    } else {
+      _fetchPage(advertListJson.links.getPreviousUrl());
+    }
   }
 
   @override
   void onInit() {
     super.onInit();
-     if( Get.find<NetWorkController>().connectionStatus.value)      {
+    if (Get.find<NetWorkController>().connectionStatus.value) {
       getAllAds();
     }
     // else{
     //   //Get.snackbar("99", "99");
     //   print("9888897876665565575755454545459");
     // }
-
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.offset >=
+            scrollController.position.maxScrollExtent) {
+          onSwipeUp();
+        } else if (scrollController.offset >=
+            scrollController.position.minScrollExtent) {
+          onSwipeDown();
+        }
+      }
+      ;
+    });
 
     setUserName(Get.find<AccountInfoStorage>().readName() ?? "");
   }
@@ -73,21 +108,15 @@ if(Get.find<NetWorkController>().connectionStatus.value){
     update();
   }
 
-  Future<void> _fetchPage(int pageKey) async {
+  Future<void> _fetchPage(String url) async {
     try {
-      _advertPageApi.page = page;
-      page++;
+      await _advertApi.getList().then((value) {
+        advertListJson = value;
+        getDataFromWeb = false;
+      });
 
-      final data = await _advertPageApi.getList();
-      final newItems = data.embedded.adverts;
-      final isLastPage = newItems.length < _pageSize;
-
-      if (isLastPage) {
-        pagingController.appendLastPage(newItems);
-      } else {
-        final nextPageKey = pageKey + newItems.length;
-        pagingController.appendPage(newItems, nextPageKey);
-      }
+      pagingController.appendLastPage(advertListJson.adverts());
+      update();
     } catch (error) {
       pagingController.error = error;
     }
@@ -95,10 +124,8 @@ if(Get.find<NetWorkController>().connectionStatus.value){
 
   updateData() async {
     await _advertApi.getList().then((value) {
-      adverts = value.embedded.adverts;
-
-
-
+      advertListJson = value;
+      //adverts = value.embedded.adverts;
 
       getDataFromWeb = false;
     });
@@ -116,23 +143,19 @@ if(Get.find<NetWorkController>().connectionStatus.value){
 
   filterUpdate() {
     if (searchWord.text.isNotEmpty) {
-      setSearch("search", searchWord.text.toString());
-      searchAddLinke = searchAddLinke + "&search=${searchWord.text}";
+      Filter.data['search'] = searchWord.text.toString();
     }
-    searchAddLinke = searchAddLinke + priceSearch;
 
-    // searchApi.searchData = searchAddLinke;
-
-    searchApi.getList().then((value) {
-      clearPrice();
+    _advertApi.getList().then((value) {
       pagingController.itemList.clear();
-      adverts.clear();
-      adverts = value.embedded.adverts;
-      pagingController.appendLastPage(adverts);
+      advertListJson = value;
+      Filter.data.clear();
+      resetPriceSlider();
+      pagingController.appendLastPage(advertListJson.adverts());
+
       Get.find<LocController>().clearData();
       Get.find<CategoryAndSubcategory>().clearData();
       Get.find<TapHomeViewController>().search.clear();
-      searchAddLinke = "";
       update();
     });
   }
@@ -154,7 +177,7 @@ if(Get.find<NetWorkController>().connectionStatus.value){
     update();
   }
 
-  clearPrice() {
+  resetPriceSlider() {
     minValue = prices[0].id;
     maxValue = prices[prices.length - 1].id;
     values = SfRangeValues(minValue, maxValue);
@@ -165,8 +188,7 @@ if(Get.find<NetWorkController>().connectionStatus.value){
     values = value;
     Filter.data["minPrice="] = prices[values.start.toInt() - 1].id;
     Filter.data["maxPrice="] = prices[values.end.toInt() - 1].id;
-    priceSearch =
-        "minPrice=${values.start.toInt().toString()}&maxPrice=${values.end.toInt().toString()}";
+
     Get.find<TapHomeViewController>()
         .setSearch("minPrice", values.start.toInt().toString());
     Get.find<TapHomeViewController>()

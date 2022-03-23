@@ -29,7 +29,7 @@ class Validator {
 
 
   String validateSurface(String value) {
-    print(value);
+   // print(int.tryParse(value) < 0);
     print("ggggggggggggggg");
     if (value.isEmpty||value==null) {
       return " Veuillez renseigner la surface.";

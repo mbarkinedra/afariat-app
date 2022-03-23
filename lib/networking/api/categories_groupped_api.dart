@@ -13,6 +13,7 @@ class CategoriesGrouppedApi extends ApiManager {
 
   @override
   AbstractJsonResource fromJson(data) {
+    print('MEMEME');
     return CategoriesGroupedJsonList.fromJson(data);
   }
 }

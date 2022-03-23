@@ -38,6 +38,7 @@ abstract class ApiManager {
         //devlog.log(value.data.toString() );
         data = value.data;
       });
+      print("CALLED URL: ${apiUrl()}");
       jsonList = fromJson(data);
 
 

@@ -4,6 +4,8 @@ import 'package:afariat/networking/json/adverts_json.dart';
 
 import 'api_manager.dart';
 
+//TODO: Remove this file. Used advert_api instead
+
 class SearchApi extends ApiManager {
   Map<String, dynamic> map = {};
 
@@ -11,6 +13,7 @@ class SearchApi extends ApiManager {
 
   @override
   String apiUrl() {
+    throw new Exception('Should not be used. Use api_advert instead');
     return SettingsApp.advertPageUrl + searchData;
   }
 

@@ -149,7 +149,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                   onRefresh: () => Future.sync(
                                     () => controller.pagingController.refresh(),
                                   ),
-                                  child: PagedListView<int, dynamic>(
+                                  child: PagedListView<int, dynamic>(scrollController: controller.scrollController,
                                     pagingController:
                                         controller.pagingController,
                                     builderDelegate:
