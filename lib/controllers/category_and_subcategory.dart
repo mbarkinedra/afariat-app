@@ -91,6 +91,8 @@ class CategoryAndSubcategory extends GetxController {
       tapPublishViewController.updateSubCategoryJson(subCategorie);
       update();
     } else {
+      print("category ${subCategorie.name}");
+
       subcategories1 = subCategorie;
       tapHomeViewController.setSearch("category", subCategorie.id);
       tapHomeViewController.search.remove("categoryGroup");
@@ -102,6 +104,7 @@ class CategoryAndSubcategory extends GetxController {
       _categoriesGrouppedApi.categoryId = subCategorie.id;
       _refApi.advertTypeId = subCategorie.id;
       _refApi.getList().then((value) {
+
         Get.find<TapPublishViewController>().updateAdvertTypes(value);
 
         update();

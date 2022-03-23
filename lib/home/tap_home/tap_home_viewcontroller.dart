@@ -162,7 +162,7 @@ class TapHomeViewController extends GetxController {
 
   setSearch(String key, v) {
     search[key] = v;
-    Filter.data[key] = v;
+    //Filter.data[key] = v;
   }
 
   getPriceList() async {
