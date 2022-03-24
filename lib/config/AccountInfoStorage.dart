@@ -38,7 +38,6 @@ class AccountInfoStorage extends GetxController {
 
   String readEmail() {
     String email= _secureStorage.readSecureData(_key_email);
-    print(" emailemail $email");
 
  return email;
   }

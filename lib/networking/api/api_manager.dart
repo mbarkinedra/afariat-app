@@ -31,14 +31,13 @@ abstract class ApiManager {
       await dioSingleton.dio
           .get(apiUrl(), queryParameters: filters)
           .then((value) {
-        // print("value.dabbbbbbbbbbbbbbbbbbbbbbbbbbta");
+
         // var logger = Logger();
         //
         // logger.d(value.data);
         //devlog.log(value.data.toString() );
         data = value.data;
       });
-      print("CALLED URL: ${apiUrl()}");
       jsonList = fromJson(data);
 
 
@@ -64,7 +63,6 @@ abstract class ApiManager {
             }),
       )
           .then((value) {
-//      responseHeaders = value.headers;
 
         return value;
       }).catchError((error) {
@@ -82,7 +80,6 @@ abstract class ApiManager {
     Wsse xwsse = Wsse();
 
     String wsse = xwsse.generateWsseFromStorage();
-    print(wsse);
     if(_netWorkController.connectionStatus.value){
       return dioSingleton.dio
           .post(
@@ -109,12 +106,11 @@ abstract class ApiManager {
           // throw Exception("Connection  Timeout Exception");
         }
 
-        print(error);
         return error;
 
       });
     }else{
-      a.Get.snackbar("erreur", "y hav not connction");
+      a.Get.snackbar("erreur", "vous n'avez pas de connexion");
     }
 
   }
@@ -126,7 +122,6 @@ abstract class ApiManager {
     Wsse xwsse = Wsse();
 
     String wsse = xwsse.generateWsseFromStorage();
-    print(wsse);
 
     return dioSingleton.dio
         .get(
@@ -144,7 +139,6 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
-     // print(value.data);
 
       return value;
     }).onError((error, stackTrace) {
@@ -158,7 +152,6 @@ abstract class ApiManager {
 
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
-    print(wsse);
     if (_netWorkController.connectionStatus.value) {
       return dioSingleton.dio
           .put(
@@ -177,28 +170,25 @@ abstract class ApiManager {
             }),
       )
           .then((value) {
-        //  responseHeaders = value.headers;
-        //  print(value.data);
+
         return value;
       }).onError((error, stackTrace) {
         if(error.type == DioErrorType.connectTimeout){
-          a.Get.snackbar("erreur", "Connection  Timeout");
+          a.Get.snackbar("erreur", "Délai de connection dépassé");
           // throw Exception("Connection  Timeout Exception");
         }
 
-        print(error);
         return error;
 
       });
     }else{
-      a.Get.snackbar("erreur", "y hav not connction");
+      a.Get.snackbar("erreur", "");
     }
 
   }
   Future getdata(Map<String, dynamic> dataToPost) async {
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
-    print(wsse);
     return dioSingleton.dio
         .get(
       apiUrl(),
@@ -217,7 +207,6 @@ abstract class ApiManager {
         .then((value) {
       return value;
     }).onError((error, stackTrace) {
-print(error);
       return error;
     });
   }
@@ -227,7 +216,6 @@ print(error);
     //generer le wsse
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
-    print(wsse);
     Options options = Options(headers: {
       "Accept": "application/json",
       'apikey': SettingsApp.apiKey,
@@ -247,7 +235,6 @@ print(error);
     //generer le wsse
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
-    print(wsse);
     Options options = Options(headers: {
       "Accept": "application/json",
       'apikey': SettingsApp.apiKey,
@@ -257,7 +244,6 @@ print(error);
     return dioSingleton.dio.delete(apiUrl(), options: options).then((value) {
       return value;
     }).onError((error, stackTrace) {
-      print(error);
       return error;
 
     });

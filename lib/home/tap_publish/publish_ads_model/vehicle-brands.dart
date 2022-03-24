@@ -150,7 +150,6 @@ class VehicleBrands extends GetView<TapPublishViewController> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
-                print(" up date CategoryAndSubcategory gh");
 
                 return Row(
                   children: [

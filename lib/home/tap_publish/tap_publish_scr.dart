@@ -17,7 +17,8 @@ import '../home_view_controller.dart';
 import 'tap_publish_viewcontroller.dart';
 
 class TapPublishScr extends GetWidget<TapPublishViewController> {
-  int p=0;
+  int p = 0;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -42,413 +43,508 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             )),
-        body:
-
-
-            Container(
-          child: Obx(() =>
-            Column(
-              children: [ Get.find<NetWorkController>().connectionStatus.value == false
-                  ? Container(
-                child: Center(child: CircularProgressIndicator()),
-                height: 50,
-                width: 50,
-              )
-                  : SizedBox(),
+        body: Container(
+          child: Obx(
+            () => Column(
+              children: [
+                Get.find<NetWorkController>().connectionStatus.value == false
+                    ? Container(
+                        child: Center(child: CircularProgressIndicator()),
+                        height: 50,
+                        width: 50,
+                      )
+                    : SizedBox(),
                 Get.find<NetWorkController>().connectionStatus.value
-                    ?
-                Expanded(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(bottom: 25, left: 25, right: 25, top: 8),
-                    child: Form(
-                      key: controller.globalKey,
-                      child: ListView(
-                        //  padding: EdgeInsets.all(4),
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: GetBuilder<CategoryAndSubcategory>(builder: (logic) {
-                              return Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        "Catégorie",
-                                        style: TextStyle(
-                                            fontSize: 18, fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.deepOrange, width: 2),
-                                        borderRadius: BorderRadius.circular(10)),
-                                    child: DropdownButton<CategoryGroupedJson>(
-                                      underline: SizedBox(),
-                                      isExpanded: true,
-                                      hint: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 8.0, right: 8),
-                                        child: Text("Catégorie"),
-                                      ),
-                                      value: logic.categoryGroupedJson,
-                                      iconSize: 24,
-                                      elevation: 16,
-                                      onChanged: logic.updateCategory,
-                                      items: logic.categoryGroupList
-                                          .where((element) => element.name != "")
-                                          .map<DropdownMenuItem<CategoryGroupedJson>>(
-                                              (CategoryGroupedJson value) {
-                                        return DropdownMenuItem<CategoryGroupedJson>(
-                                          value: value,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.0, right: 8),
-                                            child: Text(value.name),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.deepOrange, width: 2),
-                                        borderRadius: BorderRadius.circular(10)),
-                                    child: DropdownButton<SubcategoryJson>(
-                                      isExpanded: true,
-                                      underline: SizedBox(),
-                                      hint: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 8.0, right: 8),
-                                        child: Text("Sous catégorie"),
-                                      ),
-                                      value: logic.subcategories1,
-                                      iconSize: 24,
-                                      elevation: 16,
-                                      onChanged: logic.updateSubCategory,
-                                      items: logic.listSubCategories
-                                          .where((element) => element.name != "")
-                                          .map<DropdownMenuItem<SubcategoryJson>>(
-                                              (SubcategoryJson value) {
-                                        return DropdownMenuItem<SubcategoryJson>(
-                                          value: value,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.0, right: 8),
-                                            child: Text(value.name),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  )
-                                ],
-                              );
-                            }),
-                          ),
-                          Row(
-                            children: [
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
+                    ? Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: 25, left: 25, right: 25, top: 8),
+                          child: Form(
+                            key: controller.globalKey,
+                            child: ListView(
+                              //  padding: EdgeInsets.all(4),
+                              children: <Widget>[
+                                Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "Type d'annonce",
-                                    style: TextStyle(
-                                        fontSize: 18, fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          GetBuilder<TapPublishViewController>(builder: (logic) {
-                            return Column(
-                              children: logic.values.map((e) {
-                                return RadioListTile(
-                                    activeColor: Colors.deepOrange,
-                                    title: Text(e.name),
-                                    value: e,
-                                    groupValue: logic.advertType,
-                                    onChanged: logic.updateRadioButton);
-                              }).toList(),
-                            );
-                          }),
-                          GetBuilder<TapPublishViewController>(builder: (logic) {
-                            return logic.getView != null
-                                ? WidgetPublish(
-                                    logic.getView.name,
-                                  )
-                                : SizedBox();
-                          }),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Titre de l'annonce",
-                              style:
-                                  TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8),
-                            child: CustomTextFiled(
-                              width: size.width * .8,
-                              color: framColor,
-                              validator: controller.validator.validatetitle,
-                              hintText: "Titre",
-                              textEditingController: controller.title,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Description",
-                              style:
-                                  TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8),
-                            child: CustomTextFiled(
-                              maxLines: 5,
-                              color: framColor,
-                              width: size.width * .8,
-                              validator: controller.validator.validateDescription,
-                              hintText: "Description",
-                              textEditingController: controller.description,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              "Prix",
-                              style:
-                                  TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Container(
-                                    // width: size.width * .87,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.deepOrange, width: 2),
-                                        borderRadius: BorderRadius.circular(10)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 8, right: 8),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 1,
-                                            child: CustomTextFiled2(
-                                                color: Colors.deepOrange,
-                                                validator:
-                                                    controller.validator.validatePrice,
-                                                hintText: "Prix",
-                                                textEditingController: controller.prix,
-                                                keyboardType: TextInputType.number),
+                                  child: GetBuilder<CategoryAndSubcategory>(
+                                      builder: (logic) {
+                                    return Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Text(
+                                              "Catégorie",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                          Text(
-                                            "DT",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Gouvernorat",
-                              style:
-                                  TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8),
-                            child: GetBuilder<LocController>(builder: (logic) {
-                              return logic.getCity?Center(child: CircularProgressIndicator(),):Column(
-                                children: [
-                                  Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.deepOrange, width: 2),
-                                        borderRadius: BorderRadius.circular(10)),
-                                    child: DropdownButton<RefJson>(
-                                      isExpanded: true,
-                                      underline: SizedBox(),
-                                      hint: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 8.0, right: 8),
-                                        child: Text("Gouvernorat"),
-                                      ),
-                                      value: logic.city,
-                                      iconSize: 24,
-                                      elevation: 16,
-                                      onChanged: logic.updateCity,
-                                      items: logic.cities
-                                          .where((element) => element.name != "")
-                                          .map<DropdownMenuItem<RefJson>>(
-                                              (RefJson value) {
-                                        return DropdownMenuItem<RefJson>(
-                                          value: value,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.0, right: 8),
-                                            child: Text(value.name),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
-
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(top: 8.0, bottom: 8),
-                                      child: Text(
-                                        "Commune",
-                                        style: TextStyle(
-                                            fontSize: 18, fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Colors.deepOrange, width: 2),
-                                          borderRadius: BorderRadius.circular(10)),
-                                      child: DropdownButton<RefJson>(
-                                        isExpanded: true,
-                                        underline: SizedBox(),
-                                        hint: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 8.0, right: 10),
-                                          child: Text("Commune"),
                                         ),
-                                        value: logic.town,
-                                        iconSize: 24,
-                                        elevation: 16,
-                                        onChanged: logic.updateTown,
-                                        items: logic.towns
-                                            .where((element) => element.name != "")
-                                            .map<DropdownMenuItem<RefJson>>(
-                                                (RefJson value) {
-                                          return DropdownMenuItem<RefJson>(
-                                            value: value,
-                                            child: Padding(
+                                        Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.deepOrange,
+                                                  width: 2),
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: DropdownButton<
+                                              CategoryGroupedJson>(
+                                            underline: SizedBox(),
+                                            isExpanded: true,
+                                            hint: Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 8.0, right: 8),
-                                              child: Text(value.name),
+                                              child: Text("Catégorie"),
                                             ),
-                                          );
-                                        }).toList(),
-                                      )),
-                                  Align(
+                                            value: logic.categoryGroupedJson,
+                                            iconSize: 24,
+                                            elevation: 16,
+                                            onChanged: logic.updateCategory,
+                                            items: logic.categoryGroupList
+                                                .where((element) =>
+                                                    element.name != "")
+                                                .map<
+                                                        DropdownMenuItem<
+                                                            CategoryGroupedJson>>(
+                                                    (CategoryGroupedJson
+                                                        value) {
+                                              return DropdownMenuItem<
+                                                  CategoryGroupedJson>(
+                                                value: value,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0, right: 8),
+                                                  child: Text(value.name),
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.deepOrange,
+                                                  width: 2),
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child:
+                                              DropdownButton<SubcategoryJson>(
+                                            isExpanded: true,
+                                            underline: SizedBox(),
+                                            hint: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8.0, right: 8),
+                                              child: Text("Sous catégorie"),
+                                            ),
+                                            value: logic.subcategories1,
+                                            iconSize: 24,
+                                            elevation: 16,
+                                            onChanged: logic.updateSubCategory,
+                                            items: logic.listSubCategories
+                                                .where((element) =>
+                                                    element.name != "")
+                                                .map<
+                                                        DropdownMenuItem<
+                                                            SubcategoryJson>>(
+                                                    (SubcategoryJson value) {
+                                              return DropdownMenuItem<
+                                                  SubcategoryJson>(
+                                                value: value,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0, right: 8),
+                                                  child: Text(value.name),
+                                                ),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        )
+                                      ],
+                                    );
+                                  }),
+                                ),
+                                Row(
+                                  children: [
+                                    Align(
                                       alignment: Alignment.topLeft,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(right: 8.0),
-                                        child: Obx(() => Text(
-                                              controller.validateTown.value,
-                                              style: TextStyle(color: Colors.red),
-                                            )),
-                                      ))
-                                ],
-                              );
-                            }),
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.call),
-                              Flexible(
-                                flex: 1,
-                                child: GetBuilder<TapPublishViewController>(
-                                    builder: (logic) {
-                                  return ListTile(
-                                    title: const Text('Afficher N° Tél'),
-                                    trailing: CupertinoSwitch(
-                                      value: logic.lights,
-                                      activeColor: Colors.deepOrange,
-                                      onChanged: logic.updateLight,
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          "Type d'annonce",
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
                                     ),
-                                    onTap: () {
-                                      logic.lights = !logic.lights;
-                                    },
+                                  ],
+                                ),
+                                GetBuilder<TapPublishViewController>(
+                                    builder: (logic) {
+                                  return Column(
+                                    children: logic.values.map((e) {
+                                      return RadioListTile(
+                                          activeColor: Colors.deepOrange,
+                                          title: Text(e.name),
+                                          value: e,
+                                          groupValue: logic.advertType,
+                                          onChanged: logic.updateRadioButton);
+                                    }).toList(),
                                   );
                                 }),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 8.0, bottom: 40, right: 8, left: 8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                CustomButtonWithoutIcon(
-                                    width: MediaQuery.of(context).size.width * .35,
-                                    height: 50,
-                                    label: "Suivant",
-                                    labColor: Colors.white,
-                                    btColor: buttonColor,
-                                    function: () {
-                                      validateGetView(context);
-                                    }),
+                                GetBuilder<TapPublishViewController>(
+                                    builder: (logic) {
+                                  return logic.getView != null
+                                      ? WidgetPublish(
+                                          logic.getView.name,
+                                        )
+                                      : SizedBox();
+                                }),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Titre de l'annonce",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 8.0, right: 8),
+                                  child: CustomTextFiled(
+                                    width: size.width * .8,
+                                    color: framColor,
+                                    validator:
+                                        controller.validator.validatetitle,
+                                    hintText: "Titre",
+                                    textEditingController: controller.title,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Description",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 8.0, right: 8),
+                                  child: CustomTextFiled(
+                                    maxLines: 5,
+                                    color: framColor,
+                                    width: size.width * .8,
+                                    validator: controller
+                                        .validator.validateDescription,
+                                    hintText: "Description",
+                                    textEditingController:
+                                        controller.description,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text(
+                                    "Prix",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Container(
+                                          // width: size.width * .87,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.deepOrange,
+                                                  width: 2),
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8, right: 8),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: CustomTextFiled2(
+                                                      color: Colors.deepOrange,
+                                                      validator: controller
+                                                          .validator
+                                                          .validatePrice,
+                                                      hintText: "Prix",
+                                                      textEditingController:
+                                                          controller.prix,
+                                                      keyboardType:
+                                                          TextInputType.number),
+                                                ),
+                                                Text(
+                                                  "DT",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Gouvernorat",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 8.0, right: 8),
+                                  child: GetBuilder<LocController>(
+                                      builder: (logic) {
+                                    return logic.getCity
+                                        ? Center(
+                                            child: CircularProgressIndicator(),
+                                          )
+                                        : Column(
+                                            children: [
+                                              Container(
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color:
+                                                            Colors.deepOrange,
+                                                        width: 2),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                child: DropdownButton<RefJson>(
+                                                  isExpanded: true,
+                                                  underline: SizedBox(),
+                                                  hint: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 8.0,
+                                                            right: 8),
+                                                    child: Text("Gouvernorat"),
+                                                  ),
+                                                  value: logic.city,
+                                                  iconSize: 24,
+                                                  elevation: 16,
+                                                  onChanged: logic.updateCity,
+                                                  items: logic.cities
+                                                      .where((element) =>
+                                                          element.name != "")
+                                                      .map<
+                                                              DropdownMenuItem<
+                                                                  RefJson>>(
+                                                          (RefJson value) {
+                                                    return DropdownMenuItem<
+                                                        RefJson>(
+                                                      value: value,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 8.0,
+                                                                right: 8),
+                                                        child: Text(value.name),
+                                                      ),
+                                                    );
+                                                  }).toList(),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 8,
+                                              ),
+                                              Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 8.0, bottom: 8),
+                                                  child: Text(
+                                                    "Commune",
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color:
+                                                              Colors.deepOrange,
+                                                          width: 2),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  child:
+                                                      DropdownButton<RefJson>(
+                                                    isExpanded: true,
+                                                    underline: SizedBox(),
+                                                    hint: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 8.0,
+                                                              right: 10),
+                                                      child: Text("Commune"),
+                                                    ),
+                                                    value: logic.town,
+                                                    iconSize: 24,
+                                                    elevation: 16,
+                                                    onChanged: logic.updateTown,
+                                                    items: logic.towns
+                                                        .where((element) =>
+                                                            element.name != "")
+                                                        .map<
+                                                                DropdownMenuItem<
+                                                                    RefJson>>(
+                                                            (RefJson value) {
+                                                      return DropdownMenuItem<
+                                                          RefJson>(
+                                                        value: value,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 8.0,
+                                                                  right: 8),
+                                                          child:
+                                                              Text(value.name),
+                                                        ),
+                                                      );
+                                                    }).toList(),
+                                                  )),
+                                              Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 8.0),
+                                                    child: Obx(() => Text(
+                                                          controller
+                                                              .validateTown
+                                                              .value,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.red),
+                                                        )),
+                                                  ))
+                                            ],
+                                          );
+                                  }),
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(Icons.call),
+                                    Flexible(
+                                      flex: 1,
+                                      child:
+                                          GetBuilder<TapPublishViewController>(
+                                              builder: (logic) {
+                                        return ListTile(
+                                          title: const Text('Afficher N° Tél'),
+                                          trailing: CupertinoSwitch(
+                                            value: logic.lights,
+                                            activeColor: Colors.deepOrange,
+                                            onChanged: logic.updateLight,
+                                          ),
+                                          onTap: () {
+                                            logic.lights = !logic.lights;
+                                          },
+                                        );
+                                      }),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 8.0, bottom: 40, right: 8, left: 8),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      CustomButtonWithoutIcon(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              .35,
+                                          height: 50,
+                                          label: "Suivant",
+                                          labColor: Colors.white,
+                                          btColor: buttonColor,
+                                          function: () {
+                                            validateGetView(context);
+                                          }),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )  : Expanded(
-                    child: Container(
-                      child: Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.wifi_off_rounded,size: 80,color: Colors.deepOrangeAccent,),
-                          Text("Pas de connexion internet",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black45),) ,
-                          /*   Text("Connect_toi a internet et réessaie.",style: TextStyle(color: Colors.black45),)*/],
-                      )),
-                    ))
+                        ),
+                      )
+                    : Expanded(
+                        child: Container(
+                        child: Center(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.wifi_off_rounded,
+                              size: 80,
+                              color: Colors.deepOrangeAccent,
+                            ),
+                            Text(
+                              "Pas de connexion internet",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black45),
+                            ),
+                            /*   Text("Connect_toi a internet et réessaie.",style: TextStyle(color: Colors.black45),)*/
+                          ],
+                        )),
+                      ))
               ],
             ),
           ),
@@ -458,10 +554,9 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
   }
 
   void validateOptions(context) {
-    if (controller.globalKey.currentState.validate() ) {
-      controller.myAdsView["prix"] = controller.prix.text +
-          " " +
-          SettingsApp.moneySymbol;
+    if (controller.globalKey.currentState.validate()) {
+      controller.myAdsView["prix"] =
+          controller.prix.text + " " + SettingsApp.moneySymbol;
       controller.myAds["price"] = controller.prix.text;
 
       controller.myAdsView["title"] = controller.title.text;
@@ -489,12 +584,12 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
     } else {
       controller.validateTown.value = "";
     }
-    if (controller.pieces == null ) {
+    if (controller.pieces == null) {
       controller.validatePiece.value = " Nombre des pieces sont obligatoires ";
     } else {
       controller.validatePiece.value = "";
     }
-    if (controller.vehiculebrands == null  ) {
+    if (controller.vehiculebrands == null) {
       controller.validateMarque.value = " la marque est obligatoire";
     } else {
       controller.validateMarque.value = "";
@@ -520,7 +615,10 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
     } else {
       controller.validateKm.value = "";
     }
-    if (controller.subCategories != null) {
+    if (controller.subCategories != null &&
+        controller.category != null &&
+        controller.town != null &&
+        controller.citie != null) {
       if (controller.subCategories.name == "Voitures" ||
           controller.subCategories.name == "Voitures professionnelles") {
         if (controller.vehiculebrands != null &&
@@ -542,14 +640,14 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
           Get.snackbar("Oups !",
               "merci de bien vouloir compléter les champs ci dessous.");
         }
-      } else if (controller.subCategories.name == "Appartements" ||
+      }
+      else if (controller.subCategories.name == "Appartements" ||
           controller.subCategories.name == "Maison" ||
           controller.subCategories.name == "Bureaux et locaux commerciaux") {
         if (controller.pieces != null && controller.surface != null) {
           controller.myAdsView["Superficie"] =
-              controller.surface.text.replaceAll("-", "")+ " " + "m²";
-           controller.myAds["area"] =
-               controller.surface.text;
+              controller.surface.text  + " " + "m²";
+          controller.myAds["area"] = controller.surface.text;
 
           validateOptions(context);
         } else {

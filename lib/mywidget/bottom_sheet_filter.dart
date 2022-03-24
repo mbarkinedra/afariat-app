@@ -256,15 +256,13 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
               function: () {
                 Filter.data.clear();
                 Get.find<TapHomeViewController>().search.forEach((key, value) {
-                  print("ooooooooooo");
-                  print(key);
-                  print(value);
+
+
                   //add filter values to URL parameters
 
                  Filter.data[key] = value;
                 });
 
-                //Get.find<TapHomeViewController>().searchApi.searchData=link;
                 Get.find<TapHomeViewController>().filterUpdate();
                 Navigator.pop(context);
               },

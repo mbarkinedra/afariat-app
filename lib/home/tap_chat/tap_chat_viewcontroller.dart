@@ -1,4 +1,3 @@
-import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/api/conversations_api.dart';
 import 'package:afariat/networking/api/delete_conversation_api.dart';
 import 'package:afariat/networking/json/conversation_json.dart';
@@ -54,7 +53,6 @@ getAllConversations();
   }
 
   getAllConversations() {
-   // if(Get.find<NetWorkController>().connectionStatus.value){
     _getConvertionsApi.secureGet().then((value) {
       ConversationJson conversationJson = ConversationJson.fromJson(value.data);
       conversations = conversationJson.eEmbedded.conversation;
@@ -63,7 +61,7 @@ getAllConversations();
 
       update();
     });
- //  }
+
 }
 
   deleteConversation(int id, item) {

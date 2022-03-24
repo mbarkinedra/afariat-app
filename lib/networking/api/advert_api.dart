@@ -11,7 +11,6 @@ class AdvertApi extends ApiManager {
 
     String url = SettingsApp.advertUrl + parameters;
 
-    print("ZZZZZZZZZZZ $url");
     return url;
   }
 

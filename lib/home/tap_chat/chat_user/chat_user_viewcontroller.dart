@@ -68,7 +68,6 @@ class ChatUserViewController extends GetxController {
     // });
     _getMessageApi.id = id;
     await _getMessageApi.secureGet().then((value) {
-      print(value.data);
       ConversationJson conversationJson = ConversationJson.fromJson(value.data);
 
 

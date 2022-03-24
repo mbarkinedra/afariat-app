@@ -16,8 +16,6 @@ class Validator {
   }
 
   String validatePrice(String value) {
-    print(value);
-    print("prix");
     if (value.isEmpty) {
       return " Veuillez renseigner le prix.";
     } else if (int.tryParse(value) < 0) {
@@ -26,19 +24,14 @@ class Validator {
     return null;
   }
 
-
-
   String validateSurface(String value) {
-   // print(int.tryParse(value) < 0);
-    print("ggggggggggggggg");
-    if (value.isEmpty||value==null) {
+    if (value.isEmpty || value == null) {
       return " Veuillez renseigner la surface.";
-    }
- else if (int.tryParse(value) < 0) {
-
+    } else if (double.tryParse(value).isNegative) {
       return "La surface doit être positive  ";
     }
-    return null;}
+    return null;
+  }
 
   String validateDescription(String value) {
     if (value.isNotEmpty) {
@@ -52,13 +45,13 @@ class Validator {
     return null;
   }
 
-  isvala() {
+  isvalid() {
     globalKey.currentState.validate();
   }
 
   String validateEmail(String value) {
     if (!GetUtils.isEmail(value)) {
-      return "9çççççççççççççççççççççççççççççççççççççççççççç";
+      return "email";
     }
     return null;
   }

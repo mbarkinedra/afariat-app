@@ -446,7 +446,6 @@ class TapPublishViewController extends GetxController {
 
       await publishApi.securePost(dataToPost: myAds).then((value) {
         buttonPublier.value = false;
-        print(value.data);
         _validateServer.validatorServer(
             validate: () async {
               Filter.data.clear();

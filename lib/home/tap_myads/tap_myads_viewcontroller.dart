@@ -13,44 +13,40 @@ class TapMyadsViewController extends GetxController {
   List<Adverts> adverts = [];
   bool deleteData = false;
   bool getAdsFromServer = false;
+
   @override
   void onInit() {
     super.onInit();
 
-      print("999999999999999");
-      ads();
-
-
+    ads();
   }
 
-ads() {
-  if(Get.find<NetWorkController>().connectionStatus.value ){
-    _myAdsApi.userId = Get.find<AccountInfoStorage>().readUserId();
-    getAdsFromServer = true;
-   // update();
-    _myAdsApi.getList().then((value) {
-      MyAdsJson myAdsJson = MyAdsJson();
-      myAdsJson = value;
-      adverts = myAdsJson.eEmbedded.adverts;
+  ads() {
+    if (Get.find<NetWorkController>().connectionStatus.value) {
+      _myAdsApi.userId = Get.find<AccountInfoStorage>().readUserId();
+      getAdsFromServer = true;
+      _myAdsApi.getList().then((value) {
+        MyAdsJson myAdsJson = MyAdsJson();
+        myAdsJson = value;
+        adverts = myAdsJson.eEmbedded.adverts;
 
-      getAdsFromServer = false;
-      update();
-    });
-  }}
+        getAdsFromServer = false;
+        update();
+      });
+    }
+  }
 
- Future deleteAds(int i) async{
+  Future deleteAds(int i) async {
     deleteData = true;
     update();
     _deleteAds.id = i;
 
-   await _deleteAds.delPost().then((value) {
+    await _deleteAds.delPost().then((value) {
       ads();
       deleteData = false;
-      print("ok deleete" );
 
       update();
     });
-print("not ok delete" );
     update();
   }
 }

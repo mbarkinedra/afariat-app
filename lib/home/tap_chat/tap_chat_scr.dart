@@ -9,8 +9,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'chat_user/chat_user_scr.dart';
 import 'chat_user/chat_user_viewcontroller.dart';
 import 'tap_chat_viewcontroller.dart';
-import 'dart:convert';
-import 'dart:math';
+
 
 class TapChatScr extends GetWidget<TapChatViewController> {
 
@@ -51,8 +50,7 @@ class TapChatScr extends GetWidget<TapChatViewController> {
                                   builderDelegate:
                                       PagedChildBuilderDelegate<dynamic>(
                                     itemBuilder: (context, item, index) {
-                                      print(
-                                          "controller ${controller.conversations.length}");
+
                                       return controller.conversations.length ==
                                               0
                                           ? Container(

@@ -7,7 +7,6 @@ import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/bottom_sheet_filter.dart';
 import 'package:afariat/mywidget/myhomeitem.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'tap_home_viewcontroller.dart';
@@ -58,7 +57,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                     color: Colors.grey,
                                     spreadRadius: 1,
                                     blurRadius: 1,
-                                    // changes position of shadow
                                   ),
                                 ],
                               ),

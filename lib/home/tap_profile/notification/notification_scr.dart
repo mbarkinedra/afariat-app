@@ -23,7 +23,6 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
               return ListView.builder(
                   itemCount: logic.notifications.length,
                   itemBuilder: (context, pos) {
-                    print(logic.notifications.isEmpty);
                     final item = logic.notifications[pos];
                     return logic.notifications.isEmpty?Center(child: Text(" Pas des notifications"),) : GestureDetector(
                       onTap: () {

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:afariat/home/tap_chat/tap_chat_viewcontroller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -12,25 +11,24 @@ import 'loc_controller.dart';
 class NetWorkController extends GetxController {
   var connectionStatus = false.obs;
   final Connectivity _connectivity = Connectivity();
-  StreamSubscription<ConnectivityResult> _connectivitysubscription;
+  StreamSubscription<ConnectivityResult> connectivitysubscription;
 
   @override
   void onInit() {
     super.onInit();
 
     initConnectivity();
-    _connectivitysubscription =
+    connectivitysubscription =
         _connectivity.onConnectivityChanged.listen((_updateConnectionStatus));
   }
 
   Future<void> initConnectivity() async {
-    ConnectivityResult result;
+   // ConnectivityResult result;
     try {
       _connectivity.checkConnectivity().then((value) {
         _updateConnectionStatus(value);
       });
     } catch (e) {
-      print(e.toString());
     }
   }
 

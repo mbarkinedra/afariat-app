@@ -3,12 +3,9 @@ import 'package:afariat/config/filter.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
-import 'package:afariat/networking/api/advertPage_api.dart';
 import 'package:afariat/networking/api/advert_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
-import 'package:afariat/networking/api/search_api.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -33,7 +30,6 @@ class TapHomeViewController extends GetxController {
   SfRangeValues values = SfRangeValues(0, 100000);
   Map<String, dynamic> search = {};
   bool loadPrice = true;
-  static const _pageSize = 20;
   String searchAddLinke = "";
 
   String name = "";
@@ -45,7 +41,6 @@ class TapHomeViewController extends GetxController {
   getAllAds() {
     if (Get.find<NetWorkController>().connectionStatus.value) {
       pagingController.addPageRequestListener((pageKey) {
-        print("99999999999999999  $pageKey");
 
         /**
          * if advertListJson is null, utiliser le par defaut: _advertApi.apiUrl()
@@ -83,10 +78,7 @@ class TapHomeViewController extends GetxController {
     if (Get.find<NetWorkController>().connectionStatus.value) {
       getAllAds();
     }
-    // else{
-    //   //Get.snackbar("99", "99");
-    //   print("9888897876665565575755454545459");
-    // }
+
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
         if (scrollController.offset >=

@@ -8,12 +8,11 @@ class CategoriesGrouppedApi extends ApiManager {
   @override
   String apiUrl() {
 
-    return SettingsApp.grouppedCategoriesUrl ;//;+ "/" + categoryId.toString();;
+    return SettingsApp.grouppedCategoriesUrl ;
   }
 
   @override
   AbstractJsonResource fromJson(data) {
-    print('MEMEME');
     return CategoriesGroupedJsonList.fromJson(data);
   }
 }

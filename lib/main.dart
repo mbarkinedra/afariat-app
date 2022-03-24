@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'bindings/bindings.dart';
-import 'controllers/network_controller.dart';
 import 'home/home_view.dart';
 
 

@@ -60,9 +60,7 @@ class CategoryAndSubcategory extends GetxController {
       }
       categoryGroupedJson = categoryGrouped;
       tapHomeViewController.filterUpdate();
-      //  update();
     } else {
-      print("categoryGroup ${categoryGrouped.name}");
 
       Filter.data["categoryGroup"] = categoryGrouped.id;
       tapHomeViewController.setSearch("categoryGroup", categoryGrouped.id);
@@ -73,7 +71,6 @@ class CategoryAndSubcategory extends GetxController {
       subcategories1 = null;
 
       listSubCategories = sc[categoryGrouped.id];
-      print("end ${categoryGrouped.name}");
     }
     update();
   }
@@ -86,12 +83,9 @@ class CategoryAndSubcategory extends GetxController {
         tapHomeViewController.search.remove("category");
       }
 
-      // tapPublishViewController
-      //     .updateRadioButton(null);
       tapPublishViewController.updateSubCategoryJson(subCategorie);
       update();
     } else {
-      print("category ${subCategorie.name}");
 
       subcategories1 = subCategorie;
       tapHomeViewController.setSearch("category", subCategorie.id);

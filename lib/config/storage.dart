@@ -12,7 +12,7 @@ box = GetStorage('secure');
 
   writeSecureData(String key, String value) {
     var writeData = box.write(key, value);
-   // return writeData;
+  return writeData;
   }
 
   String readSecureData(String key) {
