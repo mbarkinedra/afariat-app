@@ -111,7 +111,7 @@ class AdvertJson {
   City city;
   Town town;
   String modifiedAt;
-  Links linkss;
+  Links links;
 
   AdvertJson({
     this.id,
@@ -124,7 +124,7 @@ class AdvertJson {
     this.city,
     this.town,
     this.modifiedAt,
-    this.linkss,
+    this.links,
   });
 
   AdvertJson.fromJson(Map<String, dynamic> json) {
@@ -138,7 +138,7 @@ class AdvertJson {
     city = City.fromJson(json['city']);
     town = Town.fromJson(json['town']);
     modifiedAt = json['modified_at'];
-    linkss = Links.fromJson(json['_links']);
+    links = Links.fromJson(json['_links']);
   }
 }
 

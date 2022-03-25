@@ -42,7 +42,7 @@ class TapHomeViewController extends GetxController {
   getAllAds() {
     if (Get.find<NetWorkController>().connectionStatus.value) {
       pagingController.addPageRequestListener((pageKey) {
-        _fetchPage(_advertApi.apiUrl());
+        _fetchPage();
       });
       updateData();
       getPriceList();
@@ -53,7 +53,6 @@ class TapHomeViewController extends GetxController {
     if (advertListJson.links.next == null) {
       _fetchPage(advertListJson.links.getLastUrl());
     } else {
-      _advertApi.myUrl = advertListJson.links.getNextUrl();
       _fetchPage(advertListJson.links.getNextUrl());
     }
   }
@@ -83,7 +82,8 @@ class TapHomeViewController extends GetxController {
             scrollController.position.minScrollExtent) {
           onSwipeDown();
         }
-      };
+      }
+      ;
     });
 
     setUserName(Get.find<AccountInfoStorage>().readName() ?? "");
@@ -94,12 +94,11 @@ class TapHomeViewController extends GetxController {
     update();
   }
 
-  Future<void> _fetchPage(String url) async {
+  Future<void> _fetchPage([String url]) async {
     try {
+      _advertApi.url = url;
       await _advertApi.getList().then((value) {
         advertListJson = value;
-        print(advertListJson.links.next.href);
-        _advertApi.myUrl = null;
         getDataFromWeb = false;
       });
 
@@ -109,11 +108,13 @@ class TapHomeViewController extends GetxController {
       pagingController.error = error;
     }
   }
-  clearData(){
-    _advertApi.myUrl=null;
+
+  clearData() {
+    _advertApi.url = null;
     Filter.data.clear();
     onSwipeDown();
   }
+
   updateData() async {
     await _advertApi.getList().then((value) {
       advertListJson = value;
@@ -132,6 +133,9 @@ class TapHomeViewController extends GetxController {
   }
 
   filterUpdate() {
+    //reset the URL of advertApi
+    _advertApi.url = null;
+
     if (searchWord.text.isNotEmpty) {
       Filter.data['search'] = searchWord.text.toString();
     }
@@ -141,6 +145,14 @@ class TapHomeViewController extends GetxController {
       advertListJson = value;
       resetPriceSlider();
       pagingController.appendLastPage(advertListJson.adverts());
+
+      //go top after getting ads
+      scrollController
+        ..animateTo(
+          0.0,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 300),
+        );
 
       Get.find<LocController>().clearData();
       Get.find<CategoryAndSubcategory>().clearData();
