@@ -1,4 +1,5 @@
 import 'package:afariat/config/AccountInfoStorage.dart';
+import 'package:afariat/config/filter.dart';
 
 import 'package:afariat/home/tap_chat/tap_chat_scr.dart';
 import 'package:afariat/home/tap_home/tap_home_scr.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
+import 'tap_home/tap_home_viewcontroller.dart';
 import 'tap_myads/tap_myads_scr.dart';
 import 'tap_profile/tap_profile_scr.dart';
 import 'tap_publish/tap_publish_scr.dart';
@@ -75,6 +77,15 @@ class HomeViwController extends GetxController {
   }
 
   changeItemFilter(value) {
+    Filter.data.clear();
+   // Get.find<TapHomeViewController>().pagingController.itemList.clear();
+    Get.find<TapHomeViewController>().clearData();
+    if (value == 0) {
+
+      print(value);
+
+
+    }
     TapPublishViewController tapPublishViewController =
         Get.find<TapPublishViewController>();
     if (value != 2 || newPublish >= 2) {
@@ -82,14 +93,12 @@ class HomeViwController extends GetxController {
 
       tapPublishViewController.clearAllData();
 
-      //controller.index = value;
     } else if (!tapPublishViewController.modifAds.value) {
       newPublish = 1;
       tapPublishViewController.clearAllData();
     } else {
       newPublish++;
 
-      //controller.index = value;
     }
     controller.index = value;
     update();

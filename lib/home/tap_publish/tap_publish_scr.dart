@@ -646,7 +646,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
           controller.subCategories.name == "Bureaux et locaux commerciaux") {
         if (controller.pieces != null && controller.surface != null) {
           controller.myAdsView["Superficie"] =
-              controller.surface.text  + " " + "m²";
+              controller.surface.text.replaceAll("-", "") + " " + "m²";
           controller.myAds["area"] = controller.surface.text;
 
           validateOptions(context);

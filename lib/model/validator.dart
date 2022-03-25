@@ -27,7 +27,7 @@ class Validator {
   String validateSurface(String value) {
     if (value.isEmpty || value == null) {
       return " Veuillez renseigner la surface.";
-    } else if (double.tryParse(value).isNegative) {
+    } else if (int.tryParse(value).isNegative) {
       return "La surface doit être positive  ";
     }
     return null;

@@ -244,6 +244,8 @@ abstract class ApiManager {
     return dioSingleton.dio.delete(apiUrl(), options: options).then((value) {
       return value;
     }).onError((error, stackTrace) {
+      print(error);
+
       return error;
 
     });

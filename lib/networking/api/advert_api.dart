@@ -4,13 +4,17 @@ import 'package:afariat/networking/api/api_manager.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
 
 class AdvertApi extends ApiManager {
+  String myUrl;
   @override
   String apiUrl() {
     String parameters =
         Filter.toHttpQuery() != '' ? '?' + Filter.toHttpQuery() : '';
 
     String url = SettingsApp.advertUrl + parameters;
+if(myUrl !=null){
 
+  return url=SettingsApp.baseUrl+myUrl;
+}else
     return url;
   }
 
@@ -19,10 +23,4 @@ class AdvertApi extends ApiManager {
     return AdvertListJson.fromJson(data);
   }
 
-// @override
-// void processNetworkErro(error){
-//   super.processNetworkErro(error);
-//
-//   // show the submit button
-// }
 }

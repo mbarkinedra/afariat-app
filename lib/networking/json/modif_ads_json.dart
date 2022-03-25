@@ -1,7 +1,7 @@
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 
-class ModifAdsJson extends AbstractJsonResource{
+class ModifAdsJson extends AbstractJsonResource {
   String createdAt;
   int id;
   String username;
@@ -25,28 +25,35 @@ class ModifAdsJson extends AbstractJsonResource{
   Mileage vehicleBrand;
   Mileage motoBrand;
   Mileage vehicleModel;
+  Mileage area;
+  Mileage roomsNumber;
 
   ModifAdsJson(
       {this.createdAt,
-        this.id,
-        this.username,
-        this.mobilePhoneNumber,
-        this.title,
-        this.slug,
-        this.description,
-        this.price,
-        this.showPhoneNumber,
-        this.advertType,
-        this.category,
-        this.region,
-        this.city,
-        this.town,
-        this.photos,this.motoBrand,        this.shortUrl,
-        this.lLinks,this.mileage,
-        this.yearModel,
-        this.energy,
-        this.vehicleBrand,
-        this.vehicleModel,});
+      this.id,
+      this.username,
+      this.mobilePhoneNumber,
+      this.title,
+      this.slug,
+      this.description,
+      this.price,
+      this.showPhoneNumber,
+      this.advertType,
+      this.category,
+      this.region,
+      this.city,
+      this.town,
+      this.photos,
+      this.motoBrand,
+      this.shortUrl,
+      this.lLinks,
+      this.mileage,
+      this.yearModel,
+      this.energy,
+      this.vehicleBrand,
+      this.vehicleModel,
+      this.roomsNumber,
+      this.area});
 
   ModifAdsJson.fromJson(Map<String, dynamic> json) {
     createdAt = json['created_at'];
@@ -65,16 +72,16 @@ class ModifAdsJson extends AbstractJsonResource{
         ? new Category.fromJson(json['category'])
         : null;
     region =
-    json['region'] != null ? new Region.fromJson(json['region']) : null;
+        json['region'] != null ? new Region.fromJson(json['region']) : null;
     city = json['city'] != null ? new Group.fromJson(json['city']) : null;
     town = json['town'] != null ? new Group.fromJson(json['town']) : null;
     mileage =
-    json['mileage'] != null ? new Mileage.fromJson(json['mileage']) : null;
+        json['mileage'] != null ? new Mileage.fromJson(json['mileage']) : null;
     yearModel = json['year_model'] != null
         ? new Mileage.fromJson(json['year_model'])
         : null;
     energy =
-    json['energy'] != null ? new Mileage.fromJson(json['energy']) : null;
+        json['energy'] != null ? new Mileage.fromJson(json['energy']) : null;
     vehicleBrand = json['vehicle_brand'] != null
         ? new Mileage.fromJson(json['vehicle_brand'])
         : null;
@@ -83,6 +90,12 @@ class ModifAdsJson extends AbstractJsonResource{
         : null;
     vehicleModel = json['vehicle_model'] != null
         ? new Mileage.fromJson(json['vehicle_model'])
+        : null;
+    area = json['area'] != null
+        ? new Mileage.fromJson(json['area'])
+        : null;
+    roomsNumber = json['rooms_Number'] != null
+        ? new Mileage.fromJson(json['rooms_Number'])
         : null;
     if (json['photos'] != null) {
       photos = <Photos>[];
@@ -137,6 +150,10 @@ class ModifAdsJson extends AbstractJsonResource{
     }
     if (this.vehicleModel != null) {
       data['vehicle_model'] = this.vehicleModel.toJson();
+    }  if (this.area != null) {
+      data['area'] = this.area.toJson();
+    }  if (this.roomsNumber != null) {
+      data['roomsNumber'] = this.roomsNumber.toJson();
     }
     if (this.photos != null) {
       data['photos'] = this.photos.map((v) => v.toJson()).toList();
@@ -148,6 +165,7 @@ class ModifAdsJson extends AbstractJsonResource{
     return data;
   }
 }
+
 class Mileage {
   String value;
 
@@ -163,6 +181,7 @@ class Mileage {
     return data;
   }
 }
+
 class AdvertType {
   String name;
 
@@ -307,7 +326,7 @@ class Photos {
   Photos({this.path});
 
   Photos.fromJson(Map<String, dynamic> json) {
-    path =SettingsApp.baseUrl +"/"+ json['path'];
+    path = SettingsApp.baseUrl + "/" + json['path'];
   }
 
   Map<String, dynamic> toJson() {
@@ -316,5 +335,3 @@ class Photos {
     return data;
   }
 }
-
-

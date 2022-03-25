@@ -1,5 +1,6 @@
 import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
+import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
@@ -41,13 +42,6 @@ class TapHomeViewController extends GetxController {
   getAllAds() {
     if (Get.find<NetWorkController>().connectionStatus.value) {
       pagingController.addPageRequestListener((pageKey) {
-
-        /**
-         * if advertListJson is null, utiliser le par defaut: _advertApi.apiUrl()
-         * else
-         * utiliser advertListJson.links.getNextUrl() etc...
-         *
-         */
         _fetchPage(_advertApi.apiUrl());
       });
       updateData();
@@ -59,6 +53,7 @@ class TapHomeViewController extends GetxController {
     if (advertListJson.links.next == null) {
       _fetchPage(advertListJson.links.getLastUrl());
     } else {
+      _advertApi.myUrl = advertListJson.links.getNextUrl();
       _fetchPage(advertListJson.links.getNextUrl());
     }
   }
@@ -88,8 +83,7 @@ class TapHomeViewController extends GetxController {
             scrollController.position.minScrollExtent) {
           onSwipeDown();
         }
-      }
-      ;
+      };
     });
 
     setUserName(Get.find<AccountInfoStorage>().readName() ?? "");
@@ -104,6 +98,8 @@ class TapHomeViewController extends GetxController {
     try {
       await _advertApi.getList().then((value) {
         advertListJson = value;
+        print(advertListJson.links.next.href);
+        _advertApi.myUrl = null;
         getDataFromWeb = false;
       });
 
@@ -113,12 +109,14 @@ class TapHomeViewController extends GetxController {
       pagingController.error = error;
     }
   }
-
+  clearData(){
+    _advertApi.myUrl=null;
+    Filter.data.clear();
+    onSwipeDown();
+  }
   updateData() async {
     await _advertApi.getList().then((value) {
       advertListJson = value;
-      //adverts = value.embedded.adverts;
-
       getDataFromWeb = false;
     });
     update();
@@ -141,7 +139,6 @@ class TapHomeViewController extends GetxController {
     _advertApi.getList().then((value) {
       pagingController.itemList.clear();
       advertListJson = value;
-      Filter.data.clear();
       resetPriceSlider();
       pagingController.appendLastPage(advertListJson.adverts());
 
@@ -154,7 +151,6 @@ class TapHomeViewController extends GetxController {
 
   setSearch(String key, v) {
     search[key] = v;
-    //Filter.data[key] = v;
   }
 
   getPriceList() async {

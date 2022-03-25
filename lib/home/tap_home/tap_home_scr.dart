@@ -147,7 +147,9 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                   onRefresh: () => Future.sync(
                                     () => controller.pagingController.refresh(),
                                   ),
-                                  child: PagedListView<int, dynamic>(scrollController: controller.scrollController,
+                                  child: PagedListView<int, dynamic>(
+                                    scrollController:
+                                        controller.scrollController,
                                     pagingController:
                                         controller.pagingController,
                                     builderDelegate:
@@ -191,11 +193,23 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                       )
                     : Expanded(
                         child: Container(
-                        child: Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,
+                        child: Center(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                         Icon(Icons.wifi_off_rounded,size: 80,color: Colors.deepOrangeAccent,),
-                        Text("Pas de connexion internet",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black45),) ,
-                         /*   Text("Connect_toi a internet et réessaie.",style: TextStyle(color: Colors.black45),)*/],
+                            Icon(
+                              Icons.wifi_off_rounded,
+                              size: 80,
+                              color: Colors.deepOrangeAccent,
+                            ),
+                            Text(
+                              "Pas de connexion internet",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black45),
+                            ),
+                            /*   Text("Connect_toi a internet et réessaie.",style: TextStyle(color: Colors.black45),)*/
+                          ],
                         )),
                       ))
               ],
