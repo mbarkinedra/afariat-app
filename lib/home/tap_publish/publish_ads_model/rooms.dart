@@ -1,5 +1,6 @@
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/custom_text_filed2.dart';
+import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,19 +30,19 @@ class Rooms extends GetView<TapPublishViewController> {
                         border: Border.all(color: Colors.deepOrange, width: 2),
                         borderRadius: BorderRadius.circular(10)),
                     child: ListTile(
-                      title: DropdownButton<String>(
-                        value: logic.pieces,
+                      title: DropdownButton<RefJson>(
+                        value: logic.nombrePiece,
                         isExpanded: true,
                         iconSize: 24,
                         elevation: 16,
                         style: const TextStyle(color: Colors.black),
                         underline: Container(),
                         onChanged: logic.updateNombrePieces,
-                        items: logic.nombrePieces
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
+                        items: controller.nombrePieces
+                            .map<DropdownMenuItem<RefJson>>((RefJson value) {
+                          return DropdownMenuItem<RefJson>(
                             value: value,
-                            child: Text(value),
+                            child: Text(value.name),
                           );
                         }).toList(),
                       ),
@@ -57,9 +58,9 @@ class Rooms extends GetView<TapPublishViewController> {
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: Obx(() => Text(
-                controller.validatePiece.value,
-                style: TextStyle(color: Colors.red),
-              )),
+                    controller.validatePiece.value,
+                    style: TextStyle(color: Colors.red),
+                  )),
             )),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -90,16 +91,13 @@ class Rooms extends GetView<TapPublishViewController> {
                               Expanded(
                                 flex: 1,
                                 child: CustomTextFiled2(
-                                  padding: 0,
-                                  color: Colors.deepOrange,
+                                    padding: 0,
+                                    color: Colors.deepOrange,
                                     hintText: "Surface",
                                     validator:
-                                    controller.validator.validateSurface,
-
+                                        controller.validator.validateSurface,
                                     textEditingController: controller.surface,
-                                    keyboardType: TextInputType.number
-                                ),
-
+                                    keyboardType: TextInputType.number),
                               ),
                               Text(
                                 "m²",
@@ -113,11 +111,7 @@ class Rooms extends GetView<TapPublishViewController> {
                     ),
                   ],
                 ),
-
-
               ),
-
-
             ],
           ),
         ),

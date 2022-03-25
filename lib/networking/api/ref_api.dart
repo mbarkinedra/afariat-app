@@ -33,6 +33,10 @@ class VehicleBrandsApi extends RefApi {
   @override
   String apiUrl() => SettingsApp.vehicleBrandsUrl;
 }
+class RoomsNumberApi extends RefApi {
+  @override
+  String apiUrl() => SettingsApp.roomsNumberUrl;
+}
 class EnergieApi extends RefApi{
   @override
   String apiUrl() => SettingsApp.energiesUrl;
@@ -59,10 +63,6 @@ class YearsModelsApi extends RefApi {
   String apiUrl() => SettingsApp.yearsModelsUrl;
 }
 
-class RoomsNumberApi extends RefApi {
-  @override
-  String apiUrl() => SettingsApp.roomsNumberUrl;
-}
 
 class AdvertTypesApi extends RefApi {
   int  advertTypeId;

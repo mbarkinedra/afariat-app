@@ -18,6 +18,7 @@ class SettingsApp {
   static const String myAdsUrl = baseApiUrl + '/adverts?user=';
   static const String cityUrl = baseApiUrl + '/simple/cities';
   static const String townUrl = baseApiUrl + '/simple/towns';
+  static const String roomsNumberUrl = baseApiUrl + '/simple/rooms-number';
   static const String grouppedCategoriesUrl =
       baseApiUrl + '/simple/categories-groupped';
   static const String priceUrl = baseApiUrl + '/simple/prices';
@@ -28,7 +29,6 @@ class SettingsApp {
 
   static const String mileagesUrl = baseApiUrl + '/simple/mileages';
   static const String yearsModelsUrl = baseApiUrl + '/simple/year-models';
-  static const String roomsNumberUrl = baseApiUrl + '/simple/rooms-number';
   static const String advertTypesUrl =
       baseApiUrl + '/simple/category/advert-types/';
   static const String deleteAds = baseApiUrl + '/adverts';

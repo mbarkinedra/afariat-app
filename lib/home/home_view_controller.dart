@@ -77,15 +77,10 @@ class HomeViwController extends GetxController {
   }
 
   changeItemFilter(value) {
-    Filter.data.clear();
+    //Filter.data.clear();
    // Get.find<TapHomeViewController>().pagingController.itemList.clear();
     Get.find<TapHomeViewController>().clearData();
-    if (value == 0) {
 
-      print(value);
-
-
-    }
     TapPublishViewController tapPublishViewController =
         Get.find<TapPublishViewController>();
     if (value != 2 || newPublish >= 2) {

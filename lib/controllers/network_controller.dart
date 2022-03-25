@@ -41,13 +41,14 @@ class NetWorkController extends GetxController {
         tapHomeViewController.getAllAds();
         Get.find<TapPublishViewController>().getMileages();
         Get.find<TapPublishViewController>().getYearsModels();
-
+        Get.find<TapPublishViewController>().getRoomsNumber();
         Get.find<LocController>().getCitylist();
         Get.find<CategoryAndSubcategory>().getCategoriesGrouppedApi();
         break;
       case ConnectivityResult.mobile:
         connectionStatus.value = true;
         tapHomeViewController.getAllAds();
+        Get.find<TapPublishViewController>().getRoomsNumber();
         Get.find<TapPublishViewController>().getMileages();
         Get.find<TapPublishViewController>().getYearsModels();
         Get.find<LocController>().getCitylist();

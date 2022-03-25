@@ -584,7 +584,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
     } else {
       controller.validateTown.value = "";
     }
-    if (controller.pieces == null) {
+    if (controller.nombrePieces == null) {
       controller.validatePiece.value = " Nombre des pieces sont obligatoires ";
     } else {
       controller.validatePiece.value = "";
@@ -644,7 +644,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
       else if (controller.subCategories.name == "Appartements" ||
           controller.subCategories.name == "Maison" ||
           controller.subCategories.name == "Bureaux et locaux commerciaux") {
-        if (controller.pieces != null && controller.surface != null) {
+        if (controller.nombrePieces != null && controller.surface != null) {
           controller.myAdsView["Superficie"] =
               controller.surface.text.replaceAll("-", "") + " " + "m²";
           controller.myAds["area"] = controller.surface.text;

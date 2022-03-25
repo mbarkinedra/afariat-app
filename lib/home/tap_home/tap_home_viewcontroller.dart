@@ -58,8 +58,12 @@ class TapHomeViewController extends GetxController {
   }
 
   onSwipeDown() {
-    pagingController.itemList.clear();
+  //  if(   pagingController.itemList!=null){
+      pagingController.itemList?.clear();
+   // }
+
     if (advertListJson.links.previous == null) {
+      print("getFirstUrl");
       _fetchPage(advertListJson.links.getFirstUrl());
     } else {
       _fetchPage(advertListJson.links.getPreviousUrl());
@@ -77,9 +81,11 @@ class TapHomeViewController extends GetxController {
       if (scrollController.position.atEdge) {
         if (scrollController.offset >=
             scrollController.position.maxScrollExtent) {
+          print("onSwipeUp");
           onSwipeUp();
         } else if (scrollController.offset >=
             scrollController.position.minScrollExtent) {
+          print("onSwipeDown");
           onSwipeDown();
         }
       }
@@ -112,7 +118,8 @@ class TapHomeViewController extends GetxController {
   clearData() {
     _advertApi.url = null;
     Filter.data.clear();
-    onSwipeDown();
+    pagingController.refresh();
+
   }
 
   updateData() async {

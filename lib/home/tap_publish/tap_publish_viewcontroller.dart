@@ -53,7 +53,7 @@ class TapPublishViewController extends GetxController {
   SubcategoryJson subCategories;
   bool lights = true;
   bool isButtonSheet = false;
-  String pieces;
+ // String pieces;
   BuildContext context;
   RefJson energie;
 
@@ -82,6 +82,7 @@ class TapPublishViewController extends GetxController {
   RefJson citie;
   RefJson town;
   RefJson kilometrage;
+  RefJson nombrePiece;
   List<RefJson> vehiculeBrands = [];
   List<RefJson> energies = [];
 
@@ -89,21 +90,21 @@ class TapPublishViewController extends GetxController {
   List<RefJson> vehiculeModels = [];
   List<RefJson> mileages = [];
   List<RefJson> yearsModels = [];
-
+List<RefJson>nombrePieces=[];
   // List<RefJson> rooms = [];
-  List<String> nombrePieces = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '10+'
-  ];
+  // List<String> nombrePieces = [
+  //   '1',
+  //   '2',
+  //   '3',
+  //   '4',
+  //   '5',
+  //   '6',
+  //   '7',
+  //   '8',
+  //   '9',
+  //   '10',
+  //   '10+'
+  // ];
   List<String> photos = [];
   VehicleBrandsApi _vehicleBrandsApi = VehicleBrandsApi();
   MotoBrandsApi _motoBrandsApi = MotoBrandsApi();
@@ -112,7 +113,7 @@ class TapPublishViewController extends GetxController {
   YearsModelsApi _yearsModelsApi = YearsModelsApi();
   EnergieApi _energieApi = EnergieApi();
   ValidateServer _validateServer = ValidateServer();
-
+RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
   photobase64Encode(im) {
     final bytes = File(im.path).readAsBytesSync();
     String img64 = base64Encode(bytes);
@@ -169,15 +170,25 @@ class TapPublishViewController extends GetxController {
   }
 
   @override
+  void onReady() {
+    super.onReady();
+
+  }
+
+  @override
   void onInit() {
     super.onInit();
     advertType = values[0];
     myAds["advertType"] = values[0].name;
     myAdsView["advertType"] = values[0].name;
+
     if (Get.find<NetWorkController>().connectionStatus.value) {
+
       getMileages();
       getYearsModels();
+
     }
+
   }
 
   getEnergie() {
@@ -234,7 +245,15 @@ class TapPublishViewController extends GetxController {
     });
     update();
   }
-
+  getRoomsNumber() async {
+    print("value");
+    await _roomsNumberApi.getList().then((value) {
+      print("value");
+      print(value);
+      nombrePieces = value.data;
+    });
+    update();
+  }
   getMotosBrand() async {
     await _motoBrandsApi.getList().then((value) {
       motosBrands = value.data;
@@ -318,9 +337,10 @@ class TapPublishViewController extends GetxController {
   }
 
   updateNombrePieces(newValue) {
-    pieces = newValue;
-    myAds["roomsNumber"] = newValue;
-    myAdsView["Nombre de pièces"] = newValue;
+    nombrePiece= newValue;
+    myAds["roomsNumber"] = newValue.id;
+    myAdsView["Nombre de pièces"] = newValue.name;
+    print("Nombre de pièces");
     update();
   }
 
@@ -378,7 +398,7 @@ class TapPublishViewController extends GetxController {
       vehiculeModel = null;
       energie = null;
       kilometrage = null;
-      pieces = null;
+      nombrePiece = null;
 
       myAds = {};
       myAdsView = {};
@@ -490,7 +510,7 @@ class TapPublishViewController extends GetxController {
     _modifAdsApi.id = id;
     await _modifAdsApi.getList().then((value) async {
       modifAdsJson = value;
-
+print(value.toJson());
       title.text = modifAdsJson.title;
       description.text = modifAdsJson.description;
       prix.text = modifAdsJson.price.toString();
@@ -587,6 +607,18 @@ class TapPublishViewController extends GetxController {
           }
         }
       }
+      if (modifAdsJson.roomsNumber != null) {
+        for (int i = 0; i < nombrePieces.length; i++) {
+
+          print(nombrePieces[i] == modifAdsJson.roomsNumber.value);
+          print(nombrePieces[i]);
+          print( modifAdsJson.roomsNumber.value);
+          if (nombrePieces[i].id == modifAdsJson.roomsNumber.value) {
+            updateNombrePieces(nombrePieces[i]);
+          }
+        }
+      }
+      surface.text = modifAdsJson.area.toString();
 
       editAdsImages.clear();
       modifAdsJson.photos.forEach((element) {

@@ -25,7 +25,7 @@ class ModifAdsJson extends AbstractJsonResource {
   Mileage vehicleBrand;
   Mileage motoBrand;
   Mileage vehicleModel;
-  Mileage area;
+  int area;
   Mileage roomsNumber;
 
   ModifAdsJson(
@@ -91,9 +91,8 @@ class ModifAdsJson extends AbstractJsonResource {
     vehicleModel = json['vehicle_model'] != null
         ? new Mileage.fromJson(json['vehicle_model'])
         : null;
-    area = json['area'] != null
-        ? new Mileage.fromJson(json['area'])
-        : null;
+    area = json['area'];
+
     roomsNumber = json['rooms_Number'] != null
         ? new Mileage.fromJson(json['rooms_Number'])
         : null;
@@ -117,6 +116,7 @@ class ModifAdsJson extends AbstractJsonResource {
     data['slug'] = this.slug;
     data['description'] = this.description;
     data['price'] = this.price;
+    data['area'] = this.area;
     data['show_phone_number'] = this.showPhoneNumber;
     if (this.advertType != null) {
       data['advert_type'] = this.advertType.toJson();
@@ -150,9 +150,7 @@ class ModifAdsJson extends AbstractJsonResource {
     }
     if (this.vehicleModel != null) {
       data['vehicle_model'] = this.vehicleModel.toJson();
-    }  if (this.area != null) {
-      data['area'] = this.area.toJson();
-    }  if (this.roomsNumber != null) {
+    }   if (this.roomsNumber != null) {
       data['roomsNumber'] = this.roomsNumber.toJson();
     }
     if (this.photos != null) {
