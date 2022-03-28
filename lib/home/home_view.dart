@@ -39,7 +39,7 @@ class Home extends GetWidget<HomeViwController> {
           colorBehindNavBar: Colors.white,
         ),
         popAllScreensOnTapOfSelectedTab: true,
-        popActionScreens: PopActionScreensType.all,
+        //popActionScreens: PopActionScreensType.all,
         itemAnimationProperties: ItemAnimationProperties(
           // Navigation Bar's items animation properties.
           duration: Duration(seconds: 1),

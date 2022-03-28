@@ -12,6 +12,7 @@ class AdvertApi extends ApiManager {
         Filter.toHttpQuery() != '' ? '?' + Filter.toHttpQuery() : '';
 
     String defaultUrl = SettingsApp.advertUrl + parameters;
+    print(parameters);
     if (url != null) {
       return defaultUrl = SettingsApp.baseUrl + url;
     } else

@@ -20,83 +20,75 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    List<Widget>list= controller.editAdsImages
+    List<Widget> list = controller.editAdsImages
         .map((e) => Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                border: Border.all(
-                    color: framColor),
-                borderRadius:
-                BorderRadius.circular(
-                    10)),
-            width: size.width * .3,
-            height: size.height * .2,
-            child: ClipRRect(
-              borderRadius:
-              BorderRadius.circular(10),
-              child: Image.network(
-                e,
-                fit: BoxFit.fill,
+              padding: const EdgeInsets.all(8.0),
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: framColor),
+                        borderRadius: BorderRadius.circular(10)),
+                    width: size.width * .3,
+                    height: size.height * .2,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        e,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    child: InkWell(
+                        onTap: () {
+                          controller.delEditImage(e);
+                        },
+                        child: Icon(
+                          Icons.clear,
+                          size: 30,
+                          color: framColor,
+                        )),
+                  ),
+                ],
               ),
-            ),
-          ),
-          Positioned(
-            right: 0,
-            child: InkWell(
-                onTap: () {
-                  controller.deleditImage(e);
-                },
-                child: Icon(
-                  Icons.clear,
-                  size: 30,
-                  color: framColor,
-                )),
-          ),
-        ],
-      ),
-    ))
+            ))
         .toList();
-    List<Widget>list2=controller.images
+    List<Widget> list2 = controller.images
         .map((e) => Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                border: Border.all(
-                    color: framColor),
-                borderRadius:
-                BorderRadius.circular(
-                    10)),
-            width: size.width * .3,
-            height: size.height * .2,
-            child: ClipRRect(
-              borderRadius:
-              BorderRadius.circular(10),
-              child: Image.file(
-                e,
-                fit: BoxFit.fill,
+              padding: const EdgeInsets.all(8.0),
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: framColor),
+                        borderRadius: BorderRadius.circular(10)),
+                    width: size.width * .3,
+                    height: size.height * .2,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.file(
+                        e,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    child: InkWell(
+                        onTap: () {
+                          controller.deleteImage(e);
+                        },
+                        child: Icon(
+                          Icons.clear,
+                          size: 30,
+                          color: framColor,
+                        )),
+                  ),
+                ],
               ),
-            ),
-          ),
-          Positioned(
-            right: 0,
-            child: InkWell(
-                onTap: () {
-                controller.deleteImage(e);
-                },
-                child: Icon(
-                  Icons.clear,
-                  size: 30,
-                  color: framColor,
-                )),
-          ),
-        ],
-      ),
-    ))
+            ))
         .toList();
     return Scaffold(
       body: SingleChildScrollView(
@@ -113,7 +105,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                     child: Text(
                   "Vérification",
                   style: TextStyle(
-                      color:framColor,
+                      color: framColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 30),
                 )),
@@ -152,10 +144,6 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
               label: "Gouvernorat :",
               data: controller.myAdsView["city"],
             ),
-            // CustomApercu(
-            //   label: "Afficher N° Tél:",
-            //   data: controller.myAdsView["showPhoneNumber"],
-            // ),
             ListTile(
               contentPadding: EdgeInsets.all(8),
               title: const Text(
@@ -194,7 +182,6 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                       controller.myAdsView["prix"].replaceAll(" DT", ""))) +
                   ' ' +
                   SettingsApp.moneySymbol,
-              //controller.myAdsView["prix"],
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -202,9 +189,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [...list2,...list]
-
-    ),
+                    children: [...list2, ...list]),
               ),
             ),
             Padding(
@@ -226,7 +211,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                       width: MediaQuery.of(context).size.width * .25,
                       height: 40,
                       label: "Modifier",
-                      labColor:buttonColor,
+                      labColor: buttonColor,
                       btColor: Colors.white,
                       function: () {
                         int count = 0;
@@ -244,7 +229,6 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                       btColor: Colors.white,
                       function: () {
                         controller.images.clear();
-
                         controller.updateCategoryToNull();
                         controller.updateSubcategoryToNull();
                         Get.find<LocController>().updateCityAndTown();
@@ -255,21 +239,18 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                         controller.myAds = {};
                         controller.category = null;
                         controller.updateCategory(null);
-                        //    controller.energies = [];
                         controller.energie = null;
                         controller.kilometrage = null;
                         controller.lights = false;
                         controller.motosBrand = null;
                         controller.vehiculebrands = null;
-
                         int count = 0;
-
                         Navigator.popUntil(context, (route) {
                           return count++ == 2;
                         });
                       },
                     ),
-                    Obx(  () {
+                    Obx(() {
                       return controller.buttonPublier.value
                           ? CircularProgressIndicator()
                           : CustomButtonWithoutIcon(

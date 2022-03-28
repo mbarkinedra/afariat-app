@@ -23,13 +23,12 @@ class NetWorkController extends GetxController {
   }
 
   Future<void> initConnectivity() async {
-   // ConnectivityResult result;
+    // ConnectivityResult result;
     try {
       _connectivity.checkConnectivity().then((value) {
         _updateConnectionStatus(value);
       });
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   _updateConnectionStatus(ConnectivityResult value) {
@@ -43,7 +42,7 @@ class NetWorkController extends GetxController {
         Get.find<TapPublishViewController>().getYearsModels();
         Get.find<TapPublishViewController>().getRoomsNumber();
         Get.find<LocController>().getCitylist();
-        Get.find<CategoryAndSubcategory>().getCategoriesGrouppedApi();
+        Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
         break;
       case ConnectivityResult.mobile:
         connectionStatus.value = true;
@@ -52,12 +51,22 @@ class NetWorkController extends GetxController {
         Get.find<TapPublishViewController>().getMileages();
         Get.find<TapPublishViewController>().getYearsModels();
         Get.find<LocController>().getCitylist();
-        Get.find<CategoryAndSubcategory>().getCategoriesGrouppedApi();
+        Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
 
+        break;
+      case ConnectivityResult.bluetooth:
+        break;
+      case ConnectivityResult.ethernet:
         break;
       case ConnectivityResult.none:
         connectionStatus.value = false;
         break;
     }
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    connectivitysubscription.cancel();
   }
 }

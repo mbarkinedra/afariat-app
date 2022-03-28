@@ -28,19 +28,18 @@ import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
   RxBool buttonPublier = false.obs;
-  bool buttonModif = false;
-  bool buttonSupprimer = false;
+
   RxBool modifAds = false.obs;
   bool getDataFromServer = false;
   RxString validateTown = "".obs;
   RxString validateMarque = "".obs;
   RxString validatePiece = "".obs;
-
   RxString validateModele = "".obs;
   RxString validateEnergie = "".obs;
   RxString validateYears = "".obs;
   RxString validateKm = "".obs;
-
+  bool lights = true;
+  bool isButtonSheet = false;
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   final storge = Get.find<SecureStorage>();
   final accountInfoStorage = Get.find<AccountInfoStorage>();
@@ -51,12 +50,9 @@ class TapPublishViewController extends GetxController {
   ModifAdsJson modifAdsJson = ModifAdsJson();
   CategoryGroupedJson category;
   SubcategoryJson subCategories;
-  bool lights = true;
-  bool isButtonSheet = false;
- // String pieces;
+
   BuildContext context;
   RefJson energie;
-
   Map<String, dynamic> myAds = {};
   Map<String, String> myAdsView = {};
   TextEditingController title = TextEditingController();
@@ -64,10 +60,8 @@ class TapPublishViewController extends GetxController {
   TextEditingController prix = TextEditingController();
   TextEditingController surface = TextEditingController();
   ModifAdsApi _modifAdsApi = ModifAdsApi();
-
   List<File> images = [];
   List<String> editAdsImages = [];
-
   List<RefJson> values = [
     RefJson(name: "Offre", id: 1),
     RefJson(name: "Demande", id: 2),
@@ -85,26 +79,11 @@ class TapPublishViewController extends GetxController {
   RefJson nombrePiece;
   List<RefJson> vehiculeBrands = [];
   List<RefJson> energies = [];
-
   List<RefJson> motosBrands = [];
   List<RefJson> vehiculeModels = [];
   List<RefJson> mileages = [];
   List<RefJson> yearsModels = [];
-List<RefJson>nombrePieces=[];
-  // List<RefJson> rooms = [];
-  // List<String> nombrePieces = [
-  //   '1',
-  //   '2',
-  //   '3',
-  //   '4',
-  //   '5',
-  //   '6',
-  //   '7',
-  //   '8',
-  //   '9',
-  //   '10',
-  //   '10+'
-  // ];
+  List<RefJson> nombrePieces = [];
   List<String> photos = [];
   VehicleBrandsApi _vehicleBrandsApi = VehicleBrandsApi();
   MotoBrandsApi _motoBrandsApi = MotoBrandsApi();
@@ -113,7 +92,8 @@ List<RefJson>nombrePieces=[];
   YearsModelsApi _yearsModelsApi = YearsModelsApi();
   EnergieApi _energieApi = EnergieApi();
   ValidateServer _validateServer = ValidateServer();
-RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
+  RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
+
   photobase64Encode(im) {
     final bytes = File(im.path).readAsBytesSync();
     String img64 = base64Encode(bytes);
@@ -122,12 +102,10 @@ RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
 
   void openCamera() async {
     var imgCamera = await picker.pickImage(source: ImageSource.camera);
-
     if (imgCamera != null) {
       images.add(File(imgCamera.path));
       update();
     }
-
     update();
   }
 
@@ -137,7 +115,6 @@ RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
       images.add(File(pickedFile.path));
       update();
     }
-
     update();
   }
 
@@ -146,7 +123,7 @@ RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
     update();
   }
 
-  deleditImage(String file) {
+  delEditImage(String file) {
     editAdsImages.remove(file);
     update();
   }
@@ -172,7 +149,6 @@ RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
   @override
   void onReady() {
     super.onReady();
-
   }
 
   @override
@@ -183,12 +159,9 @@ RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
     myAdsView["advertType"] = values[0].name;
 
     if (Get.find<NetWorkController>().connectionStatus.value) {
-
       getMileages();
       getYearsModels();
-
     }
-
   }
 
   getEnergie() {
@@ -226,7 +199,6 @@ RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
     vehiculeModel = null;
     _vehicleModelApi.getList().then((value) {
       vehiculeModels = value.data;
-
       if (modifAdsJson.vehicleModel != null) {
         vehiculeModels.forEach((element) {
           if (element.name == modifAdsJson.vehicleModel.value) {
@@ -245,6 +217,7 @@ RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
     });
     update();
   }
+
   getRoomsNumber() async {
     print("value");
     await _roomsNumberApi.getList().then((value) {
@@ -254,6 +227,7 @@ RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
     });
     update();
   }
+
   getMotosBrand() async {
     await _motoBrandsApi.getList().then((value) {
       motosBrands = value.data;
@@ -337,7 +311,7 @@ RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
   }
 
   updateNombrePieces(newValue) {
-    nombrePiece= newValue;
+    nombrePiece = newValue;
     myAds["roomsNumber"] = newValue.id;
     myAdsView["Nombre de pièces"] = newValue.name;
     print("Nombre de pièces");
@@ -379,6 +353,10 @@ RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
       Get.find<CategoryAndSubcategory>().categoryGroupedJson = null;
       Get.find<CategoryAndSubcategory>().subcategories1 = null;
       Get.find<CategoryAndSubcategory>().update();
+      images.clear();
+      photos.clear();
+      editAdsImages.clear();
+      dataAdverts = false;
       validateTown.value = "";
       validateMarque.value = "";
       validateModele.value = "";
@@ -413,12 +391,10 @@ RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
 
   postData(con) async {
     buttonPublier.value = true;
-
     for (var i in images) {
       photobase64Encode(i);
     }
     myAds["photos"] = photos;
-
     PublishApi publishApi = PublishApi();
 
     if (dataAdverts) {
@@ -428,13 +404,10 @@ RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
 
         if (value.statusCode == 204) {
           Get.find<TapMyadsViewController>().ads();
-
           Filter.data.clear();
           clearAllData();
-          Get.find<CategoryAndSubcategory>().clearData();
-          Get.find<LocController>().clearData();
-          images.clear();
-          editAdsImages.clear();
+          Get.find<CategoryAndSubcategory>().clearDataCategroyAndSubCategory();
+          Get.find<LocController>().clearDataCityAndTown();
           Get.find<HomeViwController>().changeItemFilter(1);
           await showDialog<bool>(
               context: context,
@@ -469,12 +442,10 @@ RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
         _validateServer.validatorServer(
             validate: () async {
               Filter.data.clear();
-
               clearAllData();
-              images.clear();
-              editAdsImages.clear();
-              Get.find<CategoryAndSubcategory>().clearData();
-              Get.find<LocController>().clearData();
+              Get.find<CategoryAndSubcategory>().subcategories1 = null;
+              Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
+              Get.find<LocController>().getCitylist();
               await showDialog<bool>(
                   context: context,
                   builder: (context) {
@@ -489,7 +460,6 @@ RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
                         }
                         Navigator.pop(context);
                         Get.find<TapPublishViewController>().clearAllData();
-
                         Get.find<TapMyadsViewController>().ads();
                         Get.find<HomeViwController>().changeItemFilter(1);
                       },
@@ -506,11 +476,11 @@ RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
     update();
   }
 
-  getModifAds(int id) async {
+  getAllData(int id) async {
     _modifAdsApi.id = id;
     await _modifAdsApi.getList().then((value) async {
       modifAdsJson = value;
-print(value.toJson());
+      print(value.toJson());
       title.text = modifAdsJson.title;
       description.text = modifAdsJson.description;
       prix.text = modifAdsJson.price.toString();
@@ -531,6 +501,15 @@ print(value.toJson());
                       .sc[modifAdsJson.category.group.id]
                       .length;
               sub++) {
+            print(Get.find<CategoryAndSubcategory>()
+                    .sc[modifAdsJson.category.group.id][sub]
+                    .id ==
+                modifAdsJson.category.id);
+            print(Get.find<CategoryAndSubcategory>()
+                .sc[modifAdsJson.category.group.id][sub]
+                .id);
+            print(modifAdsJson.category.id);
+
             if (Get.find<CategoryAndSubcategory>()
                     .sc[modifAdsJson.category.group.id][sub]
                     .id ==
@@ -609,11 +588,7 @@ print(value.toJson());
       }
       if (modifAdsJson.roomsNumber != null) {
         for (int i = 0; i < nombrePieces.length; i++) {
-
-          print(nombrePieces[i] == modifAdsJson.roomsNumber.value);
-          print(nombrePieces[i]);
-          print( modifAdsJson.roomsNumber.value);
-          if (nombrePieces[i].id == modifAdsJson.roomsNumber.value) {
+          if (nombrePieces[i].id.toString() == modifAdsJson.roomsNumber.value) {
             updateNombrePieces(nombrePieces[i]);
           }
         }
@@ -624,8 +599,6 @@ print(value.toJson());
       modifAdsJson.photos.forEach((element) {
         editAdsImages.add(element.path);
       });
-//    dataEditFromServer=false;
-      //  update();
     });
   }
 }

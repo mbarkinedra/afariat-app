@@ -2,7 +2,6 @@ import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/storage.dart';
 import 'package:afariat/config/wsse.dart';
 import 'package:afariat/home/home_view_controller.dart';
-import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_profile/account/account_view_controller.dart';
 import 'package:afariat/model/validate_server.dart';
 import 'package:afariat/networking/api/get_salt_api.dart';

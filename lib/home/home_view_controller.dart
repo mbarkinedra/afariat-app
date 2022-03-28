@@ -1,15 +1,13 @@
 import 'package:afariat/config/AccountInfoStorage.dart';
-import 'package:afariat/config/filter.dart';
-
+import 'package:afariat/controllers/category_and_subcategory.dart';
+import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_chat/tap_chat_scr.dart';
 import 'package:afariat/home/tap_home/tap_home_scr.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
-
 import 'package:afariat/sign_in/sign_in_scr.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-
 import 'tap_home/tap_home_viewcontroller.dart';
 import 'tap_myads/tap_myads_scr.dart';
 import 'tap_profile/tap_profile_scr.dart';
@@ -66,9 +64,9 @@ class HomeViwController extends GetxController {
   void onReady() {
     super.onReady();
 
-    Get.find<TapHomeViewController>().setUserName(Get.find<AccountInfoStorage>().readName()??"" );
+    Get.find<TapHomeViewController>()
+        .setUserName(Get.find<AccountInfoStorage>().readName() ?? "");
   }
-
 
   updatelist() {
     if (Get.find<AccountInfoStorage>().isLoggedIn()) {
@@ -85,21 +83,22 @@ class HomeViwController extends GetxController {
   }
 
   changeItemFilter(value) {
-    Get.find<TapHomeViewController>().clearData();
+    Get.find<TapHomeViewController>().clearDataFilter();
 
     TapPublishViewController tapPublishViewController =
         Get.find<TapPublishViewController>();
     if (value != 2 || newPublish >= 2) {
       newPublish = 1;
-
+      Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
+      Get.find<LocController>().getCitylist();
       tapPublishViewController.clearAllData();
-
     } else if (!tapPublishViewController.modifAds.value) {
       newPublish = 1;
+      Get.find<LocController>().getCitylist();
+      Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
       tapPublishViewController.clearAllData();
     } else {
       newPublish++;
-
     }
     controller.index = value;
     update();

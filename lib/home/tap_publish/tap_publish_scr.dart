@@ -17,7 +17,7 @@ import '../home_view_controller.dart';
 import 'tap_publish_viewcontroller.dart';
 
 class TapPublishScr extends GetWidget<TapPublishViewController> {
- // int p = 0;
+  // int p = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -293,7 +293,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                 Expanded(
                                                   flex: 1,
                                                   child: CustomTextFiled2(
-                                                      color:framColor,
+                                                      color: framColor,
                                                       validator: controller
                                                           .validator
                                                           .validatePrice,
@@ -536,7 +536,6 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black45),
                             ),
-                            /*   Text("Connect_toi a internet et réessaie.",style: TextStyle(color: Colors.black45),)*/
                           ],
                         )),
                       ))
@@ -548,15 +547,13 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
         );
   }
 
-  void validateOptions(context) {
+  void validateDefaultOptions(context) {
     if (controller.globalKey.currentState.validate()) {
       controller.myAdsView["prix"] =
           controller.prix.text + " " + SettingsApp.moneySymbol;
       controller.myAds["price"] = controller.prix.text;
-
       controller.myAdsView["title"] = controller.title.text;
       controller.myAds["title"] = controller.title.text;
-
       controller.myAdsView["description"] = controller.description.text;
       controller.myAds["description"] = controller.description.text;
       controller.myAds["showPhoneNumber"] = controller.lights ? "yes" : "no";
@@ -579,7 +576,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
     } else {
       controller.validateTown.value = "";
     }
-    if (controller.nombrePieces == null) {
+    if (controller.nombrePiece == null) {
       controller.validatePiece.value = " Nombre des pieces sont obligatoires ";
     } else {
       controller.validatePiece.value = "";
@@ -621,7 +618,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
             controller.energie != null &&
             controller.kilometrage != null &&
             controller.yearsModele != null) {
-          validateOptions(context);
+          validateDefaultOptions(context);
         } else {
           Get.snackbar("Oups !",
               "merci de bien vouloir compléter les champs ci dessous.");
@@ -630,7 +627,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
         if (controller.motosBrand != null &&
             controller.kilometrage != null &&
             controller.yearsModele != null) {
-          validateOptions(context);
+          validateDefaultOptions(context);
         } else {
           Get.snackbar("Oups !",
               "merci de bien vouloir compléter les champs ci dessous.");
@@ -643,13 +640,13 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
               controller.surface.text.replaceAll("-", "") + " " + "m²";
           controller.myAds["area"] = controller.surface.text;
 
-          validateOptions(context);
+          validateDefaultOptions(context);
         } else {
           Get.snackbar("Oups !",
               "merci de bien vouloir compléter les champs ci dessous.");
         }
       } else {
-        validateOptions(context);
+        validateDefaultOptions(context);
       }
     } else {
       Get.snackbar(

@@ -111,6 +111,7 @@ abstract class ApiManager {
       });
     }else{
       a.Get.snackbar("erreur", "vous n'avez pas de connexion");
+      return null;
     }
 
   }
@@ -177,12 +178,14 @@ abstract class ApiManager {
           a.Get.snackbar("erreur", "Délai de connection dépassé");
           // throw Exception("Connection  Timeout Exception");
         }
-
+print(error);
         return error;
 
       });
     }else{
+
       a.Get.snackbar("erreur", "");
+      return null;
     }
 
   }

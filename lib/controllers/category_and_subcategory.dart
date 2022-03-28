@@ -10,26 +10,23 @@ import 'package:get/get.dart';
 import 'network_controller.dart';
 
 class CategoryAndSubcategory extends GetxController {
-  int index = 0;
   final CategoriesGrouppedApi _categoriesGrouppedApi = CategoriesGrouppedApi();
   final tapHomeViewController = Get.find<TapHomeViewController>();
+  final tapPublishViewController = Get.find<TapPublishViewController>();
   Map<int, List<SubcategoryJson>> sc = {};
-
   List<SubcategoryJson> listSubCategories = [];
   SubcategoryJson subcategories1;
   CategoryGroupedJson categoryGroupedJson;
   List<CategoryGroupedJson> categoryGroupList = [];
-
   AdvertTypesApi _refApi = AdvertTypesApi();
-  final tapPublishViewController = Get.find<TapPublishViewController>();
 
   @override
   void onInit() {
     super.onInit();
-    getCategoriesGrouppedApi();
+    getCategoryGrouppedApi();
   }
 
-  getCategoriesGrouppedApi() {
+  getCategoryGrouppedApi() {
     if (Get.find<NetWorkController>().connectionStatus.value) {
       _categoriesGrouppedApi.getList().then((value) {
         categoryGroupList = value.data;
@@ -40,13 +37,14 @@ class CategoryAndSubcategory extends GetxController {
           sc[element.id] = element.subcategories;
         }
         categoryGroupList.insert(0, CategoryGroupedJson(id: 0, name: ""));
-
+        listSubCategories = [];
+        subcategories1 = null;
         update();
       });
     }
   }
 
-  clearData() {
+  clearDataCategroyAndSubCategory() {
     categoryGroupedJson = null;
     subcategories1 = null;
     update();
@@ -61,7 +59,6 @@ class CategoryAndSubcategory extends GetxController {
       categoryGroupedJson = categoryGrouped;
       tapHomeViewController.filterUpdate();
     } else {
-
       Filter.data["categoryGroup"] = categoryGrouped.id;
       tapHomeViewController.setSearch("categoryGroup", categoryGrouped.id);
 
@@ -75,30 +72,28 @@ class CategoryAndSubcategory extends GetxController {
     update();
   }
 
-  updateSubCategory(SubcategoryJson subCategorie) {
-    if (subCategorie.id == 0) {
+  updateSubCategory(SubcategoryJson subCategorieJson) {
+    if (subCategorieJson.id == 0) {
       tapHomeViewController.setSearch("categoryGroup", categoryGroupedJson.id);
-      subcategories1 = subCategorie;
+      subcategories1 = subCategorieJson;
       if (tapHomeViewController.search["category"] != null) {
         tapHomeViewController.search.remove("category");
       }
 
-      tapPublishViewController.updateSubCategoryJson(subCategorie);
+      tapPublishViewController.updateSubCategoryJson(subCategorieJson);
       update();
     } else {
-
-      subcategories1 = subCategorie;
-      tapHomeViewController.setSearch("category", subCategorie.id);
+      subcategories1 = subCategorieJson;
+      tapHomeViewController.setSearch("category", subCategorieJson.id);
       tapHomeViewController.search.remove("categoryGroup");
-      tapPublishViewController.updateSubCategoryJson(subCategorie);
-      tapPublishViewController
-          .updateGetView(RefJson(id: subCategorie.id, name: subCategorie.name));
-      tapPublishViewController.myAds["category"] = subCategorie.id;
-      tapPublishViewController.myAdsView["category"] = subCategorie.name;
-      _categoriesGrouppedApi.categoryId = subCategorie.id;
-      _refApi.advertTypeId = subCategorie.id;
+      tapPublishViewController.updateSubCategoryJson(subCategorieJson);
+      tapPublishViewController.updateGetView(
+          RefJson(id: subCategorieJson.id, name: subCategorieJson.name));
+      tapPublishViewController.myAds["category"] = subCategorieJson.id;
+      tapPublishViewController.myAdsView["category"] = subCategorieJson.name;
+      _categoriesGrouppedApi.categoryId = subCategorieJson.id;
+      _refApi.advertTypeId = subCategorieJson.id;
       _refApi.getList().then((value) {
-
         Get.find<TapPublishViewController>().updateAdvertTypes(value);
 
         update();

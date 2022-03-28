@@ -59,9 +59,9 @@ class Rooms extends GetView<TapPublishViewController> {
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0),
               child: Obx(() => Text(
-                    controller.validatePiece.value,
-                    style: TextStyle(color: Colors.red),
-                  )),
+                controller.validatePiece.value,
+                style: TextStyle(color: Colors.red),
+              )),
             )),
         Padding(
           padding: const EdgeInsets.all(8.0),

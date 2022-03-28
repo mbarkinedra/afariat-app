@@ -79,7 +79,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                               ),
                                               onPressed: () {
                                                 /* Clear the search field */
-                                                controller.filterClear();
+                                                controller.filterClearSearch();
                                               },
                                             )
                                           : null,
@@ -117,11 +117,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                             Get.find<TapPublishViewController>().clearAllData();
                             Filter.data.clear();
                           },
-                          child: const Icon(
-                            Icons.filter_alt_outlined,
-                            size: 30,
-                            color:ColorGrey
-                          ),
+                          child: const Icon(Icons.filter_alt_outlined,
+                              size: 30, color: ColorGrey),
                         ),
                       )
                     ]),
@@ -207,9 +204,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                               "Pas de connexion internet",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color:ColorText),
+                                  color: ColorText),
                             ),
-                            /*   Text("Connect_toi a internet et réessaie.",style: TextStyle(color: Colors.black45),)*/
                           ],
                         )),
                       ))
@@ -255,14 +251,18 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
               ),
               Expanded(child: SizedBox()),
               Divider(
-                thickness: 1,color: ColorText,
+                thickness: 1,
+                color: ColorText,
               ),
               ListTile(
-                leading: Icon(Icons.help_center,color: ColorText,),
+                leading: Icon(
+                  Icons.help_center,
+                  color: ColorText,
+                ),
                 title: const Text(
                   "Centre d'aide",
-                  style: TextStyle(
-                      color: ColorText, fontWeight: FontWeight.bold),
+                  style:
+                      TextStyle(color: ColorText, fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
                   controller.launchURL("https://afariat.com/aide.html");
@@ -272,16 +272,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
               SizedBox(
                 height: 20,
               )
-
-              /*        ListTile(
-                title: const Text('Item 2'),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  Navigator.pop(context);
-                },
-              ),*/
             ],
           ),
         ),

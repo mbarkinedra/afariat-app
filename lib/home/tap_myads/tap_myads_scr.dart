@@ -22,7 +22,7 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
           ),
-          backgroundColor:framColor,
+          backgroundColor: framColor,
         ),
         body: Obx(
           () => Column(
@@ -64,17 +64,16 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                                           height: _size.height * .20,
                                         ),
                                         CustomButtonWithoutIcon(
-                                          function: () {
-                                            Get.find<HomeViwController>()
-                                                .changeItemFilter(2);
-                                          },
-                                          labColor: Colors.white,
-                                          height: 50,
-                                          width: 300,
-                                          label:
-                                              "Déposer une annonce maintenant",
-                                          btColor:buttonColor
-                                        )
+                                            function: () {
+                                              Get.find<HomeViwController>()
+                                                  .changeItemFilter(2);
+                                            },
+                                            labColor: Colors.white,
+                                            height: 50,
+                                            width: 300,
+                                            label:
+                                                "Déposer une annonce maintenant",
+                                            btColor: buttonColor)
                                       ],
                                     ),
                                   )
@@ -121,16 +120,12 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                                                       TapPublishViewController>();
                                               tapPublishViewController
                                                   .dataAdverts = true;
-                                         /*     tapPublishViewController
-                                                  .dataEditFromServer = true;*/
+
                                               tapPublishViewController
                                                   .modifAds.value = true;
                                               tapPublishViewController
-                                                  .getModifAds(
+                                                  .getAllData(
                                                       logic.adverts[pos].id);
-                                             /* Future.delayed(Duration(seconds: 3)).then((value) {
-
-                                              });*/
                                               Get.find<HomeViwController>()
                                                   .changeItemFilter(2);
                                             },
@@ -148,15 +143,14 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                           Icon(
                             Icons.wifi_off_rounded,
                             size: 80,
-                            color:framColor,
+                            color: framColor,
                           ),
                           Text(
                             "Pas de connexion internet",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black45),
+                                color: ColorText),
                           ),
-                          /*   Text("Connect_toi a internet et réessaie.",style: TextStyle(color: Colors.black45),)*/
                         ],
                       )),
                     ))

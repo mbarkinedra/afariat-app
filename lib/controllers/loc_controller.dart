@@ -17,26 +17,30 @@ class LocController extends GetxController {
   List<RefJson> towns = [];
   RefJson town;
   int index = 0;
-bool getCity=true;
+  bool getCity = true;
+
   @override
   void onInit() {
     super.onInit();
     getCitylist();
   }
-getCitylist(){
-  if(Get.find<NetWorkController>().connectionStatus.value){
-    _cityApi.getList().then((value) {
-      cities = value.data;
 
-      cities.insert(0, RefJson(id: 0, name: ""));
-      getCity=false;
-      update();
-    });
+  getCitylist() {
+    if (Get.find<NetWorkController>().connectionStatus.value) {
+      _cityApi.getList().then((value) {
+        cities = value.data;
+
+        cities.insert(0, RefJson(id: 0, name: ""));
+        towns = [];
+        town = null;
+        getCity = false;
+        update();
+      });
+    }
   }
-}
-  clearData() {
-    city = null;
 
+  clearDataCityAndTown() {
+    city = null;
     town = null;
     update();
   }
@@ -62,13 +66,11 @@ getCitylist(){
       tapPublishViewController.myAds["city"] = ci.id;
       tapPublishViewController.myAdsView["city"] = ci.name;
       Get.find<TapHomeViewController>().setSearch("city", ci.id.toString());
-      tapHomeViewController.searchAddLinke =
-          tapHomeViewController.searchAddLinke + "&city=${ci.id}";
 
       updateTowns(ci.id);
       update();
     }
-}
+  }
 
   updateTown(RefJson town) {
     if (town.id == 0) {
@@ -80,10 +82,8 @@ getCitylist(){
       tapHomeViewController.filterUpdate();
     } else {
       this.town = town;
-      tapPublishViewController.validateTown.value="";
+      tapPublishViewController.validateTown.value = "";
       Get.find<TapHomeViewController>().setSearch("town", town.id.toString());
-      tapHomeViewController.searchAddLinke =
-          tapHomeViewController.searchAddLinke + "&town=${town.id}";
       tapPublishViewController.town = town;
       tapHomeViewController.setSearch("town", town.id);
       tapPublishViewController.myAds["town"] = town.id;
@@ -100,7 +100,6 @@ getCitylist(){
       if (index == 0) {
         towns.insert(0, RefJson(id: 0, name: ""));
       }
-
       update();
     });
   }
@@ -110,7 +109,6 @@ getCitylist(){
     tapPublishViewController.citie = null;
     tapPublishViewController.town = null;
     town = null;
-
     update();
   }
 }

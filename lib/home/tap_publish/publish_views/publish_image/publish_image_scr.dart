@@ -95,7 +95,7 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                                   right: 0,
                                   child: InkWell(
                                       onTap: () {
-                                        logic.deleditImage(e);
+                                        logic.delEditImage(e);
                                       },
                                       child: Icon(
                                         Icons.clear,
