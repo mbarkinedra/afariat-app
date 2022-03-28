@@ -92,8 +92,9 @@ class TapHomeViewController extends GetxController {
       ;
     });
 
-    setUserName(Get.find<AccountInfoStorage>().readName() ?? "");
   }
+
+
 
   setUserName(String v) {
     name = v;

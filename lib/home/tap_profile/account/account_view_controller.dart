@@ -2,6 +2,7 @@ import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/filter.dart';
 import 'package:afariat/config/wsse.dart';
 import 'package:afariat/controllers/loc_controller.dart';
+import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/model/validate_server.dart';
 import 'package:afariat/networking/api/user_api.dart';
 import 'package:afariat/networking/json/user_json.dart';
@@ -43,6 +44,7 @@ class AccountViewController extends GetxController {
 
     _userApi.putData(dataToPost: Filter.data).then(
       (value) {
+
 Get.find<AccountInfoStorage>().saveName(name.text);
         validateServer.validatorServer(
             validate: () {
@@ -74,16 +76,19 @@ Get.find<AccountInfoStorage>().saveName(name.text);
       name.text = _userJson.name;
 
       phone.text = _userJson.phone;
+      print(_userJson.name);
       Get.find<AccountInfoStorage>().saveName(_userJson.name);
-
+      Get.find<TapHomeViewController>().setUserName(_userJson.name);
 
       localisation.cities.forEach((element) {
+      //  print(element.name);
         if (element.id == _userJson.city.id) {
           localisation.updateCity(element);
+          update();
         }
       });
       _userApi.id = null;
-      update();
+
     });
   }
 }

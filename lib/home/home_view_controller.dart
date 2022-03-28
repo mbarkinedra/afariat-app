@@ -62,6 +62,14 @@ class HomeViwController extends GetxController {
     );
   }
 
+  @override
+  void onReady() {
+    super.onReady();
+
+    Get.find<TapHomeViewController>().setUserName(Get.find<AccountInfoStorage>().readName()??"" );
+  }
+
+
   updatelist() {
     if (Get.find<AccountInfoStorage>().isLoggedIn()) {
       buildScreens[1] = TapMyAdsScr();
@@ -77,8 +85,6 @@ class HomeViwController extends GetxController {
   }
 
   changeItemFilter(value) {
-    //Filter.data.clear();
-   // Get.find<TapHomeViewController>().pagingController.itemList.clear();
     Get.find<TapHomeViewController>().clearData();
 
     TapPublishViewController tapPublishViewController =
@@ -99,7 +105,7 @@ class HomeViwController extends GetxController {
     update();
   }
 
-  Widget buildoffstageNavigator(String tabItem) {
+  Widget buildOffStageNavigator(String tabItem) {
     return Offstage(
       offstage: _currentPage != tabItem,
       child: PageToView(

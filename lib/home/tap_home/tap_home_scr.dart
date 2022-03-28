@@ -2,6 +2,7 @@ import 'package:afariat/advert_details/advert_details_scr.dart';
 import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
 
 import 'package:afariat/config/filter.dart';
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/bottom_sheet_filter.dart';
@@ -200,7 +201,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                             Icon(
                               Icons.wifi_off_rounded,
                               size: 80,
-                              color: Colors.deepOrangeAccent,
+                              color:framColor,
                             ),
                             Text(
                               "Pas de connexion internet",
@@ -218,37 +219,44 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
       drawer: Container(
         width: _size.width * .6,
         child: Drawer(
-          child: ListView(
+          child: Column(
             // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.zero,
+            //padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
                 decoration: BoxDecoration(
-                  color: Colors.deepOrangeAccent,
+                  color:framColor,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.asset(
-                      "assets/images/Splash_6.png",
-                      height: _size.height * .1,
-                      width: _size.width * .3,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child:
-                          GetBuilder<TapHomeViewController>(builder: (logic) {
-                        return Text(logic.name,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold));
-                      }),
-                    ),
-                  ],
+                child: Container(
+                  width: _size.width * .6,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Image.asset(
+                        "assets/images/Splash_6.png",
+                        height: _size.height * .1,
+                        width: _size.width * .3,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child:
+                            GetBuilder<TapHomeViewController>(builder: (logic) {
+                          return Text(logic.name,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold));
+                        }),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              // SizedBox(height: 35,),
+              Expanded(child: SizedBox()),
+              Divider(
+                thickness: 2,
+              ),
               ListTile(
                 leading: Icon(Icons.help_center),
                 title: const Text(
@@ -261,6 +269,10 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   // Navigator.pop(context);
                 },
               ),
+              SizedBox(
+                height: 20,
+              )
+
               /*        ListTile(
                 title: const Text('Item 2'),
                 onTap: () {
