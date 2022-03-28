@@ -1,4 +1,5 @@
 import 'package:afariat/config/settings_app.dart';
+import 'package:afariat/config/utility.dart';
 
 import 'package:afariat/networking/json/my_ads_json.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +87,7 @@ class AdsItem extends StatelessWidget {
                               SettingsApp.moneySymbol,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.deepOrange,
+                              color: framColor,
                               fontSize: 15),
                         ),
                       ),
@@ -112,25 +113,10 @@ class AdsItem extends StatelessWidget {
                         onTap: deleteAds,
                         child: Icon(
                           Icons.delete,
-                          color: Colors.deepOrange,
-                        ))
-                          // GetBuilder<TapMyadsViewController>(builder: (logic) {
-                          //   return logic.deleteData
-                          //       ? CircularProgressIndicator()
-                          //       : InkWell(
-                          //           onTap: deleteAds,
-                          //           child: Icon(
-                          //             Icons.delete,
-                          //             color: Colors.deepOrange,
-                          //           ));
-                          // }),
-                          // InkWell(
-                          //   onTap: editAds,
-                          //   child: Icon(
-                          //     Icons.edit,
-                          //     color: Colors.deepOrange,
-                          //   ),
-                          // )
+                          color:framColor,
+                        ),
+                          ),
+
                         ],
                       ),
                     )

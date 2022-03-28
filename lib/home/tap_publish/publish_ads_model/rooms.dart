@@ -1,3 +1,4 @@
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/custom_text_filed2.dart';
 import 'package:afariat/networking/json/ref_json.dart';
@@ -27,7 +28,7 @@ class Rooms extends GetView<TapPublishViewController> {
                 child: GetBuilder<TapPublishViewController>(builder: (logic) {
                   return Container(
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.deepOrange, width: 2),
+                        border: Border.all(color: framColor, width: 2),
                         borderRadius: BorderRadius.circular(10)),
                     child: ListTile(
                       title: DropdownButton<RefJson>(
@@ -82,7 +83,7 @@ class Rooms extends GetView<TapPublishViewController> {
                       child: Container(
                         decoration: BoxDecoration(
                             border:
-                                Border.all(color: Colors.deepOrange, width: 2),
+                                Border.all(color:framColor, width: 2),
                             borderRadius: BorderRadius.circular(10)),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8.0, right: 8),
@@ -92,7 +93,7 @@ class Rooms extends GetView<TapPublishViewController> {
                                 flex: 1,
                                 child: CustomTextFiled2(
                                     padding: 0,
-                                    color: Colors.deepOrange,
+                                    color: framColor,
                                     hintText: "Surface",
                                     validator:
                                         controller.validator.validateSurface,

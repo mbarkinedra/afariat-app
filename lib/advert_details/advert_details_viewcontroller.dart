@@ -1,4 +1,5 @@
 import 'package:afariat/config/filter.dart';
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_chat/chat_user/chat_user_scr.dart';
 import 'package:afariat/home/tap_chat/chat_user/chat_user_viewcontroller.dart';
 import 'package:afariat/networking/api/advert_details_api.dart';
@@ -78,7 +79,7 @@ class AdvertDetailsViewcontroller extends GetxController {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  color: Colors.deepOrange,
+                  color: framColor,
                   padding: EdgeInsets.all(8),
                   child: FittedBox(
                     child: Text("Contacter l'annonceur par messagerie",
@@ -240,7 +241,7 @@ class AdvertDetailsViewcontroller extends GetxController {
                           color: Colors.grey[100],
                           child: Icon(
                             Icons.close,
-                            color: Colors.deepOrange,
+                            color:framColor,
                             size: 30,
                           ))),
                 ),

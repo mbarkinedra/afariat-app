@@ -131,7 +131,7 @@ class SignInScr extends GetWidget<SignInViewController> {
                             text: 'Créer un compte',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.deepOrange))
+                                color:framColor))
                       ],
                     ),
                   ),

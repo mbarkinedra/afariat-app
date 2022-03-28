@@ -1,3 +1,4 @@
+import 'package:afariat/config/utility.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -61,13 +62,13 @@ class Home extends GetWidget<HomeViwController> {
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.home),
         title: ("Acceuil"),
-        activeColorPrimary: Colors.deepOrange,
+        activeColorPrimary: framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.photo_size_select_large_outlined),
         title: ("Annonces"),
-        activeColorPrimary: Colors.deepOrange,
+        activeColorPrimary: framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
@@ -77,13 +78,13 @@ class Home extends GetWidget<HomeViwController> {
           size: 35,
         ),
         title: ("Publier"),
-        activeColorPrimary: Colors.deepOrange,
+        activeColorPrimary: framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.article_rounded),
         title: ("Chat"),
-        activeColorPrimary: Colors.deepOrange,
+        activeColorPrimary:framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
@@ -104,7 +105,7 @@ class Home extends GetWidget<HomeViwController> {
           ],
         ),
         title: ("Profile"),
-        activeColorPrimary: Colors.deepOrange,
+        activeColorPrimary: framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
     ];

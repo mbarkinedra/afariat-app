@@ -1,3 +1,4 @@
+import 'package:afariat/config/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'notification_view_controller.dart';
@@ -10,7 +11,7 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
         iconTheme: IconThemeData(
           color: Colors.white, //change your color here
         ),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: framColor,
         title: Text(
           "Notifications",
           style: TextStyle(color: Colors.white),

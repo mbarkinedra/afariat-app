@@ -1,3 +1,4 @@
+import 'package:afariat/config/utility.dart';
 import 'package:flutter/material.dart';
 
 class ParametresItem extends StatelessWidget {
@@ -26,7 +27,7 @@ class ParametresItem extends StatelessWidget {
       children: [
         Text(label),
         Container( width: MediaQuery.of(context).size.width*.7, decoration: BoxDecoration(
-            border: Border.all(color: Colors.deepOrange, width: 2),
+            border: Border.all(color: framColor, width: 2),
             borderRadius: BorderRadius.circular(15)),
           child: TextFormField(
             controller: textEditingController,
@@ -35,7 +36,7 @@ class ParametresItem extends StatelessWidget {
             decoration: InputDecoration(
                 icon: Icon(icon),
                 border: InputBorder.none,
-                iconColor: Colors.deepOrange,
+                iconColor: framColor,
                 hintText: hint,
                 suffixIcon: suffixIcon),
           ),

@@ -6,7 +6,6 @@ import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class PublishImageScr extends GetView<TapPublishViewController> {
   @override
   Widget build(BuildContext context) {
@@ -17,7 +16,7 @@ class PublishImageScr extends GetView<TapPublishViewController> {
           iconTheme: IconThemeData(
             color: Colors.white, //change your color here
           ),
-          backgroundColor: Colors.deepOrange,
+          backgroundColor: framColor,
           title: Text(
             "Deposer annonces",
             style: TextStyle(color: Colors.white, fontSize: 20),
@@ -73,105 +72,97 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                   ),
                 ),
                 GetBuilder<TapPublishViewController>(builder: (logic) {
-                  List<Widget>list= logic.editAdsImages
+                  List<Widget> list = logic.editAdsImages
                       .map((e) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: framColor),
-                              borderRadius:
-                              BorderRadius.circular(
-                                  10)),
-                          width: size.width * .8,
-                          height: size.height * .3,
-                          child: ClipRRect(
-                            borderRadius:
-                            BorderRadius.circular(10),
-                            child: Image.network(
-                              e,
-                              fit: BoxFit.fill,
+                            padding: const EdgeInsets.all(8.0),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: framColor),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  width: size.width * .8,
+                                  height: size.height * .3,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.network(
+                                      e,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  child: InkWell(
+                                      onTap: () {
+                                        logic.deleditImage(e);
+                                      },
+                                      child: Icon(
+                                        Icons.clear,
+                                        size: 30,
+                                        color: framColor,
+                                      )),
+                                ),
+                              ],
                             ),
-                          ),
-                        ),
-                        Positioned(
-                          right: 0,
-                          child: InkWell(
-                              onTap: () {
-                                logic.deleditImage(e);
-                              },
-                              child: Icon(
-                                Icons.clear,
-                                size: 30,
-                                color: Colors.deepOrange,
-                              )),
-                        ),
-                      ],
-                    ),
-                  ))
+                          ))
                       .toList();
-                  List<Widget>list2=logic.images
+                  List<Widget> list2 = logic.images
                       .map((e) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: framColor),
-                              borderRadius:
-                              BorderRadius.circular(
-                                  10)),
-                          width: size.width * .8,
-                          height: size.height * .3,
-                          child: ClipRRect(
-                            borderRadius:
-                            BorderRadius.circular(10),
-                            child: Image.file(
-                              e,
-                              fit: BoxFit.fill,
+                            padding: const EdgeInsets.all(8.0),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: framColor),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  width: size.width * .8,
+                                  height: size.height * .3,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.file(
+                                      e,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  child: InkWell(
+                                      onTap: () {
+                                        logic.deleteImage(e);
+                                      },
+                                      child: Icon(
+                                        Icons.clear,
+                                        size: 30,
+                                        color: framColor,
+                                      )),
+                                ),
+                              ],
                             ),
-                          ),
-                        ),
-                        Positioned(
-                          right: 0,
-                          child: InkWell(
-                              onTap: () {
-                                logic.deleteImage(e);
-                              },
-                              child: Icon(
-                                Icons.clear,
-                                size: 30,
-                                color: Colors.deepOrange,
-                              )),
-                        ),
-                      ],
-                    ),
-                  ))
+                          ))
                       .toList();
                   return logic.dataAdverts
-                      ? logic.editAdsImages.length > 0||logic.images.length > 0
+                      ? logic.editAdsImages.length > 0 ||
+                              logic.images.length > 0
                           ? Column(
                               mainAxisSize: MainAxisSize.max,
-                              children:[...list,...list2]
-                            )
+                              children: [...list, ...list2])
                           : GestureDetector(
-                    onTap: () {
-                      if (controller.images.length < 6) {
-                        showOptionsDialog(context);
-                      } else {
-                        Get.snackbar("Erreur",
-                            "Vous ne pouvez ajouter que **6** photos par annonce");
-                      }
-                    },
-                            child: Image.asset(
+                              onTap: () {
+                                if (controller.images.length < 6) {
+                                  showOptionsDialog(context);
+                                } else {
+                                  Get.snackbar("Erreur",
+                                      "Vous ne pouvez ajouter que **6** photos par annonce");
+                                }
+                              },
+                              child: Image.asset(
                                 "assets/images/placeholder.png",
                                 width: size.width,
                                 height: size.height * .5,
                               ),
-                          )
+                            )
                       : logic.images.length > 0
                           ? Column(
                               mainAxisSize: MainAxisSize.max,
@@ -207,7 +198,7 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                                                   child: Icon(
                                                     Icons.clear,
                                                     size: 30,
-                                                    color: Colors.deepOrange,
+                                                    color: framColor,
                                                   )),
                                             ),
                                           ],

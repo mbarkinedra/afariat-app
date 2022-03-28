@@ -45,7 +45,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.deepOrange, width: 2),
+                        border: Border.all(color:framColor, width: 2),
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButton<CategoryGroupedJson>(
                       underline: SizedBox(),
@@ -77,7 +77,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.deepOrange, width: 2),
+                        border: Border.all(color:framColor, width: 2),
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButton<SubcategoryJson>(
                       underline: SizedBox(),
@@ -131,7 +131,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       SfRangeSlider(
                         min: logic.minValue,
                         max: logic.maxValue,
-                        activeColor: Colors.deepOrange,
+                        activeColor:framColor,
                         values: logic.values,
                         interval: 1,
                         showTicks: false,
@@ -188,7 +188,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                 Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.deepOrange, width: 2),
+                      border: Border.all(color:framColor, width: 2),
                       borderRadius: BorderRadius.circular(15)),
                   child: DropdownButton<RefJson>(
                     underline: SizedBox(),
@@ -221,7 +221,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                 Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.deepOrange, width: 2),
+                        border: Border.all(color: framColor, width: 2),
                         borderRadius: BorderRadius.circular(15)),
                     child: DropdownButton<RefJson>(
                       underline: SizedBox(),

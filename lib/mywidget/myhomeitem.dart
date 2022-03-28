@@ -1,4 +1,5 @@
 import 'package:afariat/config/settings_app.dart';
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -71,7 +72,7 @@ class MyHomeItem extends StatelessWidget {
                     Text(
                       numberFormat.format(adverts.price) + ' ' + SettingsApp.moneySymbol,
                       style: TextStyle(
-                          color: Colors.deepOrange,
+                          color:framColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
                       softWrap: true,

@@ -55,7 +55,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                     bottomRight: Radius.circular(35)),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey,
+                                    color: ColorGrey,
                                     spreadRadius: 1,
                                     blurRadius: 1,
                                   ),
@@ -120,7 +120,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                           child: const Icon(
                             Icons.filter_alt_outlined,
                             size: 30,
-                            color: Colors.grey,
+                            color:ColorGrey
                           ),
                         ),
                       )
@@ -201,13 +201,13 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                             Icon(
                               Icons.wifi_off_rounded,
                               size: 80,
-                              color:framColor,
+                              color: framColor,
                             ),
                             Text(
                               "Pas de connexion internet",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black45),
+                                  color:ColorText),
                             ),
                             /*   Text("Connect_toi a internet et réessaie.",style: TextStyle(color: Colors.black45),)*/
                           ],
@@ -225,7 +225,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
             children: [
               DrawerHeader(
                 decoration: BoxDecoration(
-                  color:framColor,
+                  color: framColor,
                 ),
                 child: Container(
                   width: _size.width * .6,
@@ -255,14 +255,14 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
               ),
               Expanded(child: SizedBox()),
               Divider(
-                thickness: 2,
+                thickness: 1,color: ColorText,
               ),
               ListTile(
-                leading: Icon(Icons.help_center),
+                leading: Icon(Icons.help_center,color: ColorText,),
                 title: const Text(
                   "Centre d'aide",
                   style: TextStyle(
-                      color: Colors.black45, fontWeight: FontWeight.bold),
+                      color: ColorText, fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
                   controller.launchURL("https://afariat.com/aide.html");

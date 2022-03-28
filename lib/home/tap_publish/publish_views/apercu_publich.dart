@@ -52,7 +52,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                 child: Icon(
                   Icons.clear,
                   size: 30,
-                  color: Colors.deepOrange,
+                  color: framColor,
                 )),
           ),
         ],
@@ -91,7 +91,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                 child: Icon(
                   Icons.clear,
                   size: 30,
-                  color: Colors.deepOrange,
+                  color: framColor,
                 )),
           ),
         ],
@@ -113,7 +113,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                     child: Text(
                   "Vérification",
                   style: TextStyle(
-                      color: Colors.deepOrange,
+                      color:framColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 30),
                 )),
@@ -226,7 +226,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                       width: MediaQuery.of(context).size.width * .25,
                       height: 40,
                       label: "Modifier",
-                      labColor: Colors.deepOrange,
+                      labColor:buttonColor,
                       btColor: Colors.white,
                       function: () {
                         int count = 0;
@@ -240,7 +240,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                       width: MediaQuery.of(context).size.width * .25,
                       height: 40,
                       label: "Supprimer",
-                      labColor: Colors.deepOrange,
+                      labColor: buttonColor,
                       btColor: Colors.white,
                       function: () {
                         controller.images.clear();
@@ -277,7 +277,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                               height: 40,
                               label: "Publier",
                               labColor: Colors.white,
-                              btColor: Colors.deepOrange,
+                              btColor: buttonColor,
                               function: () {
                                 Get.find<TapPublishViewController>()
                                     .modifAds

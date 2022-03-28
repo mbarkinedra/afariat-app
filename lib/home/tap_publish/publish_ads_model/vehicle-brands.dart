@@ -1,3 +1,4 @@
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 
@@ -26,7 +27,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
+                                Border.all(color: framColor, width: 2)),
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,
@@ -71,7 +72,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
+                                Border.all(color: framColor, width: 2)),
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,
@@ -116,7 +117,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
+                                Border.all(color: framColor, width: 2)),
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,
@@ -162,7 +163,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
+                                Border.all(color: framColor, width: 2)),
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,
@@ -207,7 +208,7 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
+                                Border.all(color:framColor, width: 2)),
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,

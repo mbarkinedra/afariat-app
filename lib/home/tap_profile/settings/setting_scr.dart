@@ -18,7 +18,7 @@ class Setting extends GetWidget<SettingViewController> {
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
         ),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: framColor,
       ),
       body: SingleChildScrollView(
         child: Column(

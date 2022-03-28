@@ -1,3 +1,4 @@
+import 'package:afariat/config/utility.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
@@ -12,7 +13,7 @@ class ChatUserScr extends GetWidget<ChatUserViewController> {
         iconTheme: IconThemeData(
           color: Colors.white, //change your color here
         ),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: framColor,
         title: Text(
           controller.name,
           style: TextStyle(color: Colors.white),
@@ -29,7 +30,7 @@ class ChatUserScr extends GetWidget<ChatUserViewController> {
                 inputTextColor: Colors.black,
                 sendButtonIcon: Icon(
                   Icons.send,
-                  color: Colors.deepOrange,
+                  color:buttonColor,
                 )),
             messages: logic.messages,
             showUserAvatars: true,

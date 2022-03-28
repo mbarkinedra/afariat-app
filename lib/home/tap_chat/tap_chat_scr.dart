@@ -1,3 +1,4 @@
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/mywidget/chat_user.dart';
 
@@ -23,7 +24,7 @@ class TapChatScr extends GetWidget<TapChatViewController> {
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
           ),
-          backgroundColor: Colors.deepOrange,
+          backgroundColor:framColor,
         ),
         body: Obx(
           () => Column(
@@ -116,7 +117,7 @@ class TapChatScr extends GetWidget<TapChatViewController> {
                           Icon(
                             Icons.wifi_off_rounded,
                             size: 80,
-                            color: Colors.deepOrangeAccent,
+                            color: framColor,
                           ),
                           Text(
                             "Pas de connexion internet",

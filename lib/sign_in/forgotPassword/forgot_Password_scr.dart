@@ -14,7 +14,7 @@ class ForgotPassword extends GetWidget<ForgotPasswordViewController> {
         title: Text(
           "Forgot Password ",
         ),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor:framColor,
       ),
       body: Column(
         children: [
@@ -46,7 +46,7 @@ class ForgotPassword extends GetWidget<ForgotPasswordViewController> {
             label: "Envoyer",
             labColor: Colors.white,
             width: size.width * .5,
-            btColor: framColor,
+            btColor: buttonColor,
             function: () {
               controller.forgotPassword();
             },

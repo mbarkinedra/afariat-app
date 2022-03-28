@@ -17,7 +17,7 @@ import '../home_view_controller.dart';
 import 'tap_publish_viewcontroller.dart';
 
 class TapPublishScr extends GetWidget<TapPublishViewController> {
-  int p = 0;
+ // int p = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
             iconTheme: IconThemeData(
               color: Colors.white, //change your color here
             ),
-            backgroundColor: Colors.deepOrange,
+            backgroundColor: framColor,
             title: Obx(
               () => Text(
                 controller.modifAds.value
@@ -86,8 +86,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                           width: double.infinity,
                                           decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: Colors.deepOrange,
-                                                  width: 2),
+                                                  color: framColor, width: 2),
                                               borderRadius:
                                                   BorderRadius.circular(10)),
                                           child: DropdownButton<
@@ -131,8 +130,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                           width: double.infinity,
                                           decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: Colors.deepOrange,
-                                                  width: 2),
+                                                  color: framColor, width: 2),
                                               borderRadius:
                                                   BorderRadius.circular(10)),
                                           child:
@@ -193,7 +191,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                   return Column(
                                     children: logic.values.map((e) {
                                       return RadioListTile(
-                                          activeColor: Colors.deepOrange,
+                                          activeColor: framColor,
                                           title: Text(e.name),
                                           value: e,
                                           groupValue: logic.advertType,
@@ -284,8 +282,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                           // width: size.width * .87,
                                           decoration: BoxDecoration(
                                               border: Border.all(
-                                                  color: Colors.deepOrange,
-                                                  width: 2),
+                                                  color: framColor, width: 2),
                                               borderRadius:
                                                   BorderRadius.circular(10)),
                                           child: Padding(
@@ -296,7 +293,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                 Expanded(
                                                   flex: 1,
                                                   child: CustomTextFiled2(
-                                                      color: Colors.deepOrange,
+                                                      color:framColor,
                                                       validator: controller
                                                           .validator
                                                           .validatePrice,
@@ -348,8 +345,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                 width: double.infinity,
                                                 decoration: BoxDecoration(
                                                     border: Border.all(
-                                                        color:
-                                                            Colors.deepOrange,
+                                                        color: framColor,
                                                         width: 2),
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -412,8 +408,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                   width: double.infinity,
                                                   decoration: BoxDecoration(
                                                       border: Border.all(
-                                                          color:
-                                                              Colors.deepOrange,
+                                                          color: framColor,
                                                           width: 2),
                                                       borderRadius:
                                                           BorderRadius.circular(
@@ -486,7 +481,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                           title: const Text('Afficher N° Tél'),
                                           trailing: CupertinoSwitch(
                                             value: logic.lights,
-                                            activeColor: Colors.deepOrange,
+                                            activeColor: framColor,
                                             onChanged: logic.updateLight,
                                           ),
                                           onTap: () {
@@ -533,7 +528,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                             Icon(
                               Icons.wifi_off_rounded,
                               size: 80,
-                              color: Colors.deepOrangeAccent,
+                              color: framColor,
                             ),
                             Text(
                               "Pas de connexion internet",
@@ -640,8 +635,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
           Get.snackbar("Oups !",
               "merci de bien vouloir compléter les champs ci dessous.");
         }
-      }
-      else if (controller.subCategories.name == "Appartements" ||
+      } else if (controller.subCategories.name == "Appartements" ||
           controller.subCategories.name == "Maison" ||
           controller.subCategories.name == "Bureaux et locaux commerciaux") {
         if (controller.nombrePieces != null && controller.surface != null) {

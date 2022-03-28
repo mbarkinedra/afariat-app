@@ -15,7 +15,8 @@ class SignUpScr extends GetWidget<SignUpViewController> {
     return SafeArea(
         child: Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(right: 16.0,left: 16.0,top: 16.0,bottom: 50),
+        padding: const EdgeInsets.only(
+            right: 16.0, left: 16.0, top: 16.0, bottom: 50),
         child: Form(
           key: controller.registerFormKey,
           child: SingleChildScrollView(
@@ -64,7 +65,6 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                     children: [
                       Container(
                         width: double.infinity,
-                        // decoration: BoxDecoration(border: Border.all(color: Colors.deepOrange),borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<TypeRegister>(
                           hint: Text("Type"),
                           isExpanded: true,
@@ -96,7 +96,6 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                     children: [
                       Container(
                         width: double.infinity,
-                        // decoration: BoxDecoration(border: Border.all(color: Colors.deepOrange),borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<RefJson>(
                           hint: Text("City"),
                           isExpanded: true,
@@ -178,12 +177,16 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                     },
                     child: RichText(
                       text: TextSpan(
-                        text: "Vous avez déjà un compte ? ",style: TextStyle(color: Colors.deepOrange,fontSize: 15),
-                     //   style: DefaultTextStyle.of(context).style,
+                        text: "Vous avez déjà un compte ? ",
+                        style: TextStyle(color: framColor, fontSize: 15),
+                        //   style: DefaultTextStyle.of(context).style,
                         children: const <TextSpan>[
                           TextSpan(
                               text: 'Log in',
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.deepOrange,fontSize: 18))
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: framColor,
+                                  fontSize: 18))
                         ],
                       ),
                     ),

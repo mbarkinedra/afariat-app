@@ -21,7 +21,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
         iconTheme: IconThemeData(
           color: Colors.white, //change your color here
         ),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: framColor,
         title: Text(
           "Annonce détaillée",
           style: TextStyle(color: Colors.white, fontSize: 20),
@@ -102,7 +102,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                               ' ' +
                               SettingsApp.moneySymbol,
                           style: TextStyle(
-                              color: Colors.deepOrange,
+                              color: framColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 29)),
                       SizedBox(

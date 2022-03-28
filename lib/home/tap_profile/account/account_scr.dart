@@ -67,7 +67,7 @@ class Account extends GetWidget<AccountViewController> {
                       width: size.width * .8,
                       decoration: BoxDecoration(
                           border:
-                              Border.all(color: Colors.deepOrange, width: 2),
+                              Border.all(color: framColor, width: 2),
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButton<RefJson>(
                         underline: SizedBox(),

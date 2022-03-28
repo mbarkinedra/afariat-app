@@ -1,3 +1,4 @@
+import 'package:afariat/config/utility.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
           nextScreen: Home(),//
           splashTransition: SplashTransition.slideTransition,
           //   pageTransitionType: PageTransitionType.,
-          backgroundColor: Colors.deepOrange),
+          backgroundColor:framColor),
     );
   }
 }

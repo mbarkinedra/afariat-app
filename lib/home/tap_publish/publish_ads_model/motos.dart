@@ -1,3 +1,4 @@
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class Motos extends GetView<TapPublishViewController> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border:
-                              Border.all(color: Colors.deepOrange, width: 2),
+                              Border.all(color: framColor, width: 2),
                         ),
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
@@ -59,7 +60,7 @@ class Motos extends GetView<TapPublishViewController> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
+                                Border.all(color: framColor, width: 2)),
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,
@@ -94,7 +95,7 @@ class Motos extends GetView<TapPublishViewController> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
+                                Border.all(color:framColor, width: 2)),
                         child: DropdownButton<RefJson>(
                           underline: SizedBox(),
                           isExpanded: true,

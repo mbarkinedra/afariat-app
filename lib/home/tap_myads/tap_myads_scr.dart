@@ -1,3 +1,4 @@
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/ads_item.dart';
@@ -21,7 +22,7 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
           ),
-          backgroundColor: Colors.deepOrange,
+          backgroundColor:framColor,
         ),
         body: Obx(
           () => Column(
@@ -72,7 +73,7 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                                           width: 300,
                                           label:
                                               "Déposer une annonce maintenant",
-                                          btColor: Colors.deepOrange,
+                                          btColor:buttonColor
                                         )
                                       ],
                                     ),
@@ -147,7 +148,7 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                           Icon(
                             Icons.wifi_off_rounded,
                             size: 80,
-                            color: Colors.deepOrangeAccent,
+                            color:framColor,
                           ),
                           Text(
                             "Pas de connexion internet",
