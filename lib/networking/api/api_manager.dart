@@ -10,8 +10,6 @@ import 'package:dio/dio.dart';
 
 import 'package:get/get.dart' as a;
 
-
-
 abstract class ApiManager {
   final DioSingleton dioSingleton = DioSingleton();
   final storge = a.Get.find<SecureStorage>();
@@ -20,57 +18,46 @@ abstract class ApiManager {
   String apiUrl();
 
   // Headers responseHeaders;
-  NetWorkController _netWorkController=  a.Get.find<NetWorkController>();
+  NetWorkController _netWorkController = a.Get.find<NetWorkController>();
+
   AbstractJsonResource fromJson(data);
 
   Future<dynamic> getList({Map<String, dynamic> filters}) async {
-
     AbstractJsonResource jsonList;
     var data;
 
-      await dioSingleton.dio
-          .get(apiUrl(), queryParameters: filters)
-          .then((value) {
-
-        // var logger = Logger();
-        //
-        // logger.d(value.data);
-        //devlog.log(value.data.toString() );
-        data = value.data;
-      });
-      jsonList = fromJson(data);
-
+    await dioSingleton.dio
+        .get(apiUrl(), queryParameters: filters)
+        .then((value) {
+      data = value.data;
+    });
+    jsonList = fromJson(data);
 
     return jsonList;
   }
 
   /// POST DATA TO SERVER
   Future<Response<dynamic>> post(dataToPost) async {
-
-      return dioSingleton.dio
-          .post(
-        apiUrl(),
-        data: jsonEncode(dataToPost),
-        options: Options(
-            headers: {
-              "Accept": "application/json",
-              'apikey': SettingsApp.apiKey,
-              'Content-Type': 'application/json',
-            },
-            followRedirects: false,
-            validateStatus: (status) {
-              return status < 500;
-            }),
-      )
-          .then((value) {
-
-        return value;
-      }).catchError((error) {
-        a.Get.snackbar("error", error.toString());
-      });
-
-
-
+    return dioSingleton.dio
+        .post(
+      apiUrl(),
+      data: jsonEncode(dataToPost),
+      options: Options(
+          headers: {
+            "Accept": "application/json",
+            'apikey': SettingsApp.apiKey,
+            'Content-Type': 'application/json',
+          },
+          followRedirects: false,
+          validateStatus: (status) {
+            return status < 500;
+          }),
+    )
+        .then((value) {
+      return value;
+    }).catchError((error) {
+      a.Get.snackbar("error", error.toString());
+    });
   }
 
   /// POST DATA TO SERVER
@@ -80,7 +67,7 @@ abstract class ApiManager {
     Wsse xwsse = Wsse();
 
     String wsse = xwsse.generateWsseFromStorage();
-    if(_netWorkController.connectionStatus.value){
+    if (_netWorkController.connectionStatus.value) {
       return dioSingleton.dio
           .post(
         apiUrl(),
@@ -98,30 +85,23 @@ abstract class ApiManager {
             }),
       )
           .then((value) {
-
         return value;
       }).onError((error, stackTrace) {
-        if(error.type == DioErrorType.connectTimeout){
+        if (error.type == DioErrorType.connectTimeout) {
           a.Get.snackbar("erreur", "Connection  Timeout");
-          // throw Exception("Connection  Timeout Exception");
         }
 
         return error;
-
       });
-    }else{
+    } else {
       a.Get.snackbar("erreur", "vous n'avez pas de connexion");
       return null;
     }
-
   }
 
   /// Get Data  User From Server
-  Future<Response<dynamic> > secureGet({dataToPost}) async {
-    //generer le wsse
-
+  Future<Response<dynamic>> secureGet({dataToPost}) async {
     Wsse xwsse = Wsse();
-
     String wsse = xwsse.generateWsseFromStorage();
 
     return dioSingleton.dio
@@ -140,11 +120,9 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
-
       return value;
     }).onError((error, stackTrace) {
       return error;
-
     });
   }
 
@@ -171,25 +149,22 @@ abstract class ApiManager {
             }),
       )
           .then((value) {
-
         return value;
       }).onError((error, stackTrace) {
-        if(error.type == DioErrorType.connectTimeout){
+        if (error.type == DioErrorType.connectTimeout) {
           a.Get.snackbar("erreur", "Délai de connection dépassé");
           // throw Exception("Connection  Timeout Exception");
         }
-print(error);
+        print(error);
         return error;
-
       });
-    }else{
-
-      a.Get.snackbar("erreur", "");
+    } else {
+      a.Get.snackbar("erreur", "Délai de connection dépassé");
       return null;
     }
-
   }
-  Future getdata(Map<String, dynamic> dataToPost) async {
+
+  Future getData(Map<String, dynamic> dataToPost) async {
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
     return dioSingleton.dio
@@ -215,7 +190,7 @@ print(error);
   }
 
   /// del DATA TO SERVER
-  Future<Response<dynamic>> delPost() async {
+  Future<Response<dynamic>> deleteAdverts() async {
     //generer le wsse
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
@@ -228,7 +203,6 @@ print(error);
     return dioSingleton.dio.delete(apiUrl(), options: options).then((value) {
       return value;
     }).onError((error, stackTrace) {
-
       return error;
     });
   }
@@ -250,12 +224,7 @@ print(error);
       print(error);
 
       return error;
-
     });
   }
 
- /* void processNetworkErro(error){
-
-    // show snack bar for error.
-  }*/
 }

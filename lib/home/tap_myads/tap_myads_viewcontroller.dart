@@ -41,7 +41,7 @@ class TapMyadsViewController extends GetxController {
     update();
     _deleteAds.id = i;
 
-    await _deleteAds.delPost().then((value) {
+    await _deleteAds.deleteAdverts().then((value) {
       ads();
       deleteData = false;
 

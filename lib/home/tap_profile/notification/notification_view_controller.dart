@@ -41,7 +41,9 @@ class NotificationViewController extends GetxController {
     if(Get.find<NetWorkController>().connectionStatus.value){
     if (Get.find<AccountInfoStorage>().readUserId() != null) {
       getAllNotification();
-    }}
+    }}else{
+      
+    }
   }
 
   getAllNotification() {
@@ -56,7 +58,7 @@ class NotificationViewController extends GetxController {
       update();
     });
 
-    _countNotificationApi.getdata(Filter.data).then((value) {
+    _countNotificationApi.getData(Filter.data).then((value) {
       notifCount.value = value.data["totalUnread"];
 
     });

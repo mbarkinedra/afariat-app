@@ -1,20 +1,15 @@
+import 'package:afariat/config/AccountInfoStorage.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/mywidget/chat_user.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-
 import 'chat_user/chat_user_scr.dart';
 import 'chat_user/chat_user_viewcontroller.dart';
 import 'tap_chat_viewcontroller.dart';
 
-
 class TapChatScr extends GetWidget<TapChatViewController> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +19,7 @@ class TapChatScr extends GetWidget<TapChatViewController> {
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
           ),
-          backgroundColor:framColor,
+          backgroundColor: framColor,
         ),
         body: Obx(
           () => Column(
@@ -51,7 +46,6 @@ class TapChatScr extends GetWidget<TapChatViewController> {
                                   builderDelegate:
                                       PagedChildBuilderDelegate<dynamic>(
                                     itemBuilder: (context, item, index) {
-
                                       return controller.conversations.length ==
                                               0
                                           ? Container(
@@ -76,9 +70,15 @@ class TapChatScr extends GetWidget<TapChatViewController> {
                                               },
                                               child: GestureDetector(
                                                   onTap: () {
-                                                    Get.find<ChatUserViewController>()
-                                                            .name =
-                                                        item.to.username;
+                                                    Get.find<
+                                                            ChatUserViewController>()
+                                                        .name = item
+                                                                .to.username ==
+                                                            Get.find<
+                                                                    AccountInfoStorage>()
+                                                                .readEmail()
+                                                        ? item.from.username
+                                                        : item.to.username;
                                                     Get.find<ChatUserViewController>()
                                                             .id =
                                                         item.id.toString();
@@ -97,6 +97,9 @@ class TapChatScr extends GetWidget<TapChatViewController> {
                                                   },
                                                   child: ChatUser(
                                                     conversation: item,
+                                                    email: Get.find<
+                                                            AccountInfoStorage>()
+                                                        .readEmail(),
                                                     hasConversaton:
                                                         item.totalUnreadMessagesCount >
                                                             0,

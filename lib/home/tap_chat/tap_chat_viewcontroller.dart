@@ -1,8 +1,10 @@
+import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/api/conversations_api.dart';
 import 'package:afariat/networking/api/delete_conversation_api.dart';
 import 'package:afariat/networking/json/conversation_json.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'dart:developer';
 
 class TapChatViewController extends GetxController {
   bool getData = true;
@@ -22,6 +24,7 @@ class TapChatViewController extends GetxController {
 
       final data = await _getConvertionsApi.secureGet();
       ConversationJson conversationJson = ConversationJson.fromJson(data.data);
+      log(conversationJson.toJson().toString());
       final newItems = conversationJson.eEmbedded.conversation;
       final isLastPage = newItems.length < _pageSize;
 
@@ -39,17 +42,17 @@ class TapChatViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
-
   }
 
   @override
   void onReady() {
-super.onReady();
-pagingController.addPageRequestListener((pageKey) {
-  _fetchPage(page);
-});
-getAllConversations();
+    super.onReady();
+    pagingController.addPageRequestListener((pageKey) {
+      _fetchPage(page);
+    });
+    if (Get.find<NetWorkController>().connectionStatus.value) {
+      getAllConversations();
+    }
   }
 
   getAllConversations() {
@@ -61,8 +64,7 @@ getAllConversations();
 
       update();
     });
-
-}
+  }
 
   deleteConversation(int id, item) {
     pagingController.itemList.remove(item);

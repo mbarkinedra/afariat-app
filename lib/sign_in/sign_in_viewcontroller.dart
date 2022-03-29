@@ -51,7 +51,7 @@ class SignInViewController extends GetxController {
             Get.find<AccountInfoStorage>().saveEmail(email.text);
             Get.find<AccountInfoStorage>().saveHashedPassword(hashedPassword);
             //Try to login user
-            _signInApi.getdata({'X-WSSE': wsse}).then((value) {
+            _signInApi.getData({'X-WSSE': wsse}).then((value) {
               validateServer.validatorServer(
                   value: value,
                   validate: () {

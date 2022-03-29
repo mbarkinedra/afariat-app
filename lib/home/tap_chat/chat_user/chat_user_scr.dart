@@ -1,6 +1,5 @@
 import 'package:afariat/config/utility.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:get/get.dart';
 import 'chat_user_viewcontroller.dart';

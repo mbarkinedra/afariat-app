@@ -62,15 +62,13 @@ class ChatUserViewController extends GetxController {
   }
 
   Future getMessage() async {
-    _getMessageApi.id = id;
-    // pagingController.addPageRequestListener((pageKey) {
-    //  _fetchPage(page);
-    // });
+print(id);
+
     _getMessageApi.id = id;
     await _getMessageApi.secureGet().then((value) {
+      print("oooooooooooo");
+      print(value.data);
       ConversationJson conversationJson = ConversationJson.fromJson(value.data);
-
-
       conversations = conversationJson.eEmbedded.conversation;
       messages.clear();
       conversations.forEach((element) {
@@ -80,7 +78,6 @@ class ChatUserViewController extends GetxController {
               id: _accountInfoStorage.readUserId(),
               firstName:element.from.name,
             ),
-            //  createdAt: int.parse( element.createdAt),
             id: element.from.id.toString(),
             text: element.message,
             type: types.MessageType.text);
