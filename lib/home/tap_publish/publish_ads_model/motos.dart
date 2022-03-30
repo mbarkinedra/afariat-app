@@ -47,6 +47,15 @@ class Motos extends GetView<TapPublishViewController> {
                 );
               }),
             ),
+            Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Obx(() => Text(
+                    controller.validateMarque.value,
+                    style: TextStyle(color: Colors.red),
+                  )),
+                )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
@@ -82,6 +91,16 @@ class Motos extends GetView<TapPublishViewController> {
                 );
               }),
             ),
+
+            Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Obx(() => Text(
+                    controller.validateKm.value,
+                    style: TextStyle(color: Colors.red),
+                  )),
+                )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
@@ -116,7 +135,16 @@ class Motos extends GetView<TapPublishViewController> {
                   ],
                 );
               }),
-            )
+            ),
+            Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Obx(() => Text(
+                    controller.validateYears.value,
+                    style: TextStyle(color: Colors.red),
+                  )),
+                )),
           ],
         ),
       ],
