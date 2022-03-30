@@ -269,6 +269,51 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   // Navigator.pop(context);
                 },
               ),
+              ListTile(
+                leading: Icon(
+                  Icons.help_center,
+                  color: ColorText,
+                ),
+                title: const Text(
+                  "Règlement",
+                  style:
+                  TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                ),
+                onTap: () {
+                  controller.launchURL("https://afariat.com/règlement.html");
+                  // Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.lock,
+                  color: ColorText,
+                ),
+                title: const Text(
+                  "Confidentialité ",
+                  style:
+                  TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                ),
+                onTap: () {
+                  controller.launchURL("https://afariat.com/confidentialite.html");
+                  // Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.help_center,
+                  color: ColorText,
+                ),
+                title: const Text(
+                  "CGU ",
+                  style:
+                  TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                ),
+                onTap: () {
+                  controller.launchURL("https://afariat.com/conditions-générales-d-utilisation.html");
+                  // Navigator.pop(context);
+                },
+              ),
               SizedBox(
                 height: 20,
               )

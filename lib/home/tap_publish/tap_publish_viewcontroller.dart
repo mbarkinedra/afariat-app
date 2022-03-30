@@ -362,6 +362,7 @@ class TapPublishViewController extends GetxController {
       validateModele.value = "";
       validateEnergie.value = "";
       validateYears.value = "";
+      validateKm.value = "";
       validatePiece.value = "";
 
       category = null;
