@@ -271,7 +271,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
               ),
               ListTile(
                 leading: Icon(
-                  Icons.help_center,
+                  Icons.thumb_up,
                   color: ColorText,
                 ),
                 title: const Text(
@@ -301,7 +301,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
               ),
               ListTile(
                 leading: Icon(
-                  Icons.help_center,
+                  Icons.menu_book,
                   color: ColorText,
                 ),
                 title: const Text(
@@ -315,7 +315,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                 },
               ),
               SizedBox(
-                height: 20,
+                height: 25,
               )
             ],
           ),
