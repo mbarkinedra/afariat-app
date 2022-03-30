@@ -43,7 +43,7 @@ class ValidateServer {
         value.data.forEach((key, value) {
 
         });
-        registerFormKey.currentState.validateTown();
+    //    registerFormKey.currentState.validateTown();
 
         Get.snackbar(
           'Erreur',
