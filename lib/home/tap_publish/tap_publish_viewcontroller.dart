@@ -32,6 +32,9 @@ class TapPublishViewController extends GetxController {
   RxBool modifAds = false.obs;
   bool getDataFromServer = false;
   RxString validateTown = "".obs;
+  RxString validateCity = "".obs;
+  RxString validateCategory = "".obs;
+  RxString validateSousCatgory = "".obs;
   RxString validateMarque = "".obs;
   RxString validatePiece = "".obs;
   RxString validateModele = "".obs;
@@ -343,6 +346,19 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
+  clearValidateOption() {
+    validateTown.value = "";
+    validateSousCatgory.value = "";
+    validateCategory.value = "";
+    validateCity.value = "";
+    validateMarque.value = "";
+    validateModele.value = "";
+    validateEnergie.value = "";
+    validateYears.value = "";
+    validateKm.value = "";
+    validatePiece.value = "";
+  }
+
   clearAllData() {
     if (Get.find<NetWorkController>().connectionStatus.value) {
       RefJson refJson = RefJson(id: 0, name: "");
@@ -357,13 +373,7 @@ class TapPublishViewController extends GetxController {
       photos.clear();
       editAdsImages.clear();
       dataAdverts = false;
-      validateTown.value = "";
-      validateMarque.value = "";
-      validateModele.value = "";
-      validateEnergie.value = "";
-      validateYears.value = "";
-      validateKm.value = "";
-      validatePiece.value = "";
+      clearValidateOption();
 
       category = null;
       subCategories = null;

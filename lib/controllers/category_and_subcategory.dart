@@ -73,6 +73,7 @@ class CategoryAndSubcategory extends GetxController {
   }
 
   updateSubCategory(SubcategoryJson subCategorieJson) {
+    tapPublishViewController.clearValidateOption();
     if (subCategorieJson.id == 0) {
       tapHomeViewController.setSearch("categoryGroup", categoryGroupedJson.id);
       subcategories1 = subCategorieJson;

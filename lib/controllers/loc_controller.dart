@@ -60,6 +60,7 @@ class LocController extends GetxController {
       update();
     } else {
       city = ci;
+      tapPublishViewController.validateCity.value = "";
       tapPublishViewController.citie = ci;
       town = null;
       tapHomeViewController.setSearch("city", ci.id);

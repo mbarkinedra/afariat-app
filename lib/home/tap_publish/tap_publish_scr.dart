@@ -123,6 +123,21 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                             }).toList(),
                                           ),
                                         ),
+                                        Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Padding(
+                                              padding:
+                                              const EdgeInsets.only(
+                                                  right: 8.0),
+                                              child: Obx(() => Text(
+                                                controller
+                                                    .validateCategory
+                                                    .value,
+                                                style: TextStyle(
+                                                    color:
+                                                    Colors.red),
+                                              )),
+                                            )),
                                         const SizedBox(
                                           height: 10,
                                         ),
@@ -165,7 +180,22 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                               );
                                             }).toList(),
                                           ),
-                                        )
+                                        ),
+                                        Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Padding(
+                                              padding:
+                                              const EdgeInsets.only(
+                                                  right: 8.0),
+                                              child: Obx(() => Text(
+                                                controller
+                                                    .validateSousCatgory
+                                                    .value,
+                                                style: TextStyle(
+                                                    color:
+                                                    Colors.red),
+                                              )),
+                                            ))
                                       ],
                                     );
                                   }),
@@ -386,6 +416,21 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                   }).toList(),
                                                 ),
                                               ),
+                                              Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Padding(
+                                                    padding:
+                                                    const EdgeInsets.only(
+                                                        right: 8.0),
+                                                    child: Obx(() => Text(
+                                                      controller
+                                                          .validateCity
+                                                          .value,
+                                                      style: TextStyle(
+                                                          color:
+                                                          Colors.red),
+                                                    )),
+                                                  )),
                                               const SizedBox(
                                                 height: 8,
                                               ),
@@ -547,6 +592,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
         //})
         );
   }
+
   void validateDefaultOptions(context) {
     if (controller.globalKey.currentState.validate()) {
       controller.myAdsView["prix"] =
@@ -569,12 +615,38 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
       Get.snackbar("Oups !", "Merci de corriger les erreurs ci-dessous.");
     }
   }
-
+void clearValidateOption(){
+  controller.validateTown.value = "";
+  controller.validateCity.value = "";
+  controller.validateCategory.value = "";
+  controller.validateSousCatgory.value = "";
+  controller.validatePiece.value = "";
+  controller.validateMarque.value = "";
+  controller.validateModele.value = "";
+  controller.validateEnergie.value = "";
+  controller.validateYears.value = " ";
+  controller.validateKm.value = "";
+}
   void validateGetView(context) {
     if (controller.town == null) {
-      controller.validateTown.value = " La commune est obligatoire";
+      controller.validateTown.value = " commune est obligatoire";
     } else {
       controller.validateTown.value = "";
+    }
+    if (controller.citie == null) {
+      controller.validateCity.value = " ville est obligatoire";
+    } else {
+      controller.validateCity.value = "";
+    }
+    if (controller.category == null) {
+      controller.validateCategory.value = " Catégorie est obligatoire";
+    } else {
+      controller.validateCategory.value = "";
+    }
+    if (controller.subCategories== null) {
+      controller.validateSousCatgory.value = "SousCatégorie est obligatoire";
+    } else {
+      controller.validateCategory.value = "";
     }
     if (controller.nombrePiece == null) {
       controller.validatePiece.value = " Nombre des pieces sont obligatoires ";
@@ -602,11 +674,13 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
       controller.validateYears.value = " ";
     }
 
+
     if (controller.kilometrage == null) {
       controller.validateKm.value = "Kilometrage est obligatoire";
     } else {
       controller.validateKm.value = "";
     }
+
     if (controller.subCategories != null &&
         controller.category != null &&
         controller.town != null &&
