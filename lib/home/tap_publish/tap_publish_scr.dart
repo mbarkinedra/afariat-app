@@ -509,6 +509,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                           labColor: Colors.white,
                                           btColor: buttonColor,
                                           function: () {
+                                            validateDefaultOptions(context);
                                             validateGetView(context);
                                           }),
                                     ],
@@ -546,7 +547,6 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
         //})
         );
   }
-
   void validateDefaultOptions(context) {
     if (controller.globalKey.currentState.validate()) {
       controller.myAdsView["prix"] =

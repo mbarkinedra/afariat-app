@@ -8,11 +8,13 @@ class Validator {
 
       if (value.length < 11) {
         return "  Le titre doit faire au minimum 10 caractères";
-      }
+      }else
   if (value.isEmpty) {
       return "Veuillez saisir le titre";
-    }
+    }else{
     return null;
+  }
+
   }
 
   String validatePrice(String value) {
@@ -38,7 +40,8 @@ class Validator {
       if (value.length < 20) {
         return " La description doit faire au moins 20 caractères.";
 
-    }  if (value.isEmpty) {
+    }
+      if (value.isEmpty) {
       return "Veuillez renseigner la description";
     }
 
