@@ -226,7 +226,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                     width: size.width * .8,
                                     color: framColor,
                                     validator:
-                                        controller.validator.validatetitle,
+                                        controller.validator.validateTitle,
                                     hintText: "Titre",
                                     textEditingController: controller.title,
                                   ),

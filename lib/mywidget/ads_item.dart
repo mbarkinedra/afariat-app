@@ -39,7 +39,7 @@ class AdsItem extends StatelessWidget {
               ),
             ],
           ),
-          height: size.height * .27,
+          height: size.height * .28,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -66,17 +66,7 @@ class AdsItem extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
-                 /*   Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Text(
-                        adverts.description,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),*/
-                    SizedBox(
-                      height: 15,
-                    ),
+                    Spacer(),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
@@ -92,9 +82,7 @@ class AdsItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
+                    Spacer(),
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -109,14 +97,14 @@ class AdsItem extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(), InkWell(
-                        onTap: deleteAds,
-                        child: Icon(
-                          Icons.delete,
-                          color:framColor,
-                        ),
+                          SizedBox(),
+                          InkWell(
+                            onTap: deleteAds,
+                            child: Icon(
+                              Icons.delete,
+                              color: framColor,
+                            ),
                           ),
-
                         ],
                       ),
                     )

@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 class Validator {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
 
-  String validatetitle(String value) {
-    if (value.isNotEmpty) {
+  String validateTitle(String value) {
+
       if (value.length < 11) {
         return "  Le titre doit faire au minimum 10 caractères";
       }
-    } else if (value.isEmpty) {
+  if (value.isEmpty) {
       return "Veuillez saisir le titre";
     }
     return null;
@@ -34,18 +34,18 @@ class Validator {
   }
 
   String validateDescription(String value) {
-    if (value.isNotEmpty) {
+
       if (value.length < 20) {
         return " La description doit faire au moins 20 caractères.";
-      }
-    } else if (value.isEmpty) {
+
+    }  if (value.isEmpty) {
       return "Veuillez renseigner la description";
     }
 
     return null;
   }
 
-  isvalid() {
+  isValid() {
     globalKey.currentState.validate();
   }
 
