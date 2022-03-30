@@ -63,6 +63,7 @@ class CategoryAndSubcategory extends GetxController {
       tapHomeViewController.setSearch("categoryGroup", categoryGrouped.id);
 
       categoryGroupedJson = categoryGrouped;
+
       tapPublishViewController.updateCategory(categoryGrouped);
       tapPublishViewController.updateGetView(null);
       subcategories1 = null;
