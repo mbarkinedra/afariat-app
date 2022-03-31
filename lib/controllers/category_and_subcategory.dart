@@ -56,10 +56,13 @@ class CategoryAndSubcategory extends GetxController {
         Filter.data.remove("categoryGroup");
         tapHomeViewController.search.remove("categoryGroup");
       }
+      subcategories1 = null;
       categoryGroupedJson = categoryGrouped;
       tapHomeViewController.filterUpdate();
     } else {
       Filter.data["categoryGroup"] = categoryGrouped.id;
+      tapPublishViewController.validateCategory.value = "";
+
       tapHomeViewController.setSearch("categoryGroup", categoryGrouped.id);
 
       categoryGroupedJson = categoryGrouped;
@@ -86,6 +89,8 @@ class CategoryAndSubcategory extends GetxController {
       update();
     } else {
       subcategories1 = subCategorieJson;
+      tapPublishViewController.validateSousCatgory.value = "";
+
       tapHomeViewController.setSearch("category", subCategorieJson.id);
       tapHomeViewController.search.remove("categoryGroup");
       tapPublishViewController.updateSubCategoryJson(subCategorieJson);

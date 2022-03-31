@@ -20,7 +20,8 @@ class Home extends GetWidget<HomeViwController> {
       screens: controller.buildScreens,
       items: _navBarsItems(),
       selectedTabScreenContext: (BuildContext context) {
-        Get.find<TapPublishViewController>().context = context;
+         Get.find<TapPublishViewController>().context = context;
+
       },
       confineInSafeArea: true,
       backgroundColor: Colors.white,
@@ -29,7 +30,7 @@ class Home extends GetWidget<HomeViwController> {
       // Default is true.
       resizeToAvoidBottomInset: true,
       // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-      stateManagement: true,
+      stateManagement: false,
       // Default is true.
       hideNavigationBarWhenKeyboardShows: true,
       // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.

@@ -121,6 +121,11 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
+  @override
+  void onClose() {
+    super.onClose();
+  }
+
   deleteImage(File file) {
     images.remove(file);
     update();
@@ -414,7 +419,7 @@ class TapPublishViewController extends GetxController {
         buttonPublier.value = false;
 
         if (value.statusCode == 204) {
-          Get.find<TapMyadsViewController>().ads();
+          Get.find<TapMyadsViewController>().getAllAds();
           Filter.data.clear();
           clearAllData();
           Get.find<CategoryAndSubcategory>().clearDataCategroyAndSubCategory();
@@ -429,20 +434,20 @@ class TapPublishViewController extends GetxController {
                   function: () {
                     int i = 0;
                     while (i < 2) {
-                      Navigator.pop(con);
+                      //     Navigator.pop(con);
                       i++;
                     }
                     Navigator.pop(context);
-                    Get.find<TapMyadsViewController>().ads();
-                    Get.find<TapPublishViewController>().clearAllData();
-                    Get.find<HomeViwController>().changeItemFilter(1);
-                    update();
                   },
                   description: "Votre annonce est en cours de validation !",
                   buttonText: "Ok",
                   phone: false,
                 );
               });
+          Get.find<TapMyadsViewController>().getAllAds();
+          Get.find<TapPublishViewController>().clearAllData();
+          Get.find<HomeViwController>().changeItemFilter(1);
+          update();
         }
       });
     } else {
@@ -471,7 +476,7 @@ class TapPublishViewController extends GetxController {
                         }
                         Navigator.pop(context);
                         Get.find<TapPublishViewController>().clearAllData();
-                        Get.find<TapMyadsViewController>().ads();
+                        Get.find<TapMyadsViewController>().getAllAds();
                         Get.find<HomeViwController>().changeItemFilter(1);
                       },
                       description: "Votre annonce est en cours de validation !",
@@ -611,5 +616,9 @@ class TapPublishViewController extends GetxController {
         editAdsImages.add(element.path);
       });
     });
+  }
+
+  Future<bool> function() async {
+    return true;
   }
 }

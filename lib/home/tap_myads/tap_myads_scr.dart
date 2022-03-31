@@ -13,7 +13,7 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
-    controller.ads();
+    controller.getAllAds();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -80,57 +80,65 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                                 : Padding(
                                     padding:
                                         const EdgeInsets.only(bottom: 16.0),
-                                    child: ListView.builder(
-                                        itemCount: logic.adverts.length,
-                                        itemBuilder: (context, pos) {
-                                          return AdsItem(
-                                            size: _size,
-                                            adverts: logic.adverts[pos],
-                                            deleteAds: () async {
-                                              await showDialog<bool>(
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return CustomDialogueDelete(
-                                                      okFunction: () async {
-                                                        await controller
-                                                            .deleteAds(logic
-                                                                .adverts[pos]
-                                                                .id);
-                                                        Navigator.of(context)
-                                                            .pop(true);
-                                                      },
-                                                      text2: " ",
-                                                      title: "Confirmation",
-                                                      function: () async {
-                                                        Navigator.of(context)
-                                                            .pop(true);
-                                                      },
-                                                      buttonText2: "Annuler",
-                                                      description:
-                                                          "Êtes-vous sûr de  vouloir supprimer votre annonce?",
-                                                      buttonText: "Ok",
-                                                      phone: false,
-                                                    );
-                                                  });
-                                            },
-                                            editAds: () {
-                                              TapPublishViewController
-                                                  tapPublishViewController =
-                                                  Get.find<
-                                                      TapPublishViewController>();
-                                              tapPublishViewController
-                                                  .dataAdverts = true;
+                                    child: RefreshIndicator(onRefresh:controller.onRefreshAds ,
+                                      child: ListView.builder(controller: controller.scrollController,
+                                          itemCount: logic.adverts.length,
+                                          itemBuilder: (context, position) {
+                                            return AdsItem(
+                                              size: _size,
+                                              adverts: logic.adverts[position],
+                                              deleteAds: () async {
+                                                await showDialog<bool>(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return CustomDialogueDelete(
+                                                        okFunction: () async {
+                                                          await controller
+                                                              .deleteAds(logic
+                                                              .adverts[position]
+                                                              .id);
+                                                          Navigator.of(context)
+                                                              .pop(true);
+                                                        },
+                                                        text2: " ",
+                                                        title: "Confirmation",
+                                                        function: () async {
+                                                          Navigator.of(context)
+                                                              .pop(true);
+                                                        },
+                                                        buttonText2: "Annuler",
+                                                        description:
+                                                        "Êtes-vous sûr de  vouloir supprimer votre annonce?",
+                                                        buttonText: "Ok",
+                                                        phone: false,
+                                                      );
+                                                    });
+                                              },
+                                              editAds: () {
+                                                TapPublishViewController
+                                                tapPublishViewController =
+                                                Get.find<
+                                                    TapPublishViewController>();
+                                                tapPublishViewController
+                                                    .dataAdverts = true;
 
-                                              tapPublishViewController
-                                                  .modifAds.value = true;
-                                              tapPublishViewController
-                                                  .getAllData(
-                                                      logic.adverts[pos].id);
-                                              Get.find<HomeViwController>()
-                                                  .changeItemFilter(2);
-                                            },
-                                          );
-                                        }),
+                                                tapPublishViewController
+                                                    .modifAds.value = true;
+                                                tapPublishViewController
+                                                    .getAllData(
+                                                    logic.adverts[position].id);
+                                                Get.find<HomeViwController>()
+                                                    .changeItemFilter(2);
+                                              },
+                                            );
+                                            // if(position>logic.adverts.length-1){
+                                            //   return Center(child: CircularProgressIndicator());
+                                            // }else{
+                                            //
+                                            // }
+
+                                          }),
+                                    ),
                                   );
                       }),
                     )

@@ -22,6 +22,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+    controller.globalKey = globalKey;
     return Scaffold(
         appBar: AppBar(
             leading: Obx(() => controller.modifAds.value
@@ -60,7 +62,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                           padding: const EdgeInsets.only(
                               bottom: 25, left: 25, right: 25, top: 8),
                           child: Form(
-                            key: controller.globalKey,
+                            onWillPop: controller.function,
+                            key: globalKey,
                             child: ListView(
                               //  padding: EdgeInsets.all(4),
                               children: <Widget>[
@@ -105,9 +108,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                             items: logic.categoryGroupList
                                                 .where((element) =>
                                                     element.name != "")
-                                                .map<
-                                                        DropdownMenuItem<
-                                                            CategoryGroupedJson>>(
+                                                .map<DropdownMenuItem<CategoryGroupedJson>>(
                                                     (CategoryGroupedJson
                                                         value) {
                                               return DropdownMenuItem<
@@ -126,17 +127,14 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                         Align(
                                             alignment: Alignment.topLeft,
                                             child: Padding(
-                                              padding:
-                                              const EdgeInsets.only(
+                                              padding: const EdgeInsets.only(
                                                   right: 8.0),
                                               child: Obx(() => Text(
-                                                controller
-                                                    .validateCategory
-                                                    .value,
-                                                style: TextStyle(
-                                                    color:
-                                                    Colors.red),
-                                              )),
+                                                    controller
+                                                        .validateCategory.value,
+                                                    style: TextStyle(
+                                                        color: Colors.red),
+                                                  )),
                                             )),
                                         const SizedBox(
                                           height: 10,
@@ -184,17 +182,15 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                         Align(
                                             alignment: Alignment.topLeft,
                                             child: Padding(
-                                              padding:
-                                              const EdgeInsets.only(
+                                              padding: const EdgeInsets.only(
                                                   right: 8.0),
                                               child: Obx(() => Text(
-                                                controller
-                                                    .validateSousCatgory
-                                                    .value,
-                                                style: TextStyle(
-                                                    color:
-                                                    Colors.red),
-                                              )),
+                                                    controller
+                                                        .validateSousCatgory
+                                                        .value,
+                                                    style: TextStyle(
+                                                        color: Colors.red),
+                                                  )),
                                             ))
                                       ],
                                     );
@@ -420,16 +416,16 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                   alignment: Alignment.topLeft,
                                                   child: Padding(
                                                     padding:
-                                                    const EdgeInsets.only(
-                                                        right: 8.0),
+                                                        const EdgeInsets.only(
+                                                            right: 8.0),
                                                     child: Obx(() => Text(
-                                                      controller
-                                                          .validateCity
-                                                          .value,
-                                                      style: TextStyle(
-                                                          color:
-                                                          Colors.red),
-                                                    )),
+                                                          controller
+                                                              .validateCity
+                                                              .value,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.red),
+                                                        )),
                                                   )),
                                               const SizedBox(
                                                 height: 8,
@@ -615,19 +611,31 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
       Get.snackbar("Oups !", "Merci de corriger les erreurs ci-dessous.");
     }
   }
-void clearValidateOption(){
-  controller.validateTown.value = "";
-  controller.validateCity.value = "";
-  controller.validateCategory.value = "";
-  controller.validateSousCatgory.value = "";
-  controller.validatePiece.value = "";
-  controller.validateMarque.value = "";
-  controller.validateModele.value = "";
-  controller.validateEnergie.value = "";
-  controller.validateYears.value = " ";
-  controller.validateKm.value = "";
-}
+
+  void clearValidateOption() {
+    controller.validateTown.value = "";
+    controller.validateCity.value = "";
+  //  controller.validateCategory.value = "";
+   // controller.validateSousCatgory.value = "";
+    controller.validatePiece.value = "";
+    controller.validateMarque.value = "";
+    controller.validateModele.value = "";
+    controller.validateEnergie.value = "";
+    controller.validateYears.value = " ";
+    controller.validateKm.value = "";
+  }
+
   void validateGetView(context) {
+    if (controller.category == null) {
+      controller.validateCategory.value = " Catégorie est obligatoire";
+    } else {
+      controller.validateCategory.value = "";
+    }
+    if (controller.subCategories == null) {
+      controller.validateSousCatgory.value = "SousCatégorie est obligatoire";
+    } else {
+     controller.validateCategory.value = "";
+    }
     if (controller.town == null) {
       controller.validateTown.value = " commune est obligatoire";
     } else {
@@ -638,16 +646,7 @@ void clearValidateOption(){
     } else {
       controller.validateCity.value = "";
     }
-    if (controller.category == null) {
-      controller.validateCategory.value = " Catégorie est obligatoire";
-    } else {
-      controller.validateCategory.value = "";
-    }
-    if (controller.subCategories== null) {
-      controller.validateSousCatgory.value = "SousCatégorie est obligatoire";
-    } else {
-      controller.validateCategory.value = "";
-    }
+
     if (controller.nombrePiece == null) {
       controller.validatePiece.value = " Nombre des pieces sont obligatoires ";
     } else {
@@ -673,7 +672,6 @@ void clearValidateOption(){
     } else {
       controller.validateYears.value = " ";
     }
-
 
     if (controller.kilometrage == null) {
       controller.validateKm.value = "Kilometrage est obligatoire";

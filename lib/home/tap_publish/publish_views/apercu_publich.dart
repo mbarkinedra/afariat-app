@@ -18,6 +18,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.context=context;
     Size size = MediaQuery.of(context).size;
 
     List<Widget> list = controller.editAdsImages

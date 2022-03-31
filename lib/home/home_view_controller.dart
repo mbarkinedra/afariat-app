@@ -3,6 +3,7 @@ import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_chat/tap_chat_scr.dart';
 import 'package:afariat/home/tap_home/tap_home_scr.dart';
+import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/sign_in/sign_in_scr.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,9 @@ class HomeViwController extends GetxController {
   int _navigatorValue = 0;
   String _currentPage = 'Page1';
   var _navigatorKey;
-  int loadOrScroll = 0;
+  int loadOrScrollHome = 0;
+  int loadOrScrollAds = 0;
+
   List<String> _pageKeys = ['Page1', 'Page2', 'Page3', 'Page4', 'Page5'];
 
   get navigatorValue => _navigatorValue;
@@ -77,21 +80,36 @@ class HomeViwController extends GetxController {
   }
 
   changeItemFilter(value) {
+    if (value == 1) {
+      loadOrScrollAds++;
+      if (loadOrScrollAds == 1) {
+        Get.find<TapMyadsViewController>().scrollUpAds();
+      } else {
+        if (Get.find<TapMyadsViewController>().scrollController.offset != 1) {
+          Get.find<TapMyadsViewController>().scrollUpAds();
+          loadOrScrollAds = 1;
+        } else {
+          loadOrScrollAds = 0;
+        }
+      }
+    } else {
+      loadOrScrollAds = 0;
+    }
     if (value == 0) {
-      loadOrScroll++;
-      if (loadOrScroll == 1) {
+      loadOrScrollHome++;
+      if (loadOrScrollHome == 1) {
         Get.find<TapHomeViewController>().scrollUp();
       } else {
         if (Get.find<TapHomeViewController>().scrollController.offset != 1) {
           Get.find<TapHomeViewController>().scrollUp();
-          loadOrScroll = 1;
+          loadOrScrollHome = 1;
         } else {
           Get.find<TapHomeViewController>().clearDataFilter();
-          loadOrScroll = 0;
+          loadOrScrollHome = 0;
         }
       }
     } else {
-      loadOrScroll = 0;
+      loadOrScrollHome = 0;
     }
 
     TapPublishViewController tapPublishViewController =
