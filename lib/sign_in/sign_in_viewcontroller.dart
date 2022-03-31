@@ -61,7 +61,7 @@ class SignInViewController extends GetxController {
                         .saveUserId(value.data["user_id"].toString());
 
                     Get.find<HomeViwController>().changeItemFilter(0);
-                    Get.find<HomeViwController>().updatelist();
+                    Get.find<HomeViwController>().updateList();
                     Get.find<HomeViwController>().controller =
                         PersistentTabController(initialIndex: 0);
             Get.find<AccountViewController>().getUserData();

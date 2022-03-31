@@ -79,7 +79,14 @@ class TapHomeViewController extends GetxController {
       _fetchPage(advertListJson.links.getPreviousUrl());
     }
   }
+scrollUp(){
 
+ scrollController.animateTo(
+   1,
+    curve: Curves.bounceOut,
+    duration: const Duration(milliseconds: 200),
+  );
+}
 //Set Name of drawer
   setUserName(String v) {
     name = v;
@@ -104,8 +111,10 @@ class TapHomeViewController extends GetxController {
 //Lorsque on clique sur l 'icon home ,le package paging fait un appel la 1 ere page
   clearDataFilter() {
     _advertApi.url = null;
+    //Get.find<TapHomeViewController>().search.clear();
     Filter.data.clear();
     pagingController.refresh();
+
   }
 
   updateData() async {

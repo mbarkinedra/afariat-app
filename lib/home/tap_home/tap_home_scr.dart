@@ -1,6 +1,5 @@
 import 'package:afariat/advert_details/advert_details_scr.dart';
 import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
-
 import 'package:afariat/config/filter.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/network_controller.dart';
@@ -150,6 +149,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                         controller.scrollController,
                                     pagingController:
                                         controller.pagingController,
+                                    addAutomaticKeepAlives: true,
                                     builderDelegate:
                                         PagedChildBuilderDelegate<dynamic>(
                                       itemBuilder: (context, item, index) {
@@ -277,7 +277,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                 title: const Text(
                   "Règlement",
                   style:
-                  TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                      TextStyle(color: ColorText, fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
                   controller.launchURL("https://afariat.com/règlement.html");
@@ -292,10 +292,11 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                 title: const Text(
                   "Confidentialité ",
                   style:
-                  TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                      TextStyle(color: ColorText, fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
-                  controller.launchURL("https://afariat.com/confidentialite.html");
+                  controller
+                      .launchURL("https://afariat.com/confidentialite.html");
                   // Navigator.pop(context);
                 },
               ),
@@ -307,10 +308,11 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                 title: const Text(
                   "CGU ",
                   style:
-                  TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                      TextStyle(color: ColorText, fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
-                  controller.launchURL("https://afariat.com/conditions-générales-d-utilisation.html");
+                  controller.launchURL(
+                      "https://afariat.com/conditions-générales-d-utilisation.html");
                   // Navigator.pop(context);
                 },
               ),

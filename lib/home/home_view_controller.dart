@@ -19,7 +19,7 @@ class HomeViwController extends GetxController {
   int _navigatorValue = 0;
   String _currentPage = 'Page1';
   var _navigatorKey;
-
+  int loadOrScroll = 0;
   List<String> _pageKeys = ['Page1', 'Page2', 'Page3', 'Page4', 'Page5'];
 
   get navigatorValue => _navigatorValue;
@@ -58,17 +58,11 @@ class HomeViwController extends GetxController {
       naigatorKey: _navigatorKeys[_pageKeys[0]],
       tabItem: _pageKeys[0],
     );
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-
     Get.find<TapHomeViewController>()
         .setUserName(Get.find<AccountInfoStorage>().readName() ?? "");
   }
 
-  updatelist() {
+  updateList() {
     if (Get.find<AccountInfoStorage>().isLoggedIn()) {
       buildScreens[1] = TapMyAdsScr();
       buildScreens[2] = TapPublishScr();
@@ -83,7 +77,22 @@ class HomeViwController extends GetxController {
   }
 
   changeItemFilter(value) {
-    Get.find<TapHomeViewController>().clearDataFilter();
+    if (value == 0) {
+      loadOrScroll++;
+      if (loadOrScroll == 1) {
+        Get.find<TapHomeViewController>().scrollUp();
+      } else {
+        if (Get.find<TapHomeViewController>().scrollController.offset != 1) {
+          Get.find<TapHomeViewController>().scrollUp();
+          loadOrScroll = 1;
+        } else {
+          Get.find<TapHomeViewController>().clearDataFilter();
+          loadOrScroll = 0;
+        }
+      }
+    } else {
+      loadOrScroll = 0;
+    }
 
     TapPublishViewController tapPublishViewController =
         Get.find<TapPublishViewController>();
