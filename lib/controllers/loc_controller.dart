@@ -1,10 +1,11 @@
-import 'package:afariat/config/filter.dart';
+import 'package:afariat/model/filter.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:get/get.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 
+import 'filter_controller.dart';
 import 'network_controller.dart';
 
 class LocController extends GetxController {
@@ -22,10 +23,11 @@ class LocController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getCitylist();
+    getCityListSelected();
   }
 
-  getCitylist() {
+  /// GET all data from api
+  getCityListSelected() {
     if (Get.find<NetWorkController>().connectionStatus.value) {
       _cityApi.getList().then((value) {
         cities = value.data;
@@ -39,61 +41,47 @@ class LocController extends GetxController {
     }
   }
 
-  clearDataCityAndTown() {
-    city = null;
-    town = null;
-    update();
-  }
+  /// Update city from dropDown
+  updateCity(RefJson selectedCity) {
+    city = selectedCity;
 
-  updateCity(RefJson ci) {
-    if (ci.id == 0) {
-      if (Get.find<TapHomeViewController>().search["city"] != null) {
-        Get.find<TapHomeViewController>().search.remove("city");
-        Filter.data.remove("city");
-      }
-      if (Get.find<TapHomeViewController>().search["town"] != null) {
-        Get.find<TapHomeViewController>().search.remove("town");
-        Filter.data.remove("town");
-      }
+    if (selectedCity.id == 0) {
+      Get.find<FilterController>().deleteDataFilter(key: "city");
+      Get.find<FilterController>().deleteDataFilter(key: "town");
       town = null;
-      tapHomeViewController.filterUpdate();
       update();
     } else {
-      city = ci;
+      city = selectedCity;
+      Get.find<FilterController>().setDataFilter(key: "city", val: selectedCity.id);
       tapPublishViewController.validateCity.value = "";
-      tapPublishViewController.citie = ci;
+      tapPublishViewController.citie = selectedCity;
       town = null;
-      tapHomeViewController.setSearch("city", ci.id);
-      tapPublishViewController.myAds["city"] = ci.id;
-      tapPublishViewController.myAdsView["city"] = ci.name;
-      Get.find<TapHomeViewController>().setSearch("city", ci.id.toString());
-
-      updateTowns(ci.id);
+      tapPublishViewController.myAds["city"] = selectedCity.id;
+      tapPublishViewController.myAdsView["city"] = selectedCity.name;
+      getTowListSelected(selectedCity.id);
       update();
     }
   }
 
+  /// Update city from dropDown
   updateTown(RefJson town) {
     if (town.id == 0) {
-      if (Get.find<TapHomeViewController>().search["town"] != null) {
-        Filter.data.remove("town");
-        Get.find<TapHomeViewController>().search.remove("town");
-      }
+      Get.find<FilterController>().deleteDataFilter(key: "town");
       town = null;
-      tapHomeViewController.filterUpdate();
+      update();
     } else {
+      Get.find<FilterController>().setDataFilter(key: "town", val: town.id);
       this.town = town;
       tapPublishViewController.validateTown.value = "";
-      Get.find<TapHomeViewController>().setSearch("town", town.id.toString());
       tapPublishViewController.town = town;
-      tapHomeViewController.setSearch("town", town.id);
       tapPublishViewController.myAds["town"] = town.id;
       tapPublishViewController.myAdsView["town"] = town.name;
       update();
     }
   }
 
-  Future updateTowns(id) async {
+  // Get all data of twon from api
+  Future getTowListSelected(id) async {
     tapPublishViewController.town = null;
     _townsApi.cityId = id.toString();
     await _townsApi.getList().then((value) {
@@ -109,6 +97,13 @@ class LocController extends GetxController {
     city = null;
     tapPublishViewController.citie = null;
     tapPublishViewController.town = null;
+    town = null;
+    update();
+  }
+
+  /// Clear all data of city and twon (EXP:lorsque on cliq sur l icone + de publir l annonce data de city et town sont supprimées)
+  clearDataCityAndTown() {
+    city = null;
     town = null;
     update();
   }

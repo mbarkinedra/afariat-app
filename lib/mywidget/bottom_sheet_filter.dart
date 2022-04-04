@@ -1,4 +1,5 @@
-import 'package:afariat/config/filter.dart';
+import 'package:afariat/controllers/filter_controller.dart';
+import 'package:afariat/model/filter.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
@@ -6,9 +7,7 @@ import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/widget_publish.dart';
-
 import 'package:afariat/networking/json/categories_grouped_json.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -255,12 +254,10 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
               width: _size.width * .4,
               function: () {
                 Filter.data.clear();
-                Get.find<TapHomeViewController>().search.forEach((key, value) {
-                  //add filter values to URL parameters
-
+                Get.find<FilterController>().searchData.forEach((key, value) {
+                  ///add filter values to URL parameters
                   Filter.data[key] = value;
                 });
-
                 Get.find<TapHomeViewController>().filterUpdate();
                 Navigator.pop(context);
               },

@@ -1,10 +1,8 @@
 import 'dart:async';
-
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
-
 import 'category_and_subcategory.dart';
 import 'loc_controller.dart';
 
@@ -41,7 +39,7 @@ class NetWorkController extends GetxController {
         Get.find<TapPublishViewController>().getMileages();
         Get.find<TapPublishViewController>().getYearsModels();
         Get.find<TapPublishViewController>().getRoomsNumber();
-        Get.find<LocController>().getCitylist();
+        Get.find<LocController>().getCityListSelected();
         Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
         break;
       case ConnectivityResult.mobile:
@@ -50,7 +48,7 @@ class NetWorkController extends GetxController {
         Get.find<TapPublishViewController>().getRoomsNumber();
         Get.find<TapPublishViewController>().getMileages();
         Get.find<TapPublishViewController>().getYearsModels();
-        Get.find<LocController>().getCitylist();
+        Get.find<LocController>().getCityListSelected();
         Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
 
         break;

@@ -2,13 +2,15 @@ import 'dart:convert';
 
 import 'package:afariat/config/dio_singleton.dart';
 import 'package:afariat/config/settings_app.dart';
-import 'package:afariat/config/storage.dart';
-import 'package:afariat/config/wsse.dart';
+import 'package:afariat/storage/storage.dart';
+import 'package:afariat/networking/security/wsse.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 import 'package:get/get.dart' as a;
+import 'package:get/get_core/src/get_main.dart';
 
 abstract class ApiManager {
   final DioSingleton dioSingleton = DioSingleton();
@@ -21,6 +23,37 @@ abstract class ApiManager {
   NetWorkController _netWorkController = a.Get.find<NetWorkController>();
 
   AbstractJsonResource fromJson(data);
+
+  processServerError(error) {
+    String message;
+    if (error.response == null) {
+      message = 'Problème réseau.';
+    } else {
+      switch (error.response.statusCode) {
+        case 405:
+          message = 'Merci de contacter le service client. Code: 405';
+          break;
+
+        case 500:
+          message = 'Erreur serveur. Merci de contacter le service client.';
+          break;
+
+        case 503:
+          message = 'Le serveur est surchargé. '
+              'Veuillez ré-essayer un peu plus tard.';
+          break;
+
+        default:
+          message = 'Merci de contacter le service client. ';
+      }
+      Get.snackbar(
+        'Erreur',
+        message,
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+    }
+  }
 
   Future<dynamic> getList({Map<String, dynamic> filters}) async {
     AbstractJsonResource jsonList;
@@ -50,13 +83,13 @@ abstract class ApiManager {
           },
           followRedirects: false,
           validateStatus: (status) {
-            return status < 500;
+            return status < 405;
           }),
     )
         .then((value) {
       return value;
     }).catchError((error) {
-      a.Get.snackbar("error", error.toString());
+      processServerError(error);
     });
   }
 
@@ -226,5 +259,4 @@ abstract class ApiManager {
       return error;
     });
   }
-
 }

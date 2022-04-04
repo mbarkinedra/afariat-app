@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:afariat/config/AccountInfoStorage.dart';
-import 'package:afariat/config/filter.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
+import 'package:afariat/model/filter.dart';
 import 'package:afariat/networking/api/conversations_api.dart';
 import 'package:afariat/networking/api/conversationsreply.dart';
 import 'package:afariat/networking/api/get_message_api.dart';

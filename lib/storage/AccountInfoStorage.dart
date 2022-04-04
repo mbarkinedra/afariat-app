@@ -1,4 +1,4 @@
-import 'package:afariat/config/storage.dart';
+import 'package:afariat/storage/storage.dart';
 import 'package:afariat/home/home_view_controller.dart';
 import 'package:get/get.dart';
 

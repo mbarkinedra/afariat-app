@@ -1,9 +1,9 @@
-import 'package:afariat/config/AccountInfoStorage.dart';
-import 'package:afariat/config/filter.dart';
-import 'package:afariat/config/wsse.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
+import 'package:afariat/model/filter.dart';
+import 'package:afariat/networking/security/wsse.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
-import 'package:afariat/model/validate_server.dart';
+import 'package:afariat/validator/validate_server.dart';
 import 'package:afariat/networking/api/user_api.dart';
 import 'package:afariat/networking/json/user_json.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ class AccountViewController extends GetxController {
   final localisation = Get.find<LocController>();
   bool updateData = false;
 
-  ValidateServer validateServer = ValidateServer();
+  ServerValidator validateServer = ServerValidator();
   AccountInfoStorage _storage = AccountInfoStorage();
   UserApi _userApi = UserApi();
   UserJson _userJson = UserJson();
@@ -46,8 +46,8 @@ class AccountViewController extends GetxController {
       (value) {
 
 Get.find<AccountInfoStorage>().saveName(name.text);
-        validateServer.validatorServer(
-            validate: () {
+        validateServer.validateServer(
+            success: () {
               Get.snackbar("", "mise à jours avec succés ");
               updateData = false;
               wsse.generateWsseFromStorage();

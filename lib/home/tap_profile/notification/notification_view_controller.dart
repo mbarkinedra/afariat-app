@@ -1,5 +1,5 @@
-import 'package:afariat/config/AccountInfoStorage.dart';
-import 'package:afariat/config/filter.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
+import 'package:afariat/model/filter.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/api/count_notification_api.dart';
 import 'package:afariat/networking/api/delete_notification_api.dart';

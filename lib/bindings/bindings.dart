@@ -1,6 +1,7 @@
 import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
-import 'package:afariat/config/AccountInfoStorage.dart';
-import 'package:afariat/config/storage.dart';
+import 'package:afariat/controllers/filter_controller.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
+import 'package:afariat/storage/storage.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
@@ -23,15 +24,16 @@ import 'package:get/get.dart';
 class AllBindings extends Bindings {
   @override
   void dependencies() async {
-    Get.lazyPut(() =>SecureStorage() );
-    Get.lazyPut(() =>AccountInfoStorage());
+    Get.lazyPut(() => SecureStorage());
+    Get.lazyPut(() => AccountInfoStorage());
 
-
-
+    Get.put(FilterController());
     Get.lazyPut(() => AccountViewController());
     Get.lazyPut(() => TapHomeViewController(), fenix: true);
     Get.lazyPut(() => HomeViwController(), fenix: true);
-    Get.lazyPut(() =>NetWorkController(), );
+    Get.lazyPut(
+      () => NetWorkController(),
+    );
     Get.put(TapPublishViewController());
     Get.put(CategoryAndSubcategory());
     Get.put(LocController());
@@ -49,4 +51,3 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => TapChatViewController());
   }
 }
-

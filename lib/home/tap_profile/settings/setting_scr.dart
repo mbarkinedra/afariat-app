@@ -46,7 +46,7 @@ class Setting extends GetWidget<SettingViewController> {
                 obscureText: logic.isVisiblePassword1,
                 textEditingController: controller.oldPassword,
                 validator: (value) {
-                  return controller.validateServer.validator(value, 'password');
+                  return controller.validateServer.validate(value, 'password');
                 },
                 suffixIcon: IconButton(
                   onPressed: controller.showHidePassword1,
@@ -69,7 +69,7 @@ class Setting extends GetWidget<SettingViewController> {
                 obscureText: logic.isVisiblePassword2,
                 textEditingController: controller.newPassword,
                 validator: (value) {
-                  return controller.validateServer.validator(value, 'password');
+                  return controller.validateServer.validate(value, 'password');
                 },
                 suffixIcon: IconButton(
                   onPressed: controller.showHidePassword2,

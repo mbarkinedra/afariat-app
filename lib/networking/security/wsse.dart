@@ -1,4 +1,4 @@
-import 'package:afariat/config/AccountInfoStorage.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:crypto/crypto.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';

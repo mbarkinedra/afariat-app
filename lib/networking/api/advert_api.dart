@@ -1,4 +1,4 @@
-import 'package:afariat/config/filter.dart';
+import 'package:afariat/model/filter.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/api/api_manager.dart';
 import 'package:afariat/networking/json/adverts_json.dart';

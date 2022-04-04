@@ -1,4 +1,4 @@
-import 'package:afariat/config/filter.dart';
+import 'package:afariat/model/filter.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_chat/chat_user/chat_user_scr.dart';
 import 'package:afariat/home/tap_chat/chat_user/chat_user_viewcontroller.dart';

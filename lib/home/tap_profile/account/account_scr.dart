@@ -43,7 +43,7 @@ class Account extends GetWidget<AccountViewController> {
                 width: size.width * .8,
                 hintText: 'e_mail',
                 validator: (value) {
-                  return controller.validateServer.validator(value, 'email');
+                  return controller.validateServer.validate(value, 'email');
                 },
               ),
               SizedBox(
@@ -55,7 +55,7 @@ class Account extends GetWidget<AccountViewController> {
                   width: size.width * .8,
                   hintText: 'Numéro de tel',
                   validator: (value) {
-                    return controller.validateServer.validator(value, 'phone');
+                    return controller.validateServer.validate(value, 'phone');
                   }),
               SizedBox(
                 height: 10,

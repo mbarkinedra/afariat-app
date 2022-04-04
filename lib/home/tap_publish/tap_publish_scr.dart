@@ -108,7 +108,9 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                             items: logic.categoryGroupList
                                                 .where((element) =>
                                                     element.name != "")
-                                                .map<DropdownMenuItem<CategoryGroupedJson>>(
+                                                .map<
+                                                        DropdownMenuItem<
+                                                            CategoryGroupedJson>>(
                                                     (CategoryGroupedJson
                                                         value) {
                                               return DropdownMenuItem<
@@ -472,9 +474,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                     items: logic.towns
                                                         .where((element) =>
                                                             element.name != "")
-                                                        .map<
-                                                                DropdownMenuItem<
-                                                                    RefJson>>(
+                                                        .map<DropdownMenuItem<RefJson>>(
                                                             (RefJson value) {
                                                       return DropdownMenuItem<
                                                           RefJson>(
@@ -615,8 +615,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
   void clearValidateOption() {
     controller.validateTown.value = "";
     controller.validateCity.value = "";
-  //  controller.validateCategory.value = "";
-   // controller.validateSousCatgory.value = "";
+    //  controller.validateCategory.value = "";
+    // controller.validateSousCatgory.value = "";
     controller.validatePiece.value = "";
     controller.validateMarque.value = "";
     controller.validateModele.value = "";
@@ -627,33 +627,34 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
 
   void validateGetView(context) {
     if (controller.category == null) {
-      controller.validateCategory.value = " Catégorie est obligatoire";
+      controller.validateCategory.value = " La catégorie est obligatoire";
     } else {
       controller.validateCategory.value = "";
     }
     if (controller.subCategories == null) {
-      controller.validateSousCatgory.value = "SousCatégorie est obligatoire";
+      controller.validateSousCatgory.value =
+          "La sous-catégorie est obligatoire";
     } else {
-     controller.validateCategory.value = "";
+      controller.validateCategory.value = "";
     }
     if (controller.town == null) {
-      controller.validateTown.value = " commune est obligatoire";
+      controller.validateTown.value = " La commune est obligatoire";
     } else {
       controller.validateTown.value = "";
     }
     if (controller.citie == null) {
-      controller.validateCity.value = " ville est obligatoire";
+      controller.validateCity.value = " La ville est obligatoire";
     } else {
       controller.validateCity.value = "";
     }
 
     if (controller.nombrePiece == null) {
-      controller.validatePiece.value = " Nombre des pieces sont obligatoires ";
+      controller.validatePiece.value = " Nombre de pièces est obligatoire";
     } else {
       controller.validatePiece.value = "";
     }
     if (controller.vehiculebrands == null) {
-      controller.validateMarque.value = " la marque est obligatoire";
+      controller.validateMarque.value = " La marque est obligatoire";
     } else {
       controller.validateMarque.value = "";
     }
@@ -674,7 +675,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
     }
 
     if (controller.kilometrage == null) {
-      controller.validateKm.value = "Kilometrage est obligatoire";
+      controller.validateKm.value = "Le kilometrage est obligatoire";
     } else {
       controller.validateKm.value = "";
     }

@@ -1,5 +1,5 @@
-import 'package:afariat/config/AccountInfoStorage.dart';
-import 'package:afariat/config/storage.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
+import 'package:afariat/storage/storage.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/api/delete_ads.dart';
 import 'package:afariat/networking/api/my_ads_api.dart';

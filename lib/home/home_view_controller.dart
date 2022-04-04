@@ -1,4 +1,4 @@
-import 'package:afariat/config/AccountInfoStorage.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_chat/tap_chat_scr.dart';
@@ -117,11 +117,11 @@ class HomeViwController extends GetxController {
     if (value != 2 || newPublish >= 2) {
       newPublish = 1;
       Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
-      Get.find<LocController>().getCitylist();
+      Get.find<LocController>().getCityListSelected();
       tapPublishViewController.clearAllData();
     } else if (!tapPublishViewController.modifAds.value) {
       newPublish = 1;
-      Get.find<LocController>().getCitylist();
+      Get.find<LocController>().getCityListSelected();
       Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
       tapPublishViewController.clearAllData();
     } else {

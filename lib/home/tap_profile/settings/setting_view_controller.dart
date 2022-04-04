@@ -1,8 +1,8 @@
-import 'package:afariat/config/AccountInfoStorage.dart';
-import 'package:afariat/config/filter.dart';
-import 'package:afariat/config/storage.dart';
-import 'package:afariat/config/wsse.dart';
-import 'package:afariat/model/validate_server.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
+import 'package:afariat/model/filter.dart';
+import 'package:afariat/storage/storage.dart';
+import 'package:afariat/networking/security/wsse.dart';
+import 'package:afariat/validator/validate_server.dart';
 import 'package:afariat/networking/api/change_password_api.dart';
 import 'package:afariat/networking/api/get_salt_api.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class SettingViewController extends GetxController {
   bool isVisiblePassword2 = true;
   bool tham = false;
   ChangePasswordApi changePasswordApi = ChangePasswordApi();
-  ValidateServer validateServer = ValidateServer();
+  ServerValidator validateServer = ServerValidator();
   final storge = Get.find<SecureStorage>();
   GetSaltApi _getSalt = GetSaltApi();
   AccountInfoStorage accountInfoStorage = AccountInfoStorage();
@@ -42,8 +42,8 @@ class SettingViewController extends GetxController {
     };
 
     changePasswordApi.putData(dataToPost: Filter.data).then((value) {
-      validateServer.validatorServer(
-        validate: () {
+      validateServer.validateServer(
+        success: () {
           _getSalt.post({"login": "${accountInfoStorage.readEmail()}"}).then(
               (value) {
             String hashedPassword =

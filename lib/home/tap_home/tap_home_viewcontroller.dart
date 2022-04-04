@@ -1,4 +1,5 @@
-import 'package:afariat/config/filter.dart';
+import 'package:afariat/controllers/filter_controller.dart';
+import 'package:afariat/model/filter.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
@@ -138,7 +139,9 @@ scrollUp(){
     //reset the URL of advertApi
     _advertApi.url = null;
     if (searchWord.text.isNotEmpty) {
-      Filter.data['search'] = searchWord.text.toString();
+      Get.find<FilterController>()
+          .setDataFilter(key: "search", val: searchWord.text.toString() );
+     // Filter.data['search'] = searchWord.text.toString();
     }
     _advertApi.getList().then((value) {
       print("hhhhhhhhhhhhhhhhhhhhhhhh ${value.toString()}");
@@ -155,7 +158,7 @@ scrollUp(){
         );
       Get.find<LocController>().clearDataCityAndTown();
       Get.find<CategoryAndSubcategory>().clearDataCategroyAndSubCategory();
-      Get.find<TapHomeViewController>().search.clear();
+      Get.find<FilterController>().searchData.clear();
       update();
     });
   }
@@ -185,13 +188,17 @@ scrollUp(){
 
   updateSlideValue(value) {
     values = value;
-    Filter.data["minPrice="] = prices[values.start.toInt() - 1].id;
-    Filter.data["maxPrice="] = prices[values.end.toInt() - 1].id;
 
-    Get.find<TapHomeViewController>()
-        .setSearch("minPrice", values.start.toInt().toString());
-    Get.find<TapHomeViewController>()
-        .setSearch("maxPrice", values.end.toInt().toString());
+    // Filter.data["minPrice="] = prices[values.start.toInt() - 1].id;
+    // Filter.data["maxPrice="] = prices[values.end.toInt() - 1].id;
+    Get.find<FilterController>()
+        .setDataFilter(key: "minPrice",val: values.start.toInt().toString() );
+    Get.find<FilterController>()
+        .setDataFilter(key: "maxPrice",val: values.end.toInt().toString() );
+    // Get.find<TapHomeViewController>()
+    //     .setSearch("minPrice", values.start.toInt().toString());
+    // Get.find<TapHomeViewController>()
+    //     .setSearch("maxPrice", values.end.toInt().toString());
     update();
   }
 

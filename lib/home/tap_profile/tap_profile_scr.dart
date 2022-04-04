@@ -1,4 +1,4 @@
-import 'package:afariat/config/AccountInfoStorage.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_profile/notification/notification_scr.dart';
 import 'package:afariat/mywidget/profile_menu.dart';

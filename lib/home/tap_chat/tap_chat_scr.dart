@@ -1,4 +1,4 @@
-import 'package:afariat/config/AccountInfoStorage.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/mywidget/chat_user.dart';

@@ -11,13 +11,14 @@ class SignInScr extends GetWidget<SignInViewController> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
-
+    GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+    controller.signInFormKey = globalKey;
     return SafeArea(
         child: Scaffold(
             body: Padding(
       padding: const EdgeInsets.all(16.0),
       child: Form(
-        // key: controller.signInFormKey,
+        key: controller.signInFormKey,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -39,9 +40,7 @@ class SignInScr extends GetWidget<SignInViewController> {
                   hint: "Votre E-mail",
                   icon: Icons.email,
                   textEditingController: controller.email,
-                  validator: (v) {
-                    return controller.validateEmail(v);
-                  }),
+                  validator: controller.validator.validateEmail),
               SizedBox(
                 height: _size.height * .05,
               ),
@@ -53,10 +52,7 @@ class SignInScr extends GetWidget<SignInViewController> {
                   //Ajouter
                   obscureText: logic.isVisiblePassword,
                   textEditingController: controller.password,
-                  validator: (value) {
-                    return controller.validateServer
-                        .validator(value, 'password');
-                  },
+                  validator: controller.validator.validatePassword,
                   suffixIcon: IconButton(
                     onPressed: controller.showHidePassword,
                     icon: Icon(logic.isVisiblePassword
@@ -84,7 +80,7 @@ class SignInScr extends GetWidget<SignInViewController> {
                 height: _size.height * .05,
               ),
               GetBuilder<SignInViewController>(builder: (logic) {
-                return logic.buttonConnceter
+                return logic.buttonLogin
                     ? Center(child: CircularProgressIndicator())
                     : CustomButton1(
                         height: 50,
@@ -97,17 +93,20 @@ class SignInScr extends GetWidget<SignInViewController> {
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                         function: () {
-                          if( GetUtils.isEmail(controller.email.text)){
-                            if(controller.password.text.length>5){
-                              controller.login();
-                            }else{
-                              Get.snackbar("Oups !", "Veuillez saisir votre mot de passe");
-                            }
-
-                          }else{
-                            Get.snackbar("Oups !", "Veuillez saisie votre email");
+                          controller.validator.validationType = false;
+                          if (!controller.signInFormKey.currentState
+                              .validate()) {
+                            print('Client validation');
+                            //if client validations fails
+                            //show a snackbar to fix the client errors.
+                            Get.snackbar("Oups !",
+                                "Merci de corriger les erreurs ci-dessous.");
+                          } else {
+                            print('Server validation');
+                            controller.validator.validationType = true;
+                            //send data to server and get errors
+                            controller.login();
                           }
-
                         },
                       );
               }),
@@ -130,8 +129,7 @@ class SignInScr extends GetWidget<SignInViewController> {
                         TextSpan(
                             text: 'Créer un compte',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color:framColor))
+                                fontWeight: FontWeight.bold, color: framColor))
                       ],
                     ),
                   ),

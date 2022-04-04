@@ -1,17 +1,17 @@
 import 'dart:io';
 import 'dart:developer' as devlog;
 import 'dart:convert';
-import 'package:afariat/config/AccountInfoStorage.dart';
-import 'package:afariat/config/filter.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
+import 'package:afariat/model/filter.dart';
 
-import 'package:afariat/config/storage.dart';
+import 'package:afariat/storage/storage.dart';
 
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
-import 'package:afariat/model/validate_server.dart';
-import 'package:afariat/model/validator.dart';
+import 'package:afariat/validator/validate_server.dart';
+import 'package:afariat/validator/validator_Adverts.dart';
 import 'package:afariat/mywidget/custom_dialogue_felecitation.dart';
 import 'package:afariat/networking/api/modif_ads_api.dart';
 import 'package:afariat/networking/api/publish_api.dart';
@@ -47,7 +47,7 @@ class TapPublishViewController extends GetxController {
   final storge = Get.find<SecureStorage>();
   final accountInfoStorage = Get.find<AccountInfoStorage>();
   final picker = ImagePicker();
-  Validator validator = Validator();
+  ValidatorAdverts validator = ValidatorAdverts();
   bool dataAdverts = false;
   bool dataEditFromServer = false;
   ModifAdsJson modifAdsJson = ModifAdsJson();
@@ -94,7 +94,7 @@ class TapPublishViewController extends GetxController {
   MileagesApi _mileagesApi = MileagesApi();
   YearsModelsApi _yearsModelsApi = YearsModelsApi();
   EnergieApi _energieApi = EnergieApi();
-  ValidateServer _validateServer = ValidateServer();
+  ServerValidator _validateServer = ServerValidator();
   RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
 
   photobase64Encode(im) {
@@ -438,30 +438,30 @@ class TapPublishViewController extends GetxController {
                       i++;
                     }
                     Navigator.pop(context);
+                    Get.find<TapMyadsViewController>().getAllAds();
+                    Get.find<TapPublishViewController>().clearAllData();
+                    Get.find<HomeViwController>().changeItemFilter(1);
                   },
                   description: "Votre annonce est en cours de validation !",
                   buttonText: "Ok",
                   phone: false,
                 );
               });
-          Get.find<TapMyadsViewController>().getAllAds();
-          Get.find<TapPublishViewController>().clearAllData();
-          Get.find<HomeViwController>().changeItemFilter(1);
-          update();
         }
+        update();
       });
     } else {
       devlog.log(jsonEncode(myAds));
 
       await publishApi.securePost(dataToPost: myAds).then((value) {
         buttonPublier.value = false;
-        _validateServer.validatorServer(
-            validate: () async {
+        _validateServer.validateServer(
+            success: () async {
               Filter.data.clear();
               clearAllData();
               Get.find<CategoryAndSubcategory>().subcategories1 = null;
               Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
-              Get.find<LocController>().getCitylist();
+              Get.find<LocController>().getCityListSelected();
               await showDialog<bool>(
                   context: context,
                   builder: (context) {
@@ -547,7 +547,7 @@ class TapPublishViewController extends GetxController {
           myAds["city"] = Get.find<LocController>().cities[i].id;
           myAdsView["city"] = Get.find<LocController>().cities[i].name;
           Get.find<LocController>()
-              .updateTowns(Get.find<LocController>().cities[i].id)
+              .getTowListSelected(Get.find<LocController>().cities[i].id)
               .then((value) {
             for (int i = 0; i < Get.find<LocController>().towns.length; i++) {
               if (Get.find<LocController>().towns[i].id ==

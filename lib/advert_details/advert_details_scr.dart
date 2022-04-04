@@ -1,4 +1,4 @@
-import 'package:afariat/config/AccountInfoStorage.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
 
