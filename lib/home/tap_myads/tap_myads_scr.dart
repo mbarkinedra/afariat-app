@@ -81,7 +81,8 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                                     padding:
                                         const EdgeInsets.only(bottom: 16.0),
                                     child: RefreshIndicator(onRefresh:controller.onRefreshAds ,
-                                      child: ListView.builder(controller: controller.scrollController,
+                                      child:
+                                      ListView.builder(controller: controller.scrollController,
                                           itemCount: logic.adverts.length,
                                           itemBuilder: (context, position) {
                                             return AdsItem(

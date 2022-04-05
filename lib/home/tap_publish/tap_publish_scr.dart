@@ -108,8 +108,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                       .validateCategory(
                                                           CategoryGroupedJson);
                                                 },
-                                                value:
-                                                    logic.categoryGroupedJson,
+                                                value:logic.categoryGroupedJson,
                                                 iconSize: 24,
                                                 elevation: 16,
                                                 decoration:

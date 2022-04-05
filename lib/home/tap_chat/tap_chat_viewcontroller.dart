@@ -2,6 +2,7 @@ import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/api/conversations_api.dart';
 import 'package:afariat/networking/api/delete_conversation_api.dart';
 import 'package:afariat/networking/json/conversation_json.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'dart:developer';
@@ -16,7 +17,10 @@ class TapChatViewController extends GetxController {
       PagingController(firstPageKey: 0);
   int page = 1;
   DeleteConversationApi _deleteConversationApi = DeleteConversationApi();
-
+  ScrollController scrollController = ScrollController();
+  Future<void> onRefreshAds() async {
+    getAllConversations();
+  }
   Future<void> _fetchPage(int pageKey) async {
     try {
       _getConvertionsApi.page = page;

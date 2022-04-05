@@ -114,12 +114,13 @@ abstract class ApiManager {
             },
             followRedirects: false,
             validateStatus: (status) {
-              return status < 500;
+              return status < 405;
             }),
       )
           .then((value) {
         return value;
-      }).onError((error, stackTrace) {
+      }).catchError((error, stackTrace) {
+        processServerError(error);
         if (error.type == DioErrorType.connectTimeout) {
           a.Get.snackbar("erreur", "Connection  Timeout");
         }
@@ -149,13 +150,13 @@ abstract class ApiManager {
           },
           followRedirects: false,
           validateStatus: (status) {
-            return status < 500;
+            return status < 405;
           }),
     )
         .then((value) {
       return value;
-    }).onError((error, stackTrace) {
-      return error;
+    }).catchError((error, stackTrace) {
+      processServerError(error);
     });
   }
 
@@ -178,18 +179,17 @@ abstract class ApiManager {
             },
             followRedirects: false,
             validateStatus: (status) {
-              return status < 500;
+              return status < 405;
             }),
       )
           .then((value) {
         return value;
-      }).onError((error, stackTrace) {
+      }).catchError((error, stackTrace) {
         if (error.type == DioErrorType.connectTimeout) {
           a.Get.snackbar("erreur", "Délai de connection dépassé");
           // throw Exception("Connection  Timeout Exception");
         }
-        print(error);
-        return error;
+        processServerError(error);
       });
     } else {
       a.Get.snackbar("erreur", "Délai de connection dépassé");
@@ -212,13 +212,13 @@ abstract class ApiManager {
           },
           followRedirects: false,
           validateStatus: (status) {
-            return status < 500;
+            return status < 405;
           }),
     )
         .then((value) {
       return value;
-    }).onError((error, stackTrace) {
-      return error;
+    }).catchError((error, stackTrace) {
+      processServerError(error);
     });
   }
 
@@ -235,8 +235,8 @@ abstract class ApiManager {
     });
     return dioSingleton.dio.delete(apiUrl(), options: options).then((value) {
       return value;
-    }).onError((error, stackTrace) {
-      return error;
+    }).catchError((error, stackTrace) {
+      processServerError(error);
     });
   }
 
@@ -253,10 +253,10 @@ abstract class ApiManager {
     });
     return dioSingleton.dio.delete(apiUrl(), options: options).then((value) {
       return value;
-    }).onError((error, stackTrace) {
+    }).catchError((error, stackTrace) {
       print(error);
 
-      return error;
+      processServerError(error);
     });
   }
 }

@@ -386,6 +386,7 @@ class TapPublishViewController extends GetxController {
 
   postData(con) async {
     buttonPublier.value = true;
+
     /// get all image selected and convert base64
     for (var i in images) {
       photoBase64Encode(i);
@@ -397,51 +398,16 @@ class TapPublishViewController extends GetxController {
       _modifAdsApi.id = modifAdsJson.id;
       await _modifAdsApi.putData(dataToPost: myAds).then((value) async {
         buttonPublier.value = false;
-        if (value.statusCode == 204) {
-          Get.find<TapMyadsViewController>().getAllAds();
-          Filter.data.clear();
-          clearAllData();
-          Get.find<CategoryAndSubcategory>().clearDataCategroyAndSubCategory();
-          Get.find<LocController>().clearDataCityAndTown();
-          Get.find<HomeViwController>().changeItemFilter(1);
-          await showDialog<bool>(
-              context: context,
-              builder: (context) {
-                return CustomDialogueFelecitation(
-                  text2: " ",
-                  title: "Félicitation",
-                  function: () {
-                    int i = 0;
-                    while (i < 2) {
-                      i++;
-                    }
-                    Navigator.pop(context);
-                    Get.find<TapMyadsViewController>().getAllAds();
-                    Get.find<TapPublishViewController>().clearAllData();
-                    Get.find<HomeViwController>().changeItemFilter(1);
-                  },
-                  description: "Votre annonce est en cours de validation !",
-                  buttonText: "Ok",
-                  phone: false,
-                );
-              });
-        }
-        update();
-      });
-    } else {
-      devlog.log(jsonEncode(myAds));
-
-      await publishApi.securePost(dataToPost: myAds).then((value) {
-        buttonPublier.value = false;
         validator.validatorServer.validateServer(
             value: value,
-            success: ()
-            async {
+            success: () async {
+              Get.find<TapMyadsViewController>().getAllAds();
               Filter.data.clear();
               clearAllData();
-              Get.find<CategoryAndSubcategory>().subcategories1 = null;
-              Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
-              Get.find<LocController>().getCityListSelected();
+              Get.find<CategoryAndSubcategory>()
+                  .clearDataCategroyAndSubCategory();
+              Get.find<LocController>().clearDataCityAndTown();
+              Get.find<HomeViwController>().changeItemFilter(1);
               await showDialog<bool>(
                   context: context,
                   builder: (context) {
@@ -451,12 +417,11 @@ class TapPublishViewController extends GetxController {
                       function: () {
                         int i = 0;
                         while (i < 2) {
-                          Navigator.pop(con);
                           i++;
                         }
                         Navigator.pop(context);
-                        Get.find<TapPublishViewController>().clearAllData();
                         Get.find<TapMyadsViewController>().getAllAds();
+                        Get.find<TapPublishViewController>().clearAllData();
                         Get.find<HomeViwController>().changeItemFilter(1);
                       },
                       description: "Votre annonce est en cours de validation !",
@@ -464,9 +429,46 @@ class TapPublishViewController extends GetxController {
                       phone: false,
                     );
                   });
-            },
+            });
+        update();
+      });
+    } else {
+      devlog.log(jsonEncode(myAds));
 
-       );
+      await publishApi.securePost(dataToPost: myAds).then((value) {
+        buttonPublier.value = false;
+        validator.validatorServer.validateServer(
+          value: value,
+          success: () async {
+            Filter.data.clear();
+            clearAllData();
+            Get.find<CategoryAndSubcategory>().subcategories1 = null;
+            Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
+            Get.find<LocController>().getCityListSelected();
+            await showDialog<bool>(
+                context: context,
+                builder: (context) {
+                  return CustomDialogueFelecitation(
+                    text2: " ",
+                    title: "Félicitation",
+                    function: () {
+                      int i = 0;
+                      while (i < 2) {
+                        Navigator.pop(con);
+                        i++;
+                      }
+                      Navigator.pop(context);
+                      Get.find<TapPublishViewController>().clearAllData();
+                      Get.find<TapMyadsViewController>().getAllAds();
+                      Get.find<HomeViwController>().changeItemFilter(1);
+                    },
+                    description: "Votre annonce est en cours de validation !",
+                    buttonText: "Ok",
+                    phone: false,
+                  );
+                });
+          },
+        );
       });
     }
 

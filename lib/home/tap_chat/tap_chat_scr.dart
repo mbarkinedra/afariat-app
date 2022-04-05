@@ -38,76 +38,145 @@ class TapChatScr extends GetWidget<TapChatViewController> {
                         return logic.getData
                             ? Center(child: const CircularProgressIndicator())
                             : RefreshIndicator(
-                                onRefresh: () => Future.sync(
-                                  () => controller.pagingController.refresh(),
-                                ),
-                                child: PagedListView<int, dynamic>(
-                                  pagingController: controller.pagingController,
-                                  builderDelegate:
-                                      PagedChildBuilderDelegate<dynamic>(
-                                    itemBuilder: (context, item, index) {
-                                      return controller.conversations.length ==
-                                              0
-                                          ? Container(
-                                              child: Center(
-                                              child:
-                                                  Text("Pas des conversation."),
-                                            ))
-                                          : Dismissible(
-                                              background: Container(
-                                                color: Colors.red,
-                                                child: Icon(
-                                                  Icons.delete,
-                                                  size: 35,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              key: Key(item.id
-                                                  .toString()), // key: UniqueKey(),
-                                              onDismissed: (direction) {
-                                                controller.deleteConversation(
-                                                    item.id, item);
-                                              },
-                                              child: GestureDetector(
-                                                  onTap: () {
-                                                    Get.find<
-                                                            ChatUserViewController>()
-                                                        .name = item
-                                                                .to.username ==
-                                                            Get.find<
-                                                                    AccountInfoStorage>()
-                                                                .readEmail()
-                                                        ? item.from.username
-                                                        : item.to.username;
-                                                    Get.find<ChatUserViewController>()
-                                                            .id =
-                                                        item.id.toString();
-                                                    Get.find<
-                                                            ChatUserViewController>()
-                                                        .messages
-                                                        .clear();
-                                                    Get.find<
-                                                            ChatUserViewController>()
-                                                        .getMessage();
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                ChatUserScr()));
-                                                  },
-                                                  child: ChatUser(
-                                                    conversation: item,
-                                                    email: Get.find<
-                                                            AccountInfoStorage>()
-                                                        .readEmail(),
-                                                    hasConversaton:
-                                                        item.totalUnreadMessagesCount >
-                                                            0,
-                                                  )),
-                                            );
-                                    },
-                                  ),
-                                ),
+                                onRefresh: controller.onRefreshAds,
+                                child: ListView.builder(
+                                    controller: controller.scrollController,
+                                    itemCount: logic.conversations.length,
+                                    itemBuilder: (context, position) {
+                                      return Dismissible(
+                                        background: Container(
+                                          color: Colors.red,
+                                          child: Icon(
+                                            Icons.delete,
+                                            size: 35,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        key: Key(logic
+                                            .conversations[position].id
+                                            .toString()), // key: UniqueKey(),
+                                        onDismissed: (direction) {
+                                          controller.deleteConversation(
+                                              logic.conversations[position].id,
+                                              logic.conversations[position]);
+                                        },
+                                        child: GestureDetector(
+                                            onTap: () {
+                                              Get.find<ChatUserViewController>()
+                                                  .name = logic
+                                                          .conversations[
+                                                              position]
+                                                          .to
+                                                          .username ==
+                                                      Get.find<
+                                                              AccountInfoStorage>()
+                                                          .readEmail()
+                                                  ? logic
+                                                      .conversations[position]
+                                                      .from
+                                                      .username
+                                                  : logic
+                                                      .conversations[position]
+                                                      .to
+                                                      .username;
+                                              Get.find<ChatUserViewController>()
+                                                      .id =
+                                                  logic.conversations[position]
+                                                      .id
+                                                      .toString();
+                                              Get.find<ChatUserViewController>()
+                                                  .messages
+                                                  .clear();
+                                              Get.find<ChatUserViewController>()
+                                                  .getMessage();
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ChatUserScr()));
+                                            },
+                                            child: ChatUser(
+                                              conversation:
+                                                  logic.conversations[position],
+                                              email:
+                                                  Get.find<AccountInfoStorage>()
+                                                      .readEmail(),
+                                              hasConversaton: logic
+                                                      .conversations[position]
+                                                      .totalUnreadMessagesCount >
+                                                  0,
+                                            )),
+                                      );
+                                    }),
+
+                                // PagedListView<int, dynamic>(
+                                //   pagingController: controller.pagingController,
+                                //   builderDelegate:
+                                //       PagedChildBuilderDelegate<dynamic>(
+                                //     itemBuilder: (context, item, index) {
+                                //       return controller.conversations.length ==
+                                //               0
+                                //           ? Container(
+                                //               child: Center(
+                                //               child:
+                                //                   Text("Pas des conversation."),
+                                //             ))
+                                //           : Dismissible(
+                                //               background: Container(
+                                //                 color: Colors.red,
+                                //                 child: Icon(
+                                //                   Icons.delete,
+                                //                   size: 35,
+                                //                   color: Colors.white,
+                                //                 ),
+                                //               ),
+                                //               key: Key(item.id
+                                //                   .toString()), // key: UniqueKey(),
+                                //               onDismissed: (direction) {
+                                //                 controller.deleteConversation(
+                                //                     item.id, item);
+                                //               },
+                                //               child: GestureDetector(
+                                //                   onTap: () {
+                                //                     Get.find<
+                                //                             ChatUserViewController>()
+                                //                         .name = item
+                                //                                 .to.username ==
+                                //                             Get.find<
+                                //                                     AccountInfoStorage>()
+                                //                                 .readEmail()
+                                //                         ? item.from.username
+                                //                         : item.to.username;
+                                //                     Get.find<ChatUserViewController>()
+                                //                             .id =
+                                //                         item.id.toString();
+                                //                     Get.find<
+                                //                             ChatUserViewController>()
+                                //                         .messages
+                                //                         .clear();
+                                //                     Get.find<
+                                //                             ChatUserViewController>()
+                                //                         .getMessage();
+                                //                     Navigator.push(
+                                //                         context,
+                                //                         MaterialPageRoute(
+                                //                             builder: (context) =>
+                                //                                 ChatUserScr()));
+                                //                   },
+                                //                   child: ChatUser(
+                                //                     conversation: item,
+                                //                     email: Get.find<
+                                //                             AccountInfoStorage>()
+                                //                         .readEmail(),
+                                //                     hasConversaton:
+                                //                         item.totalUnreadMessagesCount >
+                                //                             0,
+                                //                   )),
+                                //             );
+                                //     },
+                                //   ),
+                                // ),
+                                //
                               );
                       }),
                     )

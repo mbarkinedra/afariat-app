@@ -18,7 +18,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.context=context;
+
     Size size = MediaQuery.of(context).size;
 
     List<Widget> list = controller.editAdsImages
@@ -245,10 +245,10 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                         controller.lights = false;
                         controller.motosBrand = null;
                         controller.vehiculebrands = null;
-                        int count = 0;
-                        Navigator.popUntil(context, (route) {
-                          return count++ == 2;
-                        });
+                        // int count = 0;
+                        // Navigator.popUntil(context, (route) {
+                        //   return count++ == 2;
+                        // });
                       },
                     ),
                     Obx(() {
@@ -261,6 +261,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                               labColor: Colors.white,
                               btColor: buttonColor,
                               function: () {
+                                controller.context=context;
                                 Get.find<TapPublishViewController>()
                                     .modifAds
                                     .value = false;

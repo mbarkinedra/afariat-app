@@ -19,6 +19,7 @@ class AdvertApi extends ApiManager {
       return defaultUrl;
   }
 
+
   @override
   fromJson(data) {
     return AdvertListJson.fromJson(data);

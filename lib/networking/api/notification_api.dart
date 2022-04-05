@@ -4,9 +4,11 @@ import 'package:afariat/networking/json/notification_json.dart';
 
 class NotificationApi extends ApiManager {
   @override
-
+int page=0;
   String apiUrl() {
-    return SettingsApp.notificationUrl;
+    String v="?sort=a.modifiedAt&direction=desc&page=$page&limit=20";
+
+    return SettingsApp.notificationUrl+v;
   }
 
   @override
