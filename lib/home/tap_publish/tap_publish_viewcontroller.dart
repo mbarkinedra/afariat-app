@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:developer' as devlog;
 import 'dart:convert';
+import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/model/filter.dart';
 
@@ -31,16 +32,6 @@ class TapPublishViewController extends GetxController {
 
   RxBool modifAds = false.obs;
   bool getDataFromServer = false;
-  RxString validateTown = "".obs;
-  RxString validateCity = "".obs;
-  RxString validateCategory = "".obs;
-  RxString validateSousCatgory = "".obs;
-  RxString validateMarque = "".obs;
-  RxString validatePiece = "".obs;
-  RxString validateModele = "".obs;
-  RxString validateEnergie = "".obs;
-  RxString validateYears = "".obs;
-  RxString validateKm = "".obs;
   bool lights = true;
   bool isButtonSheet = false;
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
@@ -52,8 +43,7 @@ class TapPublishViewController extends GetxController {
   bool dataEditFromServer = false;
   ModifAdsJson modifAdsJson = ModifAdsJson();
   CategoryGroupedJson category;
-  SubcategoryJson subCategories;
-
+  SubCategoryJson subCategories;
   BuildContext context;
   RefJson energie;
   Map<String, dynamic> myAds = {};
@@ -97,12 +87,14 @@ class TapPublishViewController extends GetxController {
   ServerValidator _validateServer = ServerValidator();
   RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
 
-  photobase64Encode(im) {
+  /// Convert image to base64
+  photoBase64Encode(im) {
     final bytes = File(im.path).readAsBytesSync();
     String img64 = base64Encode(bytes);
     photos.add(img64);
   }
 
+  /// Open Camera from Emelator
   void openCamera() async {
     var imgCamera = await picker.pickImage(source: ImageSource.camera);
     if (imgCamera != null) {
@@ -111,6 +103,8 @@ class TapPublishViewController extends GetxController {
     }
     update();
   }
+
+  /// Open Camera from Emelator
 
   void openGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -121,26 +115,25 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
+  /// Delete Image from local
   deleteImage(File file) {
     images.remove(file);
     update();
   }
 
+  /// Delete image (lors de modifier l annonce )
   delEditImage(String file) {
     editAdsImages.remove(file);
     update();
   }
 
+  ///Clear category in publishController
   updateCategoryToNull() {
     category = null;
     update();
   }
 
+  ///Clear SubCategory in publishController
   updateSubcategoryToNull() {
     subCategories = null;
     update();
@@ -150,7 +143,7 @@ class TapPublishViewController extends GetxController {
     category = categoryGrouped;
   }
 
-  updateSubCategoryJson(SubcategoryJson subCategoryJson) {
+  updateSubCategoryJson(SubCategoryJson subCategoryJson) {
     subCategories = subCategoryJson;
   }
 
@@ -191,6 +184,8 @@ class TapPublishViewController extends GetxController {
       update();
     });
   }
+
+  /// Update dropDown Marque
 
   Future getVehicleBrand() async {
     await _vehicleBrandsApi.getList().then((value) {
@@ -266,6 +261,7 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
+  /// Update value of dropDown Marque
   updateMarque(RefJson newValue) {
     _vehicleModelApi.vehicleModelId = newValue.id;
     myAds["vehicleBrand"] = newValue.id;
@@ -310,6 +306,7 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
+  ///
   updateEnergie(newValue) {
     energie = newValue;
     myAds["energy"] = newValue.id;
@@ -351,19 +348,6 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
-  clearValidateOption() {
-    validateTown.value = "";
-    validateSousCatgory.value = "";
-    validateCategory.value = "";
-    validateCity.value = "";
-    validateMarque.value = "";
-    validateModele.value = "";
-    validateEnergie.value = "";
-    validateYears.value = "";
-    validateKm.value = "";
-    validatePiece.value = "";
-  }
-
   clearAllData() {
     if (Get.find<NetWorkController>().connectionStatus.value) {
       RefJson refJson = RefJson(id: 0, name: "");
@@ -378,13 +362,10 @@ class TapPublishViewController extends GetxController {
       photos.clear();
       editAdsImages.clear();
       dataAdverts = false;
-      clearValidateOption();
-
       category = null;
       subCategories = null;
       town = null;
       citie = null;
-
       modifAds.value = false;
       yearsModele = null;
       vehiculebrands = null;
@@ -393,22 +374,21 @@ class TapPublishViewController extends GetxController {
       energie = null;
       kilometrage = null;
       nombrePiece = null;
-
       myAds = {};
       myAdsView = {};
       title.text = "";
       description.text = "";
       prix.text = "";
       surface.text = "";
-
       update();
     }
   }
 
   postData(con) async {
     buttonPublier.value = true;
+    /// get all image selected and convert base64
     for (var i in images) {
-      photobase64Encode(i);
+      photoBase64Encode(i);
     }
     myAds["photos"] = photos;
     PublishApi publishApi = PublishApi();
@@ -417,7 +397,6 @@ class TapPublishViewController extends GetxController {
       _modifAdsApi.id = modifAdsJson.id;
       await _modifAdsApi.putData(dataToPost: myAds).then((value) async {
         buttonPublier.value = false;
-
         if (value.statusCode == 204) {
           Get.find<TapMyadsViewController>().getAllAds();
           Filter.data.clear();
@@ -434,7 +413,6 @@ class TapPublishViewController extends GetxController {
                   function: () {
                     int i = 0;
                     while (i < 2) {
-                      //     Navigator.pop(con);
                       i++;
                     }
                     Navigator.pop(context);
@@ -455,8 +433,10 @@ class TapPublishViewController extends GetxController {
 
       await publishApi.securePost(dataToPost: myAds).then((value) {
         buttonPublier.value = false;
-        _validateServer.validateServer(
-            success: () async {
+        validator.validatorServer.validateServer(
+            value: value,
+            success: ()
+            async {
               Filter.data.clear();
               clearAllData();
               Get.find<CategoryAndSubcategory>().subcategories1 = null;
@@ -485,7 +465,8 @@ class TapPublishViewController extends GetxController {
                     );
                   });
             },
-            value: value);
+
+       );
       });
     }
 
@@ -620,5 +601,23 @@ class TapPublishViewController extends GetxController {
 
   Future<bool> function() async {
     return true;
+  }
+
+  void validateDefaultOptions() {
+    if (globalKey.currentState.validate()) {
+      myAdsView["prix"] = prix.text + " " + SettingsApp.moneySymbol;
+      myAds["price"] = prix.text;
+      myAdsView["title"] = title.text;
+      myAds["title"] = title.text;
+      myAdsView["description"] = description.text;
+      myAds["description"] = description.text;
+      myAds["area"] = surface.text;
+      myAdsView["Superficie"] = surface.text + " " + "m²";
+
+      myAds["showPhoneNumber"] = lights ? "yes" : "no";
+      myAdsView["showPhoneNumber"] = lights ? "Check" : "no";
+    } else {
+      Get.snackbar("Oups !", "Merci de corriger les erreurs ci-dessous.");
+    }
   }
 }

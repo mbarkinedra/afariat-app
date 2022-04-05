@@ -1,4 +1,3 @@
-import 'package:afariat/model/filter.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:get/get.dart';
@@ -52,8 +51,8 @@ class LocController extends GetxController {
       update();
     } else {
       city = selectedCity;
-      Get.find<FilterController>().setDataFilter(key: "city", val: selectedCity.id);
-      tapPublishViewController.validateCity.value = "";
+      Get.find<FilterController>()
+          .setDataFilter(key: "city", val: selectedCity.id);
       tapPublishViewController.citie = selectedCity;
       town = null;
       tapPublishViewController.myAds["city"] = selectedCity.id;
@@ -72,7 +71,6 @@ class LocController extends GetxController {
     } else {
       Get.find<FilterController>().setDataFilter(key: "town", val: town.id);
       this.town = town;
-      tapPublishViewController.validateTown.value = "";
       tapPublishViewController.town = town;
       tapPublishViewController.myAds["town"] = town.id;
       tapPublishViewController.myAdsView["town"] = town.name;

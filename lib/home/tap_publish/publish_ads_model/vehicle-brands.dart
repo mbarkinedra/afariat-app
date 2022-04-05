@@ -22,26 +22,32 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     Expanded(
                       flex: 3,
                       child: Container(
-                        height: 55,
+                        height: 60,
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            border:
-                                Border.all(color: framColor, width: 2)),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
-                          isExpanded: true,
-                          value: controller.vehiculebrands,
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: controller.updateMarque,
-                          items: logic.vehiculeBrands
-                              .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Text(value.name),
-                            );
-                          }).toList(),
+                            border: Border.all(color: framColor, width: 2)),
+                        child: Center(
+                          child: DropdownButtonFormField<RefJson>(
+                            isExpanded: true,
+                            value: controller.vehiculebrands,
+                            iconSize: 24,
+                            elevation: 16,
+                            decoration:
+                            InputDecoration.collapsed(
+                                hintText: ''),
+                            validator: (RefJson) {
+                              return controller.validator.validateMarque(RefJson);
+                            },
+                            onChanged: controller.updateMarque,
+                            items: logic.vehiculeBrands
+                                .map<DropdownMenuItem<RefJson>>((RefJson value) {
+                              return DropdownMenuItem<RefJson>(
+                                value: value,
+                                child: Text(value.name),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                     )
@@ -49,15 +55,6 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                 );
               }),
             ),
-            Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Obx(() => Text(
-                        controller.validateMarque.value,
-                        style: TextStyle(color: Colors.red),
-                      )),
-                )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
@@ -67,26 +64,32 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     Expanded(
                       flex: 3,
                       child: Container(
-                        height: 55,
+                        height: 60,
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            border:
-                                Border.all(color: framColor, width: 2)),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
-                          isExpanded: true,
-                          value: controller.vehiculeModel,
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: controller.updateModel,
-                          items: controller.vehiculeModels
-                              .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Text(value.name),
-                            );
-                          }).toList(),
+                            border: Border.all(color: framColor, width: 2)),
+                        child: Center(
+                          child: DropdownButtonFormField<RefJson>(
+                            isExpanded: true,
+                            value: controller.vehiculeModel,
+                            validator: (RefJson) {
+                              return controller.validator.validateModele(RefJson);
+                            },
+                            iconSize: 24,
+                            elevation: 16,
+                            decoration:
+                            InputDecoration.collapsed(
+                                hintText: ''),
+                            onChanged: controller.updateModel,
+                            items: controller.vehiculeModels
+                                .map<DropdownMenuItem<RefJson>>((RefJson value) {
+                              return DropdownMenuItem<RefJson>(
+                                value: value,
+                                child: Text(value.name),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                     )
@@ -94,15 +97,6 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                 );
               }),
             ),
-            Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Obx(() => Text(
-                        controller.validateModele.value,
-                        style: TextStyle(color: Colors.red),
-                      )),
-                )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
@@ -112,26 +106,32 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     Expanded(
                       flex: 3,
                       child: Container(
-                        height: 55,
+                        height: 60,
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            border:
-                                Border.all(color: framColor, width: 2)),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
-                          isExpanded: true,
-                          value: logic.energie,
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: logic.updateEnergie,
-                          items: logic.energies
-                              .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Text(value.name),
-                            );
-                          }).toList(),
+                            border: Border.all(color: framColor, width: 2)),
+                        child: Center(
+                          child: DropdownButtonFormField<RefJson>(
+                            isExpanded: true,
+                            value: logic.energie,
+                            validator: (RefJson) {
+                              return controller.validator
+                                  .validateEnergie(RefJson);
+                            },
+                            iconSize: 24,
+                            elevation: 16,
+                            onChanged: logic.updateEnergie,
+                            decoration: InputDecoration.collapsed(hintText: ''),
+                            items: logic.energies
+                                .map<DropdownMenuItem<RefJson>>(
+                                    (RefJson value) {
+                              return DropdownMenuItem<RefJson>(
+                                value: value,
+                                child: Text(value.name),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                     )
@@ -139,45 +139,40 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                 );
               }),
             ),
-            Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Obx(() => Text(
-                        controller.validateEnergie.value,
-                        style: TextStyle(color: Colors.red),
-                      )),
-                )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
-
                 return Row(
                   children: [
                     Expanded(flex: 1, child: Text("km")),
                     Expanded(
                       flex: 3,
                       child: Container(
-                        height: 55,
+                        height: 60,
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            border:
-                                Border.all(color: framColor, width: 2)),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
-                          isExpanded: true,
-                          value: logic.kilometrage,
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: logic.updateKilometrage,
-                          items: logic.mileages
-                              .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Text(value.name),
-                            );
-                          }).toList(),
+                            border: Border.all(color: framColor, width: 2)),
+                        child: Center(
+                          child: DropdownButtonFormField<RefJson>(
+                            isExpanded: true,
+                            value: logic.kilometrage,
+                            validator: (RefJson) {
+                              return controller.validator.validateKm(RefJson);
+                            },
+                            decoration: InputDecoration.collapsed(hintText: ''),
+                            iconSize: 24,
+                            elevation: 16,
+                            onChanged: logic.updateKilometrage,
+                            items: logic.mileages
+                                .map<DropdownMenuItem<RefJson>>(
+                                    (RefJson value) {
+                              return DropdownMenuItem<RefJson>(
+                                value: value,
+                                child: Text(value.name),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                     )
@@ -185,15 +180,6 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                 );
               }),
             ),
-            Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Obx(() => Text(
-                        controller.validateKm.value,
-                        style: TextStyle(color: Colors.red),
-                      )),
-                )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
@@ -207,22 +193,28 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            border:
-                                Border.all(color:framColor, width: 2)),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
-                          isExpanded: true,
-                          value: logic.yearsModele,
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: logic.updateAnnee,
-                          items: logic.yearsModels
-                              .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Text(value.name),
-                            );
-                          }).toList(),
+                            border: Border.all(color: framColor, width: 2)),
+                        child: Center(
+                          child: DropdownButtonFormField<RefJson>(
+                            isExpanded: true,
+                            value: logic.yearsModele,
+                            validator: (RefJson) {
+                              return controller.validator
+                                  .validateYears(RefJson);
+                            },
+                            decoration: InputDecoration.collapsed(hintText: ''),
+                            iconSize: 24,
+                            elevation: 16,
+                            onChanged: logic.updateAnnee,
+                            items: logic.yearsModels
+                                .map<DropdownMenuItem<RefJson>>(
+                                    (RefJson value) {
+                              return DropdownMenuItem<RefJson>(
+                                value: value,
+                                child: Text(value.name),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                     )
@@ -230,15 +222,6 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                 );
               }),
             ),
-            Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Obx(() => Text(
-                        controller.validateYears.value,
-                        style: TextStyle(color: Colors.red),
-                      )),
-                )),
           ],
         ),
       ),

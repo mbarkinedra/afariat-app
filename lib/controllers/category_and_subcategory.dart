@@ -1,4 +1,3 @@
-import 'package:afariat/model/filter.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/networking/api/categories_groupped_api.dart';
@@ -6,7 +5,6 @@ import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:get/get.dart';
-
 import 'filter_controller.dart';
 import 'network_controller.dart';
 
@@ -14,9 +12,9 @@ class CategoryAndSubcategory extends GetxController {
   final CategoriesGrouppedApi _categoriesGrouppedApi = CategoriesGrouppedApi();
   final tapHomeViewController = Get.find<TapHomeViewController>();
   final tapPublishViewController = Get.find<TapPublishViewController>();
-  Map<int, List<SubcategoryJson>> sc = {};
-  List<SubcategoryJson> listSubCategories = [];
-  SubcategoryJson subcategories1;
+  Map<int, List<SubCategoryJson>> sc = {};
+  List<SubCategoryJson> listSubCategories = [];
+  SubCategoryJson subcategories1;
   CategoryGroupedJson categoryGroupedJson;
   List<CategoryGroupedJson> categoryGroupList = [];
   AdvertTypesApi _refApi = AdvertTypesApi();
@@ -34,7 +32,7 @@ class CategoryAndSubcategory extends GetxController {
         categoryGroupList = value.data;
 
         for (var element in categoryGroupList) {
-          element.subcategories.insert(0, SubcategoryJson(id: 0, name: ""));
+          element.subcategories.insert(0, SubCategoryJson(id: 0, name: ""));
 
           sc[element.id] = element.subcategories;
         }
@@ -62,7 +60,6 @@ class CategoryAndSubcategory extends GetxController {
     } else {
       Get.find<FilterController>()
           .setDataFilter(key: "categoryGroup", val: categoryGrouped.id);
-      tapPublishViewController.validateCategory.value = "";
       categoryGroupedJson = categoryGrouped;
       tapPublishViewController.updateCategory(categoryGrouped);
       tapPublishViewController.updateGetView(null);
@@ -73,10 +70,9 @@ class CategoryAndSubcategory extends GetxController {
   }
 
   // Update all data of subcategory from api
-  updateSubCategory(SubcategoryJson subCategorieJson) {
+  updateSubCategory(SubCategoryJson subCategorieJson) {
     subcategories1 = subCategorieJson;
     tapPublishViewController.updateSubCategoryJson(subCategorieJson);
-    tapPublishViewController.clearValidateOption();
     if (subCategorieJson.id == 0) {
       Get.find<FilterController>()
           .setDataFilter(key: "categoryGroup", val: categoryGroupedJson.id);
@@ -85,7 +81,6 @@ class CategoryAndSubcategory extends GetxController {
       Get.find<FilterController>()
           .setDataFilter(key: "category", val: subCategorieJson.id);
       Get.find<FilterController>().deleteDataFilter(key: "categoryGroup");
-      tapPublishViewController.validateSousCatgory.value = "";
       tapPublishViewController.updateGetView(
           RefJson(id: subCategorieJson.id, name: subCategorieJson.name));
       tapPublishViewController.myAds["category"] = subCategorieJson.id;

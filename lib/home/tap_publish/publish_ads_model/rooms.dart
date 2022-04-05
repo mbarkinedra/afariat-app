@@ -31,13 +31,17 @@ class Rooms extends GetView<TapPublishViewController> {
                         border: Border.all(color: framColor, width: 2),
                         borderRadius: BorderRadius.circular(10)),
                     child: ListTile(
-                      title: DropdownButton<RefJson>(
+                      title: DropdownButtonFormField<RefJson>(
                         value: logic.nombrePiece,
                         isExpanded: true,
                         iconSize: 24,
                         elevation: 16,
+                        decoration: InputDecoration.collapsed(hintText: ''),
                         style: const TextStyle(color: Colors.black),
-                        underline: Container(),
+                        // underline: Container(),
+                        validator: (RefJson) {
+                          return controller.validator.validatePieces(RefJson);
+                        },
                         onChanged: logic.updateNombrePieces,
                         items: controller.nombrePieces
                             .map<DropdownMenuItem<RefJson>>((RefJson value) {
@@ -54,15 +58,6 @@ class Rooms extends GetView<TapPublishViewController> {
             ],
           ),
         ),
-        Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Obx(() => Text(
-                controller.validatePiece.value,
-                style: TextStyle(color: Colors.red),
-              )),
-            )),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -82,8 +77,7 @@ class Rooms extends GetView<TapPublishViewController> {
                       flex: 1,
                       child: Container(
                         decoration: BoxDecoration(
-                            border:
-                                Border.all(color:framColor, width: 2),
+                            border: Border.all(color: framColor, width: 2),
                             borderRadius: BorderRadius.circular(10)),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8.0, right: 8),
@@ -116,7 +110,6 @@ class Rooms extends GetView<TapPublishViewController> {
             ],
           ),
         ),
-        //buildTitleFormField(),
       ],
     );
   }

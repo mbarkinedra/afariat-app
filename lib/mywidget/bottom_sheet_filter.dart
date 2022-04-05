@@ -78,7 +78,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                     decoration: BoxDecoration(
                         border: Border.all(color: framColor, width: 2),
                         borderRadius: BorderRadius.circular(10)),
-                    child: DropdownButton<SubcategoryJson>(
+                    child: DropdownButton<SubCategoryJson>(
                       underline: SizedBox(),
                       isExpanded: true,
                       hint: Padding(
@@ -90,9 +90,9 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       elevation: 16,
                       onChanged: logic.updateSubCategory,
                       items: logic.listSubCategories
-                          .map<DropdownMenuItem<SubcategoryJson>>(
-                              (SubcategoryJson value) {
-                        return DropdownMenuItem<SubcategoryJson>(
+                          .map<DropdownMenuItem<SubCategoryJson>>(
+                              (SubCategoryJson value) {
+                        return DropdownMenuItem<SubCategoryJson>(
                           value: value,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 8.0, right: 8),

@@ -23,13 +23,14 @@ class Motos extends GetView<TapPublishViewController> {
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border:
-                              Border.all(color: framColor, width: 2),
+                          border: Border.all(color: framColor, width: 2),
                         ),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
+                        child: DropdownButtonFormField<RefJson>(
                           isExpanded: true,
                           value: logic.motosBrand,
+                          validator: (RefJson) {
+                            return controller.validator.validateMarque(RefJson);
+                          },
                           iconSize: 24,
                           elevation: 16,
                           onChanged: controller.updateMarqueMoto,
@@ -47,15 +48,6 @@ class Motos extends GetView<TapPublishViewController> {
                 );
               }),
             ),
-            Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Obx(() => Text(
-                    controller.validateMarque.value,
-                    style: TextStyle(color: Colors.red),
-                  )),
-                )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
@@ -68,12 +60,13 @@ class Motos extends GetView<TapPublishViewController> {
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            border:
-                                Border.all(color: framColor, width: 2)),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
+                            border: Border.all(color: framColor, width: 2)),
+                        child: DropdownButtonFormField<RefJson>(
                           isExpanded: true,
                           value: logic.kilometrage,
+                          validator: (RefJson) {
+                            return controller.validator.validateKm(RefJson);
+                          },
                           iconSize: 24,
                           elevation: 16,
                           onChanged: controller.updateKilometrage,
@@ -91,16 +84,6 @@ class Motos extends GetView<TapPublishViewController> {
                 );
               }),
             ),
-
-            Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Obx(() => Text(
-                    controller.validateKm.value,
-                    style: TextStyle(color: Colors.red),
-                  )),
-                )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GetBuilder<TapPublishViewController>(builder: (logic) {
@@ -113,12 +96,13 @@ class Motos extends GetView<TapPublishViewController> {
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            border:
-                                Border.all(color:framColor, width: 2)),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
+                            border: Border.all(color: framColor, width: 2)),
+                        child: DropdownButtonFormField<RefJson>(
                           isExpanded: true,
                           value: logic.yearsModele,
+                          validator: (RefJson) {
+                            return controller.validator.validateYears(RefJson);
+                          },
                           iconSize: 24,
                           elevation: 16,
                           onChanged: controller.updateAnnee,
@@ -136,15 +120,6 @@ class Motos extends GetView<TapPublishViewController> {
                 );
               }),
             ),
-            Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Obx(() => Text(
-                    controller.validateYears.value,
-                    style: TextStyle(color: Colors.red),
-                  )),
-                )),
           ],
         ),
       ],
