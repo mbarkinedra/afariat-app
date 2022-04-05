@@ -259,6 +259,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                           controller.validator.validateTitle,
                                       hintText: "Titre",
                                       textEditingController: controller.title,
+                                        maxLines: 1,
+                                      maxLength: 65,
                                     ),
                                   ),
                                   const SizedBox(
@@ -281,6 +283,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                         left: 8.0, right: 8),
                                     child: CustomTextFiled(
                                       maxLines: 5,
+                                      maxLength: 65000,
                                       color: framColor,
                                       //  width: size.width * .8,
                                       validator: controller

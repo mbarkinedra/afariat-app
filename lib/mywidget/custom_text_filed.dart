@@ -10,6 +10,7 @@ class CustomTextFiled extends StatelessWidget {
   final Function validator;
   final double padding;
   final int maxLines;
+  final int maxLength;
 
   CustomTextFiled({
     @required this.textEditingController,
@@ -20,6 +21,7 @@ class CustomTextFiled extends StatelessWidget {
     @required this.width,
     this.validator,
     this.maxLines,
+    this.maxLength,
     this.obscureText = false,
   });
 
@@ -39,6 +41,7 @@ class CustomTextFiled extends StatelessWidget {
             border: InputBorder.none,
             hintText: hintText,
           ),
+          maxLength: maxLength,
         ),
       ),
       decoration: BoxDecoration(

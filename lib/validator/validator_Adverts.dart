@@ -8,12 +8,13 @@ class ValidatorAdverts {
 
   String validateTitle(String value) {
     if (!validationType) {
-      if (value.isEmpty) {
-        return "Veuillez saisir le titre";
-      }
-      if (value.length < 10) {
+      if (value.isEmpty) return "Veuillez saisir le titre";
+
+      if (value.length < 10)
         return "  Le titre doit faire au minimum 10 caractères";
-      }
+
+      if (value.length > 65)
+        return "  Le titre ne doit pas dépasser 65 caractères";
     } else {
       validatorServer.validate(value, 'title');
     }
@@ -23,6 +24,10 @@ class ValidatorAdverts {
   String validatePrice(String value) {
     if (!validationType) {
       if (value.isEmpty) return " Veuillez renseigner le prix.";
+
+      int parsedValue = int.tryParse(value);
+      if (parsedValue == null) return "Veuillez saisir un nombre";
+
       if (int.tryParse(value) < 0) return "Le prix doit être supérieur à 0 ";
     } else {
       validatorServer.validate(value, "price");
@@ -34,11 +39,11 @@ class ValidatorAdverts {
   String validateSurface(String value) {
     if (!validationType) {
       if (value.isEmpty) {
-        return " Veuillez renseigner la surface.";
+        return "Veuillez renseigner la surface.";
       }
-      if (int.tryParse(value) < 1) {
-        return "La surface doit être supérieure à 0 ";
-      }
+      int parsedValue = int.tryParse(value);
+      if (parsedValue == null) return "Veuillez saisir un nombre";
+      if (parsedValue < 1) return "La surface doit être supérieure à 0 ";
     } else {
       return validatorServer.validate(value, 'area');
     }
@@ -46,12 +51,12 @@ class ValidatorAdverts {
   }
 
   String validateDescription(String value) {
+    if (value.isEmpty) {
+      return "Veuillez renseigner la description";
+    }
     if (!validationType) {
       if (value.length < 20) {
         return " La description doit faire au moins 20 caractères.";
-      }
-      if (value.isEmpty) {
-        return "Veuillez renseigner la description";
       }
     } else {
       validatorServer.validate(value, 'description');
