@@ -69,8 +69,9 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: GetBuilder<CategoryAndSubcategory>(
                                         builder: (logic) {
-                                      return Column(
+                                      return logic.categoryGroupList.length==0?CircularProgressIndicator():   Column(
                                         children: [
+
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Align(
@@ -253,7 +254,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                     padding: const EdgeInsets.only(
                                         left: 8.0, right: 8),
                                     child: CustomTextFiled(
-                                      // width: size.width * .8,
+                                     width: size.width * .8,
                                       color: framColor,
                                       validator:
                                           controller.validator.validateTitle,
@@ -285,7 +286,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                       maxLines: 5,
                                       maxLength: 65000,
                                       color: framColor,
-                                      //  width: size.width * .8,
+                                       width: size.width * .8,
                                       validator: controller
                                           .validator.validateDescription,
                                       hintText: "Description",
@@ -565,6 +566,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                             labColor: Colors.white,
                                             btColor: buttonColor,
                                             function: () {
+                                              /*controller.surface.text.replaceAll("-", "") + " " + "m²";
+                                              controller.myAds["area"] = controller.surface.text;*/
                                               controller.validator
                                                   .validationType = false;
                                               if (!controller
@@ -579,7 +582,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                               }
                                               print('Server validation');
                                               controller
-                                                  .validateDefaultOptions();
+                                                  .defaultOptions();
 
                                               //   controller.validator.validationType = true;
                                               //send data to server and get errors

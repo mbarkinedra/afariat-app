@@ -11,7 +11,6 @@ import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
-import 'package:afariat/validator/validate_server.dart';
 import 'package:afariat/validator/validator_Adverts.dart';
 import 'package:afariat/mywidget/custom_dialogue_felecitation.dart';
 import 'package:afariat/networking/api/modif_ads_api.dart';
@@ -84,7 +83,6 @@ class TapPublishViewController extends GetxController {
   MileagesApi _mileagesApi = MileagesApi();
   YearsModelsApi _yearsModelsApi = YearsModelsApi();
   EnergieApi _energieApi = EnergieApi();
-  ServerValidator _validateServer = ServerValidator();
   RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
 
   /// Convert image to base64
@@ -186,7 +184,6 @@ class TapPublishViewController extends GetxController {
   }
 
   /// Update dropDown Marque
-
   Future getVehicleBrand() async {
     await _vehicleBrandsApi.getList().then((value) {
       vehiculeModel = null;
@@ -306,7 +303,6 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
-  ///
   updateEnergie(newValue) {
     energie = newValue;
     myAds["energy"] = newValue.id;
@@ -334,6 +330,7 @@ class TapPublishViewController extends GetxController {
 
   updateAdvertTypes(v) {
     values = v.data;
+    print(values.toString());
     advertType = values[0];
     myAds["advertType"] = advertType.id;
     myAdsView["advertType"] = advertType.name;
@@ -348,6 +345,7 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
+  /// Clear All Data From Screen Publish
   clearAllData() {
     if (Get.find<NetWorkController>().connectionStatus.value) {
       RefJson refJson = RefJson(id: 0, name: "");
@@ -379,7 +377,7 @@ class TapPublishViewController extends GetxController {
       title.text = "";
       description.text = "";
       prix.text = "";
-      surface.text = "";
+      surface.clear();
       update();
     }
   }
@@ -394,6 +392,7 @@ class TapPublishViewController extends GetxController {
     myAds["photos"] = photos;
     PublishApi publishApi = PublishApi();
 
+    /// Method Modif Adverts
     if (dataAdverts) {
       _modifAdsApi.id = modifAdsJson.id;
       await _modifAdsApi.putData(dataToPost: myAds).then((value) async {
@@ -435,6 +434,7 @@ class TapPublishViewController extends GetxController {
     } else {
       devlog.log(jsonEncode(myAds));
 
+      /// Method Post Adverts
       await publishApi.securePost(dataToPost: myAds).then((value) {
         buttonPublier.value = false;
         validator.validatorServer.validateServer(
@@ -475,6 +475,7 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
+  /// Method Get all data for update Adverts
   getAllData(int id) async {
     _modifAdsApi.id = id;
     await _modifAdsApi.getList().then((value) async {
@@ -592,7 +593,9 @@ class TapPublishViewController extends GetxController {
           }
         }
       }
-      surface.text = modifAdsJson.area.toString();
+      if (modifAdsJson.area != null) {
+        surface.text = modifAdsJson.area.toString();
+      }
 
       editAdsImages.clear();
       modifAdsJson.photos.forEach((element) {
@@ -605,7 +608,8 @@ class TapPublishViewController extends GetxController {
     return true;
   }
 
-  void validateDefaultOptions() {
+  /// Method Default Options
+  void defaultOptions() {
     if (globalKey.currentState.validate()) {
       myAdsView["prix"] = prix.text + " " + SettingsApp.moneySymbol;
       myAds["price"] = prix.text;
@@ -613,9 +617,13 @@ class TapPublishViewController extends GetxController {
       myAds["title"] = title.text;
       myAdsView["description"] = description.text;
       myAds["description"] = description.text;
-      myAds["area"] = surface.text;
-      myAdsView["Superficie"] = surface.text + " " + "m²";
 
+      if (surface.text.length > 0) {
+        print("description");
+        print(surface.text.length);
+        myAds["area"] = surface.text;
+        myAdsView["Superficie"] = surface.text + " " + "m²";
+      }
       myAds["showPhoneNumber"] = lights ? "yes" : "no";
       myAdsView["showPhoneNumber"] = lights ? "Check" : "no";
     } else {

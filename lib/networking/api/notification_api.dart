@@ -6,9 +6,9 @@ class NotificationApi extends ApiManager {
   @override
 int page=0;
   String apiUrl() {
-    String v="?sort=a.modifiedAt&direction=desc&page=$page&limit=20";
+    String url="?sort=a.modifiedAt&direction=desc&page=$page&limit=20";
 
-    return SettingsApp.notificationUrl+v;
+    return SettingsApp.notificationUrl+url;
   }
 
   @override

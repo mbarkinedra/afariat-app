@@ -120,12 +120,11 @@ abstract class ApiManager {
           .then((value) {
         return value;
       }).catchError((error, stackTrace) {
-        processServerError(error);
         if (error.type == DioErrorType.connectTimeout) {
           a.Get.snackbar("erreur", "Connection  Timeout");
         }
+        processServerError(error);
 
-        return error;
       });
     } else {
       a.Get.snackbar("erreur", "vous n'avez pas de connexion");

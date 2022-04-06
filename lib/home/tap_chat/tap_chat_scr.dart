@@ -4,7 +4,6 @@ import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/mywidget/chat_user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'chat_user/chat_user_scr.dart';
 import 'chat_user/chat_user_viewcontroller.dart';
 import 'tap_chat_viewcontroller.dart';
