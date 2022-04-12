@@ -26,7 +26,7 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => SecureStorage());
     Get.lazyPut(() => AccountInfoStorage());
 
-    Get.put(FilterController());
+ //   Get.put(FilterController());
     Get.lazyPut(() => AccountViewController());
     Get.lazyPut(() => TapHomeViewController(), fenix: true);
     Get.lazyPut(() => HomeViwController(), fenix: true);

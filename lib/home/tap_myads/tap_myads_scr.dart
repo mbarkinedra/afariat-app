@@ -65,6 +65,7 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
                                         ),
                                         CustomButtonWithoutIcon(
                                             function: () {
+                                              print("Déposer une annonce maintenant");
                                               Get.find<HomeViwController>()
                                                   .changeItemFilter(2);
                                             },

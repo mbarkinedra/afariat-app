@@ -254,7 +254,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
               width: _size.width * .4,
               function: () {
                 Filter.data.clear();
-                Get.find<FilterController>().searchData.forEach((key, value) {
+                FilterController.searchData.forEach((key, value) {
                   ///add filter values to URL parameters
                   Filter.data[key] = value;
                 });

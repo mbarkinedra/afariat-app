@@ -80,17 +80,21 @@ class HomeViwController extends GetxController {
   }
 
   changeItemFilter(value) {
+    print(value);
     if (value == 1) {
       loadOrScrollAds++;
       if (loadOrScrollAds == 1) {
         Get.find<TapMyadsViewController>().scrollUpAds();
       } else {
-        if (Get.find<TapMyadsViewController>().scrollController.offset != 1) {
-          Get.find<TapMyadsViewController>().scrollUpAds();
-          loadOrScrollAds = 1;
-        } else {
-          loadOrScrollAds = 0;
+        if (Get.find<TapMyadsViewController>().scrollController.hasClients){
+          if (Get.find<TapMyadsViewController>().scrollController.offset != 1) {
+            Get.find<TapMyadsViewController>().scrollUpAds();
+            loadOrScrollAds = 1;
+          } else {
+            loadOrScrollAds = 0;
+          }
         }
+
       }
     } else {
       loadOrScrollAds = 0;
@@ -127,6 +131,7 @@ class HomeViwController extends GetxController {
     } else {
       newPublish++;
     }
+   // controller.jumpToTab(value);
     controller.index = value;
     update();
   }

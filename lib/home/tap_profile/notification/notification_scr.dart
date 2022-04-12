@@ -23,7 +23,8 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
             child: GetBuilder<NotificationViewController>(builder: (logic) {
               return RefreshIndicator(
                 onRefresh: controller.onRefreshAds,
-                child: ListView.builder(controller: controller.scrollController,
+                child: ListView.builder(
+                    controller: controller.scrollController,
                     itemCount: logic.notifications.length + 1,
                     itemBuilder: (context, pos) {
                       //
@@ -32,12 +33,14 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
                           child: Text(" Pas des notifications"),
                         );
                       } else {
-                        if (logic.notifications.length - 1 < pos) {
-                          return controller.loadMoreData?Container(
-                              height: 50,
-                              width: 50,
-                              child:
-                                  Center(child: CircularProgressIndicator())):SizedBox();
+                        if (logic.notifications.length -1< pos) {
+                          return controller.loadMoreData
+                              ? Container(
+                                  height: 50,
+                                  width: 50,
+                                  child: Center(
+                                      child: CircularProgressIndicator()))
+                              : SizedBox();
                         } else {
                           final item = logic.notifications[pos];
                           return GestureDetector(

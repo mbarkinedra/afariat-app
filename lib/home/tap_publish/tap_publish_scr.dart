@@ -69,136 +69,167 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: GetBuilder<CategoryAndSubcategory>(
                                         builder: (logic) {
-                                      return logic.categoryGroupList.length==0?CircularProgressIndicator():   Column(
-                                        children: [
-
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Text(
-                                                "Catégorie",
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 60,
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: framColor, width: 2),
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: Center(
-                                              child: DropdownButtonFormField<
-                                                  CategoryGroupedJson>(
-                                                isExpanded: true,
-                                                hint: Padding(
+                                      return logic.categoryGroupList.length == 0
+                                          ? CircularProgressIndicator()
+                                          : Column(
+                                              children: [
+                                                Padding(
                                                   padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0, right: 8),
-                                                  child: Text("Catégorie"),
-                                                ),
-                                                validator:
-                                                    (CategoryGroupedJson) {
-                                                  return controller.validator
-                                                      .validateCategory(
-                                                          CategoryGroupedJson);
-                                                },
-                                                value:logic.categoryGroupedJson,
-                                                iconSize: 24,
-                                                elevation: 16,
-                                                decoration:
-                                                    InputDecoration.collapsed(
-                                                        hintText: ''),
-                                                onChanged: logic.updateCategory,
-                                                items: logic.categoryGroupList
-                                                    .where((element) =>
-                                                        element.name != "")
-                                                    .map<
-                                                            DropdownMenuItem<
-                                                                CategoryGroupedJson>>(
-                                                        (CategoryGroupedJson
-                                                            value) {
-                                                  return DropdownMenuItem<
-                                                      CategoryGroupedJson>(
-                                                    value: value,
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 8.0,
-                                                              right: 8),
-                                                      child: Text(value.name),
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.topLeft,
+                                                    child: Text(
+                                                      "Catégorie",
+                                                      style: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
-                                                  );
-                                                }).toList(),
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Container(
-                                            height: 60,
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: framColor, width: 2),
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: Center(
-                                              child: DropdownButtonFormField<
-                                                  SubCategoryJson>(
-                                                isExpanded: true,
-                                                //   underline: SizedBox(),
-                                                hint: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0, right: 8),
-                                                  child: Text("Sous catégorie"),
+                                                  ),
                                                 ),
-                                                validator: (SubCategoryJson) {
-                                                  return controller.validator
-                                                      .validateCategory(
-                                                          SubCategoryJson);
-                                                },
-                                                value: logic.subcategories1,
-                                                iconSize: 24,
-                                                elevation: 16,
-                                                decoration:
-                                                    InputDecoration.collapsed(
-                                                        hintText: ''),
-                                                onChanged:
-                                                    logic.updateSubCategory,
-                                                items: logic.listSubCategories
-                                                    .where((element) =>
-                                                        element.name != "")
-                                                    .map<
-                                                            DropdownMenuItem<
-                                                                SubCategoryJson>>(
-                                                        (SubCategoryJson
-                                                            value) {
-                                                  return DropdownMenuItem<
-                                                      SubCategoryJson>(
-                                                    value: value,
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 8.0,
-                                                              right: 8),
-                                                      child: Text(value.name),
+                                                Container(
+                                                  height: 60,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: framColor,
+                                                          width: 2),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  child: Center(
+                                                    child:
+                                                        DropdownButtonFormField<
+                                                            CategoryGroupedJson>(
+                                                      isExpanded: true,
+                                                      hint: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 8.0,
+                                                                right: 8),
+                                                        child:
+                                                            Text("Catégorie"),
+                                                      ),
+                                                      validator:
+                                                          (CategoryGroupedJson) {
+                                                        return controller
+                                                            .validator
+                                                            .validateCategory(
+                                                                CategoryGroupedJson);
+                                                      },
+                                                      value: logic
+                                                          .categoryGroupedJson,
+                                                      iconSize: 24,
+                                                      elevation: 16,
+                                                      decoration:
+                                                          InputDecoration
+                                                              .collapsed(
+                                                                  hintText: ''),
+                                                      onChanged:
+                                                          logic.updateCategory,
+                                                      items: logic
+                                                          .categoryGroupList
+                                                          .where((element) =>
+                                                              element.name !=
+                                                              "")
+                                                          .map<
+                                                                  DropdownMenuItem<
+                                                                      CategoryGroupedJson>>(
+                                                              (CategoryGroupedJson
+                                                                  value) {
+                                                        return DropdownMenuItem<
+                                                            CategoryGroupedJson>(
+                                                          value: value,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 8.0,
+                                                                    right: 8),
+                                                            child: Text(
+                                                                value.name),
+                                                          ),
+                                                        );
+                                                      }).toList(),
                                                     ),
-                                                  );
-                                                }).toList(),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      );
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Container(
+                                                  height: 60,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: framColor,
+                                                          width: 2),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10)),
+                                                  child: Center(
+                                                    child:
+                                                        DropdownButtonFormField<
+                                                            SubCategoryJson>(
+                                                      isExpanded: true,
+                                                      //   underline: SizedBox(),
+                                                      hint: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 8.0,
+                                                                right: 8),
+                                                        child: Text(
+                                                            "Sous catégorie"),
+                                                      ),
+                                                      validator:
+                                                          (SubCategoryJson) {
+                                                        return controller
+                                                            .validator
+                                                            .validateCategory(
+                                                                SubCategoryJson);
+                                                      },
+                                                      value:
+                                                          logic.subcategories1,
+                                                      iconSize: 24,
+                                                      elevation: 16,
+                                                      decoration:
+                                                          InputDecoration
+                                                              .collapsed(
+                                                                  hintText: ''),
+                                                      onChanged: logic
+                                                          .updateSubCategory,
+                                                      items: logic
+                                                          .listSubCategories
+                                                          .where((element) =>
+                                                              element.name !=
+                                                              "")
+                                                          .map<
+                                                                  DropdownMenuItem<
+                                                                      SubCategoryJson>>(
+                                                              (SubCategoryJson
+                                                                  value) {
+                                                        return DropdownMenuItem<
+                                                            SubCategoryJson>(
+                                                          value: value,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 8.0,
+                                                                    right: 8),
+                                                            child: Text(
+                                                                value.name),
+                                                          ),
+                                                        );
+                                                      }).toList(),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
                                     }),
                                   ),
                                   Row(
@@ -254,13 +285,13 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                     padding: const EdgeInsets.only(
                                         left: 8.0, right: 8),
                                     child: CustomTextFiled(
-                                     width: size.width * .8,
+                                      width: size.width * .8,
                                       color: framColor,
                                       validator:
                                           controller.validator.validateTitle,
                                       hintText: "Titre",
                                       textEditingController: controller.title,
-                                        maxLines: 1,
+                                      maxLines: 1,
                                       maxLength: 65,
                                     ),
                                   ),
@@ -286,7 +317,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                       maxLines: 5,
                                       maxLength: 65000,
                                       color: framColor,
-                                       width: size.width * .8,
+                                      width: size.width * .8,
                                       validator: controller
                                           .validator.validateDescription,
                                       hintText: "Description",
@@ -374,151 +405,165 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                           left: 8.0, right: 8),
                                       child: GetBuilder<LocController>(
                                           builder: (logic) {
-                                        return logic.getCity
-                                            ? Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              )
-                                            : Column(
-                                                children: [
-                                                  Container(
-                                                    height: 60,
-                                                    width: double.infinity,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: framColor,
-                                                            width: 2),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
-                                                    child: Center(
-                                                      child:
-                                                          DropdownButtonFormField<
-                                                              RefJson>(
-                                                        isExpanded: true,
-                                                        //underline: SizedBox(),
-                                                        hint: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  left: 8.0,
-                                                                  right: 8),
-                                                          child: Text(
-                                                              "Gouvernorat"),
-                                                        ),
-                                                        validator: (RefJson) {
-                                                          return controller
-                                                              .validator
-                                                              .validateCity(
-                                                                  RefJson);
-                                                        },
-
-                                                        value: logic.city,
-                                                        iconSize: 24,
-                                                        elevation: 16,
-                                                        decoration:
-                                                            InputDecoration
-                                                                .collapsed(
-                                                                    hintText:
-                                                                        ''),
-                                                        onChanged:
-                                                            logic.updateCity,
-                                                        items: logic.cities
-                                                            .where((element) =>
-                                                                element.name !=
-                                                                "")
-                                                            .map<
-                                                                DropdownMenuItem<
-                                                                    RefJson>>((RefJson
-                                                                value) {
-                                                          return DropdownMenuItem<
-                                                              RefJson>(
-                                                            value: value,
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      left: 8.0,
-                                                                      right: 8),
-                                                              child: Text(
-                                                                  value.name),
-                                                            ),
-                                                          );
-                                                        }).toList(),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 8,
-                                                  ),
-                                                  Container(
-                                                    height: 60,
-                                                    width: double.infinity,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: framColor,
-                                                            width: 2),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10)),
-                                                    child: Center(
-                                                      child:
-                                                          DropdownButtonFormField<
-                                                              RefJson>(
-                                                        isExpanded: true,
-                                                        //underline: SizedBox(),
-                                                        hint: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  left: 8.0,
-                                                                  right: 10),
+                                        return logic.cities.length == 0
+                                            ? CircularProgressIndicator()
+                                            : logic.getCity
+                                                ? Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  )
+                                                :logic.cities!=null?  Column(
+                                                    children: [
+                                                      Container(
+                                                        height: 60,
+                                                        width: double.infinity,
+                                                        decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                                color:
+                                                                    framColor,
+                                                                width: 2),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)),
+                                                        child: Center(
                                                           child:
-                                                              Text("Commune"),
-                                                        ),
-                                                        validator: (RefJson) {
-                                                          return controller
-                                                              .validator
-                                                              .validateTown(
-                                                                  RefJson);
-                                                        },
-                                                        value: logic.town,
-                                                        iconSize: 24,
-                                                        elevation: 16,
-                                                        decoration:
-                                                            InputDecoration
-                                                                .collapsed(
-                                                                    hintText:
-                                                                        ''),
-                                                        onChanged:
-                                                            logic.updateTown,
-                                                        items: logic.towns
-                                                            .where((element) =>
-                                                                element.name !=
-                                                                "")
-                                                            .map<
-                                                                DropdownMenuItem<
-                                                                    RefJson>>((RefJson
-                                                                value) {
-                                                          return DropdownMenuItem<
-                                                              RefJson>(
-                                                            value: value,
-                                                            child: Padding(
+                                                              DropdownButtonFormField<
+                                                                  RefJson>(
+                                                            isExpanded: true,
+                                                            //underline: SizedBox(),
+                                                            hint: Padding(
                                                               padding:
                                                                   const EdgeInsets
                                                                           .only(
                                                                       left: 8.0,
                                                                       right: 8),
                                                               child: Text(
-                                                                  value.name),
+                                                                  "Gouvernorat"),
                                                             ),
-                                                          );
-                                                        }).toList(),
+                                                            validator:
+                                                                (RefJson) {
+                                                              return controller
+                                                                  .validator
+                                                                  .validateCity(
+                                                                      RefJson);
+                                                            },
+
+                                                            value: logic.city,
+                                                            iconSize: 24,
+                                                            elevation: 16,
+                                                            decoration:
+                                                                InputDecoration
+                                                                    .collapsed(
+                                                                        hintText:
+                                                                            ''),
+                                                            onChanged: logic
+                                                                .updateCity,
+                                                            items: logic.cities
+                                                                .where((element) =>
+                                                                    element
+                                                                        .name !=
+                                                                    "")
+                                                                .map<
+                                                                    DropdownMenuItem<
+                                                                        RefJson>>((RefJson
+                                                                    value) {
+                                                              return DropdownMenuItem<
+                                                                  RefJson>(
+                                                                value: value,
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      left: 8.0,
+                                                                      right: 8),
+                                                                  child: Text(
+                                                                      value
+                                                                          .name),
+                                                                ),
+                                                              );
+                                                            }).toList(),
+                                                          ),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              );
+                                                      const SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Container(
+                                                        height: 60,
+                                                        width: double.infinity,
+                                                        decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                                color:
+                                                                    framColor,
+                                                                width: 2),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)),
+                                                        child: Center(
+                                                          child:
+                                                              DropdownButtonFormField<
+                                                                  RefJson>(
+                                                            isExpanded: true,
+                                                            //underline: SizedBox(),
+                                                            hint: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left: 8.0,
+                                                                      right:
+                                                                          10),
+                                                              child: Text(
+                                                                  "Commune"),
+                                                            ),
+                                                            validator:
+                                                                (RefJson) {
+                                                              return controller
+                                                                  .validator
+                                                                  .validateTown(
+                                                                      RefJson);
+                                                            },
+                                                            value: logic.town,
+                                                            iconSize: 24,
+                                                            elevation: 16,
+                                                            decoration:
+                                                                InputDecoration
+                                                                    .collapsed(
+                                                                        hintText:
+                                                                            ''),
+                                                            onChanged: logic
+                                                                .updateTown,
+                                                            items: logic.towns
+                                                                .where((element) =>
+                                                                    element
+                                                                        .name !=
+                                                                    "")
+                                                                .map<
+                                                                    DropdownMenuItem<
+                                                                        RefJson>>((RefJson
+                                                                    value) {
+                                                              return DropdownMenuItem<
+                                                                  RefJson>(
+                                                                value: value,
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      left: 8.0,
+                                                                      right: 8),
+                                                                  child: Text(
+                                                                      value
+                                                                          .name),
+                                                                ),
+                                                              );
+                                                            }).toList(),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ):Center(
+                                            child:
+                                            CircularProgressIndicator(),
+                                            );
                                       }),
                                     ),
                                   ),
@@ -581,8 +626,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                 return;
                                               }
                                               print('Server validation');
-                                              controller
-                                                  .defaultOptions();
+                                              controller.defaultOptions();
 
                                               //   controller.validator.validationType = true;
                                               //send data to server and get errors

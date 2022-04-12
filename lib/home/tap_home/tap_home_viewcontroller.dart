@@ -139,7 +139,7 @@ scrollUp(){
     //reset the URL of advertApi
     _advertApi.url = null;
     if (searchWord.text.isNotEmpty) {
-      Get.find<FilterController>()
+      FilterController
           .setDataFilter(key: "search", val: searchWord.text.toString() );
      // Filter.data['search'] = searchWord.text.toString();
     }
@@ -158,7 +158,7 @@ scrollUp(){
         );
       Get.find<LocController>().clearDataCityAndTown();
       Get.find<CategoryAndSubcategory>().clearDataCategroyAndSubCategory();
-      Get.find<FilterController>().searchData.clear();
+      FilterController.searchData.clear();
       update();
     });
   }
@@ -191,9 +191,9 @@ scrollUp(){
 
     // Filter.data["minPrice="] = prices[values.start.toInt() - 1].id;
     // Filter.data["maxPrice="] = prices[values.end.toInt() - 1].id;
-    Get.find<FilterController>()
+    FilterController
         .setDataFilter(key: "minPrice",val: values.start.toInt().toString() );
-    Get.find<FilterController>()
+    FilterController
         .setDataFilter(key: "maxPrice",val: values.end.toInt().toString() );
     // Get.find<TapHomeViewController>()
     //     .setSearch("minPrice", values.start.toInt().toString());

@@ -54,11 +54,11 @@ class CategoryAndSubcategory extends GetxController {
   // Update all data of category from api
   updateCategory(CategoryGroupedJson categoryGrouped) {
     if (categoryGrouped.id == 0) {
-      Get.find<FilterController>().deleteDataFilter(key: "categoryGroup");
+      FilterController.deleteDataFilter(key: "categoryGroup");
       subcategories1 = null;
       categoryGroupedJson = categoryGrouped;
     } else {
-      Get.find<FilterController>()
+      FilterController
           .setDataFilter(key: "categoryGroup", val: categoryGrouped.id);
       categoryGroupedJson = categoryGrouped;
       tapPublishViewController.updateCategory(categoryGrouped);
@@ -74,13 +74,13 @@ class CategoryAndSubcategory extends GetxController {
     subcategories1 = subCategorieJson;
     tapPublishViewController.updateSubCategoryJson(subCategorieJson);
     if (subCategorieJson.id == 0) {
-      Get.find<FilterController>()
+      FilterController
           .setDataFilter(key: "categoryGroup", val: categoryGroupedJson.id);
       update();
     } else {
-      Get.find<FilterController>()
+      FilterController
           .setDataFilter(key: "category", val: subCategorieJson.id);
-      Get.find<FilterController>().deleteDataFilter(key: "categoryGroup");
+      FilterController.deleteDataFilter(key: "categoryGroup");
       tapPublishViewController.updateGetView(
           RefJson(id: subCategorieJson.id, name: subCategorieJson.name));
       tapPublishViewController.myAds["category"] = subCategorieJson.id;
