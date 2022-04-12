@@ -66,9 +66,9 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Card(
                                   elevation: 8,
-                                  color: logic.notifications[pos].read
+                            /*      color: logic.notifications[pos].read
                                       ? Colors.white
-                                      : Colors.black12,
+                                      : Colors.black12,*/
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(

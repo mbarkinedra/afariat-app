@@ -87,6 +87,11 @@ flutter:
     - assets/images/Splash_3.png
     - assets/images/Splash_5.png
     - assets/images/Splash_6.png
+    - assets/images/Splash_8.png
+    - assets/images/Splash_9.png
+    - assets/images/Splash_10.png
+    - assets/images/drawer.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

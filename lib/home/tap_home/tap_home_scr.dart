@@ -33,7 +33,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                         child: InkWell(
                           onTap: controller.openDrawer,
                           child: Image.asset(
-                            "assets/images/Splash_2.png",
+                            "assets/images/Splash_10.png",
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -221,22 +221,30 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
             children: [
               DrawerHeader(
                 decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(
+                          "assets/images/drawer.png",
+                        ),
+                        fit: BoxFit.fill)),
+                /*decoration: BoxDecoration(
                   color: framColor,
-                ),
+                ),*/
                 child: Container(
+                  //decoration: BoxDecoration(image: DecorationImage(image: AssetImage( "assets/images/drawerBackground.png"))),
                   width: _size.width * .6,
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Image.asset(
-                        "assets/images/Splash_6.png",
-                        height: _size.height * .1,
-                        width: _size.width * .3,
-                      ),
+                      // Image.asset(
+                      //   "assets/images/Splash_6.png",
+                      //   height: _size.height * .1,
+                      //   width: _size.width * .3,
+                      // ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding:
+                            const EdgeInsets.only(top: 30, right: 8.0, left: 8),
                         child:
                             GetBuilder<TapHomeViewController>(builder: (logic) {
                           return Text(logic.name,
@@ -249,7 +257,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   ),
                 ),
               ),
-              Expanded(child: SizedBox()),
+              Spacer(),
               Divider(
                 thickness: 1,
                 color: ColorText,

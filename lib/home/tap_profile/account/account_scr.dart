@@ -23,7 +23,7 @@ class Account extends GetWidget<AccountViewController> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.asset(
-                  "assets/images/Splash_2.png",
+                  "assets/images/Splash_10.png",
                   width: 120,
                   height: 120,
                 ),
