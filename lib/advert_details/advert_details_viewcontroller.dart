@@ -19,7 +19,7 @@ class AdvertDetailsViewcontroller extends GetxController {
   bool loading = true;
   AdvertDetailsApi _advertDetailsApi = AdvertDetailsApi();
   PhotoViewController photoViewController;
-  ConvertionsApi _convertionsApi = ConvertionsApi();
+  ConversationsApi _convertionsApi = ConversationsApi();
 
   getAdvertDetails(int id) {
     _advertDetailsApi.advertTypeId = id;

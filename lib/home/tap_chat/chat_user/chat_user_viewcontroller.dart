@@ -17,7 +17,7 @@ class ChatUserViewController extends GetxController {
   TextEditingController controller = TextEditingController();
   ConversationsReply _conversationsReply = ConversationsReply();
   GetMessageApi _getMessageApi = GetMessageApi();
-  ConvertionsApi _convertionsApi = ConvertionsApi();
+  ConversationsApi _convertionsApi = ConversationsApi();
   List<Conversation> conversations = [];
   AccountInfoStorage _accountInfoStorage = AccountInfoStorage();
   ScrollController scrollController = ScrollController();

@@ -20,6 +20,7 @@ class NotificationViewController extends GetxController {
   int page = 0;
   bool loadMoreData = true;
 
+  ///Function for delete notifications
   onDeleteNotifications({index, int id}) {
     notifications.remove(index);
 
@@ -30,10 +31,12 @@ class NotificationViewController extends GetxController {
     Get.snackbar("", "Votre notification est supprimé");
   }
 
-  Future<void> onRefreshAds() async {
+  /// Function for refrech a new notifications
+  Future<void> onRefreshNotification() async {
     getAllNotification();
   }
 
+  /// Function for read a new notifictions
   readNotification(int id) {
     PutNotificationApi putNotificationApi = PutNotificationApi();
     putNotificationApi.id = id.toString();
