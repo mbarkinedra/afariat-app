@@ -20,76 +20,6 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    List<Widget> list = controller.editAdsImages
-        .map((e) => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Stack(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: framColor),
-                        borderRadius: BorderRadius.circular(10)),
-                    width: size.width * .3,
-                    height: size.height * .2,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        e,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    right: 0,
-                    child: InkWell(
-                        onTap: () {
-                          controller.delEditImage(e);
-                        },
-                        child: Icon(
-                          Icons.clear,
-                          size: 30,
-                          color: framColor,
-                        )),
-                  ),
-                ],
-              ),
-            ))
-        .toList();
-    List<Widget> list2 = controller.images
-        .map((e) => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Stack(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: framColor),
-                        borderRadius: BorderRadius.circular(10)),
-                    width: size.width * .3,
-                    height: size.height * .2,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.file(
-                        e,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    right: 0,
-                    child: InkWell(
-                        onTap: () {
-                          controller.deleteImage(e);
-                        },
-                        child: Icon(
-                          Icons.clear,
-                          size: 30,
-                          color: framColor,
-                        )),
-                  ),
-                ],
-              ),
-            ))
-        .toList();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -186,9 +116,83 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
               padding: const EdgeInsets.all(8.0),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [...list2, ...list]),
+                child:   GetBuilder<TapPublishViewController>(builder: (logic) {
+
+                  List<Widget> list = controller.editAdsImages
+                      .map((e) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: framColor),
+                              borderRadius: BorderRadius.circular(10)),
+                          width: size.width * .3,
+                          height: size.height * .2,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              e,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          right: 0,
+                          child: InkWell(
+                              onTap: () {
+                                controller.delEditImage(e);
+                              },
+                              child: Icon(
+                                Icons.clear,
+                                size: 30,
+                                color: framColor,
+                              )),
+                        ),
+                      ],
+                    ),
+                  ))
+                      .toList();
+                  List<Widget> list2 = controller.images
+                      .map((e) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: framColor),
+                              borderRadius: BorderRadius.circular(10)),
+                          width: size.width * .3,
+                          height: size.height * .2,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.file(
+                              e,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          right: 0,
+                          child: InkWell(
+                              onTap: () {
+                                controller.deleteImage(e);
+                              },
+                              child: Icon(
+                                Icons.clear,
+                                size: 30,
+                                color: framColor,
+                              )),
+                        ),
+                      ],
+                    ),
+                  ))
+                      .toList();
+                    return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [...list2, ...list]);
+                  }
+                ),
               ),
             ),
             Padding(

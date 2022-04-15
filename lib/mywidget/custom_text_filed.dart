@@ -28,7 +28,7 @@ class CustomTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
+    //  width: width,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
