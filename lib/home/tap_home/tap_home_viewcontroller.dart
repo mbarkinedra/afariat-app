@@ -7,6 +7,7 @@ import 'package:afariat/networking/api/advert_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_intro/flutter_intro.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -34,6 +35,7 @@ class TapHomeViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
     if (Get.find<NetWorkController>().connectionStatus.value) {
       getAllAds();
     }
@@ -80,14 +82,15 @@ class TapHomeViewController extends GetxController {
       _fetchPage(advertListJson.links.getPreviousUrl());
     }
   }
-scrollUp(){
 
- scrollController.animateTo(
-   1,
-    curve: Curves.bounceOut,
-    duration: const Duration(milliseconds: 200),
-  );
-}
+  scrollUp() {
+    scrollController.animateTo(
+      1,
+      curve: Curves.bounceOut,
+      duration: const Duration(milliseconds: 200),
+    );
+  }
+
 //Set Name of drawer
   setUserName(String v) {
     name = v;
@@ -115,7 +118,61 @@ scrollUp(){
     //Get.find<TapHomeViewController>().search.clear();
     Filter.data.clear();
     pagingController.refresh();
+  }
 
+  startIntro(context) {
+    intro.start(context);
+  }
+
+  Intro intro;
+
+  @override
+  void onReady() {
+    super.onReady();
+
+    intro = Intro(
+      /// You can set it true to disable animation
+      noAnimation: false,
+
+      /// The total number of guide pages, must be passed
+      stepCount: 7,
+
+      /// Click on whether the mask is allowed to be closed.
+      maskClosable: true,
+
+      /// When highlight widget is tapped.
+      onHighlightWidgetTap: (introStatus) {
+        print(introStatus);
+      },
+
+      /// The padding of the highlighted area and the widget
+      padding: EdgeInsets.all(8),
+
+      /// Border radius of the highlighted area
+      borderRadius: BorderRadius.all(Radius.circular(4)),
+
+      /// Use the default useDefaultTheme provided by the library to quickly build a guide page
+      /// Need to customize the style and content of the guide page, implement the widgetBuilder method yourself
+      /// * Above version 2.3.0, you can use useAdvancedTheme to have more control over the style of the widget
+      /// * Please see https://github.com/tal-tech/flutter_intro/issues/26
+      widgetBuilder: StepWidgetBuilder.useDefaultTheme(
+        /// Guide page text
+        texts: [
+          'Salut,pour voir les paramétres de l application cliquez ici  .',
+          'Recherchez annonces.',
+          'Filtrez vos annonces.',
+          'En cliquant sur "Annonces" ,vous trouverez vos annonces enregistrées ',
+          'Pour ajouter une annonce cliquez sur le bouton"+"',
+          'L icone "chat" ,vous permet de discuter ',
+          'Pour voir votre profile ,cliquez sur l icone "Profile"',
+        ],
+
+        /// Button text
+        buttonTextBuilder: (curr, total) {
+          return curr < total - 1 ? 'Suivant' : 'Fini';
+        },
+      ),
+    );
   }
 
   updateData() async {
@@ -139,12 +196,10 @@ scrollUp(){
     //reset the URL of advertApi
     _advertApi.url = null;
     if (searchWord.text.isNotEmpty) {
-      FilterController
-          .setDataFilter(key: "search", val: searchWord.text.toString() );
-     // Filter.data['search'] = searchWord.text.toString();
+      FilterController.setDataFilter(
+          key: "search", val: searchWord.text.toString());
     }
     _advertApi.getList().then((value) {
-      print("hhhhhhhhhhhhhhhhhhhhhhhh ${value.toString()}");
       pagingController.itemList.clear();
       advertListJson = value;
       resetPriceSlider();
@@ -189,16 +244,10 @@ scrollUp(){
   updateSlideValue(value) {
     values = value;
 
-    // Filter.data["minPrice="] = prices[values.start.toInt() - 1].id;
-    // Filter.data["maxPrice="] = prices[values.end.toInt() - 1].id;
-    FilterController
-        .setDataFilter(key: "minPrice",val: values.start.toInt().toString() );
-    FilterController
-        .setDataFilter(key: "maxPrice",val: values.end.toInt().toString() );
-    // Get.find<TapHomeViewController>()
-    //     .setSearch("minPrice", values.start.toInt().toString());
-    // Get.find<TapHomeViewController>()
-    //     .setSearch("maxPrice", values.end.toInt().toString());
+    FilterController.setDataFilter(
+        key: "minPrice", val: values.start.toInt().toString());
+    FilterController.setDataFilter(
+        key: "maxPrice", val: values.end.toInt().toString());
     update();
   }
 

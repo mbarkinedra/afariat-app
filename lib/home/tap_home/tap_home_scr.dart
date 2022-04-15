@@ -15,7 +15,9 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
-
+    Future.delayed(Duration(seconds: 1), () {
+      controller.intro.start(context);
+    });
     return Scaffold(
       key: controller.scaffoldKey,
       appBar: PreferredSize(
@@ -29,6 +31,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       SizedBox(
+                        key: controller.intro.keys[0],
                         width: _size.width * .13,
                         child: InkWell(
                           onTap: controller.openDrawer,
@@ -63,6 +66,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                               child: GetBuilder<TapHomeViewController>(
                                   builder: (logic) {
                                 return TextField(
+                                  key: controller.intro.keys[1],
                                   controller: controller.searchWord,
                                   keyboardType: TextInputType.text,
                                   onChanged: controller.filterWord,
@@ -78,6 +82,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                               ),
                                               onPressed: () {
                                                 /* Clear the search field */
+
                                                 controller.filterClearSearch();
                                               },
                                             )
@@ -89,6 +94,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                             )),
                       ),
                       SizedBox(
+                        key: controller.intro.keys[2],
                         width: _size.width * .1,
                         child: InkWell(
                           onTap: () {
@@ -116,8 +122,11 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                             Get.find<TapPublishViewController>().clearAllData();
                             Filter.data.clear();
                           },
-                          child: const Icon(Icons.filter_alt_outlined,
-                              size: 30, color: ColorGrey),
+                          child: const Icon(
+                            Icons.filter_alt_outlined,
+                            size: 30,
+                            color: ColorGrey,
+                          ),
                         ),
                       )
                     ]),
@@ -216,8 +225,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
         width: _size.width * .6,
         child: Drawer(
           child: Column(
-            // Important: Remove any padding from the ListView.
-            //padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
                 decoration: BoxDecoration(
@@ -226,22 +233,13 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                           "assets/images/drawer.png",
                         ),
                         fit: BoxFit.fill)),
-                /*decoration: BoxDecoration(
-                  color: framColor,
-                ),*/
                 child: Container(
-                  //decoration: BoxDecoration(image: DecorationImage(image: AssetImage( "assets/images/drawerBackground.png"))),
                   width: _size.width * .6,
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Image.asset(
-                      //   "assets/images/Splash_6.png",
-                      //   height: _size.height * .1,
-                      //   width: _size.width * .3,
-                      // ),
                       Padding(
                         padding:
                             const EdgeInsets.only(top: 30, right: 8.0, left: 8),
@@ -274,7 +272,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                 ),
                 onTap: () {
                   controller.launchURL("https://afariat.com/aide.html");
-                  // Navigator.pop(context);
                 },
               ),
               ListTile(
@@ -289,7 +286,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                 ),
                 onTap: () {
                   controller.launchURL("https://afariat.com/règlement.html");
-                  // Navigator.pop(context);
                 },
               ),
               ListTile(
@@ -305,7 +301,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                 onTap: () {
                   controller
                       .launchURL("https://afariat.com/confidentialite.html");
-                  // Navigator.pop(context);
                 },
               ),
               ListTile(
@@ -321,7 +316,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                 onTap: () {
                   controller.launchURL(
                       "https://afariat.com/conditions-générales-d-utilisation.html");
-                  // Navigator.pop(context);
                 },
               ),
               SizedBox(

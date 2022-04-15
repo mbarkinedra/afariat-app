@@ -1,4 +1,5 @@
 import 'package:afariat/config/utility.dart';
+import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -65,7 +66,7 @@ class Home extends GetWidget<HomeViwController> {
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.photo_size_select_large_outlined),
+        icon: Icon(Icons.photo_size_select_large_outlined,key: Get.find<TapHomeViewController>().intro.keys[3]),
         title: ("Annonces"),
         activeColorPrimary: framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
@@ -74,20 +75,20 @@ class Home extends GetWidget<HomeViwController> {
         icon: Icon(
           Icons.add,
           color: Colors.white,
-          size: 35,
+          size: 35,key: Get.find<TapHomeViewController>().intro.keys[4]
         ),
         title: ("Publier"),
         activeColorPrimary: framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.article_rounded),
+        icon: Icon(Icons.article_rounded,key: Get.find<TapHomeViewController>().intro.keys[5]),
         title: ("Chat"),
         activeColorPrimary:framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: Stack(
+        icon: Stack(key: Get.find<TapHomeViewController>().intro.keys[6],
           children: [
             Icon(
               Icons.person,
