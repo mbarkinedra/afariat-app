@@ -158,18 +158,19 @@ class TapHomeViewController extends GetxController {
       widgetBuilder: StepWidgetBuilder.useDefaultTheme(
         /// Guide page text
         texts: [
-          'Salut,pour voir les paramétres de l application cliquez ici  .',
-          'Recherchez annonces.',
-          'Filtrez vos annonces.',
-          'En cliquant sur "Annonces" ,vous trouverez vos annonces enregistrées ',
-          'Pour ajouter une annonce cliquez sur le bouton"+"',
-          'L icone "chat" ,vous permet de discuter ',
-          'Pour voir votre profile ,cliquez sur l icone "Profile"',
+          'Hello ! Voici les principales fonctionnalités de l\'appication.\n\n'
+              'Pour consulter les paramétres de l\'application appuyer sur le Logo.',
+          'Recherchez des annonces ici.',
+          'Filtrer le résultat de votre recherche',
+          'Gérér vos annonces déjà déposées en appuyant sur le menu "Annonces"',
+          'Appuyer sur le bouton "+" pour déposer une nouvelle annonce',
+          'Consulter vos messages en appuyant sur "Chat"',
+          'Gérer votre profil ici',
         ],
 
         /// Button text
         buttonTextBuilder: (curr, total) {
-          return curr < total - 1 ? 'Suivant' : 'Fini';
+          return curr < total - 1 ? 'Suivant' : 'Terminer';
         },
       ),
     );

@@ -104,7 +104,7 @@ class Home extends GetWidget<HomeViwController> {
                     : SizedBox())
           ],
         ),
-        title: ("Profile"),
+        title: ("Profil"),
         activeColorPrimary: framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
