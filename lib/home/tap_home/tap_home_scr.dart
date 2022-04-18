@@ -16,7 +16,9 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
     Future.delayed(Duration(seconds: 1), () {
-      controller.intro.start(context);
+
+     // controller.intro.start(context);
+      controller.startIntro(context);
     });
     return Scaffold(
       key: controller.scaffoldKey,

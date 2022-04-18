@@ -6,6 +6,7 @@ import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/networking/api/advert_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_intro/flutter_intro.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class TapHomeViewController extends GetxController {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  final AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
   TextEditingController searchWord = TextEditingController();
   AdvertApi _advertApi = AdvertApi();
   PriceApi _pricesApi = PriceApi();
@@ -121,7 +123,11 @@ class TapHomeViewController extends GetxController {
   }
 
   startIntro(context) {
-    intro.start(context);
+    if (accountInfoStorage.readIntro() == null) {
+      print("===null");
+      intro.start(context);
+      accountInfoStorage.saveIntro("intro");
+    }
   }
 
   Intro intro;
