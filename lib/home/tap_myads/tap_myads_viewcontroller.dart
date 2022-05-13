@@ -50,7 +50,8 @@ class TapMyadsViewController extends GetxController {
   }
 
   getAllAds() {
-    if (Get.find<NetWorkController>().connectionStatus.value) {
+    if (Get.find<NetWorkController>().connectionStatus.value &&
+        Get.find<AccountInfoStorage>().readUserId() != null) {
       _myAdsApi.userId = Get.find<AccountInfoStorage>().readUserId();
       getAdsFromServer = true;
       _myAdsApi.getList().then((value) {
