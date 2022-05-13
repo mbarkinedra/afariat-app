@@ -124,7 +124,6 @@ abstract class ApiManager {
           a.Get.snackbar("erreur", "Connection  Timeout");
         }
         processServerError(error);
-
       });
     } else {
       a.Get.snackbar("erreur", "vous n'avez pas de connexion");
@@ -135,8 +134,9 @@ abstract class ApiManager {
   /// Get Data  User From Server
   Future<Response<dynamic>> secureGet({dataToPost}) async {
     Wsse xwsse = Wsse();
-    String wsse = xwsse.generateWsseFromStorage();
 
+    String wsse = xwsse.generateWsseFromStorage();
+    print(wsse);
     return dioSingleton.dio
         .get(
       apiUrl(),

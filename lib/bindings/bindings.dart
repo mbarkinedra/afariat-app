@@ -28,8 +28,9 @@ class AllBindings extends Bindings {
 
  //   Get.put(FilterController());
     Get.lazyPut(() => AccountViewController());
-    Get.lazyPut(() => TapHomeViewController(), fenix: true);
     Get.lazyPut(() => HomeViwController(), fenix: true);
+    Get.lazyPut(() => TapHomeViewController(), fenix: true);
+
     Get.lazyPut(
       () => NetWorkController(),
     );

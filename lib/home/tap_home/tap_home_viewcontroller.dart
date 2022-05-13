@@ -14,6 +14,8 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../home_view_controller.dart';
+
 class TapHomeViewController extends GetxController {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   final AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
@@ -33,6 +35,12 @@ class TapHomeViewController extends GetxController {
   final PagingController<int, dynamic> pagingController =
       PagingController(firstPageKey: 0);
   ScrollController scrollController = ScrollController();
+  List text = [
+    'Hello ! Voici les principales fonctionnalités de l\'appication.\n\n'
+        'Pour consulter les paramétres de l\'application appuyer sur le Logo.',
+    'Recherchez des annonces ici.',
+    'Filtrer le résultat de votre recherche',
+  ];
 
   @override
   void onInit() {
@@ -120,66 +128,6 @@ class TapHomeViewController extends GetxController {
     //Get.find<TapHomeViewController>().search.clear();
     Filter.data.clear();
     pagingController.refresh();
-  }
-
-  startIntro(context) {
-    if (accountInfoStorage.readIntro() == null) {
-      print("===null");
-      intro.start(context);
-      accountInfoStorage.saveIntro("intro");
-    }
-  }
-
-  Intro intro;
-
-  @override
-  void onReady() {
-    super.onReady();
-
-    intro = Intro(
-      /// You can set it true to disable animation
-      noAnimation: false,
-
-      /// The total number of guide pages, must be passed
-      stepCount: 7,
-
-      /// Click on whether the mask is allowed to be closed.
-      maskClosable: true,
-
-      /// When highlight widget is tapped.
-      onHighlightWidgetTap: (introStatus) {
-        print(introStatus);
-      },
-
-      /// The padding of the highlighted area and the widget
-      padding: EdgeInsets.all(8),
-
-      /// Border radius of the highlighted area
-      borderRadius: BorderRadius.all(Radius.circular(4)),
-
-      /// Use the default useDefaultTheme provided by the library to quickly build a guide page
-      /// Need to customize the style and content of the guide page, implement the widgetBuilder method yourself
-      /// * Above version 2.3.0, you can use useAdvancedTheme to have more control over the style of the widget
-      /// * Please see https://github.com/tal-tech/flutter_intro/issues/26
-      widgetBuilder: StepWidgetBuilder.useDefaultTheme(
-        /// Guide page text
-        texts: [
-          'Hello ! Voici les principales fonctionnalités de l\'appication.\n\n'
-              'Pour consulter les paramétres de l\'application appuyer sur le Logo.',
-          'Recherchez des annonces ici.',
-          'Filtrer le résultat de votre recherche',
-          'Gérér vos annonces déjà déposées en appuyant sur le menu "Annonces"',
-          'Appuyer sur le bouton "+" pour déposer une nouvelle annonce',
-          'Consulter vos messages en appuyant sur "Chat"',
-          'Gérer votre profil ici',
-        ],
-
-        /// Button text
-        buttonTextBuilder: (curr, total) {
-          return curr < total - 1 ? 'Suivant' : 'Terminer';
-        },
-      ),
-    );
   }
 
   updateData() async {
@@ -270,5 +218,107 @@ class TapHomeViewController extends GetxController {
 
   launchURL(url) async {
     if (!await launch(url)) throw 'Could not launch $url';
+  }
+
+  // Start introduction une seule fois
+  startIntro(context) {
+    if (accountInfoStorage.readIntro() == null) {
+      intro.start(context);
+      accountInfoStorage.saveIntro("intro");
+    }
+  }
+
+  Intro intro;
+
+  @override
+  void onReady() {
+    super.onReady();
+
+    intro = Intro(
+      /// You can set it true to disable animation
+      noAnimation: false,
+
+      /// The total number of guide pages, must be passed
+      stepCount: 3,
+
+      /// Click on whether the mask is allowed to be closed.
+      maskClosable: true,
+
+      /// When highlight widget is tapped.
+      onHighlightWidgetTap: (introStatus) {
+        print(introStatus);
+        print('Terminer');
+      },
+
+      /// The padding of the highlighted area and the widget
+      padding: EdgeInsets.all(8),
+
+      /// Border radius of the highlighted area
+      borderRadius: BorderRadius.all(Radius.circular(4)),
+
+      /// Use the default useDefaultTheme provided by the library to quickly build a guide page
+      /// Need to customize the style and content of the guide page, implement the widgetBuilder method yourself
+      /// * Above version 2.3.0, you can use useAdvancedTheme to have more control over the style of the widget
+      /// * Please see https://github.com/tal-tech/flutter_intro/issues/26
+      widgetBuilder: StepWidgetBuilder.useAdvancedTheme(
+        widgetBuilder: (params) {
+          return Container(
+            child: Column(
+              children: [
+                Text(
+                  text[params.currentStepIndex],
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  children: [
+                    if (params.currentStepIndex + 1 < params.stepCount)
+                      InkWell(
+                        onTap: () {
+                          params.onNext();
+                        },
+                        child: Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                  color: Colors.white,
+                                )),
+                            child: Text(
+                              'Suivant',
+                              style: TextStyle(color: Colors.white),
+                            )),
+                      ),
+                    if (params.currentStepIndex + 1 == params.stepCount)
+                      InkWell(
+                        onTap: () {
+                          params.onFinish();
+                          Get.find<HomeViwController>().startIntro1();
+                        },
+                        child: Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                  color: Colors.white,
+                                )),
+                            child: Text(
+                              'Suivant',
+                              style: TextStyle(color: Colors.white),
+                            )),
+                      )
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 }

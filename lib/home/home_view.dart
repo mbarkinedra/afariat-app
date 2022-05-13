@@ -1,5 +1,4 @@
 import 'package:afariat/config/utility.dart';
-import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,16 +12,20 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'tap_publish/tap_publish_viewcontroller.dart';
 
 class Home extends GetWidget<HomeViwController> {
+  Key key;
+
   @override
   Widget build(BuildContext context) {
-    return  PersistentTabView(
+    Future.delayed(Duration(seconds: 1), () {
+      controller.context = context;
+    });
+    return PersistentTabView(
       context, onItemSelected: controller.changeItemFilter,
       controller: controller.controller,
       screens: controller.buildScreens,
       items: _navBarsItems(),
       selectedTabScreenContext: (BuildContext context) {
-         Get.find<TapPublishViewController>().context = context;
-
+        Get.find<TapPublishViewController>().context = context;
       },
       confineInSafeArea: true,
       backgroundColor: Colors.white,
@@ -39,8 +42,8 @@ class Home extends GetWidget<HomeViwController> {
         borderRadius: BorderRadius.circular(10.0),
         colorBehindNavBar: Colors.white,
       ),
-     //  popAllScreensOnTapOfSelectedTab: true,
-     // popActionScreens: PopActionScreensType.all,
+      //  popAllScreensOnTapOfSelectedTab: true,
+      // popActionScreens: PopActionScreensType.all,
       itemAnimationProperties: ItemAnimationProperties(
         // Navigation Bar's items animation properties.
         duration: Duration(seconds: 1),
@@ -53,7 +56,7 @@ class Home extends GetWidget<HomeViwController> {
         duration: Duration(milliseconds: 200),
       ),
       navBarStyle:
-      NavBarStyle.style15, // Choose the nav bar style with this property.
+          NavBarStyle.style15, // Choose the nav bar style with this property.
     );
   }
 
@@ -66,32 +69,31 @@ class Home extends GetWidget<HomeViwController> {
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.photo_size_select_large_outlined,key: Get.find<TapHomeViewController>().intro.keys[3]),
+        icon: Icon(Icons.photo_size_select_large_outlined,
+            key: controller.intro.keys[0]),
         title: ("Annonces"),
         activeColorPrimary: framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 35,key: Get.find<TapHomeViewController>().intro.keys[4]
-        ),
+        icon: Icon(Icons.add,
+            color: Colors.white, size: 35, key: controller.intro.keys[1]),
         title: ("Publier"),
         activeColorPrimary: framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.article_rounded,key: Get.find<TapHomeViewController>().intro.keys[5]),
+        icon: Icon(Icons.article_rounded, key: controller.intro.keys[2]),
         title: ("Chat"),
-        activeColorPrimary:framColor,
+        activeColorPrimary: framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: Stack(key: Get.find<TapHomeViewController>().intro.keys[6],
+        icon: Stack(
           children: [
             Icon(
               Icons.person,
+              key: controller.intro.keys[3],
             ),
             Obx(() =>
                 Get.find<NotificationViewController>().hasNotification.value
