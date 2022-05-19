@@ -74,8 +74,6 @@ class TapHomeViewController extends GetxController {
   }
 
   onSwipeUp() {
-    print(advertListJson.links.getLastUrl());
-    print(advertListJson.links.getNextUrl());
     if (advertListJson.links.next == null) {
       _fetchPage(advertListJson.links.getLastUrl());
     } else {
@@ -246,8 +244,6 @@ class TapHomeViewController extends GetxController {
 
       /// When highlight widget is tapped.
       onHighlightWidgetTap: (introStatus) {
-        print(introStatus);
-        print('Terminer');
       },
 
       /// The padding of the highlighted area and the widget

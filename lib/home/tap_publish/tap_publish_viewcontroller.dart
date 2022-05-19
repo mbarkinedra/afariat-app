@@ -219,10 +219,7 @@ class TapPublishViewController extends GetxController {
   }
 
   getRoomsNumber() async {
-    print("value");
     await _roomsNumberApi.getList().then((value) {
-      print("value");
-      print(value);
       nombrePieces = value.data;
     });
     update();
@@ -315,7 +312,6 @@ class TapPublishViewController extends GetxController {
     nombrePiece = newValue;
     myAds["roomsNumber"] = newValue.id;
     myAdsView["Nombre de pièces"] = newValue.name;
-    print("Nombre de pièces");
     update();
   }
 
@@ -330,7 +326,6 @@ class TapPublishViewController extends GetxController {
 
   updateAdvertTypes(v) {
     values = v.data;
-    print(values.toString());
     advertType = values[0];
     myAds["advertType"] = advertType.id;
     myAdsView["advertType"] = advertType.name;
@@ -480,7 +475,6 @@ class TapPublishViewController extends GetxController {
     _modifAdsApi.id = id;
     await _modifAdsApi.getList().then((value) async {
       modifAdsJson = value;
-      print(value.toJson());
       title.text = modifAdsJson.title;
       description.text = modifAdsJson.description;
       prix.text = modifAdsJson.price.toString();
@@ -501,14 +495,6 @@ class TapPublishViewController extends GetxController {
                       .sc[modifAdsJson.category.group.id]
                       .length;
               sub++) {
-            print(Get.find<CategoryAndSubcategory>()
-                    .sc[modifAdsJson.category.group.id][sub]
-                    .id ==
-                modifAdsJson.category.id);
-            print(Get.find<CategoryAndSubcategory>()
-                .sc[modifAdsJson.category.group.id][sub]
-                .id);
-            print(modifAdsJson.category.id);
 
             if (Get.find<CategoryAndSubcategory>()
                     .sc[modifAdsJson.category.group.id][sub]
@@ -619,8 +605,6 @@ class TapPublishViewController extends GetxController {
       myAds["description"] = description.text;
 
       if (surface.text.length > 0) {
-        print("description");
-        print(surface.text.length);
         myAds["area"] = surface.text;
         myAdsView["Superficie"] = surface.text + " " + "m²";
       }

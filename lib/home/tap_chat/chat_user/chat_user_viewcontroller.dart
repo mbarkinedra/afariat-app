@@ -62,12 +62,9 @@ class ChatUserViewController extends GetxController {
   }
 
   Future getMessage() async {
-print(id);
 
     _getMessageApi.id = id;
     await _getMessageApi.secureGet().then((value) {
-      print("oooooooooooo");
-      print(value.data);
       ConversationJson conversationJson = ConversationJson.fromJson(value.data);
       conversations = conversationJson.eEmbedded.conversation;
       messages.clear();

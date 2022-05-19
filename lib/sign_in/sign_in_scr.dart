@@ -96,13 +96,11 @@ class SignInScr extends GetWidget<SignInViewController> {
                           controller.validator.validationType = false;
                           if (!controller.signInFormKey.currentState
                               .validate()) {
-                            print('Client validation');
                             //if client validations fails
                             //show a snackbar to fix the client errors.
                             Get.snackbar("Oups !",
                                 "Merci de corriger les erreurs ci-dessous.");
                           } else {
-                            print('Server validation');
                             controller.validator.validationType = true;
                             //send data to server and get errors
                             controller.login();

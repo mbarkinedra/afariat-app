@@ -87,7 +87,6 @@ class HomeViwController extends GetxController {
 
       /// When highlight widget is tapped.
       onHighlightWidgetTap: (introStatus) {
-        print(introStatus);
       },
 
       /// The padding of the highlighted area and the widget
@@ -132,7 +131,6 @@ class HomeViwController extends GetxController {
   }
 
   changeItemFilter(value) {
-    print(value);
     if (value == 1) {
       loadOrScrollAds++;
       if (loadOrScrollAds == 1) {

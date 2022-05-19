@@ -32,21 +32,15 @@ class ServerValidator {
       case 400:
 
         serverErrors = value.data;
-        print(serverErrors);
-        print(value.data);
         failure();
         break;
       case 401:
       case 403:
         serverErrors = value.data;
-        print(serverErrors);
-        print(value.data);
        authFailure();
         break;
       case 404:
         serverErrors = value.data;
-        print(serverErrors);
-        print(value.data);
         notFound();
         break;
     }

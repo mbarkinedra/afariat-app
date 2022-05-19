@@ -167,14 +167,12 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                   function: () {
                     controller.validator.validationType = false;
                     if (!controller.registerFormKey.currentState.validate()) {
-                      print('Client validation');
                       //if client validations fails
                       //show a snackbar to fix the client errors.
                       Get.snackbar("Oups !",
                           "Merci de corriger les erreurs ci-dessous.");
                       return;
                     }
-                    print('Server validation');
                     controller.validator.validationType = true;
                     //send data to server and get errors
                     controller.postRegister(context);

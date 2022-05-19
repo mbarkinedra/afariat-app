@@ -632,14 +632,12 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                               if (!controller
                                                   .globalKey.currentState
                                                   .validate()) {
-                                                print('Client validation');
                                                 //if client validations fails
                                                 //show a snackbar to fix the client errors.
                                                 Get.snackbar("Oups !",
                                                     "Merci de corriger les erreurs ci-dessous.");
                                                 return;
                                               }
-                                              print('Server validation');
                                               controller.defaultOptions();
 
                                               //   controller.validator.validationType = true;

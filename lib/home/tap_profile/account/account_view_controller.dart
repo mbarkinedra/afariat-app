@@ -76,7 +76,6 @@ Get.find<AccountInfoStorage>().saveName(name.text);
       name.text = _userJson.name;
 
       phone.text = _userJson.phone;
-      print(_userJson.name);
       Get.find<AccountInfoStorage>().saveName(_userJson.name);
       Get.find<TapHomeViewController>().setUserName(_userJson.name);
 

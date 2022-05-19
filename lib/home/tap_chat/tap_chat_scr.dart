@@ -47,10 +47,8 @@ class TapChatScr extends GetWidget<TapChatViewController> {
                                         controller: controller.scrollController,
                                         itemCount: logic.conversations.length,
                                         itemBuilder: (context, position) {
-                                          print(logic.conversations.length);
                                           logic.conversations
                                               .forEach((element) {
-                                            print(element.toJson());
                                           });
                                           return Dismissible(
                                             background: Container(

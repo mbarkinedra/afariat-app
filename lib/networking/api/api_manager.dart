@@ -136,7 +136,6 @@ abstract class ApiManager {
     Wsse xwsse = Wsse();
 
     String wsse = xwsse.generateWsseFromStorage();
-    print(wsse);
     return dioSingleton.dio
         .get(
       apiUrl(),
@@ -253,8 +252,6 @@ abstract class ApiManager {
     return dioSingleton.dio.delete(apiUrl(), options: options).then((value) {
       return value;
     }).catchError((error, stackTrace) {
-      print(error);
-
       processServerError(error);
     });
   }
