@@ -144,10 +144,8 @@ class Adverts {
         : null;
     if(json['photo']!=null){
       //Découper le string selon "split(".")"
-      List photos=json['photo'].toString().split(".");
-      if(photos.last!='webp'){
         photo = SettingsApp.baseUrl + "/" + json['photo'] ;
-      }
+
 
 
     }    description = json['description'];

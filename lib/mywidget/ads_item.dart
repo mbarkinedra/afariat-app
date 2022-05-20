@@ -46,13 +46,17 @@ class AdsItem extends StatelessWidget {
             children: [
               Expanded(
                 flex: 1,
-                child:adverts.photo!=null? Image.network(
-
-                  adverts.photo,
-                  height: size.height * .25,
-                  width: size.width * .4,
-                  fit: BoxFit.fill,
-                ) : Image.asset("assets/images/no-image.jpg"),
+                child: adverts.photo != null
+                    ? Image.network(
+                        adverts.photo,
+                        height: size.height * .25,
+                        width: size.width * .4,
+                        fit: BoxFit.fill,
+                      )
+                    : Image.asset("assets/images/no-image.jpg"),
+              ),
+              SizedBox(
+                width: 10,
               ),
               Expanded(
                 flex: 1,
