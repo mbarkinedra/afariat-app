@@ -29,6 +29,11 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
       ),
       body: GetBuilder<AdvertDetailsViewcontroller>(builder: (logic) {
         //  logic.advert.userId
+
+        if (!logic.loading) {
+          print(logic.advert.photos.length);
+        }
+
         return logic.loading
             ? Center(child: CircularProgressIndicator())
             : Padding(
@@ -39,30 +44,41 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 20),
-                      if (logic.advert.photos.length > 0)
-                        CarouselSlider(
-                          options: CarouselOptions(
-                            height: _size.height * .3,
-                            viewportFraction: .7,
-                            aspectRatio: 9 / 12,
-                            enlargeCenterPage: true,
-                            autoPlay: true,
-                          ),
-                          items: logic.advert.photos
-                              .map((item) => InkWell(
-                                    onTap: () {
-                                      logic.displayDialogue(context);
-                                    },
-                                    child: Image.network(
-                                      item.path,
-                                      height: _size.height * .25,
-                                      width: _size.width * .8,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ))
-                              .toList(),
-                        ),
+                      //   SizedBox(height: 20),
+                      if (logic.advert.photos != null)
+                        logic.advert.photos.length > 1
+                            ? CarouselSlider(
+                                options: CarouselOptions(
+                                  height: _size.height * .3,
+                                  viewportFraction: .7,
+                                  aspectRatio: 9 / 12,
+                                  enlargeCenterPage: true,
+                                  autoPlay: true,
+                                ),
+                                items: logic.advert.photos
+                                    .map((item) => InkWell(
+                                          onTap: () {
+                                            logic.displayDialogue(context);
+                                          },
+                                          child: Image.network(
+                                            item.path,
+                                            height: _size.height * .25,
+                                            width: _size.width * .8,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ))
+                                    .toList(),
+                              )
+                            : logic.advert.photos.length > 0
+                                ? Container(
+                                    height: _size.height * .3,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                logic.advert.photos[0].path),
+                                            fit: BoxFit.fill)),
+                                  )
+                                : SizedBox(),
                       SizedBox(height: 10),
                       Row(
                         children: [
@@ -74,7 +90,6 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
-
                           ),
                           InkWell(
                             onTap: () {
