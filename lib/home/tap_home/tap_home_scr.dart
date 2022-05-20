@@ -5,6 +5,7 @@ import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/bottom_sheet_filter.dart';
+import 'package:afariat/mywidget/favorite_item.dart';
 import 'package:afariat/mywidget/myhomeitem.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -256,6 +257,27 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                 ),
               ),
               Spacer(),
+              ListTile(
+                leading: Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                ),
+                title: const Text(
+                  "Mes favoris",
+                  style:
+                      TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Favorite()),
+                  );
+
+                  print("add favorite");
+                  //controller.launchURL("https://afariat.com/aide.html");
+                },
+              ),
               Divider(
                 thickness: 1,
                 color: ColorText,

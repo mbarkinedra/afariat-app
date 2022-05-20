@@ -74,7 +74,14 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
+
                           ),
+                          InkWell(
+                            onTap: () {
+                              print("ajouter favoris");
+                            },
+                            child: Icon(Icons.favorite_outline_rounded),
+                          )
                         ],
                       ),
                       SizedBox(height: 10),

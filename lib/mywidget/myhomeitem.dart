@@ -12,6 +12,7 @@ class MyHomeItem extends StatelessWidget {
   final AdvertJson adverts;
 
   final numberFormat = NumberFormat("###,##0", SettingsApp.locale);
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +26,7 @@ class MyHomeItem extends StatelessWidget {
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
               bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10)
-          ),
+              bottomRight: Radius.circular(10)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
@@ -45,10 +45,11 @@ class MyHomeItem extends StatelessWidget {
               flex: 1,
               child: Container(
                 height: size.height * .2,
-                child: Image.network(
+                child:adverts.photo!=null? Image.network(
+
                   adverts.photo,
                   fit: BoxFit.fill,
-                ),
+                ):   Image.asset("assets/images/no-image.jpg"),
               ),
             ),
             Expanded(
@@ -61,7 +62,9 @@ class MyHomeItem extends StatelessWidget {
                   children: [
                     Container(
                       child: Text(
-                        adverts.title,maxLines: 3,overflow: TextOverflow.ellipsis,
+                        adverts.title,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 13),
                       ),
@@ -70,9 +73,11 @@ class MyHomeItem extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      numberFormat.format(adverts.price) + ' ' + SettingsApp.moneySymbol,
+                      numberFormat.format(adverts.price) +
+                          ' ' +
+                          SettingsApp.moneySymbol,
                       style: TextStyle(
-                          color:framColor,
+                          color: framColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
                       softWrap: true,
@@ -101,10 +106,27 @@ class MyHomeItem extends StatelessWidget {
                     SizedBox(
                       height: 4,
                     ),
-                    Text(
-                      adverts.modifiedAt,
-                      softWrap: true,
-                      overflow: TextOverflow.fade,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          adverts.modifiedAt,
+                          softWrap: true,
+                          overflow: TextOverflow.fade,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            print("ajouter favoris");
+                            isFavorite != isFavorite;
+                          },
+                          child: Icon(
+                            isFavorite
+                                ? Icons.favorite_outline_rounded
+                                : Icons.favorite,
+                            color: Colors.redAccent,
+                          ),
+                        )
+                      ],
                     ),
                   ],
                 ),

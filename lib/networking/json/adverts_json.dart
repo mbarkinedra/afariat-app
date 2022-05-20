@@ -128,9 +128,25 @@ class AdvertJson {
   });
 
   AdvertJson.fromJson(Map<String, dynamic> json) {
+    print('photo'*20);
+    print(json['photo']);
     id = json['id'];
     categoryGroup = CategoryGroup.fromJson(json['categoryGroup']);
-    photo = SettingsApp.baseUrl + "/" + json['photo'];
+
+    if(json['photo']!=null){
+      //Découper le string selon "split(".")"
+      List photos=json['photo'].toString().split(".");
+      if(photos.last!='webp'){
+        photo = SettingsApp.baseUrl + "/" + json['photo'] ;
+      }
+
+
+    }
+
+
+
+
+
     description = json['description'];
     title = json['title'];
     price = json['price'];

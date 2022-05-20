@@ -1,0 +1,126 @@
+import 'package:afariat/advert_details/advert_details_scr.dart';
+import 'package:afariat/config/settings_app.dart';
+import 'package:afariat/config/utility.dart';
+import 'package:afariat/networking/json/adverts_json.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+class Favorite extends StatefulWidget {
+  @override
+  _FavoriteState createState() => _FavoriteState();
+}
+
+class _FavoriteState extends State<Favorite> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          " Mes favoris",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.deepOrangeAccent,
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
+      ),
+      body: Container(
+        child: GridView.builder(
+            itemCount: 100,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.8,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 5),
+            itemBuilder: (BuildContext context, int index) {
+              return SingleAdvert(
+                adverts: AdvertJson(),
+              );
+            }),
+      ),
+    );
+  }
+}
+
+class SingleAdvert extends StatelessWidget {
+  final numberFormat = NumberFormat("###,##0", SettingsApp.locale);
+
+  final Size size;
+
+  SingleAdvert({this.size, this.adverts});
+
+  final AdvertJson adverts;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AdvertDetatilsScr()));
+      },
+      child: new Container(
+        margin: EdgeInsets.all(5),
+        //   height: 400.0,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(5.0)),
+        padding: EdgeInsets.all(10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+                alignment: Alignment.topRight,
+                child: new Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                )),
+            Expanded(
+              child: new Text(
+                "voiture", //   adverts.title,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+            ),
+
+            Spacer(),
+         Container(
+              width: MediaQuery.of(context).size.width * .4,
+              height: MediaQuery.of(context).size.height * .19,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15.0),
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage("assets/images/drawer.png"))),
+            ),
+            Spacer(),
+
+            Row(
+              children: [
+                Text(
+                  numberFormat.format(100/*adverts.price*/) +
+                      ' ' +
+                      SettingsApp.moneySymbol,
+                  style: TextStyle(
+                      color: framColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15),
+                  softWrap: true,
+                  overflow: TextOverflow.fade,
+                ),
+                // Expanded(child: Text("")),
+                // Text("1"/*adverts.id.toString()*/),
+                // Icon(Icons.star_border, color: Colors.yellow)
+              ],
+            )
+
+
+          ],
+        ),
+      ),
+    );
+  }
+}

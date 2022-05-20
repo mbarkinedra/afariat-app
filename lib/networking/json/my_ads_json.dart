@@ -142,8 +142,15 @@ class Adverts {
     categoryGroup = json['categoryGroup'] != null
         ? new CategoryGroup.fromJson(json['categoryGroup'])
         : null;
-    photo = SettingsApp.baseUrl +"/"+ json['photo'];
-    description = json['description'];
+    if(json['photo']!=null){
+      //Découper le string selon "split(".")"
+      List photos=json['photo'].toString().split(".");
+      if(photos.last!='webp'){
+        photo = SettingsApp.baseUrl + "/" + json['photo'] ;
+      }
+
+
+    }    description = json['description'];
     title = json['title'];
     price = json['price'];
     region =
