@@ -73,26 +73,31 @@ class AdsItem extends StatelessWidget {
                     ),
                      Spacer(),
                      Container(
-                           width: 130,
-                            height: 20,
+                           width: 140,
+                            height: 25,
                             decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(30.0)),
                               color: adverts.status == 0
-                                  ? Colors.red[200]
+                                  ? const Color(0xFFFFEBC2)
                                   : adverts.status == 1
-                                  ? Colors.orangeAccent[200]
-                                  : Colors.green[200],
+                                  ? const Color(0xFFD0F0FB)
+                                  : const Color(0xFFC7F5D9),
                             ),
                             child: Center(
                               child: FittedBox(
                                 child: Text(
                                   adverts.status == 0
-                                      ? 'en cours de validation'
+                                      ? 'Incomplète'
                                       : adverts.status == 1
-                                          ? 'en cours de validation'
-                                          : 'publier',
+                                          ? 'En cours de validation'
+                                          : 'Publiée',
                                   style: TextStyle(
+                                    color:adverts.status == 0
+                                        ? const Color(0xFF453008)
+                                        : adverts.status == 1
+                                        ? const Color(0xFF084154)
+                                        : const Color(0xFF0B4121),
                                       fontWeight: FontWeight.bold, fontSize: 12),
                                 ),
                               ),
