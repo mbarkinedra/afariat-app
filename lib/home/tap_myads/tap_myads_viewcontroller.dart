@@ -55,8 +55,10 @@ class TapMyadsViewController extends GetxController {
       _myAdsApi.userId = Get.find<AccountInfoStorage>().readUserId();
       getAdsFromServer = true;
       _myAdsApi.getList().then((value) {
+
         MyAdsJson myAdsJson = MyAdsJson();
         myAdsJson = value;
+        print(myAdsJson);
         adverts = myAdsJson.eEmbedded.adverts;
 
         getAdsFromServer = false;

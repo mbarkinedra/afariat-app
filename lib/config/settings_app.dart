@@ -41,4 +41,6 @@ class SettingsApp {
   static const String converstions = baseApiUrl + '/conversations';
   static const String getConverstion = baseApiUrl + '/conversation';
   static const String Converstionreply = baseApiUrl + '/conversations/reply';
+  static const String getFavorite = baseApiUrl + '/favorites';
+
 }

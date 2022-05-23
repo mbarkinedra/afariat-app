@@ -71,6 +71,34 @@ class AdsItem extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
+                     Spacer(),
+                     Container(
+                           width: 130,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30.0)),
+                              color: adverts.status == 0
+                                  ? Colors.red[200]
+                                  : adverts.status == 1
+                                  ? Colors.orangeAccent[200]
+                                  : Colors.green[200],
+                            ),
+                            child: Center(
+                              child: FittedBox(
+                                child: Text(
+                                  adverts.status == 0
+                                      ? 'en cours de validation'
+                                      : adverts.status == 1
+                                          ? 'en cours de validation'
+                                          : 'publier',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 12),
+                                ),
+                              ),
+                            ),
+                          )
+                     ,
                     Spacer(),
                     Align(
                       alignment: Alignment.centerLeft,

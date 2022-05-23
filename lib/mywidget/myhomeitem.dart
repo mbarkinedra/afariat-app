@@ -16,6 +16,8 @@ class MyHomeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("bbbbbbbbbbbbbbbbbbbbbbbbb");
+    print(adverts.photo);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -43,6 +45,7 @@ class MyHomeItem extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
+
               child: Container(
                 height: size.height * .2,
                 child:adverts.photo!=null? Image.network(
