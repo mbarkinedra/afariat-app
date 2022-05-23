@@ -70,13 +70,18 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                                     .toList(),
                               )
                             : logic.advert.photos.length > 0
-                                ? Container(
-                                    height: _size.height * .3,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                                logic.advert.photos[0].path),
-                                            fit: BoxFit.fill)),
+                                ? InkWell(
+                                    onTap: () {
+                                      logic.displayDialogue(context);
+                                    },
+                                    child: Container(
+                                      height: _size.height * .3,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                  logic.advert.photos[0].path),
+                                              fit: BoxFit.fill)),
+                                    ),
                                   )
                                 : SizedBox(),
                       SizedBox(height: 10),

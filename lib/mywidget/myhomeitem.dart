@@ -45,14 +45,14 @@ class MyHomeItem extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
-
               child: Container(
                 height: size.height * .2,
-                child:adverts.photo!=null? Image.network(
-
-                  adverts.photo,
-                  fit: BoxFit.fill,
-                ):   Image.asset("assets/images/no-image.jpg"),
+                child: adverts.photo != null
+                    ? Image.network(
+                        adverts.photo,
+                        fit: BoxFit.fill,
+                      )
+                    : Image.asset("assets/images/no-image.jpg"),
               ),
             ),
             Expanded(

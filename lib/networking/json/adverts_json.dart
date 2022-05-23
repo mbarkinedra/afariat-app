@@ -128,24 +128,18 @@ class AdvertJson {
   });
 
   AdvertJson.fromJson(Map<String, dynamic> json) {
-    print('photo'*20);
+    print('photo' * 20);
     print(json['photo']);
     id = json['id'];
     categoryGroup = CategoryGroup.fromJson(json['categoryGroup']);
 
-    if(json['photo']!=null){
+    if (json['photo'] != null) {
       //Découper le string selon "split(".")"
-      List photos=json['photo'].toString().split(".");
-      if(photos.last!='webp'){
-        photo = SettingsApp.baseUrl + "/" + json['photo'] ;
+      List photos = json['photo'].toString().split(".");
+      if (photos.last != 'webp') {
+        photo = SettingsApp.baseUrl + "/" + json['photo'];
       }
-
-
     }
-
-
-
-
 
     description = json['description'];
     title = json['title'];
@@ -225,7 +219,6 @@ class City {
     order = json['order'];
     links = Links.fromJson(json['_links']);
   }
-
 }
 
 class Town {
@@ -248,5 +241,3 @@ class Town {
     links = Links.fromJson(json['_links']);
   }
 }
-
-
