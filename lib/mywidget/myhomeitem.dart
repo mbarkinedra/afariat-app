@@ -1,7 +1,11 @@
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
+import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
+import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class MyHomeItem extends StatelessWidget {
@@ -16,8 +20,21 @@ class MyHomeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("bbbbbbbbbbbbbbbbbbbbbbbbb");
-    print(adverts.photo);
+    print("iiiiiii" * 20);
+    print(Get.find<FavoriteViewController>().favorites.contains(adverts.id));
+    Get.find<FavoriteViewController>().favorites.forEach((element) {
+      print(element);
+      print(adverts.id);
+      print(element == adverts.id);
+    });
+
+    // Get.find<TapHomeViewController>().favorites.forEach((element) {
+    //   print(adverts.id);
+    //   print("0000000000000");
+    //   print(element);
+    // });
+
+    print("iiiiiii" * 20);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -120,13 +137,35 @@ class MyHomeItem extends StatelessWidget {
                         InkWell(
                           onTap: () {
                             print("ajouter favoris");
-                            isFavorite != isFavorite;
+
+                            if (Get.find<AccountInfoStorage>().isLoggedIn()) {
+                              if (Get.find<FavoriteViewController>()
+                                  .favorites
+                                  .contains(adverts.id)) {
+                                Get.find<FavoriteViewController>()
+                                    .deleteFavoriteByAdvert(adverts.id);
+                              } else {
+                                Get.find<FavoriteViewController>()
+                                    .addToMyFavorite(adverts.id);
+                              }
+
+                              //isFavorite != isFavorite;
+                            } else {
+                              Get.snackbar("",
+                                  "Veuillez vous connecter pour rajouter cette annonce à vos favoris",
+                                  colorText: Colors.white,
+                                  backgroundColor: buttonColor);
+                            }
                           },
                           child: Icon(
-                            isFavorite
-                                ? Icons.favorite_outline_rounded
-                                : Icons.favorite,
-                            color: Colors.redAccent,
+                            Icons.favorite,
+                            color:
+                                Get.find<AccountInfoStorage>().isLoggedIn() &&
+                                        Get.find<FavoriteViewController>()
+                                            .favorites
+                                            .contains(adverts.id)
+                                    ? Colors.red
+                                    : Colors.grey,
                           ),
                         )
                       ],

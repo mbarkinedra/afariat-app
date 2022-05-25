@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:afariat/config/dio_singleton.dart';
 import 'package:afariat/config/settings_app.dart';
@@ -100,7 +101,7 @@ abstract class ApiManager {
     Wsse xwsse = Wsse();
 
     String wsse = xwsse.generateWsseFromStorage();
-    print(wsse);
+    print("wsse =>  $wsse");
     if (_netWorkController.connectionStatus.value) {
       return dioSingleton.dio
           .post(
@@ -137,7 +138,7 @@ abstract class ApiManager {
     Wsse xwsse = Wsse();
 
     String wsse = xwsse.generateWsseFromStorage();
- print(wsse);
+    print("wsse =>  $wsse");
 
     return dioSingleton.dio
         .get(
@@ -201,6 +202,7 @@ abstract class ApiManager {
   Future getData(Map<String, dynamic> dataToPost) async {
     Wsse xwsse = Wsse();
     String wsse = xwsse.generateWsseFromStorage();
+    print(" apiUrl()=>    ${apiUrl()} ");
     return dioSingleton.dio
         .get(
       apiUrl(),

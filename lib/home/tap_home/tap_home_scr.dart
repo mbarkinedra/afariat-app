@@ -5,8 +5,9 @@ import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/bottom_sheet_filter.dart';
-import 'package:afariat/mywidget/favorite_item.dart';
+import 'package:afariat/home/tap_home/favorite/favorite_scr.dart';
 import 'package:afariat/mywidget/myhomeitem.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -256,11 +257,13 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   ),
                 ),
               ),
-              Spacer(),
+              //  Spacer(),
               ListTile(
                 leading: Icon(
                   Icons.favorite,
-                  color: Colors.red,
+                  color: Get.find<AccountInfoStorage>().isLoggedIn()
+                      ? Colors.red
+                      : Colors.grey,
                 ),
                 title: const Text(
                   "Mes favoris",
@@ -268,11 +271,16 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                       TextStyle(color: ColorText, fontWeight: FontWeight.bold),
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Favorite()),
-                  );
+                  if (Get.find<AccountInfoStorage>().isLoggedIn()) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Favorite()),
+                    );
+                  } else {
+                    Get.snackbar("",
+                        "Veuillez vous connecter pour rajouter cette annonce à vos favoris",
+                        colorText: Colors.white, backgroundColor: buttonColor);
+                  }
 
                   print("add favorite");
                   //controller.launchURL("https://afariat.com/aide.html");

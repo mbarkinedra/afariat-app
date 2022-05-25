@@ -1,16 +1,19 @@
 import 'package:afariat/advert_details/advert_details_scr.dart';
+import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
+import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
+import 'package:afariat/networking/api/get_salt_api.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
+import 'package:afariat/networking/json/favorite_json.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class Favorite extends StatefulWidget {
-  @override
-  _FavoriteState createState() => _FavoriteState();
-}
+import 'favorite_viewController.dart';
 
-class _FavoriteState extends State<Favorite> {
+class Favorite extends GetView<FavoriteViewController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,19 +32,28 @@ class _FavoriteState extends State<Favorite> {
               Navigator.of(context).pop();
             }),
       ),
-      body: Container(
-        child: GridView.builder(
-            itemCount: 100,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.8,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 5),
-            itemBuilder: (BuildContext context, int index) {
-              return SingleAdvert(
-                adverts: AdvertJson(),
-              );
-            }),
+      body:  GetBuilder<FavoriteViewController>(builder: (logic) {
+
+          return logic.favoriteJson==null?Center(child: CircularProgressIndicator(),):GridView.builder(
+              itemCount: logic
+                  .favoriteJson
+                  .eEmbedded
+                  .favorites
+                  .length??0,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.8,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5),
+              itemBuilder: (BuildContext context, int index) {
+                return SingleAdvert(
+                  advert: logic
+                      .favoriteJson
+                      .eEmbedded
+                      .favorites[index],
+                );
+              });
+        }
       ),
     );
   }
@@ -51,15 +63,15 @@ class SingleAdvert extends StatelessWidget {
   final numberFormat = NumberFormat("###,##0", SettingsApp.locale);
 
   final Size size;
+  final Favorites advert;
 
-  SingleAdvert({this.size, this.adverts});
-
-  final AdvertJson adverts;
+  SingleAdvert({this.size, this.advert});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        Get.find<AdvertDetailsViewcontroller>().getAdvertDetails(advert.advert.id);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => AdvertDetatilsScr()));
       },
@@ -73,35 +85,52 @@ class SingleAdvert extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
+            InkWell(
+              onTap: () {
+             print("delete favorite");
+                Get.find<FavoriteViewController>().deleteFavorite(advert.id);
+              },
+
+              child: Container(
                 alignment: Alignment.topRight,
-                child: new Icon(
-                  Icons.favorite,
-                  color: Colors.red,
-                )),
+                child: Icon(
+                  Icons.delete,
+                  color: framColor,
+                ),
+              ),
+            ),
             Expanded(
               child: new Text(
-                "voiture", //   adverts.title,
+                advert.advert.title,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
             ),
-
             Spacer(),
-         Container(
+            Container(
               width: MediaQuery.of(context).size.width * .4,
               height: MediaQuery.of(context).size.height * .19,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.0),
-                  image: DecorationImage(
+              child: advert.advert.photo != null
+                  ? Image.network(
+                      advert.advert.photo,
                       fit: BoxFit.fill,
-                      image: AssetImage("assets/images/drawer.png"))),
+                    )
+                  : Image.asset("assets/images/no-image.jpg"),
             ),
+            // Container(
+            //   width: MediaQuery.of(context).size.width * .4,
+            //   height: MediaQuery.of(context).size.height * .19,
+            //   decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(15.0),
+            //     image: DecorationImage(
+            //         fit: BoxFit.fill,
+            //         image: AssetImage(advert.advert.photo))
+            //   ),
+            // ),
             Spacer(),
-
             Row(
               children: [
                 Text(
-                  numberFormat.format(100/*adverts.price*/) +
+                  numberFormat.format(advert.advert.price) +
                       ' ' +
                       SettingsApp.moneySymbol,
                   style: TextStyle(
@@ -116,8 +145,6 @@ class SingleAdvert extends StatelessWidget {
                 // Icon(Icons.star_border, color: Colors.yellow)
               ],
             )
-
-
           ],
         ),
       ),

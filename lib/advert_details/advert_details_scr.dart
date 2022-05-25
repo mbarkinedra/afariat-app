@@ -1,3 +1,4 @@
+import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
@@ -97,11 +98,37 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                             ),
                           ),
                           InkWell(
-                            onTap: () {
-                              print("ajouter favoris");
-                            },
-                            child: Icon(Icons.favorite_outline_rounded),
-                          )
+                              onTap: () {
+                                if (Get.find<AccountInfoStorage>()
+                                    .isLoggedIn()) {
+                                  if (Get.find<FavoriteViewController>()
+                                      .favorites
+                                      .contains(logic.advert.id)) {
+                                    //  print("delete favoris");
+                                    Get.find<FavoriteViewController>()
+                                        .deleteFavoriteByAdvert(logic.advert.id);
+                                  } else {
+                                    Get.find<FavoriteViewController>()
+                                        .addToMyFavorite(logic.advert.id);
+                                  }
+
+                                } else {
+                                  Get.snackbar("",
+                                      "Veuillez vous connecter pour rajouter cette annonce à vos favoris",
+                                      colorText: Colors.white,
+                                      backgroundColor: buttonColor);
+                                }
+                              },
+                              child: Icon(
+                                Icons.favorite,
+                                color:
+                                    Get.find<AccountInfoStorage>().isLoggedIn()&&
+                                        Get.find<FavoriteViewController>()
+                                            .favorites
+                                            .contains(logic.advert.id)
+                                        ? Colors.red
+                                        : Colors.grey,
+                              ))
                         ],
                       ),
                       SizedBox(height: 10),

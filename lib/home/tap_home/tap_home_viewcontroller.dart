@@ -1,11 +1,16 @@
+import 'dart:developer';
+
 import 'package:afariat/controllers/filter_controller.dart';
 import 'package:afariat/model/filter.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/networking/api/advert_api.dart';
+import 'package:afariat/networking/api/delete_favorite.dart';
+import 'package:afariat/networking/api/favorite_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
+import 'package:afariat/networking/json/favorite_json.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_intro/flutter_intro.dart';
@@ -20,6 +25,7 @@ class TapHomeViewController extends GetxController {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   final AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
   TextEditingController searchWord = TextEditingController();
+
   AdvertApi _advertApi = AdvertApi();
   PriceApi _pricesApi = PriceApi();
   bool getDataFromWeb = true;
@@ -32,6 +38,7 @@ class TapHomeViewController extends GetxController {
   bool loadPrice = true;
   String url = '';
   String name = "";
+  FavoriteJson favoriteJson = FavoriteJson();
   final PagingController<int, dynamic> pagingController =
       PagingController(firstPageKey: 0);
   ScrollController scrollController = ScrollController();
@@ -47,6 +54,7 @@ class TapHomeViewController extends GetxController {
     super.onInit();
 
     if (Get.find<NetWorkController>().connectionStatus.value) {
+      //getFavorite();
       getAllAds();
     }
 
@@ -111,6 +119,7 @@ class TapHomeViewController extends GetxController {
       await _advertApi.getList().then((value) {
         advertListJson = value;
         getDataFromWeb = false;
+        // getFavorite();
       });
 
       pagingController.appendLastPage(advertListJson.adverts());
@@ -243,8 +252,7 @@ class TapHomeViewController extends GetxController {
       maskClosable: true,
 
       /// When highlight widget is tapped.
-      onHighlightWidgetTap: (introStatus) {
-      },
+      onHighlightWidgetTap: (introStatus) {},
 
       /// The padding of the highlighted area and the widget
       padding: EdgeInsets.all(8),
