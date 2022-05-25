@@ -232,7 +232,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage(
-                          "assets/images/drawer.png",
+                          "assets/images/Drawer.png",
                         ),
                         fit: BoxFit.fill)),
                 child: Container(
