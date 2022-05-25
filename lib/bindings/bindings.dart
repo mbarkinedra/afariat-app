@@ -35,7 +35,7 @@ class AllBindings extends Bindings {
     Get.lazyPut(
       () => NetWorkController(),
     );
-    Get.lazyPut(() => FavoriteViewController());
+    Get.lazyPut(() => FavoriteViewController(), fenix: true);
     Get.put(TapPublishViewController());
     Get.put(CategoryAndSubcategory());
     Get.put(LocController());

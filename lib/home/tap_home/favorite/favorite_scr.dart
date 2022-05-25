@@ -25,6 +25,7 @@ class Favorite extends GetView<FavoriteViewController> {
         backgroundColor: Colors.deepOrangeAccent,
         leading: IconButton(
             icon: Icon(
+              //
               Icons.arrow_back_ios,
               color: Colors.white,
             ),
@@ -32,29 +33,24 @@ class Favorite extends GetView<FavoriteViewController> {
               Navigator.of(context).pop();
             }),
       ),
-      body:  GetBuilder<FavoriteViewController>(builder: (logic) {
-
-          return logic.favoriteJson==null?Center(child: CircularProgressIndicator(),):GridView.builder(
-              itemCount: logic
-                  .favoriteJson
-                  .eEmbedded
-                  .favorites
-                  .length??0,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.8,
-                  crossAxisSpacing: 5,
-                  mainAxisSpacing: 5),
-              itemBuilder: (BuildContext context, int index) {
-                return SingleAdvert(
-                  advert: logic
-                      .favoriteJson
-                      .eEmbedded
-                      .favorites[index],
-                );
-              });
-        }
-      ),
+      body: GetBuilder<FavoriteViewController>(builder: (logic) {
+        return logic.favoriteJson == null
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : GridView.builder(
+                itemCount: logic.favoriteJson.eEmbedded.favorites.length ?? 0,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.8,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5),
+                itemBuilder: (BuildContext context, int index) {
+                  return SingleAdvert(
+                    favorite: logic.favoriteJson.eEmbedded.favorites[index],
+                  );
+                });
+      }),
     );
   }
 }
@@ -63,15 +59,17 @@ class SingleAdvert extends StatelessWidget {
   final numberFormat = NumberFormat("###,##0", SettingsApp.locale);
 
   final Size size;
-  final Favorites advert;
+  final Favorites favorite;
 
-  SingleAdvert({this.size, this.advert});
+  SingleAdvert({this.size, this.favorite});
 
   @override
   Widget build(BuildContext context) {
+    print(" Mes favoris n  BuildContext");
     return GestureDetector(
       onTap: () {
-        Get.find<AdvertDetailsViewcontroller>().getAdvertDetails(advert.advert.id);
+        Get.find<AdvertDetailsViewcontroller>()
+            .getAdvertDetails(favorite.advert.id);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => AdvertDetatilsScr()));
       },
@@ -87,50 +85,48 @@ class SingleAdvert extends StatelessWidget {
           children: <Widget>[
             InkWell(
               onTap: () {
-             print("delete favorite");
-                Get.find<FavoriteViewController>().deleteFavorite(advert.id);
+                print("delete favorite");
+                Get.find<FavoriteViewController>().idItemDelete =
+                    favorite.advert.id;
+                Get.find<FavoriteViewController>().deleteFavorite(favorite.id);
               },
-
               child: Container(
                 alignment: Alignment.topRight,
-                child: Icon(
-                  Icons.delete,
-                  color: framColor,
-                ),
+                child: Get.find<FavoriteViewController>().idItemDelete ==
+                        favorite.advert.id
+                    ? CircularProgressIndicator()
+                    : Icon(
+                        Icons.delete,
+                        color: framColor,
+                      ),
               ),
             ),
             Expanded(
+              flex: 1,
               child: new Text(
-                advert.advert.title,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                favorite.advert.title,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
               ),
             ),
-            Spacer(),
-            Container(
-              width: MediaQuery.of(context).size.width * .4,
-              height: MediaQuery.of(context).size.height * .19,
-              child: advert.advert.photo != null
-                  ? Image.network(
-                      advert.advert.photo,
-                      fit: BoxFit.fill,
-                    )
-                  : Image.asset("assets/images/no-image.jpg"),
+            // Spacer(),
+            Expanded(
+              flex: 3,
+              child: Container(
+                width: MediaQuery.of(context).size.width * .4,
+                // height: MediaQuery.of(context).size.height * .19,
+                child: favorite.advert.photo != null
+                    ? Image.network(
+                        favorite.advert.photo,
+                        fit: BoxFit.fill,
+                      )
+                    : Image.asset("assets/images/no-image.jpg"),
+              ),
             ),
-            // Container(
-            //   width: MediaQuery.of(context).size.width * .4,
-            //   height: MediaQuery.of(context).size.height * .19,
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(15.0),
-            //     image: DecorationImage(
-            //         fit: BoxFit.fill,
-            //         image: AssetImage(advert.advert.photo))
-            //   ),
-            // ),
             Spacer(),
             Row(
               children: [
                 Text(
-                  numberFormat.format(advert.advert.price) +
+                  numberFormat.format(favorite.advert.price) +
                       ' ' +
                       SettingsApp.moneySymbol,
                   style: TextStyle(

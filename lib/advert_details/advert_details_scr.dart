@@ -106,12 +106,12 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                                       .contains(logic.advert.id)) {
                                     //  print("delete favoris");
                                     Get.find<FavoriteViewController>()
-                                        .deleteFavoriteByAdvert(logic.advert.id);
+                                        .deleteFavoriteByAdvert(
+                                            logic.advert.id);
                                   } else {
                                     Get.find<FavoriteViewController>()
                                         .addToMyFavorite(logic.advert.id);
                                   }
-
                                 } else {
                                   Get.snackbar("",
                                       "Veuillez vous connecter pour rajouter cette annonce à vos favoris",
@@ -120,14 +120,18 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                                 }
                               },
                               child: Icon(
-                                Icons.favorite,
-                                color:
-                                    Get.find<AccountInfoStorage>().isLoggedIn()&&
+                                Get.find<FavoriteViewController>()
+                                        .favorites
+                                        .contains(logic.advert.id)
+                                    ? Icons.favorite
+                                    : Icons.favorite_outline_rounded,
+                                color: Get.find<AccountInfoStorage>()
+                                            .isLoggedIn() ||
                                         Get.find<FavoriteViewController>()
                                             .favorites
                                             .contains(logic.advert.id)
-                                        ? Colors.red
-                                        : Colors.grey,
+                                    ? Colors.red
+                                    : Colors.grey,
                               ))
                         ],
                       ),

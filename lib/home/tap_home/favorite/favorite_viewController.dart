@@ -13,6 +13,7 @@ class FavoriteViewController extends GetxController {
   DeleteFavoriteByAdvert _deleteFavoriteByAdvert = DeleteFavoriteByAdvert();
   List<int> favorites = [];
   FavoriteJson favoriteJson;
+  int idItemDelete;
 
   @override
   void onInit() {
@@ -20,6 +21,7 @@ class FavoriteViewController extends GetxController {
     getFavorite();
   }
 
+  ///Add favovorite advert from homescrenn and advertDetails
   addToMyFavorite(id) {
     _favoriteApi.securePost(dataToPost: {"id": id}).then((value) {
       getFavorite();
@@ -27,6 +29,7 @@ class FavoriteViewController extends GetxController {
     });
   }
 
+  ///get List of favorite adverts
   getFavorite() {
     _favoriteApi.secureGet().then((value) {
       favoriteJson = FavoriteJson.fromJson(value.data);
@@ -37,9 +40,8 @@ class FavoriteViewController extends GetxController {
     });
   }
 
+  /// Delete Favorite by advert
   deleteFavoriteByAdvert(int id) {
-    //  favorites.removeAt(index);
-
     _deleteFavoriteByAdvert.IdAdvert = id.toString();
     _deleteFavoriteByAdvert.deleteData().then((value) {
       getFavorite();
@@ -47,12 +49,14 @@ class FavoriteViewController extends GetxController {
     });
   }
 
+  /// Delete favorite advert from list favorite
   deleteFavorite(int id) {
-    //  favorites.removeAt(index);
+    update();
 
     _deleteFavoriteApi.id = id.toString();
     _deleteFavoriteApi.deleteData().then((value) {
       getFavorite();
+      update();
     });
   }
 }

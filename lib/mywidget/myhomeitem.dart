@@ -20,21 +20,6 @@ class MyHomeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("iiiiiii" * 20);
-    print(Get.find<FavoriteViewController>().favorites.contains(adverts.id));
-    Get.find<FavoriteViewController>().favorites.forEach((element) {
-      print(element);
-      print(adverts.id);
-      print(element == adverts.id);
-    });
-
-    // Get.find<TapHomeViewController>().favorites.forEach((element) {
-    //   print(adverts.id);
-    //   print("0000000000000");
-    //   print(element);
-    // });
-
-    print("iiiiiii" * 20);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -148,8 +133,6 @@ class MyHomeItem extends StatelessWidget {
                                 Get.find<FavoriteViewController>()
                                     .addToMyFavorite(adverts.id);
                               }
-
-                              //isFavorite != isFavorite;
                             } else {
                               Get.snackbar("",
                                   "Veuillez vous connecter pour rajouter cette annonce à vos favoris",
@@ -158,9 +141,13 @@ class MyHomeItem extends StatelessWidget {
                             }
                           },
                           child: Icon(
-                            Icons.favorite,
+                            Get.find<FavoriteViewController>()
+                                    .favorites
+                                    .contains(adverts.id)
+                                ? Icons.favorite
+                                : Icons.favorite_outline_rounded,
                             color:
-                                Get.find<AccountInfoStorage>().isLoggedIn() &&
+                                Get.find<AccountInfoStorage>().isLoggedIn() ||
                                         Get.find<FavoriteViewController>()
                                             .favorites
                                             .contains(adverts.id)
