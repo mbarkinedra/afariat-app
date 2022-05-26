@@ -38,18 +38,38 @@ class Favorite extends GetView<FavoriteViewController> {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : GridView.builder(
-                itemCount: logic.favoriteJson.eEmbedded.favorites.length ?? 0,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.8,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5),
-                itemBuilder: (BuildContext context, int index) {
-                  return SingleAdvert(
-                    favorite: logic.favoriteJson.eEmbedded.favorites[index],
-                  );
-                });
+            : logic.favoriteJson.eEmbedded.favorites.length == 0
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 175,
+                        ),
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Text("Vous n'avez encore d'annonces favoris.",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.grey)),
+                        ),
+                      ],
+                    ),
+                  )
+                : GridView.builder(
+                    itemCount:
+                        logic.favoriteJson.eEmbedded.favorites.length ?? 0,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.8,
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 5),
+                    itemBuilder: (BuildContext context, int index) {
+                      return SingleAdvert(
+                        favorite: logic.favoriteJson.eEmbedded.favorites[index],
+                      );
+                    });
       }),
     );
   }
@@ -65,7 +85,6 @@ class SingleAdvert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(" Mes favoris n  BuildContext");
     return GestureDetector(
       onTap: () {
         Get.find<AdvertDetailsViewcontroller>()
