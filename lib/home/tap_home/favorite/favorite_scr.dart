@@ -22,7 +22,7 @@ class Favorite extends GetView<FavoriteViewController> {
           " Mes favoris",
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor:framColor,
         leading: IconButton(
             icon: Icon(
               //
