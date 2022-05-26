@@ -22,7 +22,7 @@ class Favorite extends GetView<FavoriteViewController> {
           " Mes favoris",
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor:framColor,
+        backgroundColor: framColor,
         leading: IconButton(
             icon: Icon(
               //
@@ -101,19 +101,11 @@ class SingleAdvert extends StatelessWidget {
                       ),
               ),
             ),
-            Expanded(
-              flex: 1,
-              child: new Text(
-                favorite.advert.title,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-              ),
-            ),
-            // Spacer(),
+            SizedBox(height: 8),
             Expanded(
               flex: 3,
               child: Container(
                 width: MediaQuery.of(context).size.width * .4,
-                // height: MediaQuery.of(context).size.height * .19,
                 child: favorite.advert.photo != null
                     ? Image.network(
                         favorite.advert.photo,
@@ -122,7 +114,14 @@ class SingleAdvert extends StatelessWidget {
                     : Image.asset("assets/images/no-image.jpg"),
               ),
             ),
-            Spacer(),
+            SizedBox(height: 8),
+            Expanded(
+              flex: 1,
+              child: new Text(
+                favorite.advert.title,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              ),
+            ),
             Row(
               children: [
                 Text(
