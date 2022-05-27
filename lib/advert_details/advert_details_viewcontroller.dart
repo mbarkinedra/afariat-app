@@ -23,7 +23,7 @@ class AdvertDetailsViewcontroller extends GetxController {
 
   getAdvertDetails(int id) {
     _advertDetailsApi.advertTypeId = id;
-    _advertDetailsApi.getList().then((value) {
+    _advertDetailsApi.getResource().then((value) {
       advert = value;
 
       loading = false;

@@ -13,9 +13,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' as a;
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../storage/AccountInfoStorage.dart';
+
 abstract class ApiManager {
   final DioSingleton dioSingleton = DioSingleton();
-  final storge = a.Get.find<SecureStorage>();
+  final storage = a.Get.find<SecureStorage>();
+  AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
 
   /// Returns the API URL of current API ressource
   String apiUrl();
@@ -56,6 +59,22 @@ abstract class ApiManager {
     }
   }
 
+  //Get one resource
+  Future<dynamic> getResource() async {
+    var data;
+    await dioSingleton.dio.get(apiUrl()).then((value) {
+      data = value.data;
+    });
+    return fromJson(data);
+  }
+
+  // Get one resource by secure method
+  Future<dynamic> secureGetResource() async {
+    var json = await this.secureGet();
+    return fromJson(json.data);
+  }
+
+  // Get list of resources
   Future<dynamic> getList({Map<String, dynamic> filters}) async {
     AbstractJsonResource jsonList;
     var data;
@@ -66,6 +85,16 @@ abstract class ApiManager {
       data = value.data;
     });
     jsonList = fromJson(data);
+
+    return jsonList;
+  }
+
+  // Get list of resources using the secure method
+  Future<dynamic> secureGetList({Map<String, dynamic> filters}) async {
+    AbstractJsonResource jsonList;
+
+    var json = await this.secureGet();
+    jsonList = fromJson(json.data);
 
     return jsonList;
   }
@@ -98,9 +127,7 @@ abstract class ApiManager {
   Future<Response<dynamic>> securePost({dataToPost}) async {
     //generer le wsse
 
-    Wsse xwsse = Wsse();
-
-    String wsse = xwsse.generateWsseFromStorage();
+    String wsse = Wsse.generateWsseFromStorage();
     print("wsse =>  $wsse");
     if (_netWorkController.connectionStatus.value) {
       return dioSingleton.dio
@@ -134,21 +161,18 @@ abstract class ApiManager {
   }
 
   /// Get Data  User From Server
-  Future<Response<dynamic>> secureGet({dataToPost}) async {
-    Wsse xwsse = Wsse();
-
-    String wsse = xwsse.generateWsseFromStorage();
-    print("wsse =>  $wsse");
-
+  Future<Response<dynamic>> secureGet({Map<String, dynamic> filters}) async {
+    String xwsse = Wsse.generateWsseFromStorage();
     return dioSingleton.dio
         .get(
       apiUrl(),
+      queryParameters: filters,
       options: Options(
           headers: {
             "Accept": "application/json",
             'apikey': SettingsApp.apiKey,
             'Content-Type': 'application/json',
-            'X-WSSE': wsse,
+            'X-WSSE': xwsse,
           },
           followRedirects: false,
           validateStatus: (status) {
@@ -164,9 +188,7 @@ abstract class ApiManager {
 
   Future<Response<dynamic>> putData({dataToPost}) async {
     //generer le wsse
-
-    Wsse xwsse = Wsse();
-    String wsse = xwsse.generateWsseFromStorage();
+    String wsse = Wsse.generateWsseFromStorage();
     if (_netWorkController.connectionStatus.value) {
       return dioSingleton.dio
           .put(
@@ -199,9 +221,8 @@ abstract class ApiManager {
     }
   }
 
-  Future getData(Map<String, dynamic> dataToPost) async {
-    Wsse xwsse = Wsse();
-    String wsse = xwsse.generateWsseFromStorage();
+  Future getData() async {
+    String wsse = Wsse.generateWsseFromStorage();
     print(" apiUrl()=>    ${apiUrl()} ");
     return dioSingleton.dio
         .get(
@@ -228,8 +249,7 @@ abstract class ApiManager {
   /// del DATA TO SERVER
   Future<Response<dynamic>> deleteAdverts() async {
     //generer le wsse
-    Wsse xwsse = Wsse();
-    String wsse = xwsse.generateWsseFromStorage();
+    String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(headers: {
       "Accept": "application/json",
       'apikey': SettingsApp.apiKey,
@@ -246,8 +266,7 @@ abstract class ApiManager {
   //Delete User From User
   Future<Response<dynamic>> deleteData() async {
     //generer le wsse
-    Wsse xwsse = Wsse();
-    String wsse = xwsse.generateWsseFromStorage();
+    String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(headers: {
       "Accept": "application/json",
       'apikey': SettingsApp.apiKey,

@@ -21,7 +21,6 @@ class AccountViewController extends GetxController {
   AccountInfoStorage _storage = AccountInfoStorage();
   UserApi _userApi = UserApi();
   UserJson _userJson = UserJson();
-  Wsse wsse = Wsse();
 
   @override
   void onInit() {
@@ -50,7 +49,7 @@ Get.find<AccountInfoStorage>().saveName(name.text);
             success: () {
               Get.snackbar("", "mise à jours avec succés ");
               updateData = false;
-              wsse.generateWsseFromStorage();
+              Wsse.generateWsseFromStorage();
               update();
             },
             value: value);

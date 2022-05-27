@@ -37,11 +37,10 @@ class SignInViewController extends GetxController {
           success: () {
             String hashedPassword =
                 Wsse.hashPassword(password.text, value.data["salt"]);
-            String wsse = Wsse.generateWsseHeader(email.text, hashedPassword);
             Get.find<AccountInfoStorage>().saveEmail(email.text);
             Get.find<AccountInfoStorage>().saveHashedPassword(hashedPassword);
             //Try to login user
-            _signInApi.getData({'X-WSSE': wsse}).then((value) {
+            _signInApi.getData().then((value) {
               validator.validatorServer.validateServer(
                   value: value,
                   success: () async {
