@@ -11,7 +11,7 @@ class FavoriteViewController extends GetxController {
   FavoriteApi _favoriteApi = FavoriteApi();
   DeleteFavoriteApi _deleteFavoriteApi = DeleteFavoriteApi();
   DeleteFavoriteByAdvert _deleteFavoriteByAdvert = DeleteFavoriteByAdvert();
-  List<int> favorites = [];
+
   FavoriteJson favoriteJson;
   int idItemDelete;
 
@@ -25,38 +25,45 @@ class FavoriteViewController extends GetxController {
   addToMyFavorite(id) {
     _favoriteApi.securePost(dataToPost: {"id": id}).then((value) {
       getFavorite();
-      Get.find<TapHomeViewController>().update();
     });
   }
 
   ///get List of favorite adverts
-  getFavorite() {
-    _favoriteApi.secureGet().then((value) {
+  Future getFavorite() async {
+    await _favoriteApi.secureGet().then((value) {
+      Get.find<TapHomeViewController>().favorites.clear();
       favoriteJson = FavoriteJson.fromJson(value.data);
       favoriteJson.eEmbedded.favorites.forEach((element) {
-        favorites.add(element.advert.id);
+        Get.find<TapHomeViewController>().favorites.add(element.advert.id);
       });
-      update();
+      Get.find<TapHomeViewController>().update();
     });
+    update();
   }
 
   /// Delete Favorite by advert
-  deleteFavoriteByAdvert(int id) {
+  deleteFavoriteByAdvert(int id) async {
     _deleteFavoriteByAdvert.IdAdvert = id.toString();
-    _deleteFavoriteByAdvert.deleteData().then((value) {
+    Get.find<TapHomeViewController>().favorites.remove(id);
+    await _deleteFavoriteByAdvert.deleteData().then((value) {
       getFavorite();
-      Get.find<TapHomeViewController>().update();
     });
   }
 
-  /// Delete favorite advert from list favorite
-  deleteFavorite(int id) {
-    update();
+  // Delete fast from list favorite
+  deleteFastFromList(int id) {
+    favoriteJson.eEmbedded.favorites.removeWhere((element) => element.id == id);
+  }
 
+  /// Delete favorite advert from list favorite
+  deleteFavorite(int id) async {
+    update();
     _deleteFavoriteApi.id = id.toString();
-    _deleteFavoriteApi.deleteData().then((value) {
-      getFavorite();
-      update();
+    deleteFastFromList(id);
+    Get.find<TapHomeViewController>().deleteFromFavoritesList(id);
+    await _deleteFavoriteApi.deleteData().then((value) {
+      Get.find<FavoriteViewController>().idItemDelete = null;
     });
+    update();
   }
 }

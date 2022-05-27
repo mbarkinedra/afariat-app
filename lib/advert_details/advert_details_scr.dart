@@ -1,4 +1,5 @@
 import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
+import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
@@ -33,6 +34,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
 
         if (!logic.loading) {
           print(logic.advert.photos.length);
+          print(logic.advert.is_favorite);
         }
 
         return logic.loading
@@ -101,16 +103,25 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                               onTap: () {
                                 if (Get.find<AccountInfoStorage>()
                                     .isLoggedIn()) {
-                                  if (Get.find<FavoriteViewController>()
+                                  if (Get.find<TapHomeViewController>()
                                       .favorites
                                       .contains(logic.advert.id)) {
-                                    //  print("delete favoris");
                                     Get.find<FavoriteViewController>()
                                         .deleteFavoriteByAdvert(
                                             logic.advert.id);
+                                    Get.find<TapHomeViewController>()
+                                        .deleteFromFavoritesList(logic.advert.id);
+
+                                    Get.find<FavoriteViewController>()
+                                        .getFavorite();
+                                    controller.update();
                                   } else {
                                     Get.find<FavoriteViewController>()
                                         .addToMyFavorite(logic.advert.id);
+                                    Get.find<TapHomeViewController>()
+                                        .addToFavoritesList(logic.advert.id);
+                                    controller.update();
+                                    // controller.update();
                                   }
                                 } else {
                                   Get.snackbar("",
@@ -120,14 +131,14 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                                 }
                               },
                               child: Icon(
-                                Get.find<FavoriteViewController>()
+                                Get.find<TapHomeViewController>()
                                         .favorites
                                         .contains(logic.advert.id)
                                     ? Icons.favorite
                                     : Icons.favorite_outline_rounded,
                                 color: Get.find<AccountInfoStorage>()
                                             .isLoggedIn() ||
-                                        Get.find<FavoriteViewController>()
+                                        Get.find<TapHomeViewController>()
                                             .favorites
                                             .contains(logic.advert.id)
                                     ? Colors.red

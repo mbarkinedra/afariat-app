@@ -16,10 +16,10 @@ class MyHomeItem extends StatelessWidget {
   final AdvertJson adverts;
 
   final numberFormat = NumberFormat("###,##0", SettingsApp.locale);
-  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
+    print("this id is ${adverts.id}   is_favorite ${adverts.is_favorite} ");
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -121,17 +121,19 @@ class MyHomeItem extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            print("ajouter favoris");
-
                             if (Get.find<AccountInfoStorage>().isLoggedIn()) {
-                              if (Get.find<FavoriteViewController>()
+                              if (Get.find<TapHomeViewController>()
                                   .favorites
                                   .contains(adverts.id)) {
                                 Get.find<FavoriteViewController>()
                                     .deleteFavoriteByAdvert(adverts.id);
+                                Get.find<TapHomeViewController>()
+                                    .deleteFromFavoritesList(adverts.id);
                               } else {
                                 Get.find<FavoriteViewController>()
                                     .addToMyFavorite(adverts.id);
+                                Get.find<TapHomeViewController>()
+                                    .addToFavoritesList(adverts.id);
                               }
                             } else {
                               Get.snackbar("",
@@ -141,16 +143,18 @@ class MyHomeItem extends StatelessWidget {
                             }
                           },
                           child: Icon(
-                            Get.find<FavoriteViewController>()
-                                    .favorites
-                                    .contains(adverts.id)
+                            Get.find<TapHomeViewController>()
+                                        .favorites
+                                        .contains(adverts.id) ||
+                                    adverts.is_favorite
                                 ? Icons.favorite
                                 : Icons.favorite_outline_rounded,
                             color:
                                 Get.find<AccountInfoStorage>().isLoggedIn() ||
-                                        Get.find<FavoriteViewController>()
+                                        Get.find<TapHomeViewController>()
                                             .favorites
-                                            .contains(adverts.id)
+                                            .contains(adverts.id) ||
+                                        adverts.is_favorite
                                     ? Colors.red
                                     : Colors.grey,
                           ),

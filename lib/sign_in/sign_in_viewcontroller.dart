@@ -1,3 +1,5 @@
+import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
+import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/storage/storage.dart';
 import 'package:afariat/networking/security/wsse.dart';
@@ -42,8 +44,10 @@ class SignInViewController extends GetxController {
             _signInApi.getData({'X-WSSE': wsse}).then((value) {
               validator.validatorServer.validateServer(
                   value: value,
-                  success: () {
+                  success: () async {
                     //save user info to local storage
+
+                    await Get.find<FavoriteViewController>().getFavorite();
 
                     Get.find<AccountInfoStorage>()
                         .saveUserId(value.data["user_id"].toString());

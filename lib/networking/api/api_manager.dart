@@ -63,7 +63,6 @@ abstract class ApiManager {
     await dioSingleton.dio
         .get(apiUrl(), queryParameters: filters)
         .then((value) {
-          log(value.data.toString());
       data = value.data;
     });
     jsonList = fromJson(data);

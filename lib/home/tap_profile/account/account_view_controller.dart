@@ -80,7 +80,6 @@ Get.find<AccountInfoStorage>().saveName(name.text);
       Get.find<TapHomeViewController>().setUserName(_userJson.name);
 
       localisation.cities.forEach((element) {
-      //  print(element.name);
         if (element.id == _userJson.city.id) {
           localisation.updateCity(element);
           update();

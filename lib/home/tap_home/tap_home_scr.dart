@@ -160,7 +160,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                         controller.scrollController,
                                     pagingController:
                                         controller.pagingController,
-                                    addAutomaticKeepAlives: true,
+                                    // addAutomaticKeepAlives: true,
                                     builderDelegate:
                                         PagedChildBuilderDelegate<dynamic>(
                                       itemBuilder: (context, item, index) {
@@ -282,7 +282,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                         colorText: Colors.white, backgroundColor: buttonColor);
                   }
 
-                  print("add favorite");
                   //controller.launchURL("https://afariat.com/aide.html");
                 },
               ),

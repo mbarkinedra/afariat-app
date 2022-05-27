@@ -35,7 +35,7 @@ class NetWorkController extends GetxController {
     switch (value) {
       case ConnectivityResult.wifi:
         connectionStatus.value = true;
-        tapHomeViewController.getAllAds();
+        tapHomeViewController.getAllAdverts();
         Get.find<TapPublishViewController>().getMileages();
         Get.find<TapPublishViewController>().getYearsModels();
         Get.find<TapPublishViewController>().getRoomsNumber();
@@ -44,7 +44,7 @@ class NetWorkController extends GetxController {
         break;
       case ConnectivityResult.mobile:
         connectionStatus.value = true;
-        tapHomeViewController.getAllAds();
+        tapHomeViewController.getAllAdverts();
         Get.find<TapPublishViewController>().getRoomsNumber();
         Get.find<TapPublishViewController>().getMileages();
         Get.find<TapPublishViewController>().getYearsModels();

@@ -112,6 +112,7 @@ class AdvertJson {
   Town town;
   String modifiedAt;
   Links links;
+  bool is_favorite;
 
   AdvertJson({
     this.id,
@@ -125,25 +126,24 @@ class AdvertJson {
     this.town,
     this.modifiedAt,
     this.links,
+    this.is_favorite
   });
 
   AdvertJson.fromJson(Map<String, dynamic> json) {
-    print('photo' * 20);
-    print(json['photo']);
+
     id = json['id'];
     categoryGroup = CategoryGroup.fromJson(json['categoryGroup']);
 
     if (json['photo'] != null) {
-      //Découper le string selon "split(".")"
-      //List photos = json['photo'].toString().split(".");
-      //if (photos.last != 'webp') {
         photo = SettingsApp.baseUrl + "/" + json['photo'];
-      //}
+
     }
 
     description = json['description'];
     title = json['title'];
     price = json['price'];
+    is_favorite = json['is_favorite'];
+
     region = Region.fromJson(json['region']);
     city = City.fromJson(json['city']);
     town = Town.fromJson(json['town']);

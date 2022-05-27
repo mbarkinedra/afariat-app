@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:afariat/controllers/filter_controller.dart';
+import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
 import 'package:afariat/model/filter.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/network_controller.dart';
@@ -25,7 +26,7 @@ class TapHomeViewController extends GetxController {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   final AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
   TextEditingController searchWord = TextEditingController();
-
+  List<int> favorites = [];
   AdvertApi _advertApi = AdvertApi();
   PriceApi _pricesApi = PriceApi();
   bool getDataFromWeb = true;
@@ -54,8 +55,7 @@ class TapHomeViewController extends GetxController {
     super.onInit();
 
     if (Get.find<NetWorkController>().connectionStatus.value) {
-      //getFavorite();
-      getAllAds();
+      getAllAdverts();
     }
 
     scrollController.addListener(() {
@@ -71,7 +71,41 @@ class TapHomeViewController extends GetxController {
     });
   }
 
-  getAllAds() {
+  // Add List favorite into home
+  addToFavoritesList(int id) {
+    favorites.add(id);
+    pagingController.itemList.forEach((element) {
+      if (favorites.contains(element.id)) {
+        element.is_favorite = true;
+      }
+    });
+    update();
+  }
+
+  // delete List favorite into home
+  deleteFromFavoritesList(int id) {
+    favorites.remove(id);
+    pagingController.itemList.forEach((element) {
+      if (favorites.contains(element.id)) {
+        element.is_favorite = true;
+      } else {
+        element.is_favorite = false;
+      }
+    });
+    update();
+  }
+
+  // delete list favorite "logOut"
+  deleteAllFavoritesList() {
+    favorites.clear();
+    pagingController.itemList.forEach((element) {
+      element.is_favorite = false;
+    });
+    update();
+  }
+
+  //Get all adverts
+  getAllAdverts() {
     if (Get.find<NetWorkController>().connectionStatus.value) {
       pagingController.addPageRequestListener((pageKey) {
         _fetchPage();
@@ -120,8 +154,14 @@ class TapHomeViewController extends GetxController {
         advertListJson = value;
         getDataFromWeb = false;
         // getFavorite();
+        Get.find<FavoriteViewController>().getFavorite();
       });
 
+      advertListJson.embedded.adverts.forEach((element) {
+        if (element.is_favorite) {
+          favorites.add(element.id);
+        }
+      });
       pagingController.appendLastPage(advertListJson.adverts());
       update();
     } catch (error) {
