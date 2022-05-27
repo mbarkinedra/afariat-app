@@ -2,6 +2,7 @@ import 'package:afariat/networking/api/delete_favorite.dart';
 import 'package:afariat/networking/api/delete_favoriteByAdvert_api.dart';
 import 'package:afariat/networking/api/favorite_api.dart';
 import 'package:afariat/networking/json/favorite_json.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
@@ -30,15 +31,17 @@ class FavoriteViewController extends GetxController {
 
   ///get List of favorite adverts
   Future getFavorite() async {
-    await _favoriteApi.secureGet().then((value) {
-      Get.find<TapHomeViewController>().favorites.clear();
-      favoriteJson = FavoriteJson.fromJson(value.data);
-      favoriteJson.eEmbedded.favorites.forEach((element) {
-        Get.find<TapHomeViewController>().favorites.add(element.advert.id);
+    if (Get.find<AccountInfoStorage>().isLoggedIn()) {
+      await _favoriteApi.secureGet().then((value) {
+        Get.find<TapHomeViewController>().favorites.clear();
+        favoriteJson = FavoriteJson.fromJson(value.data);
+        favoriteJson.eEmbedded.favorites.forEach((element) {
+          Get.find<TapHomeViewController>().favorites.add(element.advert.id);
+        });
+        Get.find<TapHomeViewController>().update();
       });
-      Get.find<TapHomeViewController>().update();
-    });
-    update();
+      update();
+    }
   }
 
   /// Delete Favorite by advert
