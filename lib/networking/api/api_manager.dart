@@ -179,6 +179,7 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
+      print(value);
       return value;
     }).catchError((error, stackTrace) {
       processServerError(error);
@@ -238,6 +239,7 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
+      print(value);
       return value;
     }).catchError((error, stackTrace) {
       processServerError(error);
@@ -246,23 +248,6 @@ abstract class ApiManager {
 
   /// del DATA TO SERVER
   Future<Response<dynamic>> deleteAdverts() async {
-    //generer le wsse
-    String wsse = Wsse.generateWsseFromStorage();
-    Options options = Options(headers: {
-      "Accept": "application/json",
-      'apikey': SettingsApp.apiKey,
-      'Content-Type': 'application/json',
-      'X-WSSE': wsse,
-    });
-    return dioSingleton.dio.delete(apiUrl(), options: options).then((value) {
-      return value;
-    }).catchError((error, stackTrace) {
-      processServerError(error);
-    });
-  }
-
-  //Delete User From User
-  Future<Response<dynamic>> deleteData() async {
     //generer le wsse
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(headers: {

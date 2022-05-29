@@ -1,8 +1,9 @@
 import 'abstract_json_resource.dart';
 
-class UserJson extends AbstractJsonResource{
-  String username;
+class UserJson extends AbstractJsonResource {
   int id;
+  String username;
+  String email;
   String salt;
   String name;
   String slug;
@@ -10,23 +11,27 @@ class UserJson extends AbstractJsonResource{
   int type;
   bool autopublish;
   String updatedAt;
+  String createddAt;
   City city;
 
   UserJson(
-      {this.username,
-        this.id,
-        this.salt,
-        this.name,
-        this.slug,
-        this.phone,
-        this.type,
-        this.autopublish,
-        this.updatedAt,
-        this.city});
+      {this.id,
+      this.username,
+      this.email,
+      this.salt,
+      this.name,
+      this.slug,
+      this.phone,
+      this.type,
+      this.autopublish,
+      this.updatedAt,
+      this.createddAt,
+      this.city});
 
   UserJson.fromJson(Map<String, dynamic> json) {
-    username = json['username'];
     id = json['id'];
+    username = json['username'];
+    email = json['email'];
     salt = json['salt'];
     name = json['name'];
     slug = json['slug'];
@@ -34,22 +39,39 @@ class UserJson extends AbstractJsonResource{
     type = json['type'];
     autopublish = json['autopublish'];
     updatedAt = json['updated_at'];
+    createddAt = json['created_at'];
     city = json['city'] != null ? new City.fromJson(json['city']) : null;
   }
 
-  Map<String, dynamic> toJson() {
+  /// form: if set to true, only needed fields for update will be serialized, otherwise, all fields.
+  Map<String, dynamic> toJson({form = false}) {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (form != true) {
+      data['id'] = this.id;
+    }
     data['username'] = this.username;
-    data['id'] = this.id;
-    data['salt'] = this.salt;
+    data['email'] = this.email;
+    if (form != true) {
+      data['salt'] = this.salt;
+    }
     data['name'] = this.name;
-    data['slug'] = this.slug;
+    if (form != true) {
+      data['slug'] = this.slug;
+    }
     data['phone'] = this.phone;
     data['type'] = this.type;
-    data['autopublish'] = this.autopublish;
-    data['updated_at'] = this.updatedAt;
+    if (form != true) {
+      data['autopublish'] = this.autopublish;
+
+      data['updated_at'] = this.updatedAt;
+      data['created_at'] = this.createddAt;
+    }
     if (this.city != null) {
-      data['city'] = this.city.toJson();
+      if (form != true) {
+        data['city'] = this.city.toJson();
+      } else {
+        data['city'] = this.city.id;
+      }
     }
     return data;
   }
@@ -89,7 +111,7 @@ class Links {
 
   Links.fromJson(Map<String, dynamic> json) {
     region =
-    json['region'] != null ? new Region.fromJson(json['region']) : null;
+        json['region'] != null ? new Region.fromJson(json['region']) : null;
   }
 
   Map<String, dynamic> toJson() {

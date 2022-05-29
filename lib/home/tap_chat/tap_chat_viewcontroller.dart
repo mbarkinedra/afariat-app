@@ -1,17 +1,15 @@
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/api/conversations_api.dart';
-import 'package:afariat/networking/api/delete_conversation_api.dart';
 import 'package:afariat/networking/json/conversation_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TapChatViewController extends GetxController {
   bool getData = true;
-  ConversationsApi _getConvertionsApi = ConversationsApi();
+  ConversationsApi _conversationApi = ConversationsApi();
   List<Conversation> conversations = [];
   RxBool hasConversaton = false.obs;
 
-  DeleteConversationApi _deleteConversationApi = DeleteConversationApi();
   ScrollController scrollController = ScrollController();
 
   Future<void> onRefreshAds() async {
@@ -32,7 +30,7 @@ class TapChatViewController extends GetxController {
   }
 
   getAllConversations() {
-    _getConvertionsApi.secureGet().then((value) {
+    _conversationApi.secureGet().then((value) {
       ConversationJson conversationJson = ConversationJson.fromJson(value.data);
       conversations = conversationJson.eEmbedded.conversation;
 
@@ -43,9 +41,8 @@ class TapChatViewController extends GetxController {
   }
 
   deleteConversation(int id, item) {
-    conversations.remove(item);
-    _deleteConversationApi.id = id.toString();
-    _deleteConversationApi.deleteData().then((value) {
+    _conversationApi.deleteResource(id.toString()).then((value) {
+      conversations.remove(item);
       update();
     });
     update();

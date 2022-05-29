@@ -1,10 +1,9 @@
 import 'package:afariat/model/filter.dart';
 import 'package:afariat/config/settings_app.dart';
-import 'package:afariat/networking/api/api_manager.dart';
+import 'package:afariat/networking/api/resource_api.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
-import 'package:afariat/storage/AccountInfoStorage.dart';
 
-class AdvertApi extends ApiManager {
+class AdvertApi extends ResourceApi {
   String url;
 
   @override
@@ -18,6 +17,12 @@ class AdvertApi extends ApiManager {
     } else
       return defaultUrl;
   }
+
+  @override
+  String apiDeleteUrl(String id) {
+    return SettingsApp.deleteAds + "/" + id;
+  }
+
 
   @override
   Future<dynamic> getList({Map<String, dynamic> filters}) async {

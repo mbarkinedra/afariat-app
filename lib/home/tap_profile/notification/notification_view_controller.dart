@@ -1,7 +1,7 @@
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/model/filter.dart';
 import 'package:afariat/controllers/network_controller.dart';
-import 'package:afariat/networking/api/count_notification_api.dart';
+import 'package:afariat/networking/api/count_notification_api.dart--';
 import 'package:afariat/networking/api/delete_notification_api.dart';
 import 'package:afariat/networking/api/notification_api.dart';
 import 'package:afariat/networking/api/put_notification_api.dart';
@@ -12,7 +12,6 @@ import 'package:get/get.dart';
 class NotificationViewController extends GetxController {
   NotificationApi _notificationApi = NotificationApi();
   DeleteNotificationApi deleteNotificationApi = DeleteNotificationApi();
-  CountNotificationApi _countNotificationApi = CountNotificationApi();
   material.ScrollController scrollController = material.ScrollController();
   List<Notification> notifications = [];
   RxBool hasNotification = false.obs;
@@ -22,8 +21,7 @@ class NotificationViewController extends GetxController {
 
   ///Function for delete notifications
   onDeleteNotifications({index, int id}) {
-    deleteNotificationApi.id = id.toString();
-    deleteNotificationApi.deleteData().then((value) {
+    _notificationApi.deleteResource(id.toString()).then((value) {
       notifications.remove(index);
       update();
     });
@@ -86,7 +84,7 @@ class NotificationViewController extends GetxController {
       update();
     });
 
-    _countNotificationApi.getData().then((value) {
+    _notificationApi.getUnread().then((value) {
       notifCount.value = value.data["totalUnread"];
     });
   }

@@ -1,5 +1,4 @@
 import 'package:afariat/storage/AccountInfoStorage.dart';
-import 'package:afariat/model/filter.dart';
 import 'package:afariat/networking/security/wsse.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
@@ -20,7 +19,7 @@ class AccountViewController extends GetxController {
   ServerValidator validateServer = ServerValidator();
   AccountInfoStorage _storage = AccountInfoStorage();
   UserApi _userApi = UserApi();
-  UserJson _userJson = UserJson();
+  UserJson user = UserJson();
 
   @override
   void onInit() {
@@ -30,62 +29,55 @@ class AccountViewController extends GetxController {
 
   updateUserData() {
     updateData = true;
-    update();
-    Filter.data["type"] = _userJson.type;
-    Filter.data["email"] = email.text;
-
-    Filter.data["name"] = name.text;
-    Filter.data["phone"] = phone.text;
-
-    Filter.data["city"] = localisation.city.id;
+    // update();
+    user.type = user.type;
+    user.email = email.text;
+    user.name = name.text;
+    user.phone = phone.text;
+    user.city.id = localisation.city.id;
 
     _userApi.id = Get.find<AccountInfoStorage>().readUserId();
 
-    _userApi.putData(dataToPost: Filter.data).then(
+    _userApi.putData(dataToPost: user.toJson(form: true)).then(
       (value) {
-
-Get.find<AccountInfoStorage>().saveName(name.text);
+        Get.find<AccountInfoStorage>().saveName(user.name);
         validateServer.validateServer(
             success: () {
-              Get.snackbar("", "mise à jours avec succés ");
+              Get.snackbar("", "Mise à jours avec succès ");
               updateData = false;
               Wsse.generateWsseFromStorage();
               update();
             },
             value: value);
-
       },
     ).catchError((e) {
       updateData = false;
       update();
-
     });
   }
 
   getUserData() {
-    String userId = Get.find<AccountInfoStorage>().readUserId();
-
-    _userApi.id = userId;
+    _userApi.id = Get.find<AccountInfoStorage>().readUserId();
     name.text = _storage.readName() ?? "";
     email.text = _storage.readEmail() ?? "";
     phone.text = _storage.readPhone() ?? "";
 
     _userApi.secureGet().then((value) {
-      _userJson = UserJson.fromJson(value.data);
-      name.text = _userJson.name;
-
-      phone.text = _userJson.phone;
-      Get.find<AccountInfoStorage>().saveName(_userJson.name);
-      Get.find<TapHomeViewController>().setUserName(_userJson.name);
+      print(value);
+      user = UserJson.fromJson(value.data);
+      name.text = user.name;
+      phone.text = user.phone;
+      email.text = user.email;
+      Get.find<AccountInfoStorage>().saveName(user.name);
+      Get.find<TapHomeViewController>().setUserName(user.username);
 
       localisation.cities.forEach((element) {
-        if (element.id == _userJson.city.id) {
+        if (element.id == user.city.id) {
           localisation.updateCity(element);
           update();
         }
       });
-      _userApi.id = null;
-
+      //_userApi.id = null;
     });
   }
 }

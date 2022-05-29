@@ -1,5 +1,3 @@
-import 'package:afariat/networking/api/delete_favorite.dart';
-import 'package:afariat/networking/api/delete_favoriteByAdvert_api.dart';
 import 'package:afariat/networking/api/favorite_api.dart';
 import 'package:afariat/networking/json/favorite_json.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
@@ -10,8 +8,6 @@ import '../tap_home_viewcontroller.dart';
 
 class FavoriteViewController extends GetxController {
   FavoriteApi _favoriteApi = FavoriteApi();
-  DeleteFavoriteApi _deleteFavoriteApi = DeleteFavoriteApi();
-  DeleteFavoriteByAdvert _deleteFavoriteByAdvert = DeleteFavoriteByAdvert();
 
   FavoriteJson favoriteJson;
   int idItemDelete;
@@ -45,10 +41,9 @@ class FavoriteViewController extends GetxController {
   }
 
   /// Delete Favorite by advert
-  deleteFavoriteByAdvert(int id) async {
-    _deleteFavoriteByAdvert.IdAdvert = id.toString();
-    Get.find<TapHomeViewController>().favorites.remove(id);
-    await _deleteFavoriteByAdvert.deleteData().then((value) {
+  deleteFavoriteByAdvert(int advertId) async {
+    Get.find<TapHomeViewController>().favorites.remove(advertId);
+    await _favoriteApi.deleteByAdvertId(advertId.toString()).then((value) {
       getFavorite();
     });
   }
@@ -61,10 +56,9 @@ class FavoriteViewController extends GetxController {
   /// Delete favorite advert from list favorite
   deleteFavorite(int id) async {
     update();
-    _deleteFavoriteApi.id = id.toString();
     deleteFastFromList(id);
     Get.find<TapHomeViewController>().deleteFromFavoritesList(id);
-    await _deleteFavoriteApi.deleteData().then((value) {
+    await _favoriteApi.deleteResource(id.toString()).then((value) {
       Get.find<FavoriteViewController>().idItemDelete = null;
     });
     update();
