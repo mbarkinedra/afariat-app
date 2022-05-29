@@ -128,7 +128,6 @@ abstract class ApiManager {
     //generer le wsse
 
     String wsse = Wsse.generateWsseFromStorage();
-    print("wsse =>  $wsse");
     if (_netWorkController.connectionStatus.value) {
       return dioSingleton.dio
           .post(
@@ -223,7 +222,6 @@ abstract class ApiManager {
 
   Future getData() async {
     String wsse = Wsse.generateWsseFromStorage();
-    print(" apiUrl()=>    ${apiUrl()} ");
     return dioSingleton.dio
         .get(
       apiUrl(),

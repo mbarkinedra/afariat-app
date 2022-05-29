@@ -11,7 +11,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'tap_publish/tap_publish_viewcontroller.dart';
 
-class Home extends GetWidget<HomeViwController> {
+class Home extends GetWidget<HomeViewController> {
   Key key;
 
   @override

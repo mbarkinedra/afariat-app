@@ -85,7 +85,6 @@ class AccountInfoStorage extends GetxController {
     _secureStorage.deleteSecureData(_key_phone);
     _secureStorage.deleteSecureData(_key_user_id);
     _secureStorage.deleteSecureData(_key_name);
-    Get.find<HomeViwController>().updateList();
   }
 
   bool isLoggedIn() {

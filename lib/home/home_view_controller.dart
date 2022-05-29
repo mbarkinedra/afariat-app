@@ -15,7 +15,7 @@ import 'tap_profile/tap_profile_scr.dart';
 import 'tap_publish/tap_publish_scr.dart';
 import 'package:flutter_intro/flutter_intro.dart';
 
-class HomeViwController extends GetxController {
+class HomeViewController extends GetxController {
   BuildContext context;
   PersistentTabController controller;
   int newPublish = 0;

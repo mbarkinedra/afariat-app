@@ -401,7 +401,7 @@ class TapPublishViewController extends GetxController {
               Get.find<CategoryAndSubcategory>()
                   .clearDataCategroyAndSubCategory();
               Get.find<LocController>().clearDataCityAndTown();
-              Get.find<HomeViwController>().changeItemFilter(1);
+              Get.find<HomeViewController>().changeItemFilter(1);
               await showDialog<bool>(
                   context: context,
                   builder: (context) {
@@ -416,7 +416,7 @@ class TapPublishViewController extends GetxController {
                         Navigator.pop(context);
                         Get.find<TapMyadsViewController>().getAllAds();
                         Get.find<TapPublishViewController>().clearAllData();
-                        Get.find<HomeViwController>().changeItemFilter(1);
+                        Get.find<HomeViewController>().changeItemFilter(1);
                       },
                       description: "Votre annonce est en cours de validation !",
                       buttonText: "Ok",
@@ -455,7 +455,7 @@ class TapPublishViewController extends GetxController {
                       Navigator.pop(context);
                       Get.find<TapPublishViewController>().clearAllData();
                       Get.find<TapMyadsViewController>().getAllAds();
-                      Get.find<HomeViwController>().changeItemFilter(1);
+                      Get.find<HomeViewController>().changeItemFilter(1);
                     },
                     description: "Votre annonce est en cours de validation !",
                     buttonText: "Ok",

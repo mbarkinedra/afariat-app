@@ -26,7 +26,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
             leading: Obx(() => controller.modifAds.value
                 ? InkWell(
                     onTap: () {
-                      Get.find<HomeViwController>().changeItemFilter(1);
+                      Get.find<HomeViewController>().changeItemFilter(1);
                     },
                     child: Icon(Icons.arrow_back))
                 : SizedBox()),

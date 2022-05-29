@@ -34,7 +34,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                 Text(
                     "Toutes vos annonces et vos favoris à un seul endroit, c'est gratuit !"),
                 SizedBox(
-                  height: _size.height * .1,
+                  height: _size.height * .03,
                 ),
                 LogInItem(
                     key: Key('name'),
@@ -44,7 +44,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                     icon: Icons.account_circle,
                     validator: controller.validator.validateName),
                 SizedBox(
-                  height: _size.height * .05,
+                  height: _size.height * .02,
                 ),
                 LogInItem(
                     key: Key('phone'),
@@ -54,7 +54,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                     icon: Icons.add_call,
                     validator: controller.validator.validatePhone),
                 SizedBox(
-                  height: _size.height * .05,
+                  height: _size.height * .02,
                 ),
                 GetBuilder<SignUpViewController>(builder: (logic) {
                   return Column(
@@ -86,7 +86,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                   );
                 }),
                 SizedBox(
-                  height: _size.height * .05,
+                  height: _size.height * .02,
                 ),
                 GetBuilder<LocController>(builder: (logic) {
                   return Column(
@@ -122,7 +122,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                   );
                 }),
                 SizedBox(
-                  height: _size.height * .05,
+                  height: _size.height * .02,
                 ),
                 LogInItem(
                     key: Key('email'),
@@ -132,7 +132,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                     icon: Icons.email,
                     validator: controller.validator.validateEmail),
                 SizedBox(
-                  height: _size.height * .05,
+                  height: _size.height * .02,
                 ),
                 GetBuilder<SignUpViewController>(builder: (logic) {
                   return LogInItem(

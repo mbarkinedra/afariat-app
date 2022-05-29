@@ -98,9 +98,11 @@ class TapHomeViewController extends GetxController {
   // delete list favorite "logOut"
   deleteAllFavoritesList() {
     favorites.clear();
-    pagingController.itemList.forEach((element) {
-      element.is_favorite = false;
-    });
+    if(pagingController.itemList != null) {
+      pagingController.itemList.forEach((element) {
+        element.is_favorite = false;
+      });
+    }
     update();
   }
 
@@ -186,7 +188,7 @@ class TapHomeViewController extends GetxController {
   }
 
   filterWord(v) {
-    update();
+    filterUpdate();
   }
 
   filterClearSearch() {
@@ -342,7 +344,7 @@ class TapHomeViewController extends GetxController {
                       InkWell(
                         onTap: () {
                           params.onFinish();
-                          Get.find<HomeViwController>().startIntro1();
+                          Get.find<HomeViewController>().startIntro1();
                         },
                         child: Container(
                             padding: EdgeInsets.all(8),

@@ -21,6 +21,8 @@ class AdvertApi extends ApiManager {
 
   @override
   Future<dynamic> getList({Map<String, dynamic> filters}) async {
+    print(filters);
+    print('TOTO');
     //if user is logged in, use the secure call.
     if (this.accountInfoStorage.isLoggedIn()) {
       return await this.secureGetList(filters: filters);

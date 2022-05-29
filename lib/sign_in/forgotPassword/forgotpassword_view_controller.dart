@@ -9,14 +9,23 @@ class ForgotPasswordViewController extends GetxController {
   ForgotPasswordApi _forgotPasswordApi = ForgotPasswordApi();
   ServerValidator validateServer = ServerValidator();
 
+  ParameterBag userData = ParameterBag();
+
   forgotPassword() {
-    Filter.data["username"] = password.text;
-    _forgotPasswordApi.post(Filter.data).then((value) {
+    userData.data["username"] = password.text;
+    _forgotPasswordApi.post(userData.data).then((value) {
+      if (value == null) {
+        //a 500 error perhaps. No need to continue validating the server response
+        return;
+      }
       validateServer.validateServer(
         success: () {},
+        failure: () {},
         value: value,
       );
       Get.snackbar("message", value.data["message"]);
-    }).catchError((error) {});
+    }).catchError((error) {
+      print(error);
+    });
   }
 }

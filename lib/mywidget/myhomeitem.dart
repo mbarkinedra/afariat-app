@@ -19,7 +19,6 @@ class MyHomeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("this id is ${adverts.id}   is_favorite ${adverts.is_favorite} ");
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(

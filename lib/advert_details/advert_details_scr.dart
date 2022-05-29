@@ -32,10 +32,10 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
       body: GetBuilder<AdvertDetailsViewcontroller>(builder: (logic) {
         //  logic.advert.userId
 
-        if (!logic.loading) {
+        /*if (!logic.loading) {
           print(logic.advert.photos.length);
           print(logic.advert.is_favorite);
-        }
+        }*/
 
         return logic.loading
             ? Center(child: CircularProgressIndicator())
@@ -244,7 +244,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                         Row(
                           children: [
                             Text(
-                              "Modéle : ",
+                              "Modèle : ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),

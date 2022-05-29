@@ -104,7 +104,6 @@ class SingleAdvert extends StatelessWidget {
           children: <Widget>[
             InkWell(
               onTap: () {
-                print("delete favorite");
                 Get.find<TapHomeViewController>()
                     .favorites
                     .remove(favorite.advert.id);

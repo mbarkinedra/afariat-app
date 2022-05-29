@@ -152,8 +152,6 @@ class Adverts {
     title = json['title'];
     price = json['price'];
     status = json['status'];
-    print('hhhhhhhhhhhhhhhhhhhh');
-    print(status);
 
     region =
         json['region'] != null ? new Region.fromJson(json['region']) : null;

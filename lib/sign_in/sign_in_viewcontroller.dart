@@ -1,7 +1,5 @@
 import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
-import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
-import 'package:afariat/storage/storage.dart';
 import 'package:afariat/networking/security/wsse.dart';
 import 'package:afariat/home/home_view_controller.dart';
 import 'package:afariat/home/tap_profile/account/account_view_controller.dart';
@@ -15,7 +13,6 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 class SignInViewController extends GetxController {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  final storge = Get.find<SecureStorage>();
   GetSaltApi _getSalt = GetSaltApi();
   SignInApi _signInApi = SignInApi();
   bool isVisiblePassword = true;
@@ -33,6 +30,9 @@ class SignInViewController extends GetxController {
     buttonLogin = true;
     update();
     await _getSalt.post({"login": "${email.text}"}).then((value) {
+      if(value == null){ //a 500 error perhaps. No need to continue validating the server response
+        return ;
+      }
       validator.validatorServer.validateServer(
           success: () {
             String hashedPassword =
@@ -51,9 +51,9 @@ class SignInViewController extends GetxController {
                     Get.find<AccountInfoStorage>()
                         .saveUserId(value.data["user_id"].toString());
 
-                    Get.find<HomeViwController>().changeItemFilter(0);
-                    Get.find<HomeViwController>().updateList();
-                    Get.find<HomeViwController>().controller =
+                    Get.find<HomeViewController>().changeItemFilter(0);
+                    Get.find<HomeViewController>().updateList();
+                    Get.find<HomeViewController>().controller =
                         PersistentTabController(initialIndex: 0);
                     Get.find<AccountViewController>().getUserData();
                     email.clear();

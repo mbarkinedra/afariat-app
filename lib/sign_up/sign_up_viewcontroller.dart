@@ -51,6 +51,9 @@ class SignUpViewController extends GetxController {
         email: email.text);
 
     await _signUpApi.post(user).then((value) {
+      if(value == null){ //a 500 error perhaps. No need to continue validating the server response
+        return ;
+      }
       validator.validatorServer.validateServer(
           value: value,
           success: () {
@@ -72,7 +75,6 @@ class SignUpViewController extends GetxController {
           });
     }).catchError((e) {
       Get.snackbar("Erreur", "Oups ! une erreur s'est produite.");
-      print(e);
     });
   }
 }

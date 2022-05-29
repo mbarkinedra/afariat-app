@@ -22,13 +22,12 @@ class NotificationViewController extends GetxController {
 
   ///Function for delete notifications
   onDeleteNotifications({index, int id}) {
-    notifications.remove(index);
-
     deleteNotificationApi.id = id.toString();
     deleteNotificationApi.deleteData().then((value) {
+      notifications.remove(index);
       update();
     });
-    Get.snackbar("", "Votre notification est supprimé");
+    Get.snackbar("", "Notification supprimée avec succès");
   }
 
   /// Function for refrech a new notifications
@@ -40,7 +39,7 @@ class NotificationViewController extends GetxController {
   readNotification(int id) {
     PutNotificationApi putNotificationApi = PutNotificationApi();
     putNotificationApi.id = id.toString();
-    putNotificationApi.putData(dataToPost: Filter.data).then((value) {
+    putNotificationApi.putData().then((value) {
       notifications.clear();
       getAllNotification();
     });
@@ -51,9 +50,12 @@ class NotificationViewController extends GetxController {
     super.onInit();
     if (Get.find<NetWorkController>().connectionStatus.value) {
       if (Get.find<AccountInfoStorage>().readUserId() != null) {
+        print('user');
         getAllNotification();
       }
-    } else {}
+    } else {
+      print('no user');
+    }
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
         if (scrollController.offset >=
@@ -68,6 +70,7 @@ class NotificationViewController extends GetxController {
   }
 
   getAllNotification() {
+    print('here');
     _notificationApi.secureGet().then((value) {
       NotificationJson notificationJson = NotificationJson.fromJson(value.data);
       List<Notification> notification = notificationJson.eEmbedded.notification;
@@ -86,6 +89,11 @@ class NotificationViewController extends GetxController {
     _countNotificationApi.getData().then((value) {
       notifCount.value = value.data["totalUnread"];
     });
+  }
+
+  void clearList() {
+    notifications.clear();
+    update();
   }
 
   void onSwipeUp() {

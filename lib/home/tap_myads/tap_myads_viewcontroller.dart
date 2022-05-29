@@ -58,7 +58,6 @@ class TapMyadsViewController extends GetxController {
 
         MyAdsJson myAdsJson = MyAdsJson();
         myAdsJson = value;
-        print(myAdsJson);
         adverts = myAdsJson.eEmbedded.adverts;
 
         getAdsFromServer = false;

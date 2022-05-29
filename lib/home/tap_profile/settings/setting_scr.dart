@@ -90,11 +90,11 @@ class Setting extends GetWidget<SettingViewController> {
                 label: "Mettre à jour",
                 icon: Icons.refresh_outlined,
                 iconcolor:
-                    logic.updatepasseword ? backmenubackground : framColor,
+                    logic.updatePasseword ? backmenubackground : framColor,
                 width: size.width * .5,
-                btcolor: logic.updatepasseword ? framColor : backmenubackground,
+                btcolor: logic.updatePasseword ? framColor : backmenubackground,
                 labcolor:
-                    logic.updatepasseword ? backmenubackground : framColor,
+                    logic.updatePasseword ? backmenubackground : framColor,
                 function: () {
                   controller.changePassword();
                 },
