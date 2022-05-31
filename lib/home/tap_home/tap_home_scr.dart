@@ -226,131 +226,133 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
       drawer: Container(
         width: _size.width * .6,
         child: Drawer(
-          child: Column(
-            children: [
-              DrawerHeader(
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                          "assets/images/Drawer.png",
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(
+                            "assets/images/Drawer.png",
+                          ),
+                          fit: BoxFit.fill)),
+                  child: Container(
+                    width: _size.width * .6,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(top: 30, right: 8.0, left: 8),
+                          child:
+                              GetBuilder<TapHomeViewController>(builder: (logic) {
+                            return Text(logic.name,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold));
+                          }),
                         ),
-                        fit: BoxFit.fill)),
-                child: Container(
-                  width: _size.width * .6,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(top: 30, right: 8.0, left: 8),
-                        child:
-                            GetBuilder<TapHomeViewController>(builder: (logic) {
-                          return Text(logic.name,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold));
-                        }),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              //  Spacer(),
-              ListTile(
-                leading: Icon(
-                  Icons.favorite,
-                  color: Get.find<AccountInfoStorage>().isLoggedIn()
-                      ? Colors.red
-                      : Colors.grey,
-                ),
-                title: const Text(
-                  "Mes favoris",
-                  style:
-                      TextStyle(color: ColorText, fontWeight: FontWeight.bold),
-                ),
-                onTap: () {
-                  if (Get.find<AccountInfoStorage>().isLoggedIn()) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Favorite()),
-                    );
-                  } else {
-                    Get.snackbar("",
-                        "Veuillez vous connecter pour rajouter cette annonce à vos favoris",
-                        colorText: Colors.white, backgroundColor: buttonColor);
-                  }
+                //  Spacer(),
+                ListTile(
+                  leading: Icon(
+                    Icons.favorite,
+                    color: Get.find<AccountInfoStorage>().isLoggedIn()
+                        ? Colors.red
+                        : Colors.grey,
+                  ),
+                  title: const Text(
+                    "Mes favoris",
+                    style:
+                        TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                  ),
+                  onTap: () {
+                    if (Get.find<AccountInfoStorage>().isLoggedIn()) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Favorite()),
+                      );
+                    } else {
+                      Get.snackbar("",
+                          "Veuillez vous connecter pour rajouter cette annonce à vos favoris",
+                          colorText: Colors.white, backgroundColor: buttonColor);
+                    }
 
-                  //controller.launchURL("https://afariat.com/aide.html");
-                },
-              ),
-              Divider(
-                thickness: 1,
-                color: ColorText,
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.help_center,
+                    //controller.launchURL("https://afariat.com/aide.html");
+                  },
+                ),
+                Divider(
+                  thickness: 1,
                   color: ColorText,
                 ),
-                title: const Text(
-                  "Centre d'aide",
-                  style:
-                      TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                ListTile(
+                  leading: Icon(
+                    Icons.help_center,
+                    color: ColorText,
+                  ),
+                  title: const Text(
+                    "Centre d'aide",
+                    style:
+                        TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                  ),
+                  onTap: () {
+                    controller.launchURL("https://afariat.com/aide.html");
+                  },
                 ),
-                onTap: () {
-                  controller.launchURL("https://afariat.com/aide.html");
-                },
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.checklist,
-                  color: ColorText,
+                ListTile(
+                  leading: Icon(
+                    Icons.checklist,
+                    color: ColorText,
+                  ),
+                  title: const Text(
+                    "Règlement",
+                    style:
+                        TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                  ),
+                  onTap: () {
+                    controller.launchURL("https://afariat.com/règlement.html");
+                  },
                 ),
-                title: const Text(
-                  "Règlement",
-                  style:
-                      TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                ListTile(
+                  leading: Icon(
+                    Icons.https,
+                    color: ColorText,
+                  ),
+                  title: const Text(
+                    "Confidentialité ",
+                    style:
+                        TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                  ),
+                  onTap: () {
+                    controller
+                        .launchURL("https://afariat.com/confidentialite.html");
+                  },
                 ),
-                onTap: () {
-                  controller.launchURL("https://afariat.com/règlement.html");
-                },
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.https,
-                  color: ColorText,
+                ListTile(
+                  leading: Icon(
+                    Icons.gavel,
+                    color: ColorText,
+                  ),
+                  title: const Text(
+                    "CGU ",
+                    style:
+                        TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                  ),
+                  onTap: () {
+                    controller.launchURL(
+                        "https://afariat.com/conditions-générales-d-utilisation.html");
+                  },
                 ),
-                title: const Text(
-                  "Confidentialité ",
-                  style:
-                      TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                SizedBox(
+                  height: 25,
                 ),
-                onTap: () {
-                  controller
-                      .launchURL("https://afariat.com/confidentialite.html");
-                },
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.gavel,
-                  color: ColorText,
-                ),
-                title: const Text(
-                  "CGU ",
-                  style:
-                      TextStyle(color: ColorText, fontWeight: FontWeight.bold),
-                ),
-                onTap: () {
-                  controller.launchURL(
-                      "https://afariat.com/conditions-générales-d-utilisation.html");
-                },
-              ),
-              SizedBox(
-                height: 25,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

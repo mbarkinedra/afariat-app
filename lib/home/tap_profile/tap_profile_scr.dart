@@ -74,6 +74,9 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
               press: () async {
                 Get.find<AccountInfoStorage>().logout();
                 Get.find<HomeViewController>().updateList();
+
+                Get.find<NotificationViewController>().hasNotification.value =
+                    false;
                 Get.find<TapHomeViewController>().deleteAllFavoritesList();
                 Get.find<NotificationViewController>().clearList();
                 await Get.find<AccountInfoStorage>().removeHashedPassword();

@@ -1,4 +1,5 @@
 import 'package:afariat/config/utility.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -96,7 +97,8 @@ class Home extends GetWidget<HomeViewController> {
               key: controller.intro.keys[3],
             ),
             Obx(() =>
-                Get.find<NotificationViewController>().hasNotification.value
+                Get.find<NotificationViewController>().hasNotification.value &&
+                        Get.find<AccountInfoStorage>().isLoggedIn()
                     ? Container(
                         decoration: BoxDecoration(
                             shape: BoxShape.circle, color: Colors.red),
