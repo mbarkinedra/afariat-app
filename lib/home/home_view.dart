@@ -96,16 +96,16 @@ class Home extends GetWidget<HomeViewController> {
               Icons.person,
               key: controller.intro.keys[3],
             ),
-            Obx(() =>
-                Get.find<NotificationViewController>().hasNotification.value &&
-                        Get.find<AccountInfoStorage>().isLoggedIn()
-                    ? Container(
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Colors.red),
-                        height: 10,
-                        width: 10,
-                      )
-                    : SizedBox())
+            Obx(() => Get.find<NotificationViewController>()
+                    .hasNotification
+                    .value //&&  Get.find<AccountInfoStorage>().isLoggedIn()
+                ? Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.red),
+                    height: 10,
+                    width: 10,
+                  )
+                : SizedBox())
           ],
         ),
         title: ("Profil"),

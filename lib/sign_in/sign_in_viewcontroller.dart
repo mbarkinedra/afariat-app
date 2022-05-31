@@ -1,4 +1,5 @@
 import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
+import 'package:afariat/home/tap_profile/notification/notification_view_controller.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/networking/security/wsse.dart';
 import 'package:afariat/home/home_view_controller.dart';
@@ -30,8 +31,9 @@ class SignInViewController extends GetxController {
     buttonLogin = true;
     update();
     await _getSalt.post({"login": "${email.text}"}).then((value) {
-      if(value == null){ //a 500 error perhaps. No need to continue validating the server response
-        return ;
+      if (value == null) {
+        //a 500 error perhaps. No need to continue validating the server response
+        return;
       }
       validator.validatorServer.validateServer(
           success: () {
@@ -56,6 +58,7 @@ class SignInViewController extends GetxController {
                     Get.find<HomeViewController>().controller =
                         PersistentTabController(initialIndex: 0);
                     Get.find<AccountViewController>().getUserData();
+                    Get.find<NotificationViewController>().getAllNotification();
                     email.clear();
                     password.clear();
                   },

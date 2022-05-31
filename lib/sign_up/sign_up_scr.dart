@@ -160,6 +160,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                   width: _size.width * .8,
                   btcolor: buttonColor,
                   icon: Icons.login,
+                  iconcolor: Colors.white,
                   label: "Créer mon compte",
                   labcolor: textbuttonColor,
                   fontWeight: FontWeight.bold,

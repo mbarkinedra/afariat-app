@@ -1,17 +1,13 @@
-import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/model/filter.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/controllers/network_controller.dart';
-import 'package:afariat/networking/api/count_notification_api.dart--';
-import 'package:afariat/networking/api/delete_notification_api.dart';
 import 'package:afariat/networking/api/notification_api.dart';
-import 'package:afariat/networking/api/put_notification_api.dart';
 import 'package:afariat/networking/json/notification_json.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
 
 class NotificationViewController extends GetxController {
   NotificationApi _notificationApi = NotificationApi();
-  DeleteNotificationApi deleteNotificationApi = DeleteNotificationApi();
   material.ScrollController scrollController = material.ScrollController();
   List<Notification> notifications = [];
   RxBool hasNotification = false.obs;
@@ -34,10 +30,9 @@ class NotificationViewController extends GetxController {
   }
 
   /// Function for read a new notifictions
-  readNotification(int id) {
-    PutNotificationApi putNotificationApi = PutNotificationApi();
-    putNotificationApi.id = id.toString();
-    putNotificationApi.putData().then((value) {
+  readNotification( int id) {
+  _notificationApi.id = id.toString();
+    _notificationApi.putData().then((value) {
       notifications.clear();
       getAllNotification();
     });

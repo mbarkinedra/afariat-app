@@ -7,8 +7,6 @@ import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/networking/api/advert_api.dart';
-import 'package:afariat/networking/api/delete_favorite.dart--';
-import 'package:afariat/networking/api/favorite_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:afariat/networking/json/favorite_json.dart';
@@ -19,7 +17,6 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../home_view_controller.dart';
 
 class TapHomeViewController extends GetxController {
@@ -98,7 +95,7 @@ class TapHomeViewController extends GetxController {
   // delete list favorite "logOut"
   deleteAllFavoritesList() {
     favorites.clear();
-    if(pagingController.itemList != null) {
+    if (pagingController.itemList != null) {
       pagingController.itemList.forEach((element) {
         element.is_favorite = false;
       });

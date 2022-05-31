@@ -5,7 +5,7 @@ import 'package:afariat/networking/json/notification_json.dart';
 
 class NotificationApi extends ResourceApi {
   String url;
-
+  String id;
   @override
   int page = 0;
 
@@ -34,5 +34,10 @@ class NotificationApi extends ResourceApi {
   Future getUnread() {
     url = SettingsApp.notificationCountUrl;
     return this.getData();
+  }
+
+  Future<Response<dynamic>> putData({dataToPost}) async {
+    url = SettingsApp.putNotificationUrl + "/" + id;
+    return super.putData(dataToPost: {"id": id});
   }
 }
