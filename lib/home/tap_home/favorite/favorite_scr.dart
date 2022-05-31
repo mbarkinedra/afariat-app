@@ -90,7 +90,7 @@ class SingleAdvert extends StatelessWidget {
         Get.find<AdvertDetailsViewcontroller>()
             .getAdvertDetails(favorite.advert.id);
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AdvertDetatilsScr()));
+            MaterialPageRoute(builder: (context) => AdvertDetailsScr()));
       },
       child: new Container(
         margin: EdgeInsets.all(5),

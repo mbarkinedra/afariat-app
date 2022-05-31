@@ -183,7 +183,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        AdvertDetatilsScr()),
+                                                        AdvertDetailsScr()),
                                               );
                                             },
                                             child: MyHomeItem(

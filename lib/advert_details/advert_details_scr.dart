@@ -12,7 +12,7 @@ import 'package:intl/intl.dart';
 
 import 'advert_details_viewcontroller.dart';
 
-class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
+class AdvertDetailsScr extends GetView<AdvertDetailsViewcontroller> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -110,7 +110,8 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                                         .deleteFavoriteByAdvert(
                                             logic.advert.id);
                                     Get.find<TapHomeViewController>()
-                                        .deleteFromFavoritesList(logic.advert.id);
+                                        .deleteFromFavoritesList(
+                                            logic.advert.id);
 
                                     Get.find<FavoriteViewController>()
                                         .getFavorite();
