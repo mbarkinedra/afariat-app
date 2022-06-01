@@ -56,10 +56,9 @@ class HomeViewController extends GetxController {
   ];
 
 // Start introduction une seule fois
-  startIntro1() {   intro.start(context);
-    if (accountInfoStorage.readIntro() == null) {
-
-    }
+  startIntro1() {
+    intro.start(context);
+    if (accountInfoStorage.readIntro() == null) {}
   }
 
   Intro intro;
@@ -86,8 +85,7 @@ class HomeViewController extends GetxController {
       maskClosable: true,
 
       /// When highlight widget is tapped.
-      onHighlightWidgetTap: (introStatus) {
-      },
+      onHighlightWidgetTap: (introStatus) {},
 
       /// The padding of the highlighted area and the widget
       padding: EdgeInsets.all(8),

@@ -3,13 +3,11 @@ import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
-
 import 'package:afariat/mywidget/custom_button_icon.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 import 'advert_details_viewcontroller.dart';
 
 class AdvertDetailsScr extends GetView<AdvertDetailsViewcontroller> {
@@ -30,13 +28,6 @@ class AdvertDetailsScr extends GetView<AdvertDetailsViewcontroller> {
         ),
       ),
       body: GetBuilder<AdvertDetailsViewcontroller>(builder: (logic) {
-        //  logic.advert.userId
-
-        /*if (!logic.loading) {
-          print(logic.advert.photos.length);
-          print(logic.advert.is_favorite);
-        }*/
-
         return logic.loading
             ? Center(child: CircularProgressIndicator())
             : Padding(

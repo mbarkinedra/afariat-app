@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:afariat/controllers/filter_controller.dart';
 import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
 import 'package:afariat/model/filter.dart';
@@ -71,11 +69,12 @@ class TapHomeViewController extends GetxController {
   // Add List favorite into home
   addToFavoritesList(int id) {
     favorites.add(id);
-    pagingController.itemList.forEach((element) {
-      if (favorites.contains(element.id)) {
-        element.is_favorite = true;
-      }
-    });
+    if (pagingController.itemList == null)
+      pagingController.itemList.forEach((element) {
+        if (favorites.contains(element.id)) {
+          element.is_favorite = true;
+        }
+      });
     update();
   }
 

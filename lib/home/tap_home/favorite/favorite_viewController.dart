@@ -2,8 +2,6 @@ import 'package:afariat/networking/api/favorite_api.dart';
 import 'package:afariat/networking/json/favorite_json.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-
 import '../tap_home_viewcontroller.dart';
 
 class FavoriteViewController extends GetxController {

@@ -1,4 +1,3 @@
-import 'package:afariat/model/filter.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/api/notification_api.dart';
@@ -30,8 +29,8 @@ class NotificationViewController extends GetxController {
   }
 
   /// Function for read a new notifictions
-  readNotification( int id) {
-  _notificationApi.id = id.toString();
+  readNotification(int id) {
+    _notificationApi.id = id.toString();
     _notificationApi.putData().then((value) {
       notifications.clear();
       getAllNotification();

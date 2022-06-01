@@ -1,6 +1,7 @@
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/api/api_manager.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
+import 'package:afariat/networking/json/user_json.dart';
 
 class SignUpApi extends ApiManager {
   Map<String, dynamic> data = {};
@@ -13,6 +14,6 @@ class SignUpApi extends ApiManager {
 
   @override
   AbstractJsonResource fromJson(data) {
-    return data;
+    return UserJson.fromJson(data);
   }
 }

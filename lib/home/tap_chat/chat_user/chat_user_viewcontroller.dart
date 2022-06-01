@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:afariat/networking/api/message_api.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/model/filter.dart';
 import 'package:afariat/networking/api/conversations_api.dart';
-import 'package:afariat/networking/api/conversationsreply.dart';
-import 'package:afariat/networking/api/get_message_api.dart';
 import 'package:afariat/networking/json/conversation_json.dart';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,6 +20,8 @@ class ChatUserViewController extends GetxController {
   List<Conversation> conversations = [];
   AccountInfoStorage _accountInfoStorage = AccountInfoStorage();
   ScrollController scrollController = ScrollController();
+  ParameterBag conversationData = ParameterBag();
+
   List<types.Message> messages = [];
   String name = "";
   String userID;
@@ -62,18 +63,16 @@ class ChatUserViewController extends GetxController {
   }
 
   Future getMessage() async {
-
     _getMessageApi.id = id;
     await _getMessageApi.secureGet().then((value) {
       ConversationJson conversationJson = ConversationJson.fromJson(value.data);
       conversations = conversationJson.eEmbedded.conversation;
       messages.clear();
       conversations.forEach((element) {
-
         final textMessage = types.TextMessage(
             author: types.User(
               id: _accountInfoStorage.readUserId(),
-              firstName:element.from.name,
+              firstName: element.from.name,
             ),
             id: element.from.id.toString(),
             text: element.message,
@@ -92,14 +91,12 @@ class ChatUserViewController extends GetxController {
         .securePost(dataToPost: {"message": message}).then((value) async {
       await getMessage();
       update();
-
     });
   }
-
   sendIdAndImage() async {
-    Filter.data["message"] = imagelink;
-    Filter.data["advert"] = id;
-    await _convertionsApi.securePost(dataToPost: Filter.data);
+    conversationData.data["message"] = imagelink;
+    conversationData.data["advert"] = id;
+    await _convertionsApi.securePost(dataToPost: conversationData.data);
     getMessage();
     update();
   }

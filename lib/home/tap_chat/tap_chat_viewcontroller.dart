@@ -45,6 +45,6 @@ class TapChatViewController extends GetxController {
       conversations.remove(item);
       update();
     });
-    update();
+
   }
 }

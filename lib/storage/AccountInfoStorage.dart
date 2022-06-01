@@ -1,5 +1,4 @@
 import 'package:afariat/storage/storage.dart';
-import 'package:afariat/home/home_view_controller.dart';
 import 'package:get/get.dart';
 
 class AccountInfoStorage extends GetxController {
@@ -9,7 +8,6 @@ class AccountInfoStorage extends GetxController {
   static const _key_name = 'name';
   static const _key_password = 'password';
   static const _key_intro = 'intro';
-
 
   static const _key_phone = 'phone';
   SecureStorage _secureStorage = Get.find<SecureStorage>();
@@ -42,8 +40,6 @@ class AccountInfoStorage extends GetxController {
     _secureStorage.writeSecureData(_key_intro, intro);
   }
 
-
-
   String readEmail() {
     String email = _secureStorage.readSecureData(_key_email);
 
@@ -57,7 +53,6 @@ class AccountInfoStorage extends GetxController {
   String readIntro() {
     return _secureStorage.readSecureData(_key_intro);
   }
-
 
   String readPassword() {
     return _secureStorage.readSecureData(_key_password);

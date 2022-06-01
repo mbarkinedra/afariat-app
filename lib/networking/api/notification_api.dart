@@ -6,7 +6,6 @@ import 'package:afariat/networking/json/notification_json.dart';
 class NotificationApi extends ResourceApi {
   String url;
   String id;
-  @override
   int page = 0;
 
   @override

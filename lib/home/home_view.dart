@@ -1,5 +1,4 @@
 import 'package:afariat/config/utility.dart';
-import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,7 +11,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'tap_publish/tap_publish_viewcontroller.dart';
 
-class Home extends GetWidget<HomeViewController> {
+class HomeView extends GetWidget<HomeViewController> {
   Key key;
 
   @override
@@ -98,7 +97,7 @@ class Home extends GetWidget<HomeViewController> {
             ),
             Obx(() => Get.find<NotificationViewController>()
                     .hasNotification
-                    .value //&&  Get.find<AccountInfoStorage>().isLoggedIn()
+                    .value
                 ? Container(
                     decoration: BoxDecoration(
                         shape: BoxShape.circle, color: Colors.red),

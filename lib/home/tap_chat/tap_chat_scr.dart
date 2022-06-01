@@ -59,9 +59,11 @@ class TapChatScr extends GetWidget<TapChatViewController> {
                                                 color: Colors.white,
                                               ),
                                             ),
-                                            key: Key(logic
-                                                .conversations[position].id
-                                                .toString()), // key: UniqueKey(),
+                                            // key: Key(logic
+                                            //     .conversations[position].id
+                                            //     .toString()),
+
+                                           key: UniqueKey(),
                                             onDismissed: (direction) {
                                               controller.deleteConversation(
                                                   logic.conversations[position]

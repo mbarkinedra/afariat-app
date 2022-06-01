@@ -1,6 +1,7 @@
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/api/api_manager.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
+import 'package:afariat/networking/json/user_json.dart';
 
 class SignInApi extends ApiManager {
   @override
@@ -10,7 +11,6 @@ class SignInApi extends ApiManager {
 
   @override
   AbstractJsonResource fromJson(data) {
-    // TODO: implement fromJson
-    throw UnimplementedError();
+    return UserJson.fromJson(data);
   }
 }

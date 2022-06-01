@@ -3,17 +3,13 @@ import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
-import 'package:afariat/networking/api/get_salt_api.dart';
-import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:afariat/networking/json/favorite_json.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 import 'favorite_viewController.dart';
 
-class Favorite extends GetView<FavoriteViewController> {
+class FavoriteScr extends GetView<FavoriteViewController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

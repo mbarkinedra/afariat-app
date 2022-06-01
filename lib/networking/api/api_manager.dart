@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:afariat/config/dio_singleton.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/storage/storage.dart';
@@ -9,10 +7,8 @@ import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart' as a;
 import 'package:get/get_core/src/get_main.dart';
-
 import '../../storage/AccountInfoStorage.dart';
 
 abstract class ApiManager {

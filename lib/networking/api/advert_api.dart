@@ -16,7 +16,7 @@ class AdvertApi extends ResourceApi {
       return defaultUrl = SettingsApp.baseUrl + url;
     } else
       return defaultUrl;
-  }
+     }
 
   @override
   String apiDeleteUrl(String id) {

@@ -76,15 +76,13 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                       prefixIcon: Icon(Icons.search),
                                       suffixIcon: logic.searchWord.text
                                                   .toString()
-                                                  .length >
-                                              0
+                                                  .length > 0
                                           ? IconButton(
                                               icon: Icon(
                                                 Icons.clear,
                                               ),
                                               onPressed: () {
                                                 /* Clear the search field */
-
                                                 controller.filterClearSearch();
                                               },
                                             )
@@ -160,7 +158,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                         controller.scrollController,
                                     pagingController:
                                         controller.pagingController,
-                                    // addAutomaticKeepAlives: true,
                                     builderDelegate:
                                         PagedChildBuilderDelegate<dynamic>(
                                       itemBuilder: (context, item, index) {
@@ -244,10 +241,10 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding:
-                              const EdgeInsets.only(top: 30, right: 8.0, left: 8),
-                          child:
-                              GetBuilder<TapHomeViewController>(builder: (logic) {
+                          padding: const EdgeInsets.only(
+                              top: 30, right: 8.0, left: 8),
+                          child: GetBuilder<TapHomeViewController>(
+                              builder: (logic) {
                             return Text(logic.name,
                                 style: TextStyle(
                                     color: Colors.white,
@@ -268,23 +265,22 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   ),
                   title: const Text(
                     "Mes favoris",
-                    style:
-                        TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: ColorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
                     if (Get.find<AccountInfoStorage>().isLoggedIn()) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Favorite()),
+                        MaterialPageRoute(builder: (context) => FavoriteScr()),
                       );
                     } else {
                       Get.snackbar("",
                           "Veuillez vous connecter pour rajouter cette annonce à vos favoris",
-                          colorText: Colors.white, backgroundColor: buttonColor);
+                          colorText: Colors.white,
+                          backgroundColor: buttonColor);
                     }
-
-                    //controller.launchURL("https://afariat.com/aide.html");
-                  },
+                    },
                 ),
                 Divider(
                   thickness: 1,
@@ -297,8 +293,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   ),
                   title: const Text(
                     "Centre d'aide",
-                    style:
-                        TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: ColorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
                     controller.launchURL("https://afariat.com/aide.html");
@@ -311,8 +307,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   ),
                   title: const Text(
                     "Règlement",
-                    style:
-                        TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: ColorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
                     controller.launchURL("https://afariat.com/règlement.html");
@@ -325,8 +321,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   ),
                   title: const Text(
                     "Confidentialité ",
-                    style:
-                        TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: ColorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
                     controller
@@ -340,8 +336,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   ),
                   title: const Text(
                     "CGU ",
-                    style:
-                        TextStyle(color: ColorText, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: ColorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
                     controller.launchURL(
