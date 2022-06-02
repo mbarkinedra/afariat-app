@@ -85,7 +85,7 @@ class NotificationViewController extends GetxController {
 
   void clearList() {
     notifications.clear();
-    update();
+   update();
   }
 
   void onSwipeUp() {

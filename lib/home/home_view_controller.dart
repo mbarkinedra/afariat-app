@@ -129,7 +129,14 @@ class HomeViewController extends GetxController {
   }
 
   changeItemFilter(value) {
+    if (value == 0) {
+      Get.find<TapHomeViewController>().scrollUpHome();
+    }
     if (value == 1) {
+      Get.find<TapMyAdsViewController>().loadOrScrollUpAds();
+    }
+    Get.find<TapPublishViewController>().loadTapPublish(value);
+    /* if (value == 1) {
       loadOrScrollAds++;
       if (loadOrScrollAds == 1) {
         Get.find<TapMyadsViewController>().scrollUpAds();
@@ -161,9 +168,8 @@ class HomeViewController extends GetxController {
       }
     } else {
       loadOrScrollHome = 0;
-    }
-
-    TapPublishViewController tapPublishViewController =
+    }*/
+/*    TapPublishViewController tapPublishViewController =
         Get.find<TapPublishViewController>();
     if (value != 2 || newPublish >= 2) {
       newPublish = 1;
@@ -177,7 +183,7 @@ class HomeViewController extends GetxController {
       tapPublishViewController.clearAllData();
     } else {
       newPublish++;
-    }
+    }*/
     // controller.jumpToTab(value);
     controller.index = value;
     update();

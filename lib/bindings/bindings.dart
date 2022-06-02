@@ -40,7 +40,7 @@ class AllBindings extends Bindings {
     Get.put(LocController());
     Get.lazyPut(() => SignUpViewController());
     Get.lazyPut(() => SignInViewController());
-    Get.lazyPut(() => TapMyadsViewController(), fenix: true);
+    Get.lazyPut(() => TapMyAdsViewController(), fenix: true);
     Get.lazyPut(() => TapProfileViewController());
     Get.lazyPut(() => AdvertDetailsViewcontroller());
     Get.lazyPut(() => TapPublishViewController(), fenix: true);

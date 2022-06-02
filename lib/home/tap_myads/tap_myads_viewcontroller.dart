@@ -1,5 +1,4 @@
 import 'package:afariat/storage/AccountInfoStorage.dart';
-import 'package:afariat/storage/storage.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/api/delete_ads.dart';
 import 'package:afariat/networking/api/my_ads_api.dart';
@@ -7,14 +6,14 @@ import 'package:afariat/networking/json/my_ads_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class TapMyadsViewController extends GetxController {
+class TapMyAdsViewController extends GetxController {
   MyAdsApi _myAdsApi = MyAdsApi();
   DeleteAds _deleteAds = DeleteAds();
-  final storge = Get.find<SecureStorage>();
   List<Adverts> adverts = [];
   bool deleteData = false;
   bool getAdsFromServer = false;
   ScrollController scrollController = ScrollController();
+  int loadOrScrollAds = 0;
 
   Future<void> onRefreshAds() async {
     getAllAds();
@@ -55,7 +54,6 @@ class TapMyadsViewController extends GetxController {
       _myAdsApi.userId = Get.find<AccountInfoStorage>().readUserId();
       getAdsFromServer = true;
       _myAdsApi.getList().then((value) {
-
         MyAdsJson myAdsJson = MyAdsJson();
         myAdsJson = value;
         adverts = myAdsJson.eEmbedded.adverts;
@@ -66,6 +64,7 @@ class TapMyadsViewController extends GetxController {
     }
   }
 
+  /// Delete Ads From List
   Future deleteAds(int i) async {
     deleteData = true;
     update();
@@ -81,4 +80,25 @@ class TapMyadsViewController extends GetxController {
   }
 
   Future<void> onSwipeUp() async {}
+
+  /// Scroll Up List Of Ads
+  loadOrScrollUpAds() {
+    //  if (value == 1) {
+    loadOrScrollAds++;
+    if (loadOrScrollAds == 1) {
+      scrollUpAds();
+    } else {
+      if (scrollController.hasClients) {
+        if (scrollController.offset != 1) {
+          scrollUpAds();
+          loadOrScrollAds = 1;
+        } else {
+          loadOrScrollAds = 0;
+        }
+      }
+    }
+    /*} else {
+      loadOrScrollAds = 0;
+    }*/
+  }
 }

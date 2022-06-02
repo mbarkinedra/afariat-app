@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import '../home_view_controller.dart';
 import 'tap_myads_viewcontroller.dart';
 
-class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
+class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -37,7 +37,7 @@ class TapMyAdsScr extends GetWidget<TapMyadsViewController> {
               Get.find<NetWorkController>().connectionStatus.value
                   ? Expanded(
                       child:
-                          GetBuilder<TapMyadsViewController>(builder: (logic) {
+                          GetBuilder<TapMyAdsViewController>(builder: (logic) {
                         return controller.getAdsFromServer
                             ? Center(
                                 child: CircularProgressIndicator(),

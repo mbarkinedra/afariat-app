@@ -31,6 +31,7 @@ class TapHomeViewController extends GetxController {
   int minValuePrice = 0;
   SfRangeValues values = SfRangeValues(0, 100000);
   Map<String, dynamic> search = {};
+  int loadOrScrollHome = 0;
   bool loadPrice = true;
   String url = '';
   String name = "";
@@ -249,6 +250,26 @@ class TapHomeViewController extends GetxController {
     FilterController.setDataFilter(
         key: "maxPrice", val: values.end.toInt().toString());
     update();
+  }
+  /// Scroll Up List Of Advert
+
+  scrollUpHome() {
+    //  if (value == 0) {
+    loadOrScrollHome++;
+    if (loadOrScrollHome == 1) {
+      scrollUp();
+    } else {
+      if (scrollController.offset != 1) {
+        scrollUp();
+        loadOrScrollHome = 1;
+      } else {
+        clearDataFilter();
+        loadOrScrollHome = 0;
+      }
+    }
+    //} else {
+    //loadOrScrollHome = 0;
+    //}
   }
 
   openDrawer() {

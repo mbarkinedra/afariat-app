@@ -123,13 +123,14 @@ class AdvertDetailsViewcontroller extends GetxController {
                         children: [
                           TextButton(
                               onPressed: () {
-                                Filter.data.clear();
+                                ParameterBag message =ParameterBag();
+                                message.data.clear();
 
-                                Filter.data["message"] =
+                                message.data["message"] =
                                     textEditingController.text;
-                                Filter.data["advert"] = advert.id;
+                                message.data["advert"] = advert.id;
                                 _convertionsApi
-                                    .securePost(dataToPost: Filter.data)
+                                    .securePost(dataToPost: message.data)
                                     .then((value) {
                                   Headers responseHeaders = value.headers;
 

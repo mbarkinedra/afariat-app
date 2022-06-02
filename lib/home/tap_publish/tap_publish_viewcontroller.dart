@@ -28,7 +28,7 @@ import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
   RxBool buttonPublier = false.obs;
-
+  int newPublish = 0;
   RxBool modifAds = false.obs;
   bool getDataFromServer = false;
   bool lights = true;
@@ -395,7 +395,7 @@ class TapPublishViewController extends GetxController {
         validator.validatorServer.validateServer(
             value: value,
             success: () async {
-              Get.find<TapMyadsViewController>().getAllAds();
+              Get.find<TapMyAdsViewController>().getAllAds();
               Filter.data.clear();
               clearAllData();
               Get.find<CategoryAndSubcategory>()
@@ -414,7 +414,7 @@ class TapPublishViewController extends GetxController {
                           i++;
                         }
                         Navigator.pop(context);
-                        Get.find<TapMyadsViewController>().getAllAds();
+                        Get.find<TapMyAdsViewController>().getAllAds();
                         Get.find<TapPublishViewController>().clearAllData();
                         Get.find<HomeViewController>().changeItemFilter(1);
                       },
@@ -454,7 +454,7 @@ class TapPublishViewController extends GetxController {
                       }
                       Navigator.pop(context);
                       Get.find<TapPublishViewController>().clearAllData();
-                      Get.find<TapMyadsViewController>().getAllAds();
+                      Get.find<TapMyAdsViewController>().getAllAds();
                       Get.find<HomeViewController>().changeItemFilter(1);
                     },
                     description: "Votre annonce est en cours de validation !",
@@ -495,7 +495,6 @@ class TapPublishViewController extends GetxController {
                       .sc[modifAdsJson.category.group.id]
                       .length;
               sub++) {
-
             if (Get.find<CategoryAndSubcategory>()
                     .sc[modifAdsJson.category.group.id][sub]
                     .id ==
@@ -592,6 +591,23 @@ class TapPublishViewController extends GetxController {
 
   Future<bool> function() async {
     return true;
+  }
+
+  loadTapPublish(value) {
+    if (value != 2 || newPublish >= 2) {
+      newPublish = 1;
+      Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
+      Get.find<LocController>().getCityListSelected();
+      clearAllData();
+    } else if (!modifAds.value) {
+      newPublish = 1;
+      Get.find<LocController>().getCityListSelected();
+      Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
+      clearAllData();
+      
+    } else {
+      newPublish++;
+    }
   }
 
   /// Method Default Options

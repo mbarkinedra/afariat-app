@@ -55,8 +55,8 @@ class SignInViewController extends GetxController {
 
                     Get.find<HomeViewController>().changeItemFilter(0);
                     Get.find<HomeViewController>().updateList();
-                    Get.find<HomeViewController>().controller =
-                        PersistentTabController(initialIndex: 0);
+                    // Get.find<HomeViewController>().controller =
+                    //     PersistentTabController(initialIndex: 0);
                     Get.find<AccountViewController>().getUserData();
                     Get.find<NotificationViewController>().getAllNotification();
                     email.clear();
