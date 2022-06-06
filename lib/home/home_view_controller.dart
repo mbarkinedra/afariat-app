@@ -136,6 +136,8 @@ class HomeViewController extends GetxController {
       Get.find<TapMyAdsViewController>().loadOrScrollUpAds();
     }
     Get.find<TapPublishViewController>().loadTapPublish(value);
+    controller.index = value;
+    update();
     /* if (value == 1) {
       loadOrScrollAds++;
       if (loadOrScrollAds == 1) {
@@ -185,8 +187,6 @@ class HomeViewController extends GetxController {
       newPublish++;
     }*/
     // controller.jumpToTab(value);
-    controller.index = value;
-    update();
   }
 
   Widget buildOffStageNavigator(String tabItem) {

@@ -67,15 +67,53 @@ class TapHomeViewController extends GetxController {
     });
   }
 
+  Future<void> fetchPage([String url]) async {
+    try {
+      _advertApi.url = url;
+      await _advertApi.getList().then((value) {
+        advertListJson = value;
+        getDataFromWeb = false;
+        Get.find<FavoriteViewController>().getFavorite();
+      });
+
+      advertListJson.embedded.adverts.forEach((element) {
+        if (element.is_favorite) {
+          favorites.add(element.id);
+        }
+      });
+      pagingController.appendLastPage(advertListJson.adverts());
+      update();
+    } catch (error) {
+      pagingController.error = error;
+    }
+  }
+
+  /// Scroll Up List Of adverts (first clic on home icon ) And Load List (second clic on home icon  )
+  scrollUpHome() {
+    loadOrScrollHome++;
+    if (loadOrScrollHome == 1) {
+      scrollUp();
+    } else {
+      if (scrollController.offset != 1) {
+        scrollUp();
+        loadOrScrollHome = 1;
+      } else {
+        clearDataFilter();
+        loadOrScrollHome = 0;
+      }
+    }
+  }
+
   // Add List favorite into home
   addToFavoritesList(int id) {
     favorites.add(id);
-    if (pagingController.itemList == null)
+    if (pagingController.itemList != null) {
       pagingController.itemList.forEach((element) {
         if (favorites.contains(element.id)) {
           element.is_favorite = true;
         }
       });
+    }
     update();
   }
 
@@ -107,7 +145,7 @@ class TapHomeViewController extends GetxController {
   getAllAdverts() {
     if (Get.find<NetWorkController>().connectionStatus.value) {
       pagingController.addPageRequestListener((pageKey) {
-        _fetchPage();
+        fetchPage();
       });
       updateData();
       getPriceList();
@@ -116,9 +154,9 @@ class TapHomeViewController extends GetxController {
 
   onSwipeUp() {
     if (advertListJson.links.next == null) {
-      _fetchPage(advertListJson.links.getLastUrl());
+      fetchPage(advertListJson.links.getLastUrl());
     } else {
-      _fetchPage(advertListJson.links.getNextUrl());
+      fetchPage(advertListJson.links.getNextUrl());
     }
   }
 
@@ -126,9 +164,9 @@ class TapHomeViewController extends GetxController {
     pagingController.itemList?.clear();
 
     if (advertListJson.links.previous == null) {
-      _fetchPage(advertListJson.links.getFirstUrl());
+      fetchPage(advertListJson.links.getFirstUrl());
     } else {
-      _fetchPage(advertListJson.links.getPreviousUrl());
+      fetchPage(advertListJson.links.getPreviousUrl());
     }
   }
 
@@ -146,32 +184,9 @@ class TapHomeViewController extends GetxController {
     update();
   }
 
-  Future<void> _fetchPage([String url]) async {
-    try {
-      _advertApi.url = url;
-      await _advertApi.getList().then((value) {
-        advertListJson = value;
-        getDataFromWeb = false;
-        // getFavorite();
-        Get.find<FavoriteViewController>().getFavorite();
-      });
-
-      advertListJson.embedded.adverts.forEach((element) {
-        if (element.is_favorite) {
-          favorites.add(element.id);
-        }
-      });
-      pagingController.appendLastPage(advertListJson.adverts());
-      update();
-    } catch (error) {
-      pagingController.error = error;
-    }
-  }
-
-//Lorsque on clique sur l 'icon home ,le package paging fait un appel la 1 ere page
+  ///When you click on the home icon, the paging package calls the 1st page
   clearDataFilter() {
     _advertApi.url = null;
-    //Get.find<TapHomeViewController>().search.clear();
     Filter.data.clear();
     pagingController.refresh();
   }
@@ -251,26 +266,8 @@ class TapHomeViewController extends GetxController {
         key: "maxPrice", val: values.end.toInt().toString());
     update();
   }
-  /// Scroll Up List Of Advert
 
-  scrollUpHome() {
-    //  if (value == 0) {
-    loadOrScrollHome++;
-    if (loadOrScrollHome == 1) {
-      scrollUp();
-    } else {
-      if (scrollController.offset != 1) {
-        scrollUp();
-        loadOrScrollHome = 1;
-      } else {
-        clearDataFilter();
-        loadOrScrollHome = 0;
-      }
-    }
-    //} else {
-    //loadOrScrollHome = 0;
-    //}
-  }
+  /// Scroll Up List Of Advert
 
   openDrawer() {
     scaffoldKey.currentState.openDrawer();
