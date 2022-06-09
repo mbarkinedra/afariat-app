@@ -1,4 +1,4 @@
-import 'package:afariat/controllers/filter_controller.dart';
+
 import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
 import 'package:afariat/model/filter.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
@@ -212,10 +212,10 @@ class TapHomeViewController extends GetxController {
     //reset the URL of advertApi
     _advertApi.url = null;
     if (searchWord.text.isNotEmpty) {
-      FilterController.setDataFilter(
+      Filter.set(
           key: "search", val: searchWord.text.toString());
     }
-    _advertApi.getList().then((value) {
+    _advertApi.getList(filters: Filter.data).then((value) {
       pagingController.itemList.clear();
       advertListJson = value;
       resetPriceSlider();
@@ -229,7 +229,7 @@ class TapHomeViewController extends GetxController {
         );
       Get.find<LocController>().clearDataCityAndTown();
       Get.find<CategoryAndSubcategory>().clearDataCategroyAndSubCategory();
-      FilterController.searchData.clear();
+      Filter.clear();
       update();
     });
   }
@@ -260,9 +260,9 @@ class TapHomeViewController extends GetxController {
   updateSlideValue(value) {
     values = value;
 
-    FilterController.setDataFilter(
+    Filter.set(
         key: "minPrice", val: values.start.toInt().toString());
-    FilterController.setDataFilter(
+    Filter.set(
         key: "maxPrice", val: values.end.toInt().toString());
     update();
   }

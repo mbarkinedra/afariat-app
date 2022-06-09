@@ -3,8 +3,7 @@ import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:get/get.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/ref_json.dart';
-
-import 'filter_controller.dart';
+import 'package:afariat/model/filter.dart';
 import 'network_controller.dart';
 
 class LocController extends GetxController {
@@ -45,14 +44,13 @@ class LocController extends GetxController {
     city = selectedCity;
 
     if (selectedCity.id == 0) {
-      FilterController.deleteDataFilter(key: "city");
-      FilterController.deleteDataFilter(key: "town");
+      Filter.remove(key: "city");
+      Filter.remove(key: "town");
       town = null;
       update();
     } else {
       city = selectedCity;
-      FilterController
-          .setDataFilter(key: "city", val: selectedCity.id);
+      Filter.set(key: "city", val: selectedCity.id);
       tapPublishViewController.citie = selectedCity;
       town = null;
       tapPublishViewController.myAds["city"] = selectedCity.id;
@@ -65,11 +63,11 @@ class LocController extends GetxController {
   /// Update city from dropDown
   updateTown(RefJson town) {
     if (town.id == 0) {
-      FilterController.deleteDataFilter(key: "town");
+      Filter.remove(key: "town");
       town = null;
       update();
     } else {
-      FilterController.setDataFilter(key: "town", val: town.id);
+      Filter.set(key: "town", val: town.id);
       this.town = town;
       tapPublishViewController.town = town;
       tapPublishViewController.myAds["town"] = town.id;

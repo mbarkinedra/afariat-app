@@ -14,5 +14,22 @@ class Filter {
 
   static String toHttpQuery() => Uri(
       queryParameters:
-      data.map((key, value) => MapEntry(key, value?.toString()))).query;
+          data.map((key, value) => MapEntry(key, value?.toString()))).query;
+
+  /// Set data to map searchData
+  static set({key, val}) {
+    data[key] = val;
+  }
+
+  /// Delete data  from map searchData
+  static remove({key}) {
+    if (data[key] != null) {
+      data.remove(key);
+    }
+  }
+
+  /// Clear the filter data
+  static clear() {
+    data.clear();
+  }
 }

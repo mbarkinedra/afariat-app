@@ -2,14 +2,14 @@ import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/api/api_manager.dart';
 import 'package:afariat/networking/json/user_json.dart';
 
-abstract class User extends ApiManager {
+abstract class AbstractUserAPi extends ApiManager {
   @override
   fromJson(data) {
     return UserJson.fromJson(data);
   }
 }
 
-class UserApi extends User {
+class UserApi extends AbstractUserAPi {
   String id;
 
   @override
@@ -18,7 +18,7 @@ class UserApi extends User {
   }
 }
 
-class SignUpApi extends User {
+class SignUpApi extends AbstractUserAPi {
   Map<String, dynamic> data = {};
 
   @override
@@ -27,14 +27,14 @@ class SignUpApi extends User {
   }
 }
 
-class SignInApi extends User {
+class SignInApi extends AbstractUserAPi {
   @override
   String apiUrl() {
     return SettingsApp.loginUrl;
   }
 }
 
-class GetSaltApi extends User {
+class GetSaltApi extends AbstractUserAPi {
   @override
   String apiUrl() {
     return SettingsApp.getSaltUrl;

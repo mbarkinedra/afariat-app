@@ -25,7 +25,6 @@ class ForgotPasswordViewController extends GetxController {
       );
       Get.snackbar("message", value.data["message"]);
     }).catchError((error) {
-      print(error);
     });
   }
 }

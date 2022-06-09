@@ -3,7 +3,7 @@ import 'package:afariat/model/filter.dart';
 import 'package:afariat/networking/security/wsse.dart';
 import 'package:afariat/validator/validate_server.dart';
 import 'package:afariat/networking/api/change_password_api.dart';
-import 'package:afariat/networking/api/get_salt_api.dart---';
+import 'package:afariat/networking/api/user_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

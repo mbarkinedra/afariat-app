@@ -175,7 +175,6 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
-      print(value);
       return value;
     }).catchError((error, stackTrace) {
       processServerError(error);
@@ -235,7 +234,6 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
-      print(value);
       return value;
     }).catchError((error, stackTrace) {
       processServerError(error);

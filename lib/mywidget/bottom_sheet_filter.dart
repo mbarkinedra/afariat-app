@@ -1,4 +1,3 @@
-import 'package:afariat/controllers/filter_controller.dart';
 import 'package:afariat/model/filter.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
@@ -107,6 +106,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
             }),
           ),
           GetBuilder<TapPublishViewController>(builder: (logic) {
+            logic.isFilterContext = true;
             return logic.getView != null
                 ? WidgetPublish(
                     logic.getView.name,
@@ -253,11 +253,11 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
               height: 50,
               width: _size.width * .4,
               function: () {
-                Filter.data.clear();
-                FilterController.searchData.forEach((key, value) {
+                //Filter.data.clear();
+                /*Filter.data.forEach((key, value) {
                   ///add filter values to URL parameters
                   Filter.data[key] = value;
-                });
+                });*/
                 Get.find<TapHomeViewController>().filterUpdate();
                 Navigator.pop(context);
               },

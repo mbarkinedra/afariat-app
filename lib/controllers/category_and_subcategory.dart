@@ -5,7 +5,7 @@ import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:get/get.dart';
-import 'filter_controller.dart';
+import 'package:afariat/model/filter.dart';
 import 'network_controller.dart';
 
 class CategoryAndSubcategory extends GetxController {
@@ -54,12 +54,12 @@ class CategoryAndSubcategory extends GetxController {
   // Update all data of category from api
   updateCategory(CategoryGroupedJson categoryGrouped) {
     if (categoryGrouped.id == 0) {
-      FilterController.deleteDataFilter(key: "categoryGroup");
+      Filter.remove(key: "categoryGroup");
       subcategories1 = null;
       categoryGroupedJson = categoryGrouped;
     } else {
-      FilterController
-          .setDataFilter(key: "categoryGroup", val: categoryGrouped.id);
+      Filter
+          .set(key: "categoryGroup", val: categoryGrouped.id);
       categoryGroupedJson = categoryGrouped;
       tapPublishViewController.updateCategory(categoryGrouped);
       tapPublishViewController.updateGetView(null);
@@ -74,13 +74,13 @@ class CategoryAndSubcategory extends GetxController {
     subcategories1 = subCategorieJson;
     tapPublishViewController.updateSubCategoryJson(subCategorieJson);
     if (subCategorieJson.id == 0) {
-      FilterController
-          .setDataFilter(key: "categoryGroup", val: categoryGroupedJson.id);
+      Filter
+          .set(key: "categoryGroup", val: categoryGroupedJson.id);
       update();
     } else {
-      FilterController
-          .setDataFilter(key: "category", val: subCategorieJson.id);
-      FilterController.deleteDataFilter(key: "categoryGroup");
+      Filter
+          .set(key: "category", val: subCategorieJson.id);
+      Filter.remove(key: "categoryGroup");
       tapPublishViewController.updateGetView(
           RefJson(id: subCategorieJson.id, name: subCategorieJson.name));
       tapPublishViewController.myAds["category"] = subCategorieJson.id;

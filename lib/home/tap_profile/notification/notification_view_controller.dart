@@ -42,11 +42,10 @@ class NotificationViewController extends GetxController {
     super.onInit();
     if (Get.find<NetWorkController>().connectionStatus.value) {
       if (Get.find<AccountInfoStorage>().readUserId() != null) {
-        print('user');
         getAllNotification();
       }
     } else {
-      print('no user');
+      //do nothing, user is not logged in
     }
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
@@ -62,7 +61,6 @@ class NotificationViewController extends GetxController {
   }
 
   getAllNotification() {
-    print('here');
     _notificationApi.secureGet().then((value) {
       NotificationJson notificationJson = NotificationJson.fromJson(value.data);
       List<Notification> notification = notificationJson.eEmbedded.notification;

@@ -72,7 +72,6 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
               iconProfile: Icons.logout,
               text: "Déconnexion",
               press: () {
-                print("logout");
                 Get.find<AccountInfoStorage>().logout();
                 Get.find<HomeViewController>().updateList();
                 Get.find<NotificationViewController>().hasNotification.value =

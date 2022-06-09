@@ -2,7 +2,7 @@ import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/model/type_register.dart';
 import 'package:afariat/model/user.dart';
 import 'package:afariat/validator/validator_signUp.dart';
-import 'package:afariat/networking/api/sign_up_api.dart---';
+import 'package:afariat/networking/api/user_api.dart';
 import 'package:afariat/sign_up/sign_up_succes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

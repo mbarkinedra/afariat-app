@@ -63,7 +63,6 @@ class AccountViewController extends GetxController {
     phone.text = _storage.readPhone() ?? "";
 
     _userApi.secureGet().then((value) {
-      print(value);
       user = UserJson.fromJson(value.data);
       name.text = user.name;
       phone.text = user.phone;

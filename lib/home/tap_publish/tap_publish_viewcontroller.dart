@@ -27,6 +27,8 @@ import 'package:image_picker/image_picker.dart';
 import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
+  //if set to true, when update categories, options,... the filter will be set by the selected value.
+  bool isFilterContext = false;
   RxBool buttonPublier = false.obs;
   int newPublish = 0;
   RxBool modifAds = false.obs;
@@ -261,7 +263,10 @@ class TapPublishViewController extends GetxController {
     myAds["vehicleBrand"] = newValue.id;
     myAdsView["Marque:"] = newValue.name;
     vehiculebrands = newValue;
-
+    //set filter if we are in context filter
+    if (isFilterContext == true) {
+      Filter.set(key: "vehicleBrand", val: newValue.id);
+    }
     getVehicleModel();
 
     update();
@@ -273,6 +278,11 @@ class TapPublishViewController extends GetxController {
     myAdsView["Marque:"] = newValue.name;
     motosBrand = newValue;
 
+    //set filter if we are in context filter
+    if (isFilterContext == true) {
+      Filter.set(key: "motoBrand", val: newValue.id);
+    }
+
     update();
   }
 
@@ -281,6 +291,12 @@ class TapPublishViewController extends GetxController {
 
     myAds["vehicleModel"] = newValue.id;
     myAdsView["Modèle:"] = newValue.name;
+
+    //set filter if we are in context filter
+    if (isFilterContext == true) {
+      Filter.set(key: "vehicleModel", val: newValue.id);
+    }
+
     update();
   }
 
@@ -289,6 +305,12 @@ class TapPublishViewController extends GetxController {
 
     myAds["mileage"] = newValue.id;
     myAdsView["Kilométrage:"] = newValue.name + " " + "Km";
+
+    //set filter if we are in context filter
+    if (isFilterContext == true) {
+      Filter.set(key: "mileage", val: newValue.id);
+    }
+
     update();
   }
 
@@ -296,6 +318,11 @@ class TapPublishViewController extends GetxController {
     yearsModele = newValue;
     myAds["yearModel"] = newValue.id;
     myAdsView["Année:"] = newValue.name;
+
+    //set filter if we are in context filter
+    if (isFilterContext == true) {
+      Filter.set(key: "yearModel", val: newValue.id);
+    }
 
     update();
   }
@@ -305,6 +332,11 @@ class TapPublishViewController extends GetxController {
     myAds["energy"] = newValue.id;
     myAdsView["energie:"] = newValue.name;
 
+    //set filter if we are in context filter
+    if (isFilterContext == true) {
+      Filter.set(key: "energy", val: newValue.id);
+    }
+
     update();
   }
 
@@ -312,6 +344,12 @@ class TapPublishViewController extends GetxController {
     nombrePiece = newValue;
     myAds["roomsNumber"] = newValue.id;
     myAdsView["Nombre de pièces"] = newValue.name;
+
+    //set filter if we are in context filter
+    if (isFilterContext == true) {
+      Filter.set(key: "roomsNumber", val: newValue.id);
+    }
+
     update();
   }
 
@@ -604,7 +642,6 @@ class TapPublishViewController extends GetxController {
       Get.find<LocController>().getCityListSelected();
       Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
       clearAllData();
-      
     } else {
       newPublish++;
     }
