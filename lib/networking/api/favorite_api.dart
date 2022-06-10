@@ -31,4 +31,16 @@ class FavoriteApi extends ResourceApi {
     _deleteUrl = SettingsApp.deleteFavoriteByAdvert;
     return super.deleteResource(advertId);
   }
+
+  @override
+  String apiPostUrl(dataToPost) {
+    // TODO: implement apiPostUrl
+    throw UnimplementedError();
+  }
+
+  @override
+  String apiPutUrl({dataToPost}) {
+    // TODO: implement apiPutUrl
+    throw UnimplementedError();
+  }
 }

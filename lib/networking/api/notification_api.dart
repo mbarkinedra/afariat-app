@@ -39,4 +39,16 @@ class NotificationApi extends ResourceApi {
     url = SettingsApp.putNotificationUrl + "/" + id;
     return super.putData(dataToPost: {"id": id});
   }
+
+  @override
+  String apiPostUrl(dataToPost) {
+    // TODO: implement apiPostUrl
+    throw UnimplementedError();
+  }
+
+  @override
+  String apiPutUrl({dataToPost}) {
+    // TODO: implement apiPutUrl
+    throw UnimplementedError();
+  }
 }

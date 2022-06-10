@@ -37,4 +37,16 @@ class AdvertApi extends ResourceApi {
   fromJson(data) {
     return AdvertListJson.fromJson(data);
   }
+
+  @override
+  String apiPostUrl(dataToPost) {
+    // TODO: implement apiPostUrl
+    throw UnimplementedError();
+  }
+
+  @override
+  String apiPutUrl({dataToPost}) {
+    // TODO: implement apiPutUrl
+    throw UnimplementedError();
+  }
 }

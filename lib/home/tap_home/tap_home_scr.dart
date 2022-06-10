@@ -76,7 +76,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                       prefixIcon: Icon(Icons.search),
                                       suffixIcon: logic.searchWord.text
                                                   .toString()
-                                                  .length > 0
+                                                  .length >
+                                              0
                                           ? IconButton(
                                               icon: Icon(
                                                 Icons.clear,
@@ -151,8 +152,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                               ? Center(child: const CircularProgressIndicator())
                               : RefreshIndicator(
                                   onRefresh: () => Future.sync(
-                                    () => controller.pagingController.refresh(),
-                                  ),
+                                      () {} //  () => controller.pagingController.refresh(),
+                                      ),
                                   child: PagedListView<int, dynamic>(
                                     scrollController:
                                         controller.scrollController,
@@ -280,7 +281,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                           colorText: Colors.white,
                           backgroundColor: buttonColor);
                     }
-                    },
+                  },
                 ),
                 Divider(
                   thickness: 1,

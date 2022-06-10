@@ -4,7 +4,7 @@ import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/networking/security/wsse.dart';
 import 'package:afariat/home/home_view_controller.dart';
 import 'package:afariat/home/tap_profile/account/account_view_controller.dart';
-import 'package:afariat/networking/api/user_api.dart';
+import 'package:afariat/networking/api/abstract_user_api.dart';
 import 'package:afariat/validator/validator_signIn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';

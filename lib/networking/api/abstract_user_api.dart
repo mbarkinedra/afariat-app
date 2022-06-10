@@ -9,24 +9,6 @@ abstract class AbstractUserAPi extends ApiManager {
   }
 }
 
-class UserApi extends AbstractUserAPi {
-  String id;
-
-  @override
-  String apiUrl() {
-    return SettingsApp.userUrl + "/" + id;
-  }
-}
-
-class SignUpApi extends AbstractUserAPi {
-  Map<String, dynamic> data = {};
-
-  @override
-  String apiUrl() {
-    return SettingsApp.registerUrl;
-  }
-}
-
 class SignInApi extends AbstractUserAPi {
   @override
   String apiUrl() {

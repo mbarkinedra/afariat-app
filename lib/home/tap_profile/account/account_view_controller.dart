@@ -1,9 +1,10 @@
+import 'package:afariat/networking/api/user.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/networking/security/wsse.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/validator/validate_server.dart';
-import 'package:afariat/networking/api/user_api.dart';
+import 'package:afariat/networking/api/abstract_user_api.dart';
 import 'package:afariat/networking/json/user_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,7 +30,6 @@ class AccountViewController extends GetxController {
 
   updateUserData() {
     updateData = true;
-    // update();
     user.type = user.type;
     user.email = email.text;
     user.name = name.text;
@@ -37,8 +37,8 @@ class AccountViewController extends GetxController {
     user.city.id = localisation.city.id;
 
     _userApi.id = Get.find<AccountInfoStorage>().readUserId();
-
-    _userApi.putData(dataToPost: user.toJson(form: true)).then(
+print(user.toJson(form: true));//user.toJson(form: true)
+    _userApi.putResource(dataToPost: {}).then(
       (value) {
         Get.find<AccountInfoStorage>().saveName(user.name);
         validateServer.validateServer(

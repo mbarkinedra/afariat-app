@@ -210,6 +210,8 @@ class TapHomeViewController extends GetxController {
 
   filterUpdate() {
     //reset the URL of advertApi
+
+    //print(Filter.data);
     _advertApi.url = null;
     if (searchWord.text.isNotEmpty) {
       Filter.set(
@@ -267,7 +269,6 @@ class TapHomeViewController extends GetxController {
     update();
   }
 
-  /// Scroll Up List Of Advert
 
   openDrawer() {
     scaffoldKey.currentState.openDrawer();
@@ -283,7 +284,7 @@ class TapHomeViewController extends GetxController {
     if (!await launch(url)) throw 'Could not launch $url';
   }
 
-  // Start introduction une seule fois
+  // Start intro one time
   startIntro(context) {
     if (accountInfoStorage.readIntro() == null) {
       intro.start(context);

@@ -1,8 +1,9 @@
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/model/type_register.dart';
 import 'package:afariat/model/user.dart';
+import 'package:afariat/networking/api/user.dart';
 import 'package:afariat/validator/validator_signUp.dart';
-import 'package:afariat/networking/api/user_api.dart';
+import 'package:afariat/networking/api/abstract_user_api.dart';
 import 'package:afariat/sign_up/sign_up_succes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ class SignUpViewController extends GetxController {
   TextEditingController phone = TextEditingController();
   TextEditingController email = TextEditingController();
   ValidatorSignUp validator = ValidatorSignUp();
-  SignUpApi _signUpApi = SignUpApi();
+  UserApi _signUpApi = UserApi();
   bool isVisiblePassword = true;
   List<TypeRegister> typeList = [
     TypeRegister(name: "Particulier", id: 0),
