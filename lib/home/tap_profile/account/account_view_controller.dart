@@ -37,7 +37,7 @@ class AccountViewController extends GetxController {
     user.city.id = localisation.city.id;
 
     _userApi.id = Get.find<AccountInfoStorage>().readUserId();
-print(user.toJson(form: true));//user.toJson(form: true)
+    print(user.toJson(form: true)); //user.toJson(form: true)
     _userApi.putResource(dataToPost: {}).then(
       (value) {
         Get.find<AccountInfoStorage>().saveName(user.name);

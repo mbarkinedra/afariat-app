@@ -51,9 +51,10 @@ class SignUpViewController extends GetxController {
         name: name.text,
         email: email.text);
 
-    await _signUpApi.post(user).then((value) {
-      if(value == null){ //a 500 error perhaps. No need to continue validating the server response
-        return ;
+    await _signUpApi.postResource(user).then((value) {
+      if (value == null) {
+        //a 500 error perhaps. No need to continue validating the server response
+        return;
       }
       validator.validatorServer.validateServer(
           value: value,
