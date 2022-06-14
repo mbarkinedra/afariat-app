@@ -18,6 +18,7 @@ class MyAdsApi extends ResourceApi {
 
   @override
   String apiDeleteUrl(String id) {
+
     return SettingsApp.deleteAds + "/" + id;
   }
 
