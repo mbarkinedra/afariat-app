@@ -14,8 +14,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class ChatUserViewController extends GetxController {
   TextEditingController controller = TextEditingController();
-  ConversationsReply _conversationsReply = ConversationsReply();
-  GetMessageApi _getMessageApi = GetMessageApi();
+  MessageApi _getMessageApi = MessageApi();
   ConversationsApi _convertionsApi = ConversationsApi();
   List<Conversation> conversations = [];
   AccountInfoStorage _accountInfoStorage = AccountInfoStorage();
@@ -86,17 +85,18 @@ class ChatUserViewController extends GetxController {
   }
 
   sendChat() {
-    _conversationsReply.id = id;
-    _conversationsReply
-        .securePost(dataToPost: {"message": message}).then((value) async {
+    _getMessageApi.id = id;
+    _getMessageApi
+        .postResource(dataToPost: {"message": message}).then((value) async {
       await getMessage();
       update();
     });
   }
+
   sendIdAndImage() async {
     conversationData.data["message"] = imagelink;
     conversationData.data["advert"] = id;
-    await _convertionsApi.securePost(dataToPost: conversationData.data);
+    await _convertionsApi.postResource(dataToPost: conversationData.data);
     getMessage();
     update();
   }

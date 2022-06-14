@@ -5,30 +5,32 @@ import 'package:afariat/networking/json/conversation_json.dart';
 class ConversationsApi extends ResourceApi {
   int page;
 
+  /// Function Get List all conversation in screen chat
   @override
   String apiUrl() {
-    return SettingsApp.converstions + "?page=" + page.toString();
+    return SettingsApp.conversations + "?page=" + page.toString();
   }
 
+  /// Function delete from List  conversation in screen chat
   @override
   String apiDeleteUrl(String id) {
-    return SettingsApp.converstions + "/" + id;
+    return SettingsApp.conversations + "/" + id;
   }
 
-  @override
-  fromJson(data) {
-    return ConversationJson.fromJson(data);
-  }
-
+  /// Function Post message From screen advertDetails
   @override
   String apiPostUrl({dataToPost}) {
-    // TODO: implement apiPostUrl
-    throw UnimplementedError();
+    return SettingsApp.conversations;
   }
 
   @override
   String apiPutUrl({dataToPost}) {
     // TODO: implement apiPutUrl
     throw UnimplementedError();
+  }
+
+  @override
+  fromJson(data) {
+    return ConversationJson.fromJson(data);
   }
 }
