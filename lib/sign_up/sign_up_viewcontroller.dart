@@ -16,7 +16,8 @@ class SignUpViewController extends GetxController {
   TextEditingController phone = TextEditingController();
   TextEditingController email = TextEditingController();
   ValidatorSignUp validator = ValidatorSignUp();
-  UserApi _signUpApi = UserApi();
+ // UserApi _signUpApi = UserApi();
+  SignUpApi _signUpApi=SignUpApi();
   bool isVisiblePassword = true;
   List<TypeRegister> typeList = [
     TypeRegister(name: "Particulier", id: 0),
@@ -51,7 +52,7 @@ class SignUpViewController extends GetxController {
         name: name.text,
         email: email.text);
 
-    await _signUpApi.postResource(user).then((value) {
+    await _signUpApi.post(user).then((value) {
       if (value == null) {
         //a 500 error perhaps. No need to continue validating the server response
         return;

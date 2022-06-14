@@ -16,13 +16,7 @@ class AdvertApi extends ResourceApi {
       return defaultUrl = SettingsApp.baseUrl + url;
     } else
       return defaultUrl;
-     }
-
-  @override
-  String apiDeleteUrl(String id) {
-    return SettingsApp.deleteAds + "/" + id;
   }
-
 
   @override
   Future<dynamic> getList({Map<String, dynamic> filters}) async {
@@ -34,12 +28,7 @@ class AdvertApi extends ResourceApi {
   }
 
   @override
-  fromJson(data) {
-    return AdvertListJson.fromJson(data);
-  }
-
-  @override
-  String apiPostUrl(dataToPost) {
+  String apiPostUrl({dataToPost}) {
     // TODO: implement apiPostUrl
     throw UnimplementedError();
   }
@@ -48,5 +37,16 @@ class AdvertApi extends ResourceApi {
   String apiPutUrl({dataToPost}) {
     // TODO: implement apiPutUrl
     throw UnimplementedError();
+  }
+
+  @override
+  String apiDeleteUrl(String id) {
+    // TODO: implement apiDeleteUrl
+    throw UnimplementedError();
+  }
+
+  @override
+  fromJson(data) {
+    return AdvertListJson.fromJson(data);
   }
 }

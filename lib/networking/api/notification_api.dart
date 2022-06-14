@@ -41,7 +41,7 @@ class NotificationApi extends ResourceApi {
   }
 
   @override
-  String apiPostUrl(dataToPost) {
+  String apiPostUrl({dataToPost}) {
     // TODO: implement apiPostUrl
     throw UnimplementedError();
   }
