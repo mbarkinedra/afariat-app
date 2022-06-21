@@ -47,6 +47,8 @@ class ChatUserViewController extends GetxController {
       _getMessageApi.page = page;
       page++;
       final data = await _getMessageApi.secureGet();
+
+
       ConversationJson conversationJson = ConversationJson.fromJson(data.data);
       final newItems = conversationJson.eEmbedded.conversation;
       final isLastPage = newItems.length < _pageSize;

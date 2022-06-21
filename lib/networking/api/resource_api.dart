@@ -9,13 +9,14 @@ abstract class ResourceApi extends ApiManager {
   ///Returns the API DELETE URL of given resource ID
   String apiDeleteUrl(String id);
 
+  ///Returns the API Put URL of given resource {dataToPost}
   String apiPutUrl({dataToPost});
 
+  ///Returns the API POST URL of given resource {dataToPost}
   String apiPostUrl({dataToPost});
 
   //Delete User From User
   Future<Response<dynamic>> deleteResource(String id) async {
-    //generer le wsse
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(headers: {
       "Accept": "application/json",
@@ -34,7 +35,6 @@ abstract class ResourceApi extends ApiManager {
 
   //Put User From User
   Future<Response<dynamic>> putResource({dataToPost}) async {
-    //generer le wsse
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(headers: {
       "Accept": "application/json",
@@ -57,7 +57,6 @@ abstract class ResourceApi extends ApiManager {
 
   /// POST DATA TO SERVER
   Future<Response<dynamic>> postResource({dataToPost}) async {
-    //generer le wsse
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(headers: {
       "Accept": "application/json",

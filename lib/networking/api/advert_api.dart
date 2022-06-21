@@ -29,8 +29,7 @@ class AdvertApi extends ResourceApi {
 
   @override
   String apiPostUrl({dataToPost}) {
-    // TODO: implement apiPostUrl
-    throw UnimplementedError();
+    return SettingsApp.publishURL;
   }
 
   @override
