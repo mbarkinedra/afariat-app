@@ -5,7 +5,8 @@ import 'package:dio/dio.dart';
 
 class UserApi extends ResourceApi {
   String id;
-String url;
+  String url;
+
   @override
   String apiUrl() {
     return SettingsApp.userUrl + "/" + id;
@@ -20,7 +21,6 @@ String url;
   String apiPutUrl({dataToPost}) {
     return SettingsApp.userUrl + "/" + id;
   }
-
 
   @override
   fromJson(data) {

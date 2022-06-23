@@ -31,7 +31,7 @@ class NotificationViewController extends GetxController {
   /// Function for read a new notifictions
   readNotification(int id) {
     _notificationApi.id = id.toString();
-    _notificationApi.putData().then((value) {
+    _notificationApi.putResource(dataToPost: {"id": id}).then((value) {
       notifications.clear();
       getAllNotification();
     });
@@ -83,7 +83,7 @@ class NotificationViewController extends GetxController {
 
   void clearList() {
     notifications.clear();
-   update();
+    update();
   }
 
   void onSwipeUp() {

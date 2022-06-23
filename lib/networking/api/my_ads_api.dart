@@ -12,11 +12,6 @@ class MyAdsApi extends ResourceApi {
   }
 
   @override
-  fromJson(data) {
-    return MyAdsJson.fromJson(data);
-  }
-
-  @override
   String apiDeleteUrl(String id) {
     return SettingsApp.deleteAds + "/" + id;
   }
@@ -30,5 +25,10 @@ class MyAdsApi extends ResourceApi {
   String apiPutUrl({dataToPost}) {
     // TODO: implement apiPutUrl
     throw UnimplementedError();
+  }
+
+  @override
+  fromJson(data) {
+    return MyAdsJson.fromJson(data);
   }
 }

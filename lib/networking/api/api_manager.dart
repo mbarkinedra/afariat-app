@@ -184,11 +184,12 @@ abstract class ApiManager {
   Future<Response<dynamic>> putData({dataToPost}) async {
     //generer le wsse
     String wsse = Wsse.generateWsseFromStorage();
+    print("ttttttttt=.${apiUrl()}  bbbbbbbbbbbb ${dataToPost}");
     if (_netWorkController.connectionStatus.value) {
       return dioSingleton.dio
           .put(
         apiUrl(),
-        data: jsonEncode(dataToPost),
+      data: jsonEncode(dataToPost),
         options: Options(
             headers: {
               "Accept": "application/json",

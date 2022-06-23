@@ -58,7 +58,6 @@ class Setting extends GetWidget<SettingViewController> {
                 ),
               );
             }),
-
             SizedBox(
               height: 12,
             ),
@@ -112,7 +111,6 @@ class Setting extends GetWidget<SettingViewController> {
                 label: "Supprimer mon compte",
                 icon: Icons.delete_outline_sharp,
                 iconcolor: Colors.white,
-
                 btcolor: framColor,
                 labcolor: Colors.white,
                 function: () async {
@@ -129,10 +127,10 @@ class Setting extends GetWidget<SettingViewController> {
                           description:
                               "Êtes-vous sûr de  vouloir supprimer votre compte ?",
                           buttonText: "Ok",
-                          phone: false, okFunction: null,
+                          phone: false,
+                          okFunction: controller.deleteUser,
                         );
                       });
-
                 },
               ),
             ),

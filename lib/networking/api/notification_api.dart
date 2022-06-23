@@ -35,20 +35,14 @@ class NotificationApi extends ResourceApi {
     return this.getData();
   }
 
-  Future<Response<dynamic>> putData({dataToPost}) async {
-    url = SettingsApp.putNotificationUrl + "/" + id;
-    return super.putData(dataToPost: {"id": id});
+  @override
+  String apiPutUrl({dataToPost}) {
+    return SettingsApp.putNotificationUrl + "/" + id;
   }
 
   @override
   String apiPostUrl({dataToPost}) {
     // TODO: implement apiPostUrl
-    throw UnimplementedError();
-  }
-
-  @override
-  String apiPutUrl({dataToPost}) {
-    // TODO: implement apiPutUrl
     throw UnimplementedError();
   }
 }

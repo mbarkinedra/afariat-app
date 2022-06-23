@@ -7,6 +7,7 @@ class FavoriteApi extends ResourceApi {
   String _deleteUrl;
 
   @override
+  /// Get list fovorite
   String apiUrl() {
     return SettingsApp.favorite;
   }
@@ -16,17 +17,14 @@ class FavoriteApi extends ResourceApi {
     return _deleteUrl + "/" + id;
   }
 
-  @override
-  fromJson(data) {
-    return FavoriteJson.fromJson(data);
-  }
 
   @override
+  /// Delete Advert from list favorite
   Future<Response<dynamic>> deleteResource(String id) async {
     _deleteUrl = SettingsApp.favorite;
     return super.deleteResource(id);
   }
-
+  /// Delete Favorite from list Advert
   Future<Response<dynamic>> deleteByAdvertId(String advertId) async {
     _deleteUrl = SettingsApp.deleteFavoriteByAdvert;
     return super.deleteResource(advertId);
@@ -42,5 +40,10 @@ class FavoriteApi extends ResourceApi {
   String apiPutUrl({dataToPost}) {
     // TODO: implement apiPutUrl
     throw UnimplementedError();
+  }
+
+  @override
+  fromJson(data) {
+    return FavoriteJson.fromJson(data);
   }
 }
