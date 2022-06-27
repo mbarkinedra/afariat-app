@@ -1,6 +1,4 @@
 import 'package:afariat/storage/AccountInfoStorage.dart';
-import 'package:afariat/controllers/category_and_subcategory.dart';
-import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_chat/tap_chat_scr.dart';
 import 'package:afariat/home/tap_home/tap_home_scr.dart';
 import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
@@ -138,55 +136,6 @@ class HomeViewController extends GetxController {
     Get.find<TapPublishViewController>().loadTapPublish(value);
     controller.index = value;
     update();
-    /* if (value == 1) {
-      loadOrScrollAds++;
-      if (loadOrScrollAds == 1) {
-        Get.find<TapMyadsViewController>().scrollUpAds();
-      } else {
-        if (Get.find<TapMyadsViewController>().scrollController.hasClients) {
-          if (Get.find<TapMyadsViewController>().scrollController.offset != 1) {
-            Get.find<TapMyadsViewController>().scrollUpAds();
-            loadOrScrollAds = 1;
-          } else {
-            loadOrScrollAds = 0;
-          }
-        }
-      }
-    } else {
-      loadOrScrollAds = 0;
-    }
-    if (value == 0) {
-      loadOrScrollHome++;
-      if (loadOrScrollHome == 1) {
-        Get.find<TapHomeViewController>().scrollUp();
-      } else {
-        if (Get.find<TapHomeViewController>().scrollController.offset != 1) {
-          Get.find<TapHomeViewController>().scrollUp();
-          loadOrScrollHome = 1;
-        } else {
-          Get.find<TapHomeViewController>().clearDataFilter();
-          loadOrScrollHome = 0;
-        }
-      }
-    } else {
-      loadOrScrollHome = 0;
-    }*/
-/*    TapPublishViewController tapPublishViewController =
-        Get.find<TapPublishViewController>();
-    if (value != 2 || newPublish >= 2) {
-      newPublish = 1;
-      Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
-      Get.find<LocController>().getCityListSelected();
-      tapPublishViewController.clearAllData();
-    } else if (!tapPublishViewController.modifAds.value) {
-      newPublish = 1;
-      Get.find<LocController>().getCityListSelected();
-      Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
-      tapPublishViewController.clearAllData();
-    } else {
-      newPublish++;
-    }*/
-    // controller.jumpToTab(value);
   }
 
   Widget buildOffStageNavigator(String tabItem) {

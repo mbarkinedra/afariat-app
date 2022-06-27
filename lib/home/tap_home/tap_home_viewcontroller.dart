@@ -1,4 +1,3 @@
-
 import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
 import 'package:afariat/model/filter.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
@@ -210,12 +209,9 @@ class TapHomeViewController extends GetxController {
 
   filterUpdate() {
     //reset the URL of advertApi
-
-    //print(Filter.data);
     _advertApi.url = null;
     if (searchWord.text.isNotEmpty) {
-      Filter.set(
-          key: "search", val: searchWord.text.toString());
+      Filter.set(key: "search", val: searchWord.text.toString());
     }
     _advertApi.getList(filters: Filter.data).then((value) {
       pagingController.itemList.clear();
@@ -262,13 +258,10 @@ class TapHomeViewController extends GetxController {
   updateSlideValue(value) {
     values = value;
 
-    Filter.set(
-        key: "minPrice", val: values.start.toInt().toString());
-    Filter.set(
-        key: "maxPrice", val: values.end.toInt().toString());
+    Filter.set(key: "minPrice", val: values.start.toInt().toString());
+    Filter.set(key: "maxPrice", val: values.end.toInt().toString());
     update();
   }
-
 
   openDrawer() {
     scaffoldKey.currentState.openDrawer();

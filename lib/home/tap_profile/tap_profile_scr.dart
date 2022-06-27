@@ -73,7 +73,6 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
               text: "Déconnexion",
               press: () {
                 Get.find<AccountInfoStorage>().logout();
-               // Get.find<HomeViewController>().updateList();
                 Get.find<NotificationViewController>().hasNotification.value =
                     false;
                 Get.find<TapHomeViewController>().deleteAllFavoritesList();

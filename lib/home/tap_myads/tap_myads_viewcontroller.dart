@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TapMyAdsViewController extends GetxController {
- MyAdsApi _myAdsApi = MyAdsApi();
+  MyAdsApi _myAdsApi = MyAdsApi();
   List<Adverts> adverts = [];
   bool deleteData = false;
   bool getAdsFromServer = false;
@@ -61,11 +61,12 @@ class TapMyAdsViewController extends GetxController {
       });
     }
   }
+
   /// Delete Ads From List
   Future deleteAds(int id) async {
     deleteData = true;
     update();
-   // _advertApii.id = i;
+    // _advertApii.id = i;
 
     await _myAdsApi.deleteResource(id.toString()).then((value) {
       getAllAds();

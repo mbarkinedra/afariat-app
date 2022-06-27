@@ -40,16 +40,18 @@ class TapChatScr extends GetWidget<TapChatViewController> {
                                 onRefresh: controller.onRefreshAds,
                                 child: logic.conversations.isEmpty
                                     ? Center(
-                                        child:
-                                            Text("Aucune conversations trouvé",style: TextStyle(fontWeight: FontWeight.bold),),
+                                        child: Text(
+                                          "Aucune conversations trouvé",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       )
                                     : ListView.builder(
                                         controller: controller.scrollController,
                                         itemCount: logic.conversations.length,
                                         itemBuilder: (context, position) {
                                           logic.conversations
-                                              .forEach((element) {
-                                          });
+                                              .forEach((element) {});
                                           return Dismissible(
                                             background: Container(
                                               color: Colors.red,
@@ -59,11 +61,7 @@ class TapChatScr extends GetWidget<TapChatViewController> {
                                                 color: Colors.white,
                                               ),
                                             ),
-                                            // key: Key(logic
-                                            //     .conversations[position].id
-                                            //     .toString()),
-
-                                           key: UniqueKey(),
+                                            key: UniqueKey(),
                                             onDismissed: (direction) {
                                               controller.deleteConversation(
                                                   logic.conversations[position]

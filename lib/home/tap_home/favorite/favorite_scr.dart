@@ -83,7 +83,7 @@ class SingleAdvert extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.find<AdvertDetailsViewcontroller>()
+        Get.find<AdvertDetailsViewController>()
             .getAdvertDetails(favorite.advert.id);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => AdvertDetailsScr()));

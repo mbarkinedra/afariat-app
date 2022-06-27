@@ -1,7 +1,6 @@
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/api/resource_api.dart';
 import 'package:afariat/networking/json/user_json.dart';
-import 'package:dio/dio.dart';
 
 class UserApi extends ResourceApi {
   String id;

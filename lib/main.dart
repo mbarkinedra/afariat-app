@@ -1,6 +1,5 @@
 import 'package:afariat/config/utility.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';

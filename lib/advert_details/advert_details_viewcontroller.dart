@@ -7,13 +7,12 @@ import 'package:afariat/networking/api/conversations_api.dart';
 import 'package:afariat/networking/json/advert_details_json.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class AdvertDetailsViewcontroller extends GetxController {
+class AdvertDetailsViewController extends GetxController {
   AdvertDetailsJson advert;
   TextEditingController textEditingController = TextEditingController();
   bool loading = true;

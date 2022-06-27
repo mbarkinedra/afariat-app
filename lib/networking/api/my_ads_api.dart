@@ -1,5 +1,4 @@
 import 'package:afariat/config/settings_app.dart';
-import 'package:afariat/networking/api/api_manager.dart';
 import 'package:afariat/networking/api/resource_api.dart';
 import 'package:afariat/networking/json/my_ads_json.dart';
 

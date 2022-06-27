@@ -23,7 +23,10 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
           child: logic.notifications.isEmpty
               ? Container(
                   child: Center(
-                    child: Text(" Pas des notifications",style: TextStyle(fontWeight: FontWeight.bold),),
+                    child: Text(
+                      " Pas des notifications",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
                 )
               : ListView.builder(

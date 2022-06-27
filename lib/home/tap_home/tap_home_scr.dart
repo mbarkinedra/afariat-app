@@ -172,10 +172,10 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                           return InkWell(
                                             onTap: () {
                                               Get.find<
-                                                      AdvertDetailsViewcontroller>()
+                                                      AdvertDetailsViewController>()
                                                   .loading = true;
                                               Get.find<
-                                                      AdvertDetailsViewcontroller>()
+                                                      AdvertDetailsViewController>()
                                                   .getAdvertDetails(item.id);
                                               Navigator.push(
                                                 context,

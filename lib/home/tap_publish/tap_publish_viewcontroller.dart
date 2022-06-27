@@ -5,9 +5,7 @@ import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/api/advert_api.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/model/filter.dart';
-
 import 'package:afariat/storage/storage.dart';
-
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
@@ -18,12 +16,10 @@ import 'package:afariat/networking/api/modif_ads_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
 import 'package:afariat/networking/json/modif_ads_json.dart';
-
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
@@ -86,7 +82,7 @@ class TapPublishViewController extends GetxController {
   YearsModelsApi _yearsModelsApi = YearsModelsApi();
   EnergieApi _energieApi = EnergieApi();
   RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
-AdvertApi _advertApi =AdvertApi();
+  AdvertApi _advertApi = AdvertApi();
 
   /// Convert image to base64
   photoBase64Encode(im) {
@@ -424,11 +420,11 @@ AdvertApi _advertApi =AdvertApi();
       photoBase64Encode(i);
     }
     myAds["photos"] = photos;
+
     /// Method Modif Adverts
     if (dataAdverts) {
       _modifAdsApi.id = modifAdsJson.id;
-      await _modifAdsApi.putData(
-          dataToPost: myAds).then((value) async {
+      await _modifAdsApi.putData(dataToPost: myAds).then((value) async {
         buttonPublier.value = false;
         validator.validatorServer.validateServer(
             value: value,

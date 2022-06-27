@@ -41,13 +41,12 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => SignInViewController());
     Get.lazyPut(() => TapMyAdsViewController(), fenix: true);
     Get.lazyPut(() => TapProfileViewController());
-    Get.lazyPut(() => AdvertDetailsViewcontroller());
+    Get.lazyPut(() => AdvertDetailsViewController());
     Get.lazyPut(() => TapPublishViewController(), fenix: true);
     Get.lazyPut(() => ForgotPasswordViewController());
     Get.lazyPut(() => SettingViewController());
     Get.lazyPut(() => NotificationViewController(), fenix: true);
     Get.lazyPut(() => ChatUserViewController());
     Get.lazyPut(() => TapChatViewController());
-
   }
 }

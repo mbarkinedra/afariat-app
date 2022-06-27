@@ -30,14 +30,13 @@ class ServerValidator {
         success();
         break;
       case 400:
-
         serverErrors = value.data;
         failure();
         break;
       case 401:
       case 403:
         serverErrors = value.data;
-       authFailure();
+        authFailure();
         break;
       case 404:
         serverErrors = value.data;
