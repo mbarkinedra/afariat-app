@@ -15,7 +15,8 @@ class SignUpScr extends GetWidget<SignUpViewController> {
     return SafeArea(
         child: Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(right: 16.0,left: 16.0,top: 16.0,bottom: 50),
+        padding: const EdgeInsets.only(
+            right: 16.0, left: 16.0, top: 16.0, bottom: 50),
         child: Form(
           key: controller.registerFormKey,
           child: SingleChildScrollView(
@@ -33,39 +34,35 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                 Text(
                     "Toutes vos annonces et vos favoris à un seul endroit, c'est gratuit !"),
                 SizedBox(
-                  height: _size.height * .1,
+                  height: _size.height * .03,
                 ),
                 LogInItem(
-                  textEditingController: controller.name,
-                  label: "Nom & prénom",
-                  hint: "Nom et prénom ou nom de société",
-                  icon: Icons.account_circle,
-                  validator: (value) {
-                    return controller.validateServer.validator(value, 'name');
-                  },
-                ),
+                    key: Key('name'),
+                    textEditingController: controller.name,
+                    label: "Nom & prénom",
+                    hint: "Nom et prénom ou nom de société",
+                    icon: Icons.account_circle,
+                    validator: controller.validator.validateName),
                 SizedBox(
-                  height: _size.height * .05,
+                  height: _size.height * .02,
                 ),
                 LogInItem(
+                    key: Key('phone'),
                     textEditingController: controller.phone,
                     label: "Phone Number",
                     hint: "Pone Number",
                     icon: Icons.add_call,
-                    validator: (value) {
-                      return controller.validateServer
-                          .validator(value, 'phone');
-                    }),
+                    validator: controller.validator.validatePhone),
                 SizedBox(
-                  height: _size.height * .05,
+                  height: _size.height * .02,
                 ),
                 GetBuilder<SignUpViewController>(builder: (logic) {
                   return Column(
                     children: [
                       Container(
                         width: double.infinity,
-                        // decoration: BoxDecoration(border: Border.all(color: Colors.deepOrange),borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<TypeRegister>(
+                          key: Key('type'),
                           hint: Text("Type"),
                           isExpanded: true,
                           value: logic.type,
@@ -89,22 +86,27 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                   );
                 }),
                 SizedBox(
-                  height: _size.height * .05,
+                  height: _size.height * .02,
                 ),
                 GetBuilder<LocController>(builder: (logic) {
                   return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         width: double.infinity,
-                        // decoration: BoxDecoration(border: Border.all(color: Colors.deepOrange),borderRadius: BorderRadius.circular(10)),
-                        child: DropdownButton<RefJson>(
+                        child: DropdownButtonFormField<RefJson>(
+                          key: Key('city'),
                           hint: Text("City"),
+                          validator: (RefJson) {
+                            return controller.validator.validateCity(RefJson);
+                          },
                           isExpanded: true,
                           value: logic.city,
                           iconSize: 24,
                           elevation: 16,
                           onChanged: logic.updateCity,
                           items: logic.cities
+                              .where((element) => element.name != "")
                               .map<DropdownMenuItem<RefJson>>((RefJson value) {
                             return DropdownMenuItem<RefJson>(
                               value: value,
@@ -120,23 +122,21 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                   );
                 }),
                 SizedBox(
-                  height: _size.height * .05,
+                  height: _size.height * .02,
                 ),
                 LogInItem(
-                  textEditingController: controller.email,
-                  label: "Email",
-                  hint: "Email",
-                  icon: Icons.email,
-                  validator: (value) {
-                    return controller.validateServer.validator(value, 'email');
-                  },
-                ),
+                    key: Key('email'),
+                    textEditingController: controller.email,
+                    label: "Email",
+                    hint: "Email",
+                    icon: Icons.email,
+                    validator: controller.validator.validateEmail),
                 SizedBox(
-                  height: _size.height * .05,
+                  height: _size.height * .02,
                 ),
-                //Ajouter controller builder
                 GetBuilder<SignUpViewController>(builder: (logic) {
                   return LogInItem(
+                    validator: controller.validator.validatePassword,
                     label: "Password",
                     hint: "**********",
                     icon: Icons.lock_outline,
@@ -160,11 +160,22 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                   width: _size.width * .8,
                   btcolor: buttonColor,
                   icon: Icons.login,
+                  iconcolor: Colors.white,
                   label: "Créer mon compte",
                   labcolor: textbuttonColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                   function: () {
+                    controller.validator.validationType = false;
+                    if (!controller.registerFormKey.currentState.validate()) {
+                      //if client validations fails
+                      //show a snackbar to fix the client errors.
+                      Get.snackbar("Oups !",
+                          "Merci de corriger les erreurs ci-dessous.");
+                      return;
+                    }
+                    controller.validator.validationType = true;
+                    //send data to server and get errors
                     controller.postRegister(context);
                   },
                 )),
@@ -178,12 +189,15 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                     },
                     child: RichText(
                       text: TextSpan(
-                        text: "Vous avez déjà un compte ? ",style: TextStyle(color: Colors.deepOrange,fontSize: 15),
-                     //   style: DefaultTextStyle.of(context).style,
+                        text: "Vous avez déjà un compte ? ",
+                        style: TextStyle(color: framColor, fontSize: 15),
                         children: const <TextSpan>[
                           TextSpan(
                               text: 'Log in',
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.deepOrange,fontSize: 18))
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: framColor,
+                                  fontSize: 18))
                         ],
                       ),
                     ),

@@ -1,3 +1,4 @@
+import 'package:afariat/model/filter.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
@@ -5,9 +6,7 @@ import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/widget_publish.dart';
-
 import 'package:afariat/networking/json/categories_grouped_json.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -44,7 +43,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.deepOrange, width: 2),
+                        border: Border.all(color: framColor, width: 2),
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButton<CategoryGroupedJson>(
                       underline: SizedBox(),
@@ -76,9 +75,9 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.deepOrange, width: 2),
+                        border: Border.all(color: framColor, width: 2),
                         borderRadius: BorderRadius.circular(10)),
-                    child: DropdownButton<SubcategoryJson>(
+                    child: DropdownButton<SubCategoryJson>(
                       underline: SizedBox(),
                       isExpanded: true,
                       hint: Padding(
@@ -89,10 +88,10 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       iconSize: 24,
                       elevation: 16,
                       onChanged: logic.updateSubCategory,
-                      items: logic.listeSubCategories
-                          .map<DropdownMenuItem<SubcategoryJson>>(
-                              (SubcategoryJson value) {
-                        return DropdownMenuItem<SubcategoryJson>(
+                      items: logic.listSubCategories
+                          .map<DropdownMenuItem<SubCategoryJson>>(
+                              (SubCategoryJson value) {
+                        return DropdownMenuItem<SubCategoryJson>(
                           value: value,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 8.0, right: 8),
@@ -107,6 +106,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
             }),
           ),
           GetBuilder<TapPublishViewController>(builder: (logic) {
+            logic.isFilterContext = true;
             return logic.getView != null
                 ? WidgetPublish(
                     logic.getView.name,
@@ -121,8 +121,6 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
             ),
           ),
           GetBuilder<TapHomeViewController>(builder: (logic) {
-            print(logic.maxValue);
-            print(logic.minValue);
             return logic.loadPrice
                 ? Center(
                     child: CircularProgressIndicator(),
@@ -130,9 +128,9 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                 : Column(
                     children: [
                       SfRangeSlider(
-                        min: logic.minValue,
-                        max: logic.maxValue,
-                        activeColor: Colors.deepOrange,
+                        min: logic.minValuePrice,
+                        max: logic.maxValuePrice,
+                        activeColor: framColor,
                         values: logic.values,
                         interval: 1,
                         showTicks: false,
@@ -189,7 +187,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                 Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.deepOrange, width: 2),
+                      border: Border.all(color: framColor, width: 2),
                       borderRadius: BorderRadius.circular(15)),
                   child: DropdownButton<RefJson>(
                     underline: SizedBox(),
@@ -222,7 +220,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                 Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.deepOrange, width: 2),
+                        border: Border.all(color: framColor, width: 2),
                         borderRadius: BorderRadius.circular(15)),
                     child: DropdownButton<RefJson>(
                       underline: SizedBox(),
@@ -255,6 +253,11 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
               height: 50,
               width: _size.width * .4,
               function: () {
+                //Filter.data.clear();
+                /*Filter.data.forEach((key, value) {
+                  ///add filter values to URL parameters
+                  Filter.data[key] = value;
+                });*/
                 Get.find<TapHomeViewController>().filterUpdate();
                 Navigator.pop(context);
               },

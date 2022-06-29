@@ -1,11 +1,12 @@
-import 'package:afariat/config/AccountInfoStorage.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:crypto/crypto.dart';
+import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:convert'; // for the utf8.encode method
 
 class Wsse {
 
-
+  static AccountInfoStorage _accountInfoStorage=Get.find<AccountInfoStorage>();
   /// Hashs the given password with given salt.
   static String hashPassword(String password, String salt) {
     //combine plain password with salt
@@ -23,7 +24,7 @@ class Wsse {
     // return the digest as bas64 encoded string
     return base64.encode(digest.bytes);
   }
-  AccountInfoStorage _accountInfoStorage=AccountInfoStorage();
+
   /// Generates the WSSE header based on [username] and the [hashedPassword]
   static String generateWsseHeader(String username, String hashedPassword) {
     var uuid = const Uuid();
@@ -36,15 +37,15 @@ class Wsse {
         nonce.bytes + utf8.encode(isoDate) + utf8.encode(hashedPassword));
 
     //Generate the WSSE Header
-    String wsse = '''
+    String xwsse = '''
     UsernameToken Username="$username", PasswordDigest="${base64.encode(digest.bytes)}", Nonce="${base64.encode(nonce.bytes)}", Created="$isoDate" ''';
 
-    return wsse;
+    return xwsse;
   }
   /// It generates the WSSE based on the stored Username/Hash
- String generateWsseFromStorage()  {
-    var username =  _accountInfoStorage.readEmail();
-    var hashedPassword =  _accountInfoStorage.readHashedPassword();
+ static String generateWsseFromStorage()  {
+    var username =  Wsse._accountInfoStorage.readEmail();
+    var hashedPassword =  Wsse._accountInfoStorage.readHashedPassword();
     //TODO: If username or hashedPassword are NULL or empty, throw an exception
     if (username?.isEmpty ?? true) {
       throw Exception(
@@ -54,8 +55,8 @@ class Wsse {
       throw Exception(
           'No hashed password was found in secure storage. Could not generate WSSE');
     }
-    String wsse = generateWsseHeader(username, hashedPassword);
+    String xwsse = Wsse.generateWsseHeader(username, hashedPassword);
 
-    return wsse;
+    return xwsse;
   }
 }

@@ -23,7 +23,7 @@ class Account extends GetWidget<AccountViewController> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.asset(
-                  "assets/images/Splash_2.png",
+                  "assets/images/Splash_10.png",
                   width: 120,
                   height: 120,
                 ),
@@ -43,7 +43,7 @@ class Account extends GetWidget<AccountViewController> {
                 width: size.width * .8,
                 hintText: 'e_mail',
                 validator: (value) {
-                  return controller.validateServer.validator(value, 'email');
+                  return controller.validateServer.validate(value, 'email');
                 },
               ),
               SizedBox(
@@ -55,7 +55,7 @@ class Account extends GetWidget<AccountViewController> {
                   width: size.width * .8,
                   hintText: 'Numéro de tel',
                   validator: (value) {
-                    return controller.validateServer.validator(value, 'phone');
+                    return controller.validateServer.validate(value, 'phone');
                   }),
               SizedBox(
                 height: 10,
@@ -67,7 +67,7 @@ class Account extends GetWidget<AccountViewController> {
                       width: size.width * .8,
                       decoration: BoxDecoration(
                           border:
-                              Border.all(color: Colors.deepOrange, width: 2),
+                              Border.all(color: framColor, width: 2),
                           borderRadius: BorderRadius.circular(10)),
                       child: DropdownButton<RefJson>(
                         underline: SizedBox(),

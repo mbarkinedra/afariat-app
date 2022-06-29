@@ -1,4 +1,5 @@
-import 'package:afariat/config/filter.dart';
+import 'package:afariat/model/filter.dart';
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_chat/chat_user/chat_user_scr.dart';
 import 'package:afariat/home/tap_chat/chat_user/chat_user_viewcontroller.dart';
 import 'package:afariat/networking/api/advert_details_api.dart';
@@ -18,11 +19,11 @@ class AdvertDetailsViewcontroller extends GetxController {
   bool loading = true;
   AdvertDetailsApi _advertDetailsApi = AdvertDetailsApi();
   PhotoViewController photoViewController;
-  ConvertionsApi _convertionsApi = ConvertionsApi();
+  ConversationsApi _convertionsApi = ConversationsApi();
 
   getAdvertDetails(int id) {
     _advertDetailsApi.advertTypeId = id;
-    _advertDetailsApi.getList().then((value) {
+    _advertDetailsApi.getResource().then((value) {
       advert = value;
 
       loading = false;
@@ -78,7 +79,7 @@ class AdvertDetailsViewcontroller extends GetxController {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  color: Colors.deepOrange,
+                  color: framColor,
                   padding: EdgeInsets.all(8),
                   child: FittedBox(
                     child: Text("Contacter l'annonceur par messagerie",
@@ -122,16 +123,17 @@ class AdvertDetailsViewcontroller extends GetxController {
                         children: [
                           TextButton(
                               onPressed: () {
-                                Filter.data.clear();
-                                print("advert.userId   ${advert.userId}");
-                                Filter.data["message"] =
+                                ParameterBag message =ParameterBag();
+                                message.data.clear();
+
+                                message.data["message"] =
                                     textEditingController.text;
-                                Filter.data["advert"] = advert.id;
+                                message.data["advert"] = advert.id;
                                 _convertionsApi
-                                    .securePost(dataToPost: Filter.data)
+                                    .securePost(dataToPost: message.data)
                                     .then((value) {
                                   Headers responseHeaders = value.headers;
-                                  print(responseHeaders.map);
+
                                   String v = responseHeaders['location'][0];
                                   Get.find<ChatUserViewController>().name =
                                       advert.username;
@@ -240,7 +242,7 @@ class AdvertDetailsViewcontroller extends GetxController {
                           color: Colors.grey[100],
                           child: Icon(
                             Icons.close,
-                            color: Colors.deepOrange,
+                            color:framColor,
                             size: 30,
                           ))),
                 ),

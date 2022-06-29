@@ -1,3 +1,4 @@
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 
@@ -21,55 +22,37 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     Expanded(
                       flex: 3,
                       child: Container(
+                        height: 60,
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
-                          isExpanded: true,
-                          value: logic.vehiculebrands,
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: logic.updateMarque,
-                          items: logic.vehiculeBrands
-                              .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Text(value.name),
-                            );
-                          }).toList(),
+                            border: Border.all(color: framColor, width: 2)),
+                        child: Center(
+                          child: DropdownButtonFormField<RefJson>(
+                            isExpanded: true,
+                            value: controller.vehiculebrands,
+                            iconSize: 24,
+                            elevation: 16,
+                            decoration:
+                            InputDecoration.collapsed(
+                                hintText: ''),
+                            validator: (RefJson) {
+                              return controller.validator.validateMarque(RefJson);
+                            },
+                            onChanged: controller.updateMarque,
+                            items: logic.vehiculeBrands
+                                .map<DropdownMenuItem<RefJson>>((RefJson value) {
+                              return DropdownMenuItem<RefJson>(
+                                value: value,
+                                child: Text(value.name),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                     )
                   ],
                 );
-
-                // return ListTile(
-                //   leading: Text("Marque"),
-                //   title: Container(
-                //     padding: const EdgeInsets.all(3.0),
-                //     decoration: BoxDecoration(
-                //         borderRadius: BorderRadius.circular(15),
-                //         border: Border.all(color: Colors.deepOrange, width: 2)),
-                //     child: DropdownButton<RefJson>(
-                //       underline: SizedBox(),
-                //       isExpanded: true,
-                //       value: logic.vehiculebrands,
-                //       iconSize: 24,
-                //       elevation: 16,
-                //       onChanged: logic.updateMarque,
-                //       items: logic.vehiculeBrands
-                //           .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                //         return DropdownMenuItem<RefJson>(
-                //           value: value,
-                //           child: Text(value.name),
-                //         );
-                //       }).toList(),
-                //     ),
-                //   ),
-                // );
               }),
             ),
             Padding(
@@ -81,55 +64,37 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     Expanded(
                       flex: 3,
                       child: Container(
+                        height: 60,
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
-                          isExpanded: true,
-                          value: logic.vehiculeModel,
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: logic.updateModel,
-                          items: logic.vehiculeModels
-                              .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Text(value.name),
-                            );
-                          }).toList(),
+                            border: Border.all(color: framColor, width: 2)),
+                        child: Center(
+                          child: DropdownButtonFormField<RefJson>(
+                            isExpanded: true,
+                            value: controller.vehiculeModel,
+                            validator: (RefJson) {
+                              return controller.validator.validateModele(RefJson);
+                            },
+                            iconSize: 24,
+                            elevation: 16,
+                            decoration:
+                            InputDecoration.collapsed(
+                                hintText: ''),
+                            onChanged: controller.updateModel,
+                            items: controller.vehiculeModels
+                                .map<DropdownMenuItem<RefJson>>((RefJson value) {
+                              return DropdownMenuItem<RefJson>(
+                                value: value,
+                                child: Text(value.name),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                     )
                   ],
                 );
-
-                // return ListTile(
-                //   leading: Text("Modèle"),
-                //   title: Container(
-                //     padding: const EdgeInsets.all(3.0),
-                //     decoration: BoxDecoration(
-                //         borderRadius: BorderRadius.circular(15),
-                //         border: Border.all(color: Colors.deepOrange, width: 2)),
-                //     child: DropdownButton<RefJson>(
-                //       underline: SizedBox(),
-                //       isExpanded: true,
-                //       value: logic.vehiculeModel,
-                //       iconSize: 24,
-                //       elevation: 16,
-                //       onChanged: logic.updateModel,
-                //       items: logic.vehiculeModels
-                //           .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                //         return DropdownMenuItem<RefJson>(
-                //           value: value,
-                //           child: Text(value.name),
-                //         );
-                //       }).toList(),
-                //     ),
-                //   ),
-                // );
               }),
             ),
             Padding(
@@ -141,57 +106,37 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     Expanded(
                       flex: 3,
                       child: Container(
+                        height: 60,
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
-                          isExpanded: true,
-                          value: logic.energie,
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: logic.updateEnergie,
-                          items: logic.energies
-                              .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            print(value);
-                            return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Text(value.name),
-                            );
-                          }).toList(),
+                            border: Border.all(color: framColor, width: 2)),
+                        child: Center(
+                          child: DropdownButtonFormField<RefJson>(
+                            isExpanded: true,
+                            value: logic.energie,
+                            validator: (RefJson) {
+                              return controller.validator
+                                  .validateEnergie(RefJson);
+                            },
+                            iconSize: 24,
+                            elevation: 16,
+                            onChanged: logic.updateEnergie,
+                            decoration: InputDecoration.collapsed(hintText: ''),
+                            items: logic.energies
+                                .map<DropdownMenuItem<RefJson>>(
+                                    (RefJson value) {
+                              return DropdownMenuItem<RefJson>(
+                                value: value,
+                                child: Text(value.name),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                     )
                   ],
                 );
-
-                // return ListTile(
-                //   leading: Text("Energie"),
-                //   title: Container(
-                //     padding: const EdgeInsets.all(3.0),
-                //     decoration: BoxDecoration(
-                //         borderRadius: BorderRadius.circular(15),
-                //         border: Border.all(color: Colors.deepOrange, width: 2)),
-                //     child: DropdownButton<RefJson>(
-                //       underline: SizedBox(),
-                //       isExpanded: true,
-                //       value: logic.energie,
-                //       iconSize: 24,
-                //       elevation: 16,
-                //       onChanged: logic.updateEnergie,
-                //       items: logic.energies
-                //           .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                //         print(value);
-                //         return DropdownMenuItem<RefJson>(
-                //           value: value,
-                //           child: Text(value.name),
-                //         );
-                //       }).toList(),
-                //     ),
-                //   ),
-                // );
               }),
             ),
             Padding(
@@ -203,32 +148,36 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     Expanded(
                       flex: 3,
                       child: Container(
+                        height: 60,
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
-                          isExpanded: true,
-                          value: logic.kilometrage,
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: logic.updateKilometrage,
-                          items: logic.mileages
-                              .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Text(value.name),
-                            );
-                          }).toList(),
+                            border: Border.all(color: framColor, width: 2)),
+                        child: Center(
+                          child: DropdownButtonFormField<RefJson>(
+                            isExpanded: true,
+                            value: logic.kilometrage,
+                            validator: (RefJson) {
+                              return controller.validator.validateKm(RefJson);
+                            },
+                            decoration: InputDecoration.collapsed(hintText: ''),
+                            iconSize: 24,
+                            elevation: 16,
+                            onChanged: logic.updateKilometrage,
+                            items: logic.mileages
+                                .map<DropdownMenuItem<RefJson>>(
+                                    (RefJson value) {
+                              return DropdownMenuItem<RefJson>(
+                                value: value,
+                                child: Text(value.name),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                     )
                   ],
                 );
-
-
               }),
             ),
             Padding(
@@ -240,34 +189,39 @@ class VehicleBrands extends GetView<TapPublishViewController> {
                     Expanded(
                       flex: 3,
                       child: Container(
+                        height: 55,
                         padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
-                          isExpanded: true,
-                          value: logic.yearsmodele,
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: logic.updateAnnee,
-                          items: logic.yearsModels
-                              .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Text(value.name),
-                            );
-                          }).toList(),
+                            border: Border.all(color: framColor, width: 2)),
+                        child: Center(
+                          child: DropdownButtonFormField<RefJson>(
+                            isExpanded: true,
+                            value: logic.yearsModele,
+                            validator: (RefJson) {
+                              return controller.validator
+                                  .validateYears(RefJson);
+                            },
+                            decoration: InputDecoration.collapsed(hintText: ''),
+                            iconSize: 24,
+                            elevation: 16,
+                            onChanged: logic.updateAnnee,
+                            items: logic.yearsModels
+                                .map<DropdownMenuItem<RefJson>>(
+                                    (RefJson value) {
+                              return DropdownMenuItem<RefJson>(
+                                value: value,
+                                child: Text(value.name),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                     )
                   ],
                 );
-
-
               }),
-            )
+            ),
           ],
         ),
       ),

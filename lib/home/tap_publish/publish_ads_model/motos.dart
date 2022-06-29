@@ -1,3 +1,4 @@
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
@@ -19,26 +20,34 @@ class Motos extends GetView<TapPublishViewController> {
                     Expanded(
                       flex: 3,
                       child: Container(
-                        padding: const EdgeInsets.all(3.0),
+                        height: 60,
+                        width: double.infinity,
+                        //padding: const EdgeInsets.all(3.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border:
-                              Border.all(color: Colors.deepOrange, width: 2),
+                          border: Border.all(color: framColor, width: 2),
                         ),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
-                          isExpanded: true,
-                          value: logic.motosBrand,
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: logic.updateMarqueMoto,
-                          items: logic.motosBrands
-                              .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Text(value.name),
-                            );
-                          }).toList(),
+                        child: Center(
+                          child: DropdownButtonFormField<RefJson>(
+                            isExpanded: true,
+                            value: logic.motosBrand,
+                            decoration:
+                            InputDecoration.collapsed(
+                                hintText: ''),
+                            validator: (RefJson) {
+                              return controller.validator.validateMarque(RefJson);
+                            },
+                            iconSize: 24,
+                            elevation: 16,
+                            onChanged: controller.updateMarqueMoto,
+                            items: controller.motosBrands
+                                .map<DropdownMenuItem<RefJson>>((RefJson value) {
+                              return DropdownMenuItem<RefJson>(
+                                value: value,
+                                child: Text(value.name),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                     )
@@ -55,25 +64,33 @@ class Motos extends GetView<TapPublishViewController> {
                     Expanded(
                       flex: 3,
                       child: Container(
-                        padding: const EdgeInsets.all(3.0),
+                        height: 60,
+                        width: double.infinity,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
-                          isExpanded: true,
-                          value: logic.kilometrage,
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: logic.updateKilometrage,
-                          items: logic.mileages
-                              .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Text(value.name),
-                            );
-                          }).toList(),
+                            border: Border.all(color: framColor, width: 2)),
+                        child: Center(
+                          child: DropdownButtonFormField<RefJson>(
+                            isExpanded: true,
+                            value: logic.kilometrage,
+
+                            decoration:
+                            InputDecoration.collapsed(
+                                hintText: ''),
+                            validator: (RefJson) {
+                              return controller.validator.validateKm(RefJson);
+                            },
+                            iconSize: 24,
+                            elevation: 16,
+                            onChanged: controller.updateKilometrage,
+                            items: controller.mileages
+                                .map<DropdownMenuItem<RefJson>>((RefJson value) {
+                              return DropdownMenuItem<RefJson>(
+                                value: value,
+                                child: Text(value.name),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                     )
@@ -90,32 +107,39 @@ class Motos extends GetView<TapPublishViewController> {
                     Expanded(
                       flex: 3,
                       child: Container(
-                        padding: const EdgeInsets.all(3.0),
+                        height: 60,
+                        width: double.infinity,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            border:
-                                Border.all(color: Colors.deepOrange, width: 2)),
-                        child: DropdownButton<RefJson>(
-                          underline: SizedBox(),
-                          isExpanded: true,
-                          value: logic.yearsmodele,
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: logic.updateAnnee,
-                          items: logic.yearsModels
-                              .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Text(value.name),
-                            );
-                          }).toList(),
+                            border: Border.all(color: framColor, width: 2)),
+                        child: Center(
+                          child: DropdownButtonFormField<RefJson>(
+                            isExpanded: true,
+                            value: logic.yearsModele,
+                            decoration:
+                            InputDecoration.collapsed(
+                                hintText: ''),
+                            validator: (RefJson) {
+                              return controller.validator.validateYears(RefJson);
+                            },
+                            iconSize: 24,
+                            elevation: 16,
+                            onChanged: controller.updateAnnee,
+                            items: controller.yearsModels
+                                .map<DropdownMenuItem<RefJson>>((RefJson value) {
+                              return DropdownMenuItem<RefJson>(
+                                value: value,
+                                child: Text(value.name),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                     )
                   ],
                 );
               }),
-            )
+            ),
           ],
         ),
       ],

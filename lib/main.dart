@@ -1,21 +1,20 @@
+import 'package:afariat/config/utility.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'bindings/bindings.dart';
 import 'home/home_view.dart';
 
-
 void main() async {
-  await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -29,11 +28,10 @@ class MyApp extends StatelessWidget {
       home: AnimatedSplashScreen(
           duration: 3000,
           splashIconSize: 200,
-          splash: Image.asset("assets/images/Splash_1.png"),
-          nextScreen: Home(),//
+          splash: Image.asset("assets/images/Splash_9.png"),
+          nextScreen: HomeView(),
           splashTransition: SplashTransition.slideTransition,
-          //   pageTransitionType: PageTransitionType.,
-          backgroundColor: Colors.deepOrange),
+          backgroundColor: framColor),
     );
   }
 }

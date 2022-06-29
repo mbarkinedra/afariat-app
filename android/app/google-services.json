@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "264409657549",
+    "project_id": "afariat-fb569",
+    "storage_bucket": "afariat-fb569.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264409657549:android:62e3e4c0988aa69c533984",
+        "android_client_info": {
+          "package_name": "com.example.afariat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "264409657549-p26t20qjo3hkb1cvjm3fnhs80f5opb5h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.afariat",
+            "certificate_hash": "e2759709c08d6b7932328fbf4a4a5aae13b0091a"
+          }
+        },
+        {
+          "client_id": "264409657549-c9uq2qrcbte3jd2hsf06lc92rrcm17hq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFlJ9TtYy2CEE37e2VXP6b6t9gymI2Fy8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "264409657549-c9uq2qrcbte3jd2hsf06lc92rrcm17hq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,11 @@
 import 'package:afariat/config/settings_app.dart';
+import 'package:afariat/config/utility.dart';
+import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
+import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class MyHomeItem extends StatelessWidget {
@@ -24,8 +29,7 @@ class MyHomeItem extends StatelessWidget {
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
               bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10)
-          ),
+              bottomRight: Radius.circular(10)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
@@ -44,10 +48,12 @@ class MyHomeItem extends StatelessWidget {
               flex: 1,
               child: Container(
                 height: size.height * .2,
-                child: Image.network(
-                  adverts.photo,
-                  fit: BoxFit.fill,
-                ),
+                child: adverts.photo != null
+                    ? Image.network(
+                        adverts.photo,
+                        fit: BoxFit.fill,
+                      )
+                    : Image.asset("assets/images/no-image.jpg"),
               ),
             ),
             Expanded(
@@ -60,7 +66,9 @@ class MyHomeItem extends StatelessWidget {
                   children: [
                     Container(
                       child: Text(
-                        adverts.title,maxLines: 3,overflow: TextOverflow.ellipsis,
+                        adverts.title,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 13),
                       ),
@@ -69,9 +77,11 @@ class MyHomeItem extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      numberFormat.format(adverts.price) + ' ' + SettingsApp.moneySymbol,
+                      numberFormat.format(adverts.price) +
+                          ' ' +
+                          SettingsApp.moneySymbol,
                       style: TextStyle(
-                          color: Colors.deepOrange,
+                          color: framColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
                       softWrap: true,
@@ -100,10 +110,55 @@ class MyHomeItem extends StatelessWidget {
                     SizedBox(
                       height: 4,
                     ),
-                    Text(
-                      adverts.modifiedAt,
-                      softWrap: true,
-                      overflow: TextOverflow.fade,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          adverts.modifiedAt,
+                          softWrap: true,
+                          overflow: TextOverflow.fade,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            if (Get.find<AccountInfoStorage>().isLoggedIn()) {
+                              if (Get.find<TapHomeViewController>()
+                                  .favorites
+                                  .contains(adverts.id)) {
+                                Get.find<FavoriteViewController>()
+                                    .deleteFavoriteByAdvert(adverts.id);
+                                Get.find<TapHomeViewController>()
+                                    .deleteFromFavoritesList(adverts.id);
+                              } else {
+                                Get.find<FavoriteViewController>()
+                                    .addToMyFavorite(adverts.id);
+                                Get.find<TapHomeViewController>()
+                                    .addToFavoritesList(adverts.id);
+                              }
+                            } else {
+                              Get.snackbar("",
+                                  "Veuillez vous connecter pour rajouter cette annonce à vos favoris",
+                                  colorText: Colors.white,
+                                  backgroundColor: buttonColor);
+                            }
+                          },
+                          child: Icon(
+                            Get.find<TapHomeViewController>()
+                                        .favorites
+                                        .contains(adverts.id) ||
+                                    adverts.is_favorite
+                                ? Icons.favorite
+                                : Icons.favorite_outline_rounded,
+                            color:
+                                Get.find<AccountInfoStorage>().isLoggedIn() ||
+                                        Get.find<TapHomeViewController>()
+                                            .favorites
+                                            .contains(adverts.id) ||
+                                        adverts.is_favorite
+                                    ? Colors.red
+                                    : Colors.grey,
+                          ),
+                        )
+                      ],
                     ),
                   ],
                 ),

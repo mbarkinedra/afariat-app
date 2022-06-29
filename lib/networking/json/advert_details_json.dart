@@ -4,7 +4,7 @@ import 'package:afariat/networking/json/abstract_json_resource.dart';
 class AdvertDetailsJson extends AbstractJsonResource {
   String createdAt;
   int id;
-  bool  isRegistredUser;
+  bool isRegistredUser;
   String username;
   String mobilePhoneNumber;
   String title;
@@ -29,6 +29,7 @@ class AdvertDetailsJson extends AbstractJsonResource {
   Mileage vehicleModel;
   Mileage motoBrand;
   int userId;
+  bool is_favorite;
 
   AdvertDetailsJson(
       {this.createdAt,
@@ -54,12 +55,18 @@ class AdvertDetailsJson extends AbstractJsonResource {
       this.vehicleBrand,
       this.vehicleModel,
       this.mileage,
-      this.energy,this.motoBrand,this.isRegistredUser,  this.userId,});
+      this.energy,
+      this.motoBrand,
+      this.isRegistredUser,
+      this.userId,
+      this.is_favorite});
 
   AdvertDetailsJson.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     createdAt = json['created_at'];
     id = json['id'];
+    is_favorite = json['is_favorite'];
+
     username = json['username'];
     mobilePhoneNumber = json['mobilePhoneNumber'];
     title = json['title'];
@@ -67,7 +74,7 @@ class AdvertDetailsJson extends AbstractJsonResource {
     description = json['description'];
     price = json['price'];
     showPhoneNumber = json['show_phone_number'];
-    isRegistredUser= json['isRegistredUser'];
+    isRegistredUser = json['isRegistredUser'];
 
     area = json['area'];
     advertType = json['advert_type'] != null
@@ -84,12 +91,12 @@ class AdvertDetailsJson extends AbstractJsonResource {
         ? new RoomsNumber.fromJson(json['rooms_number'])
         : null;
     mileage =
-    json['mileage'] != null ? new Mileage.fromJson(json['mileage']) : null;
+        json['mileage'] != null ? new Mileage.fromJson(json['mileage']) : null;
     yearModel = json['year_model'] != null
         ? new Mileage.fromJson(json['year_model'])
         : null;
     energy =
-    json['energy'] != null ? new Mileage.fromJson(json['energy']) : null;
+        json['energy'] != null ? new Mileage.fromJson(json['energy']) : null;
     vehicleBrand = json['vehicle_brand'] != null
         ? new Mileage.fromJson(json['vehicle_brand'])
         : null;

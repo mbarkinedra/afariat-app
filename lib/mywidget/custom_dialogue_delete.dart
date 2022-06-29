@@ -1,3 +1,4 @@
+import 'package:afariat/config/utility.dart';
 import 'package:flutter/material.dart';
 
 class CustomDialogueDelete extends StatelessWidget {
@@ -89,9 +90,9 @@ class CustomDialogueDelete extends StatelessWidget {
                     width: 100,
                     height: 40,
                     decoration: BoxDecoration(
-                      color:Colors.deepOrange,
+                      color:framColor,
                       borderRadius: BorderRadius.circular(7),
-                      border: Border.all(color: Colors.deepOrange, width: 2),
+                      border: Border.all(color:framColor, width: 2),
 
                       //border corner radius
                       boxShadow: [
@@ -121,7 +122,7 @@ class CustomDialogueDelete extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(7),
-                border: Border.all(color: Colors.deepOrange, width: 2),
+                border: Border.all(color:framColor, width: 2),
 //border corner radius
                 boxShadow: [
                   BoxShadow(

@@ -11,11 +11,11 @@ class MyAdsJson extends AbstractJsonResource {
 
   MyAdsJson(
       {this.page,
-        this.limit,
-        this.pages,
-        this.total,
-        this.lLinks,
-        this.eEmbedded});
+      this.limit,
+      this.pages,
+      this.total,
+      this.lLinks,
+      this.eEmbedded});
 
   MyAdsJson.fromJson(Map<String, dynamic> json) {
     page = json['page'];
@@ -118,6 +118,7 @@ class Adverts {
   String description;
   String title;
   int price;
+  int status;
   Region region;
   CategoryGroup city;
   CategoryGroup town;
@@ -126,32 +127,38 @@ class Adverts {
 
   Adverts(
       {this.id,
-        this.categoryGroup,
-        this.photo,
-        this.description,
-        this.title,
-        this.price,
-        this.region,
-        this.city,
-        this.town,
-        this.modifiedAt,
-        this.lLinks});
+      this.categoryGroup,
+      this.photo,
+      this.description,
+      this.title,
+      this.price,
+      this.region,
+      this.city,
+      this.town,
+      this.modifiedAt,
+      this.lLinks,
+      this.status});
 
   Adverts.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     categoryGroup = json['categoryGroup'] != null
         ? new CategoryGroup.fromJson(json['categoryGroup'])
         : null;
-    photo = SettingsApp.baseUrl +"/"+ json['photo'];
+    if (json['photo'] != null) {
+      //Découper le string selon "split(".")"
+      photo = SettingsApp.baseUrl + "/" + json['photo'];
+    }
     description = json['description'];
     title = json['title'];
     price = json['price'];
+    status = json['status'];
+
     region =
-    json['region'] != null ? new Region.fromJson(json['region']) : null;
+        json['region'] != null ? new Region.fromJson(json['region']) : null;
     city =
-    json['city'] != null ? new CategoryGroup.fromJson(json['city']) : null;
+        json['city'] != null ? new CategoryGroup.fromJson(json['city']) : null;
     town =
-    json['town'] != null ? new CategoryGroup.fromJson(json['town']) : null;
+        json['town'] != null ? new CategoryGroup.fromJson(json['town']) : null;
     modifiedAt = json['modified_at'];
     lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
   }
@@ -166,6 +173,8 @@ class Adverts {
     data['description'] = this.description;
     data['title'] = this.title;
     data['price'] = this.price;
+    data['status'] = this.status;
+
     if (this.region != null) {
       data['region'] = this.region.toJson();
     }
@@ -210,29 +219,6 @@ class CategoryGroup {
   }
 }
 
-// class Links {
-//   Self self;
-//   Self search;
-//
-//   Links({this.self, this.search});
-//
-//   Links.fromJson(Map<String, dynamic> json) {
-//     self = json['self'] != null ? new Self.fromJson(json['self']) : null;
-//     search = json['search'] != null ? new Self.fromJson(json['search']) : null;
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     if (this.self != null) {
-//       data['self'] = this.self.toJson();
-//     }
-//     if (this.search != null) {
-//       data['search'] = this.search.toJson();
-//     }
-//     return data;
-//   }
-// }
-
 class Region {
   int id;
   String name;
@@ -243,11 +229,11 @@ class Region {
 
   Region(
       {this.id,
-        this.name,
-        this.isoCode,
-        this.codeInsee,
-        this.order,
-        this.lLinks});
+      this.name,
+      this.isoCode,
+      this.codeInsee,
+      this.order,
+      this.lLinks});
 
   Region.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -271,21 +257,3 @@ class Region {
     return data;
   }
 }
-
-// class Links {
-//   Self self;
-//
-//   Links({this.self});
-//
-//   Links.fromJson(Map<String, dynamic> json) {
-//     self = json['self'] != null ? new Self.fromJson(json['self']) : null;
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     if (this.self != null) {
-//       data['self'] = this.self.toJson();
-//     }
-//     return data;
-//   }
-// }

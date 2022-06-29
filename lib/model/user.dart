@@ -16,8 +16,6 @@ class User {
       this.first,
       this.second});
 
-
-
   Map<String, dynamic> toJson() => {
         "email": email,
         "plainPassword": {'first': first, 'second': second},

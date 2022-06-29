@@ -39,18 +39,18 @@ class ProfileMenu extends StatelessWidget {
               children: [
                 Icon(
                   iconProfile,
-                  color: Colors.grey,
+                  color: ColorText,
                 ),
                 SizedBox(width: 20),
                 Expanded(
                     child: Text(
                   text,
                   style: TextStyle(
-                      color: Colors.grey[700], fontWeight: FontWeight.bold),
+                      color:ColorGrey, fontWeight: FontWeight.bold),
                 )),
                 Icon(
                   Icons.arrow_forward_ios,
-                  color: Colors.grey,
+                  color: ColorText,
                 ),
               ],
             ),

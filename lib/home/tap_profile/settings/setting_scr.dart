@@ -18,7 +18,7 @@ class Setting extends GetWidget<SettingViewController> {
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
         ),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: framColor,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -46,7 +46,7 @@ class Setting extends GetWidget<SettingViewController> {
                 obscureText: logic.isVisiblePassword1,
                 textEditingController: controller.oldPassword,
                 validator: (value) {
-                  return controller.validateServer.validator(value, 'password');
+                  return controller.validateServer.validate(value, 'password');
                 },
                 suffixIcon: IconButton(
                   onPressed: controller.showHidePassword1,
@@ -69,7 +69,7 @@ class Setting extends GetWidget<SettingViewController> {
                 obscureText: logic.isVisiblePassword2,
                 textEditingController: controller.newPassword,
                 validator: (value) {
-                  return controller.validateServer.validator(value, 'password');
+                  return controller.validateServer.validate(value, 'password');
                 },
                 suffixIcon: IconButton(
                   onPressed: controller.showHidePassword2,
@@ -90,11 +90,11 @@ class Setting extends GetWidget<SettingViewController> {
                 label: "Mettre à jour",
                 icon: Icons.refresh_outlined,
                 iconcolor:
-                    logic.updatepasseword ? backmenubackground : framColor,
+                    logic.updatePasseword ? backmenubackground : framColor,
                 width: size.width * .5,
-                btcolor: logic.updatepasseword ? framColor : backmenubackground,
+                btcolor: logic.updatePasseword ? framColor : backmenubackground,
                 labcolor:
-                    logic.updatepasseword ? backmenubackground : framColor,
+                    logic.updatePasseword ? backmenubackground : framColor,
                 function: () {
                   controller.changePassword();
                 },

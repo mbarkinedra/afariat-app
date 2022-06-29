@@ -1,19 +1,16 @@
-
-import 'package:afariat/config/AccountInfoStorage.dart';
+import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
+import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
-
-
 import 'package:afariat/mywidget/custom_button_icon.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 import 'advert_details_viewcontroller.dart';
 
-
-class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
+class AdvertDetailsScr extends GetView<AdvertDetailsViewcontroller> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -24,14 +21,13 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
         iconTheme: IconThemeData(
           color: Colors.white, //change your color here
         ),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: framColor,
         title: Text(
           "Annonce détaillée",
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),
       body: GetBuilder<AdvertDetailsViewcontroller>(builder: (logic) {
-        //  logic.advert.userId
         return logic.loading
             ? Center(child: CircularProgressIndicator())
             : Padding(
@@ -42,29 +38,46 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 20),
-                      CarouselSlider(
-                        options: CarouselOptions(
-                          height: _size.height * .3,
-                          viewportFraction: .7,
-                          aspectRatio: 9 / 12,
-                          enlargeCenterPage: true,
-                          autoPlay: true,
-                        ),
-                        items: logic.advert.photos
-                            .map((item) => InkWell(
-                                  onTap: () {
-                                    logic.displayDialogue(context);
-                                  },
-                                  child: Image.network(
-                                    item.path,
-                                    height: _size.height * .25,
-                                    width: _size.width * .8,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ))
-                            .toList(),
-                      ),
+                      //   SizedBox(height: 20),
+                      if (logic.advert.photos != null)
+                        logic.advert.photos.length > 1
+                            ? CarouselSlider(
+                                options: CarouselOptions(
+                                  height: _size.height * .3,
+                                  viewportFraction: .7,
+                                  aspectRatio: 9 / 12,
+                                  enlargeCenterPage: true,
+                                  autoPlay: true,
+                                ),
+                                items: logic.advert.photos
+                                    .map((item) => InkWell(
+                                          onTap: () {
+                                            logic.displayDialogue(context);
+                                          },
+                                          child: Image.network(
+                                            item.path,
+                                            height: _size.height * .25,
+                                            width: _size.width * .8,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ))
+                                    .toList(),
+                              )
+                            : logic.advert.photos.length > 0
+                                ? InkWell(
+                                    onTap: () {
+                                      logic.displayDialogue(context);
+                                    },
+                                    child: Container(
+                                      height: _size.height * .3,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: NetworkImage(
+                                                  logic.advert.photos[0].path),
+                                              fit: BoxFit.fill)),
+                                    ),
+                                  )
+                                : SizedBox(),
                       SizedBox(height: 10),
                       Row(
                         children: [
@@ -77,6 +90,52 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                           ),
+                          InkWell(
+                              onTap: () {
+                                if (Get.find<AccountInfoStorage>()
+                                    .isLoggedIn()) {
+                                  if (Get.find<TapHomeViewController>()
+                                      .favorites
+                                      .contains(logic.advert.id)) {
+                                    Get.find<FavoriteViewController>()
+                                        .deleteFavoriteByAdvert(
+                                            logic.advert.id);
+                                    Get.find<TapHomeViewController>()
+                                        .deleteFromFavoritesList(
+                                            logic.advert.id);
+
+                                    Get.find<FavoriteViewController>()
+                                        .getFavorite();
+                                    controller.update();
+                                  } else {
+                                    Get.find<FavoriteViewController>()
+                                        .addToMyFavorite(logic.advert.id);
+                                    Get.find<TapHomeViewController>()
+                                        .addToFavoritesList(logic.advert.id);
+                                    controller.update();
+                                    // controller.update();
+                                  }
+                                } else {
+                                  Get.snackbar("",
+                                      "Veuillez vous connecter pour rajouter cette annonce à vos favoris",
+                                      colorText: Colors.white,
+                                      backgroundColor: buttonColor);
+                                }
+                              },
+                              child: Icon(
+                                Get.find<TapHomeViewController>()
+                                        .favorites
+                                        .contains(logic.advert.id)
+                                    ? Icons.favorite
+                                    : Icons.favorite_outline_rounded,
+                                color: Get.find<AccountInfoStorage>()
+                                            .isLoggedIn() ||
+                                        Get.find<TapHomeViewController>()
+                                            .favorites
+                                            .contains(logic.advert.id)
+                                    ? Colors.red
+                                    : Colors.grey,
+                              ))
                         ],
                       ),
                       SizedBox(height: 10),
@@ -99,9 +158,12 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                         ],
                       ),
                       SizedBox(height: 10),
-                      Text(numberFormat.format(logic.advert.price) + ' ' + SettingsApp.moneySymbol,
+                      Text(
+                          numberFormat.format(logic.advert.price) +
+                              ' ' +
+                              SettingsApp.moneySymbol,
                           style: TextStyle(
-                              color: Colors.deepOrange,
+                              color: framColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 29)),
                       SizedBox(
@@ -174,7 +236,7 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                         Row(
                           children: [
                             Text(
-                              "Modéle : ",
+                              "Modèle : ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),
@@ -284,14 +346,10 @@ class AdvertDetatilsScr extends GetView<AdvertDetailsViewcontroller> {
                               CustomButtonIcon(
                                 btcolor: buttonColor,
                                 function: () async {
-                                  print(controller.advert.id);
                                   if (controller.advert.isRegistredUser &&
                                       Get.find<AccountInfoStorage>()
                                               .readUserId() !=
                                           null) {
-                                    print(
-                                        "advert.userId   ${logic.advert.userId}");
-
                                     controller.showDialogue(context);
                                   }
                                 },

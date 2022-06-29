@@ -8,7 +8,7 @@ class CategoriesGrouppedApi extends ApiManager {
   @override
   String apiUrl() {
 
-    return SettingsApp.grouppedCategoriesUrl ;//;+ "/" + categoryId.toString();;
+    return SettingsApp.grouppedCategoriesUrl ;
   }
 
   @override

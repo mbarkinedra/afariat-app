@@ -1,7 +1,7 @@
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 
-class ModifAdsJson extends AbstractJsonResource{
+class ModifAdsJson extends AbstractJsonResource {
   String createdAt;
   int id;
   String username;
@@ -19,25 +19,41 @@ class ModifAdsJson extends AbstractJsonResource{
   List<Photos> photos;
   String shortUrl;
   Links lLinks;
+  Mileage mileage;
+  Mileage yearModel;
+  Mileage energy;
+  Mileage vehicleBrand;
+  Mileage motoBrand;
+  Mileage vehicleModel;
+  int area;
+  Mileage roomsNumber;
 
   ModifAdsJson(
       {this.createdAt,
-        this.id,
-        this.username,
-        this.mobilePhoneNumber,
-        this.title,
-        this.slug,
-        this.description,
-        this.price,
-        this.showPhoneNumber,
-        this.advertType,
-        this.category,
-        this.region,
-        this.city,
-        this.town,
-        this.photos,
-        this.shortUrl,
-        this.lLinks});
+      this.id,
+      this.username,
+      this.mobilePhoneNumber,
+      this.title,
+      this.slug,
+      this.description,
+      this.price,
+      this.showPhoneNumber,
+      this.advertType,
+      this.category,
+      this.region,
+      this.city,
+      this.town,
+      this.photos,
+      this.motoBrand,
+      this.shortUrl,
+      this.lLinks,
+      this.mileage,
+      this.yearModel,
+      this.energy,
+      this.vehicleBrand,
+      this.vehicleModel,
+      this.roomsNumber,
+      this.area});
 
   ModifAdsJson.fromJson(Map<String, dynamic> json) {
     createdAt = json['created_at'];
@@ -56,9 +72,30 @@ class ModifAdsJson extends AbstractJsonResource{
         ? new Category.fromJson(json['category'])
         : null;
     region =
-    json['region'] != null ? new Region.fromJson(json['region']) : null;
+        json['region'] != null ? new Region.fromJson(json['region']) : null;
     city = json['city'] != null ? new Group.fromJson(json['city']) : null;
     town = json['town'] != null ? new Group.fromJson(json['town']) : null;
+    mileage =
+        json['mileage'] != null ? new Mileage.fromJson(json['mileage']) : null;
+    yearModel = json['year_model'] != null
+        ? new Mileage.fromJson(json['year_model'])
+        : null;
+    energy =
+        json['energy'] != null ? new Mileage.fromJson(json['energy']) : null;
+    vehicleBrand = json['vehicle_brand'] != null
+        ? new Mileage.fromJson(json['vehicle_brand'])
+        : null;
+    motoBrand = json['moto_brand'] != null
+        ? new Mileage.fromJson(json['moto_brand'])
+        : null;
+    vehicleModel = json['vehicle_model'] != null
+        ? new Mileage.fromJson(json['vehicle_model'])
+        : null;
+    area = json['area'];
+
+    roomsNumber = json['rooms_Number'] != null
+        ? new Mileage.fromJson(json['rooms_Number'])
+        : null;
     if (json['photos'] != null) {
       photos = <Photos>[];
       json['photos'].forEach((v) {
@@ -79,6 +116,7 @@ class ModifAdsJson extends AbstractJsonResource{
     data['slug'] = this.slug;
     data['description'] = this.description;
     data['price'] = this.price;
+    data['area'] = this.area;
     data['show_phone_number'] = this.showPhoneNumber;
     if (this.advertType != null) {
       data['advert_type'] = this.advertType.toJson();
@@ -95,6 +133,26 @@ class ModifAdsJson extends AbstractJsonResource{
     if (this.town != null) {
       data['town'] = this.town.toJson();
     }
+    if (this.mileage != null) {
+      data['mileage'] = this.mileage.toJson();
+    }
+    if (this.yearModel != null) {
+      data['year_model'] = this.yearModel.toJson();
+    }
+    if (this.energy != null) {
+      data['energy'] = this.energy.toJson();
+    }
+    if (this.vehicleBrand != null) {
+      data['vehicle_brand'] = this.vehicleBrand.toJson();
+    }
+    if (this.motoBrand != null) {
+      data['vehicle_brand'] = this.motoBrand.toJson();
+    }
+    if (this.vehicleModel != null) {
+      data['vehicle_model'] = this.vehicleModel.toJson();
+    }   if (this.roomsNumber != null) {
+      data['roomsNumber'] = this.roomsNumber.toJson();
+    }
     if (this.photos != null) {
       data['photos'] = this.photos.map((v) => v.toJson()).toList();
     }
@@ -102,6 +160,22 @@ class ModifAdsJson extends AbstractJsonResource{
     if (this.lLinks != null) {
       data['_links'] = this.lLinks.toJson();
     }
+    return data;
+  }
+}
+
+class Mileage {
+  String value;
+
+  Mileage({this.value});
+
+  Mileage.fromJson(Map<String, dynamic> json) {
+    value = json['value'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['value'] = this.value;
     return data;
   }
 }
@@ -250,7 +324,7 @@ class Photos {
   Photos({this.path});
 
   Photos.fromJson(Map<String, dynamic> json) {
-    path =SettingsApp.baseUrl +"/"+ json['path'];
+    path = SettingsApp.baseUrl + "/" + json['path'];
   }
 
   Map<String, dynamic> toJson() {
@@ -259,5 +333,3 @@ class Photos {
     return data;
   }
 }
-
-

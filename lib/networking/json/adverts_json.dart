@@ -23,9 +23,13 @@ class AdvertListJson extends AbstractJsonResource {
     limit = json['limit'];
     pages = json['pages'];
     total = json['total'];
-    print("_links  ${json['_links']}");
+
     links = Links.fromJson(json['_links']);
     embedded = Embedded.fromJson(json['_embedded']);
+  }
+
+  List<AdvertJson> adverts() {
+    return embedded != null ? embedded.adverts : null;
   }
 }
 
@@ -34,20 +38,37 @@ class Links {
   Link first;
   Link last;
   Link next;
+  Link previous;
 
-  Links({
-    this.self,
-    this.first,
-    this.last,
-    this.next,
-  });
+  Links({this.self, this.first, this.last, this.next, this.previous});
 
   Links.fromJson(Map<String, dynamic> json) {
-    self = Link.fromJson(json['self']);
-    /*first = Link.fromJson(json["first"]);
-    last = Link.fromJson(json['last']);
-    next = Link.fromJson(json['next']);*/
+    self = json['self'] != null ? Link.fromJson(json['self']) : null;
+    first = json['first'] != null ? Link.fromJson(json['first']) : null;
+    last = json['last'] != null ? Link.fromJson(json['last']) : null;
+    next = json['next'] != null ? Link.fromJson(json['next']) : null;
+    previous =
+        json['previous'] != null ? Link.fromJson(json['previous']) : null;
+  }
 
+  String getFirstUrl() {
+    return (first != null) ? first.href : null;
+  }
+
+  String getNextUrl() {
+    return (next != null) ? next.href : null;
+  }
+
+  String getPreviousUrl() {
+    return (previous != null) ? previous.href : null;
+  }
+
+  String getLastUrl() {
+    return (last != null) ? last.href : null;
+  }
+
+  String getSelfUrl() {
+    return (self != null) ? self.href : null;
   }
 }
 
@@ -59,6 +80,9 @@ class Link {
   String href;
 
   Link.fromJson(Map<String, dynamic> json) {
+    if (json == null) {
+      return;
+    }
     href = json['href'];
   }
 }
@@ -88,6 +112,7 @@ class AdvertJson {
   Town town;
   String modifiedAt;
   Links links;
+  bool is_favorite;
 
   AdvertJson({
     this.id,
@@ -101,22 +126,30 @@ class AdvertJson {
     this.town,
     this.modifiedAt,
     this.links,
+    this.is_favorite
   });
 
   AdvertJson.fromJson(Map<String, dynamic> json) {
+
     id = json['id'];
     categoryGroup = CategoryGroup.fromJson(json['categoryGroup']);
-    photo = SettingsApp.baseUrl +"/"+ json['photo'];
+
+    if (json['photo'] != null) {
+        photo = SettingsApp.baseUrl + "/" + json['photo'];
+
+    }
+
     description = json['description'];
     title = json['title'];
     price = json['price'];
+    is_favorite = json['is_favorite'];
+
     region = Region.fromJson(json['region']);
     city = City.fromJson(json['city']);
     town = Town.fromJson(json['town']);
     modifiedAt = json['modified_at'];
     links = Links.fromJson(json['_links']);
   }
-
 }
 
 class CategoryGroup {
@@ -186,15 +219,6 @@ class City {
     order = json['order'];
     links = Links.fromJson(json['_links']);
   }
-
-// Map<String, dynamic> toJson() {
-//   final data = <String, dynamic>{};
-//   data['id'] = id;
-//   data['name'] = name;
-//   data['order'] = order;
-//   data['_links'] = links.toJson();
-//   return data;
-// }
 }
 
 class Town {
@@ -216,5 +240,4 @@ class Town {
     order = json['order'];
     links = Links.fromJson(json['_links']);
   }
-
 }

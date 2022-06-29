@@ -1,16 +1,17 @@
 import 'dart:io';
 import 'dart:developer' as devlog;
 import 'dart:convert';
-import 'package:afariat/config/AccountInfoStorage.dart';
-import 'package:afariat/config/filter.dart';
+import 'package:afariat/config/settings_app.dart';
+import 'package:afariat/storage/AccountInfoStorage.dart';
+import 'package:afariat/model/filter.dart';
 
-import 'package:afariat/config/storage.dart';
+import 'package:afariat/storage/storage.dart';
 
 import 'package:afariat/controllers/category_and_subcategory.dart';
+import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
-import 'package:afariat/model/validate_server.dart';
-import 'package:afariat/model/validator.dart';
+import 'package:afariat/validator/validator_Adverts.dart';
 import 'package:afariat/mywidget/custom_dialogue_felecitation.dart';
 import 'package:afariat/networking/api/modif_ads_api.dart';
 import 'package:afariat/networking/api/publish_api.dart';
@@ -26,25 +27,26 @@ import 'package:image_picker/image_picker.dart';
 import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
-  bool buttonPublier = false;
-  bool buttonModif = false;
-  bool buttonSupprimer = false;
-
+  //if set to true, when update categories, options,... the filter will be set by the selected value.
+  bool isFilterContext = false;
+  RxBool buttonPublier = false.obs;
+  int newPublish = 0;
+  RxBool modifAds = false.obs;
+  bool getDataFromServer = false;
+  bool lights = true;
+  bool isButtonSheet = false;
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   final storge = Get.find<SecureStorage>();
   final accountInfoStorage = Get.find<AccountInfoStorage>();
   final picker = ImagePicker();
-
-  Validator validator = Validator();
+  ValidatorAdverts validator = ValidatorAdverts();
   bool dataAdverts = false;
+  bool dataEditFromServer = false;
   ModifAdsJson modifAdsJson = ModifAdsJson();
   CategoryGroupedJson category;
-  SubcategoryJson subCategories;
-  bool lights = true;
-  String pieces;
+  SubCategoryJson subCategories;
   BuildContext context;
   RefJson energie;
-
   Map<String, dynamic> myAds = {};
   Map<String, String> myAdsView = {};
   TextEditingController title = TextEditingController();
@@ -52,43 +54,15 @@ class TapPublishViewController extends GetxController {
   TextEditingController prix = TextEditingController();
   TextEditingController surface = TextEditingController();
   ModifAdsApi _modifAdsApi = ModifAdsApi();
-
   List<File> images = [];
   List<String> editAdsImages = [];
-
-  List<Widget> radioList = [];
   List<RefJson> values = [
     RefJson(name: "Offre", id: 1),
     RefJson(name: "Demande", id: 2),
     RefJson(name: "Offre de location", id: 3)
   ];
-
-  List<RefJson> vehiculeBrands = [];
-  List<RefJson> energies = [];
-
-  List<RefJson> motosBrands = [];
-  List<RefJson> vehiculeModels = [];
-  List<RefJson> mileages = [];
-  List<RefJson> yearsModels = [];
-  List<RefJson> rooms = [];
-  List<String> nombrePieces = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '10+'
-  ];
-  List<String> photos = [];
-
-  // List<String> energies = ['Diesel', 'Essence', 'Electrique', 'LPG'];
   RefJson advertType;
-  RefJson yearsmodele;
+  RefJson yearsModele;
   RefJson getView;
   RefJson vehiculebrands;
   RefJson motosBrand;
@@ -96,59 +70,70 @@ class TapPublishViewController extends GetxController {
   RefJson citie;
   RefJson town;
   RefJson kilometrage;
-
+  RefJson nombrePiece;
+  List<RefJson> vehiculeBrands = [];
+  List<RefJson> energies = [];
+  List<RefJson> motosBrands = [];
+  List<RefJson> vehiculeModels = [];
+  List<RefJson> mileages = [];
+  List<RefJson> yearsModels = [];
+  List<RefJson> nombrePieces = [];
+  List<String> photos = [];
   VehicleBrandsApi _vehicleBrandsApi = VehicleBrandsApi();
   MotoBrandsApi _motoBrandsApi = MotoBrandsApi();
   VehicleModelApi _vehicleModelApi = VehicleModelApi();
   MileagesApi _mileagesApi = MileagesApi();
   YearsModelsApi _yearsModelsApi = YearsModelsApi();
   EnergieApi _energieApi = EnergieApi();
-  ValidateServer _validateServer = ValidateServer();
+  RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
 
-  photobase64Encode(im) {
+  /// Convert image to base64
+  photoBase64Encode(im) {
     final bytes = File(im.path).readAsBytesSync();
     String img64 = base64Encode(bytes);
     photos.add(img64);
   }
 
+  /// Open Camera from Emelator
   void openCamera() async {
-    var imgCamera = await picker.getImage(source: ImageSource.camera);
-
+    var imgCamera = await picker.pickImage(source: ImageSource.camera);
     if (imgCamera != null) {
-      print(' image selected.');
       images.add(File(imgCamera.path));
       update();
     }
-
     update();
   }
 
+  /// Open Camera from Emelator
+
   void openGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      print(' image selected.');
       images.add(File(pickedFile.path));
       update();
     }
-
     update();
   }
 
+  /// Delete Image from local
   deleteImage(File file) {
     images.remove(file);
     update();
   }
 
-  deleditImage(String file) {
+  /// Delete image (lors de modifier l annonce )
+  delEditImage(String file) {
     editAdsImages.remove(file);
     update();
   }
 
+  ///Clear category in publishController
   updateCategoryToNull() {
     category = null;
     update();
   }
 
+  ///Clear SubCategory in publishController
   updateSubcategoryToNull() {
     subCategories = null;
     update();
@@ -158,8 +143,13 @@ class TapPublishViewController extends GetxController {
     category = categoryGrouped;
   }
 
-  updateSubCategoryJson(SubcategoryJson subCategoryJson) {
+  updateSubCategoryJson(SubCategoryJson subCategoryJson) {
     subCategories = subCategoryJson;
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
   }
 
   @override
@@ -168,84 +158,172 @@ class TapPublishViewController extends GetxController {
     advertType = values[0];
     myAds["advertType"] = values[0].name;
     myAdsView["advertType"] = values[0].name;
-    getMileages();
-    getYearsModels();
+
+    if (Get.find<NetWorkController>().connectionStatus.value) {
+      getMileages();
+      getYearsModels();
+    }
   }
 
   getEnergie() {
     energie = null;
     _energieApi.getList().then((value) {
-      /*  print("eniytytyutytytytuytyutytutuyergy${value.data}");
-      print("eniytytyutytytytuytyutytutuyergy${value}");*/
       List<RefJson> refListJson = value.data;
+
       energies.clear();
       energies = refListJson;
-
+      if (dataAdverts) {
+        if (modifAdsJson.energy != null) {
+          energies.forEach((element) {
+            if (element.name == modifAdsJson.energy.value) {
+              updateEnergie(element);
+            }
+          });
+        }
+      }
       update();
     });
   }
 
-  getVehicleBrand() {
-    _vehicleBrandsApi.getList().then((value) {
+  /// Update dropDown Marque
+  Future getVehicleBrand() async {
+    await _vehicleBrandsApi.getList().then((value) {
       vehiculeModel = null;
 
       vehiculeBrands = value.data;
+      vehiculeBrands.forEach((element) {});
 
       update();
     });
   }
 
   getVehicleModel() {
+    vehiculeModel = null;
     _vehicleModelApi.getList().then((value) {
       vehiculeModels = value.data;
+      if (modifAdsJson.vehicleModel != null) {
+        vehiculeModels.forEach((element) {
+          if (element.name == modifAdsJson.vehicleModel.value) {
+            updateModel(element);
+          }
+        });
+      }
       getEnergie();
       update();
     });
   }
 
-  getMileages() {
-    _mileagesApi.getList().then((value) {
+  getMileages() async {
+    await _mileagesApi.getList().then((value) {
       mileages = value.data;
-
-      update();
     });
+    update();
   }
 
-  getMotosBrand() {
-    getMileages();
-    getYearsModels();
-    _motoBrandsApi.getList().then((value) {
+  getRoomsNumber() async {
+    await _roomsNumberApi.getList().then((value) {
+      nombrePieces = value.data;
+    });
+    update();
+  }
+
+  getMotosBrand() async {
+    await _motoBrandsApi.getList().then((value) {
       motosBrands = value.data;
-
-      update();
     });
   }
 
-  getYearsModels() {
-    _yearsModelsApi.getList().then((value) {
+  getYearsModels() async {
+    await _yearsModelsApi.getList().then((value) {
       yearsModels = value.data;
-
-      update();
     });
+    update();
   }
 
   updateGetView(RefJson data) async {
     getView = data;
-    vehiculebrands = null;
-    vehiculeModel = null;
-    motosBrand = null;
-    yearsmodele = null;
-    kilometrage = null;
-    getVehicleBrand();
-    getMotosBrand();
+    if (dataAdverts) {
+    } else {
+      vehiculebrands = null;
+      vehiculeModel = null;
+      motosBrand = null;
+      yearsModele = null;
+      kilometrage = null;
+      if (Get.find<NetWorkController>().connectionStatus.value) {
+        getVehicleBrand();
+        getMotosBrand();
+      }
+    }
+    update();
+  }
+
+  /// Update value of dropDown Marque
+  updateMarque(RefJson newValue) {
+    _vehicleModelApi.vehicleModelId = newValue.id;
+    myAds["vehicleBrand"] = newValue.id;
+    myAdsView["Marque:"] = newValue.name;
+    vehiculebrands = newValue;
+    //set filter if we are in context filter
+    if (isFilterContext == true) {
+      Filter.set(key: "vehicleBrand", val: newValue.id);
+    }
+    getVehicleModel();
+
+    update();
+  }
+
+  updateMarqueMoto(RefJson newValue) {
+    _vehicleModelApi.vehicleModelId = newValue.id;
+    myAds["motoBrand"] = newValue.id;
+    myAdsView["Marque:"] = newValue.name;
+    motosBrand = newValue;
+
+    //set filter if we are in context filter
+    if (isFilterContext == true) {
+      Filter.set(key: "motoBrand", val: newValue.id);
+    }
 
     update();
   }
 
   updateModel(RefJson newValue) {
     vehiculeModel = newValue;
+
     myAds["vehicleModel"] = newValue.id;
     myAdsView["Modèle:"] = newValue.name;
+
+    //set filter if we are in context filter
+    if (isFilterContext == true) {
+      Filter.set(key: "vehicleModel", val: newValue.id);
+    }
+
+    update();
+  }
+
+  updateKilometrage(RefJson newValue) {
+    kilometrage = newValue;
+
+    myAds["mileage"] = newValue.id;
+    myAdsView["Kilométrage:"] = newValue.name + " " + "Km";
+
+    //set filter if we are in context filter
+    if (isFilterContext == true) {
+      Filter.set(key: "mileage", val: newValue.id);
+    }
+
+    update();
+  }
+
+  updateAnnee(RefJson newValue) {
+    yearsModele = newValue;
+    myAds["yearModel"] = newValue.id;
+    myAdsView["Année:"] = newValue.name;
+
+    //set filter if we are in context filter
+    if (isFilterContext == true) {
+      Filter.set(key: "yearModel", val: newValue.id);
+    }
+
     update();
   }
 
@@ -253,62 +331,38 @@ class TapPublishViewController extends GetxController {
     energie = newValue;
     myAds["energy"] = newValue.id;
     myAdsView["energie:"] = newValue.name;
-    // getEnergie();
-    update();
-  }
 
-  updateMarque(RefJson newValue) {
-    _vehicleModelApi.vehicleModelId = newValue.id;
-    myAds["vehicleBrand"] = newValue.id;
-    myAdsView["Marque:"] = newValue.name;
-    vehiculebrands = newValue;
-
-    getVehicleModel();
-    update();
-  }
-  updateMarqueMoto(RefJson newValue) {
-    _vehicleModelApi.vehicleModelId = newValue.id;
-    myAds["motoBrand"] = newValue.id;
-    myAdsView["Marque:"] = newValue.name;
-    motosBrand = newValue;
-
-    getVehicleModel();
-    update();
-  }
-  updateKilometrage(RefJson newValue) {
-    kilometrage = newValue;
-
-    myAds["mileage"] = newValue.id;
-    myAdsView["Kilométrage:"] = newValue.name;
-    update();
-  }
-
-  updateAnnee(RefJson newValue) {
-    yearsmodele = newValue;
-    myAds["yearModel"] = newValue.id;
-    myAdsView["Année:"] = newValue.name;
+    //set filter if we are in context filter
+    if (isFilterContext == true) {
+      Filter.set(key: "energy", val: newValue.id);
+    }
 
     update();
   }
 
-  updateNombredepieces(newValue) {
-    pieces = newValue;
-    myAds["roomsNumber"] = newValue;
-    myAdsView["roomsNumber"] = newValue;
+  updateNombrePieces(newValue) {
+    nombrePiece = newValue;
+    myAds["roomsNumber"] = newValue.id;
+    myAdsView["Nombre de pièces"] = newValue.name;
+
+    //set filter if we are in context filter
+    if (isFilterContext == true) {
+      Filter.set(key: "roomsNumber", val: newValue.id);
+    }
+
     update();
   }
 
   updateLight(v) {
     lights = v;
-    print(accountInfoStorage.readPhone());
 
-    myAds["showPhoneNumber"] = v ? true:false;
+    myAds["showPhoneNumber"] = v ? true : false;
     myAdsView["showPhoneNumber"] =
         v ? accountInfoStorage.readPhone() : accountInfoStorage.readPhone();
     update();
   }
 
-  updateadvertTypes(v) {
+  updateAdvertTypes(v) {
     values = v.data;
     advertType = values[0];
     myAds["advertType"] = advertType.id;
@@ -324,76 +378,68 @@ class TapPublishViewController extends GetxController {
     update();
   }
 
+  /// Clear All Data From Screen Publish
   clearAllData() {
-    category = null;
-    subCategories = null;
-    yearsmodele = null;
-    getView = null;
-    vehiculebrands = null;
-    motosBrand = null;
-    vehiculeModel = null;
-    energie = null;
-    kilometrage = null;
-    pieces = null;
-    town = null;
-    citie = null;
-
-    myAds = {};
-    myAdsView = {};
-    title.text = "";
-    description.text = "";
-    prix.text = "";
-    surface.text = "";
-
-    update();
+    if (Get.find<NetWorkController>().connectionStatus.value) {
+      RefJson refJson = RefJson(id: 0, name: "");
+      updateGetView(refJson);
+      Get.find<LocController>().city = null;
+      Get.find<LocController>().town = null;
+      Get.find<LocController>().update();
+      Get.find<CategoryAndSubcategory>().categoryGroupedJson = null;
+      Get.find<CategoryAndSubcategory>().subcategories1 = null;
+      Get.find<CategoryAndSubcategory>().update();
+      images.clear();
+      photos.clear();
+      editAdsImages.clear();
+      dataAdverts = false;
+      category = null;
+      subCategories = null;
+      town = null;
+      citie = null;
+      modifAds.value = false;
+      yearsModele = null;
+      vehiculebrands = null;
+      motosBrand = null;
+      vehiculeModel = null;
+      energie = null;
+      kilometrage = null;
+      nombrePiece = null;
+      myAds = {};
+      myAdsView = {};
+      title.text = "";
+      description.text = "";
+      prix.text = "";
+      surface.clear();
+      update();
+    }
   }
 
-  postdata() async {
-    buttonPublier = true;
-    update();
+  postData(con) async {
+    buttonPublier.value = true;
+
+    /// get all image selected and convert base64
     for (var i in images) {
-      photobase64Encode(i);
+      photoBase64Encode(i);
     }
     myAds["photos"] = photos;
-    print(photos.length);
     PublishApi publishApi = PublishApi();
 
+    /// Method Modif Adverts
     if (dataAdverts) {
       _modifAdsApi.id = modifAdsJson.id;
       await _modifAdsApi.putData(dataToPost: myAds).then((value) async {
-        if (value.statusCode == 204) {
-          await showDialog<bool>(
-              context: context,
-              builder: (context) {
-                return CustomDialogueFelecitation(
-                  text2: " ",
-                  title: "Félicitation",
-                  function: () {
-                    Get.find<TapMyadsViewController>().ads();
-                    Get.find<HomeViwController>().changeSelectedValue(1);
-                    Filter.data.clear();
-                    clearAllData();
-                    Get.find<CategoryAndSubcategory>().clearData();
-                    Get.find<LocController>().clearData();
-
-                    buttonPublier = false;
-                    Navigator.pop(context);
-                    update();
-                    // Get.back();
-                  },
-                  description: "Votre annonce est en cours de validation !",
-                  buttonText: "Ok",
-                  phone: false,
-                );
-              });
-        }
-      });
-    } else {
-      devlog.log(jsonEncode(myAds));
-
-      await publishApi.securePost(dataToPost: myAds).then((value) {
-        _validateServer.validatorServer(
-            validate: () async {
+        buttonPublier.value = false;
+        validator.validatorServer.validateServer(
+            value: value,
+            success: () async {
+              Get.find<TapMyAdsViewController>().getAllAds();
+              Filter.data.clear();
+              clearAllData();
+              Get.find<CategoryAndSubcategory>()
+                  .clearDataCategroyAndSubCategory();
+              Get.find<LocController>().clearDataCityAndTown();
+              Get.find<HomeViewController>().changeItemFilter(1);
               await showDialog<bool>(
                   context: context,
                   builder: (context) {
@@ -401,94 +447,224 @@ class TapPublishViewController extends GetxController {
                       text2: " ",
                       title: "Félicitation",
                       function: () {
-
-                        Filter.data.clear();
-                        clearAllData();
-                        Get.find<CategoryAndSubcategory>().clearData();
-                        Get.find<LocController>().clearData();
-
-                   for (int ii = 0; ii < 2; ii++) {
-
-                          Get.back();
+                        int i = 0;
+                        while (i < 2) {
+                          i++;
                         }
-
-
-                        Get.find<TapMyadsViewController>().ads();
-
-                        Get.find<HomeViwController>().changeSelectedValue(1);
-                        //  Navigator.pop(context);
-                        update();
+                        Navigator.pop(context);
+                        Get.find<TapMyAdsViewController>().getAllAds();
+                        Get.find<TapPublishViewController>().clearAllData();
+                        Get.find<HomeViewController>().changeItemFilter(1);
                       },
                       description: "Votre annonce est en cours de validation !",
                       buttonText: "Ok",
                       phone: false,
                     );
                   });
-            },
-            value: value);
-
-        buttonPublier = false;
-
+            });
         update();
+      });
+    } else {
+      devlog.log(jsonEncode(myAds));
+
+      /// Method Post Adverts
+      await publishApi.securePost(dataToPost: myAds).then((value) {
+        buttonPublier.value = false;
+        validator.validatorServer.validateServer(
+          value: value,
+          success: () async {
+            Filter.data.clear();
+            clearAllData();
+            Get.find<CategoryAndSubcategory>().subcategories1 = null;
+            Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
+            Get.find<LocController>().getCityListSelected();
+            await showDialog<bool>(
+                context: context,
+                builder: (context) {
+                  return CustomDialogueFelecitation(
+                    text2: " ",
+                    title: "Félicitation",
+                    function: () {
+                      int i = 0;
+                      while (i < 2) {
+                        Navigator.pop(con);
+                        i++;
+                      }
+                      Navigator.pop(context);
+                      Get.find<TapPublishViewController>().clearAllData();
+                      Get.find<TapMyAdsViewController>().getAllAds();
+                      Get.find<HomeViewController>().changeItemFilter(1);
+                    },
+                    description: "Votre annonce est en cours de validation !",
+                    buttonText: "Ok",
+                    phone: false,
+                  );
+                });
+          },
+        );
       });
     }
 
     update();
   }
 
-  getModifAds(int id) {
+  /// Method Get all data for update Adverts
+  getAllData(int id) async {
     _modifAdsApi.id = id;
-
-    _modifAdsApi.getList().then((value) {
+    await _modifAdsApi.getList().then((value) async {
       modifAdsJson = value;
       title.text = modifAdsJson.title;
       description.text = modifAdsJson.description;
       prix.text = modifAdsJson.price.toString();
-      lights = modifAdsJson.showPhoneNumber == true? true : false;
+      lights = modifAdsJson.showPhoneNumber == true ? true : false;
+      for (int cat = 0;
+          cat < Get.find<CategoryAndSubcategory>().categoryGroupList.length;
+          cat++) {
+        if (Get.find<CategoryAndSubcategory>().categoryGroupList[cat].id ==
+            modifAdsJson.category.group.id) {
+          Get.find<CategoryAndSubcategory>().updateCategory(
+              Get.find<CategoryAndSubcategory>().categoryGroupList[cat]);
+
+          category = Get.find<CategoryAndSubcategory>().categoryGroupList[cat];
+
+          for (int sub = 0;
+              sub <
+                  Get.find<CategoryAndSubcategory>()
+                      .sc[modifAdsJson.category.group.id]
+                      .length;
+              sub++) {
+            if (Get.find<CategoryAndSubcategory>()
+                    .sc[modifAdsJson.category.group.id][sub]
+                    .id ==
+                modifAdsJson.category.id) {
+              updateSubCategoryJson(Get.find<CategoryAndSubcategory>()
+                  .sc[modifAdsJson.category.group.id][sub]);
+              Get.find<CategoryAndSubcategory>().updateSubCategory(
+                  Get.find<CategoryAndSubcategory>()
+                      .sc[modifAdsJson.category.group.id][sub]);
+            }
+          }
+        }
+      }
       for (int i = 0; i < Get.find<LocController>().cities.length; i++) {
         if (Get.find<LocController>().cities[i].id ==
             modifAdsJson.city.toJson()["id"]) {
           Get.find<LocController>().city = Get.find<LocController>().cities[i];
+          citie = Get.find<LocController>().cities[i];
+          myAds["city"] = Get.find<LocController>().cities[i].id;
+          myAdsView["city"] = Get.find<LocController>().cities[i].name;
           Get.find<LocController>()
-              .updateCity(Get.find<LocController>().cities[i]);
-          Get.find<LocController>()
-              .updateTowns(Get.find<LocController>().cities[i].id)
+              .getTowListSelected(Get.find<LocController>().cities[i].id)
               .then((value) {
             for (int i = 0; i < Get.find<LocController>().towns.length; i++) {
               if (Get.find<LocController>().towns[i].id ==
                   modifAdsJson.town.toJson()["id"]) {
                 Get.find<LocController>()
                     .updateTown(Get.find<LocController>().towns[i]);
+                town = Get.find<LocController>().towns[i];
               }
             }
           });
         }
       }
+      if (modifAdsJson.motoBrand != null) {
+        await getMotosBrand();
 
-      for (int category = 0;
-          category <
-              Get.find<CategoryAndSubcategory>().categoryGroupList.length;
-          category++) {
-        if (Get.find<CategoryAndSubcategory>().categoryGroupList[category].id ==
-            modifAdsJson.category.group.id) {
-          Get.find<CategoryAndSubcategory>().updateCategory(
-              Get.find<CategoryAndSubcategory>().categoryGroupList[category]);
-          SubcategoryJson subcat = Get.find<CategoryAndSubcategory>()
-              .sc[modifAdsJson.category.group.id]
-              .where((element) => element.id == modifAdsJson.category.id)
-              .first;
-          updateSubCategoryJson(subcat);
-          Get.find<CategoryAndSubcategory>().updateSubCategory(subcat);
-          print(subcat.toString());
+        for (int i = 0; i < motosBrands.length; i++) {
+          if (motosBrands[i].name == modifAdsJson.motoBrand.value) {
+            motosBrand = null;
+            updateMarqueMoto(motosBrands[i]);
+          }
         }
       }
-      editAdsImages
-          .clear(); // categoryAndSubcategory.updateSupCategorie(subcat );
+      if (modifAdsJson.vehicleBrand != null) {
+        await getVehicleBrand();
+
+        for (int i = 0; i < vehiculeBrands.length; i++) {
+          if (vehiculeBrands[i].name == modifAdsJson.vehicleBrand.value) {
+            vehiculebrands = null;
+            updateMarque(vehiculeBrands[i]);
+          }
+        }
+      }
+      if (modifAdsJson.mileage != null) {
+        mileages.forEach((element) {
+          if (element.name == modifAdsJson.mileage.value) {
+            updateKilometrage(element);
+          }
+        });
+      }
+
+      if (modifAdsJson.motoBrand != null) {
+        for (int i = 0; i < motosBrands.length; i++) {
+          if (motosBrands[i].name == modifAdsJson.motoBrand.value) {
+            updateMarqueMoto(motosBrands[i]);
+          }
+        }
+      }
+      if (modifAdsJson.yearModel != null) {
+        for (int i = 0; i < yearsModels.length; i++) {
+          if (yearsModels[i].name == modifAdsJson.yearModel.value) {
+            updateAnnee(yearsModels[i]);
+          }
+        }
+      }
+      if (modifAdsJson.roomsNumber != null) {
+        for (int i = 0; i < nombrePieces.length; i++) {
+          if (nombrePieces[i].id.toString() == modifAdsJson.roomsNumber.value) {
+            updateNombrePieces(nombrePieces[i]);
+          }
+        }
+      }
+      if (modifAdsJson.area != null) {
+        surface.text = modifAdsJson.area.toString();
+      }
+
+      editAdsImages.clear();
       modifAdsJson.photos.forEach((element) {
-        print(element.path);
         editAdsImages.add(element.path);
       });
-      update();
     });
+  }
+
+  Future<bool> function() async {
+    return true;
+  }
+
+  loadTapPublish(value) {
+    if (value != 2 || newPublish >= 2) {
+      newPublish = 1;
+      Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
+      Get.find<LocController>().getCityListSelected();
+      clearAllData();
+    } else if (!modifAds.value) {
+      newPublish = 1;
+      Get.find<LocController>().getCityListSelected();
+      Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
+      clearAllData();
+    } else {
+      newPublish++;
+    }
+  }
+
+  /// Method Default Options
+  void defaultOptions() {
+    if (globalKey.currentState.validate()) {
+      myAdsView["prix"] = prix.text + " " + SettingsApp.moneySymbol;
+      myAds["price"] = prix.text;
+      myAdsView["title"] = title.text;
+      myAds["title"] = title.text;
+      myAdsView["description"] = description.text;
+      myAds["description"] = description.text;
+
+      if (surface.text.length > 0) {
+        myAds["area"] = surface.text;
+        myAdsView["Superficie"] = surface.text + " " + "m²";
+      }
+      myAds["showPhoneNumber"] = lights ? "yes" : "no";
+      myAdsView["showPhoneNumber"] = lights ? "Check" : "no";
+    } else {
+      Get.snackbar("Oups !", "Merci de corriger les erreurs ci-dessous.");
+    }
   }
 }

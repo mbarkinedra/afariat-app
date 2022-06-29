@@ -1,4 +1,4 @@
-import 'package:afariat/config/storage.dart';
+import 'package:afariat/storage/storage.dart';
 import 'package:get/get.dart';
 
 class AccountInfoStorage extends GetxController {
@@ -7,9 +7,10 @@ class AccountInfoStorage extends GetxController {
   static const _key_user_id = 'user_id';
   static const _key_name = 'name';
   static const _key_password = 'password';
+  static const _key_intro = 'intro';
 
   static const _key_phone = 'phone';
-  SecureStorage _secureStorage = SecureStorage();
+  SecureStorage _secureStorage = Get.find<SecureStorage>();
 
   saveEmail(String email) {
     _secureStorage.writeSecureData(_key_email, email);
@@ -35,12 +36,22 @@ class AccountInfoStorage extends GetxController {
     _secureStorage.writeSecureData(_key_phone, phone);
   }
 
+  saveIntro(String intro) {
+    _secureStorage.writeSecureData(_key_intro, intro);
+  }
+
   String readEmail() {
-    return _secureStorage.readSecureData(_key_email);
+    String email = _secureStorage.readSecureData(_key_email);
+
+    return email;
   }
 
   String readName() {
     return _secureStorage.readSecureData(_key_name);
+  }
+
+  String readIntro() {
+    return _secureStorage.readSecureData(_key_intro);
   }
 
   String readPassword() {
@@ -60,7 +71,7 @@ class AccountInfoStorage extends GetxController {
   }
 
   /// Removes the hashed password from the secure storage, so user is no longer loggen in.
-  String removeHashedPassword() {
+  removeHashedPassword() {
     return _secureStorage.deleteSecureData(_key_hashedPassword);
   }
 
@@ -69,6 +80,8 @@ class AccountInfoStorage extends GetxController {
     _secureStorage.deleteSecureData(_key_phone);
     _secureStorage.deleteSecureData(_key_user_id);
     _secureStorage.deleteSecureData(_key_name);
+    _secureStorage.deleteSecureData(_key_name);
+    _secureStorage.deleteSecureData(_key_hashedPassword);
   }
 
   bool isLoggedIn() {

@@ -1,27 +1,30 @@
-import 'package:afariat/config/AccountInfoStorage.dart';
-import 'package:afariat/config/filter.dart';
-
+import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_chat/tap_chat_scr.dart';
 import 'package:afariat/home/tap_home/tap_home_scr.dart';
+import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
-
 import 'package:afariat/sign_in/sign_in_scr.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-
+import 'tap_home/tap_home_viewcontroller.dart';
 import 'tap_myads/tap_myads_scr.dart';
 import 'tap_profile/tap_profile_scr.dart';
 import 'tap_publish/tap_publish_scr.dart';
+import 'package:flutter_intro/flutter_intro.dart';
 
-class HomeViwController extends GetxController {
+class HomeViewController extends GetxController {
+  BuildContext context;
   PersistentTabController controller;
-
+  int newPublish = 0;
   int _navigatorValue = 0;
   String _currentPage = 'Page1';
   var _navigatorKey;
+  int loadOrScrollHome = 0;
+  int loadOrScrollAds = 0;
+  final AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
 
   List<String> _pageKeys = ['Page1', 'Page2', 'Page3', 'Page4', 'Page5'];
 
@@ -52,17 +55,66 @@ class HomeViwController extends GetxController {
     Get.find<AccountInfoStorage>().isLoggedIn() ? TapProfileScr() : SignInScr()
   ];
 
+// Start introduction une seule fois
+  startIntro1() {
+    intro.start(context);
+    if (accountInfoStorage.readIntro() == null) {}
+  }
+
+  Intro intro;
+
   @override
   void onInit() {
     controller = PersistentTabController(initialIndex: 0);
+    controller.addListener(() {});
     super.onInit();
     currentScreen = PageToView(
       naigatorKey: _navigatorKeys[_pageKeys[0]],
       tabItem: _pageKeys[0],
     );
+    Get.find<TapHomeViewController>()
+        .setUserName(Get.find<AccountInfoStorage>().readName() ?? "");
+    intro = Intro(
+      /// You can set it true to disable animation
+      noAnimation: false,
+
+      /// The total number of guide pages, must be passed
+      stepCount: 4,
+
+      /// Click on whether the mask is allowed to be closed.
+      maskClosable: true,
+
+      /// When highlight widget is tapped.
+      onHighlightWidgetTap: (introStatus) {},
+
+      /// The padding of the highlighted area and the widget
+      padding: EdgeInsets.all(8),
+
+      /// Border radius of the highlighted area
+      borderRadius: BorderRadius.all(Radius.circular(4)),
+
+      /// Use the default useDefaultTheme provided by the library to quickly build a guide page
+      /// Need to customize the style and content of the guide page, implement the widgetBuilder method yourself
+      /// * Above version 2.3.0, you can use useAdvancedTheme to have more control over the style of the widget
+      /// * Please see https://github.com/tal-tech/flutter_intro/issues/26
+      widgetBuilder: StepWidgetBuilder.useDefaultTheme(
+        /// Guide page text
+        texts: [
+          'Gérér vos annonces déjà déposées en appuyant sur le menu "Annonces"',
+          'Appuyer sur le bouton "+" pour déposer une nouvelle annonce',
+          'Consulter vos messages en appuyant sur "Chat"',
+          'Gérer votre profil ici',
+        ],
+
+        /// Button text
+        buttonTextBuilder: (curr, total) {
+          return curr < total - 1 ? 'Suivant' : 'Terminer';
+        },
+      ),
+    );
   }
 
-  updatelist() {
+  updateList() {
     if (Get.find<AccountInfoStorage>().isLoggedIn()) {
       buildScreens[1] = TapMyAdsScr();
       buildScreens[2] = TapPublishScr();
@@ -76,36 +128,68 @@ class HomeViwController extends GetxController {
     }
   }
 
-  /// Selected Navigation bar
-  changeSelectedValue(int selectedValue) {
-    updatelist();
-    controller.index = selectedValue;
+  changeItemFilter(value) {
+    if (value == 0) {
+      Get.find<TapHomeViewController>().scrollUpHome();
+    }
+    if (value == 1) {
+      Get.find<TapMyAdsViewController>().loadOrScrollUpAds();
+    }
+    Get.find<TapPublishViewController>().loadTapPublish(value);
+    controller.index = value;
     update();
-    Filter.data.clear();
-    Get.find<TapPublishViewController>().clearAllData();
-    Get.find<CategoryAndSubcategory>().clearData();
-    Get.find<LocController>().clearData();
-    _navigatorValue = selectedValue;
-    _currentPage = _pageKeys[selectedValue];
-    _navigatorKey = _navigatorKeys[_currentPage];
-
-    currentScreen = PageToView(
-      naigatorKey: _navigatorKey,
-      tabItem: _currentPage,
-    );
-
-    update();
+    /* if (value == 1) {
+      loadOrScrollAds++;
+      if (loadOrScrollAds == 1) {
+        Get.find<TapMyadsViewController>().scrollUpAds();
+      } else {
+        if (Get.find<TapMyadsViewController>().scrollController.hasClients) {
+          if (Get.find<TapMyadsViewController>().scrollController.offset != 1) {
+            Get.find<TapMyadsViewController>().scrollUpAds();
+            loadOrScrollAds = 1;
+          } else {
+            loadOrScrollAds = 0;
+          }
+        }
+      }
+    } else {
+      loadOrScrollAds = 0;
+    }
+    if (value == 0) {
+      loadOrScrollHome++;
+      if (loadOrScrollHome == 1) {
+        Get.find<TapHomeViewController>().scrollUp();
+      } else {
+        if (Get.find<TapHomeViewController>().scrollController.offset != 1) {
+          Get.find<TapHomeViewController>().scrollUp();
+          loadOrScrollHome = 1;
+        } else {
+          Get.find<TapHomeViewController>().clearDataFilter();
+          loadOrScrollHome = 0;
+        }
+      }
+    } else {
+      loadOrScrollHome = 0;
+    }*/
+/*    TapPublishViewController tapPublishViewController =
+        Get.find<TapPublishViewController>();
+    if (value != 2 || newPublish >= 2) {
+      newPublish = 1;
+      Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
+      Get.find<LocController>().getCityListSelected();
+      tapPublishViewController.clearAllData();
+    } else if (!tapPublishViewController.modifAds.value) {
+      newPublish = 1;
+      Get.find<LocController>().getCityListSelected();
+      Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
+      tapPublishViewController.clearAllData();
+    } else {
+      newPublish++;
+    }*/
+    // controller.jumpToTab(value);
   }
 
-  changeItemFilter(v) {
-    Get.find<TapPublishViewController>().updateGetView(null);
-    Get.find<CategoryAndSubcategory>().categoryGroupedJson = null;
-    Get.find<CategoryAndSubcategory>().subcategories1 = null;
-    Get.find<LocController>().town = null;
-    Get.find<LocController>().city = null;
-  }
-
-  Widget buildoffstageNavigator(String tabItem) {
+  Widget buildOffStageNavigator(String tabItem) {
     return Offstage(
       offstage: _currentPage != tabItem,
       child: PageToView(
@@ -114,10 +198,6 @@ class HomeViwController extends GetxController {
       ),
     );
   }
-
-// gotomun() {
-//   // Get.to(() => MenuView());
-// }
 }
 
 class PageToView extends StatelessWidget {

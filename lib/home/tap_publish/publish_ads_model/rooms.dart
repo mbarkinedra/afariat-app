@@ -1,5 +1,7 @@
+import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/custom_text_filed2.dart';
+import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,22 +28,26 @@ class Rooms extends GetView<TapPublishViewController> {
                 child: GetBuilder<TapPublishViewController>(builder: (logic) {
                   return Container(
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.deepOrange, width: 2),
+                        border: Border.all(color: framColor, width: 2),
                         borderRadius: BorderRadius.circular(10)),
                     child: ListTile(
-                      title: DropdownButton<String>(
-                        value: logic.pieces,
+                      title: DropdownButtonFormField<RefJson>(
+                        value: logic.nombrePiece,
                         isExpanded: true,
                         iconSize: 24,
                         elevation: 16,
+                        decoration: InputDecoration.collapsed(hintText: ''),
                         style: const TextStyle(color: Colors.black),
-                        underline: Container(),
-                        onChanged: logic.updateNombredepieces,
-                        items: logic.nombrePieces
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
+                        // underline: Container(),
+                        validator: (RefJson) {
+                          return controller.validator.validatePieces(RefJson);
+                        },
+                        onChanged: logic.updateNombrePieces,
+                        items: controller.nombrePieces
+                            .map<DropdownMenuItem<RefJson>>((RefJson value) {
+                          return DropdownMenuItem<RefJson>(
                             value: value,
-                            child: Text(value),
+                            child: Text(value.name),
                           );
                         }).toList(),
                       ),
@@ -52,7 +58,6 @@ class Rooms extends GetView<TapPublishViewController> {
             ],
           ),
         ),
-
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -71,10 +76,8 @@ class Rooms extends GetView<TapPublishViewController> {
                     Expanded(
                       flex: 1,
                       child: Container(
-                        // width: size.width * .55,
                         decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Colors.deepOrange, width: 2),
+                            border: Border.all(color: framColor, width: 2),
                             borderRadius: BorderRadius.circular(10)),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 8.0, right: 8),
@@ -83,12 +86,13 @@ class Rooms extends GetView<TapPublishViewController> {
                               Expanded(
                                 flex: 1,
                                 child: CustomTextFiled2(
-                                  padding: 0,
-                                  color: Colors.deepOrange,
-                                  hintText: "Surface",
-                                  textEditingController: controller.surface,
-                                  keyboardType: TextInputType.number,
-                                ),
+                                    padding: 0,
+                                    color: framColor,
+                                    hintText: "Surface",
+                                    validator:
+                                        controller.validator.validateSurface,
+                                    textEditingController: controller.surface,
+                                    keyboardType: TextInputType.number),
                               ),
                               Text(
                                 "m²",
@@ -102,52 +106,10 @@ class Rooms extends GetView<TapPublishViewController> {
                     ),
                   ],
                 ),
-
-                /*    child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 8),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: CustomTextFiled2(
-                              padding: 0,
-                              color: Colors.deepOrange,
-                              textEditingController: controller.surface,
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
-                          Text(
-                            "m²",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),*/
               ),
-
-              // Container(
-              //   height: 50,
-              //
-              //   decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(10),
-              //       border: Border.all(color: Colors.deepOrange, width: 2),
-              //       color: Colors.grey[100]),
-              //   child: Center(
-              //     child: Text(
-              //       "m²",
-              //       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              //     ),
-              //   ),
-              // )
             ],
           ),
         ),
-        //buildTitleFormField(),
       ],
     );
   }

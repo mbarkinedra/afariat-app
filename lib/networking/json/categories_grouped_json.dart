@@ -20,7 +20,7 @@ class CategoriesGroupedJsonList extends AbstractJsonResource {
 class CategoryGroupedJson {
   int id;
   String name;
-  List<SubcategoryJson> subcategories;
+  List<SubCategoryJson> subcategories;
 
   CategoryGroupedJson({this.id, this.name, this.subcategories});
 
@@ -28,22 +28,22 @@ class CategoryGroupedJson {
     id = json['id'];
     name = json['name'];
     if (json['subcategories'] != null) {
-      subcategories = <SubcategoryJson>[];
+      subcategories = <SubCategoryJson>[];
       json['subcategories'].forEach((v) {
-        subcategories.add(new SubcategoryJson.fromJson(v));
+        subcategories.add(new SubCategoryJson.fromJson(v));
       });
     }
   }
 }
 
 /// A single subcategory json resource
-class SubcategoryJson {
+class SubCategoryJson {
   int id;
   String name;
 
-  SubcategoryJson({this.id, this.name});
+  SubCategoryJson({this.id, this.name});
 
-  SubcategoryJson.fromJson(Map<String, dynamic> json) {
+  SubCategoryJson.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }

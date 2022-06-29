@@ -1,9 +1,10 @@
-import 'package:afariat/config/filter.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:get/get.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/ref_json.dart';
+import 'package:afariat/model/filter.dart';
+import 'network_controller.dart';
 
 class LocController extends GetxController {
   final tapHomeViewController = Get.find<TapHomeViewController>();
@@ -15,77 +16,75 @@ class LocController extends GetxController {
   List<RefJson> towns = [];
   RefJson town;
   int index = 0;
+  bool getCity = true;
 
   @override
   void onInit() {
     super.onInit();
-    _cityApi.getList().then((value) {
-      cities = value.data;
+    getCityListSelected();
+  }
 
-      cities.insert(0, RefJson(id: 0, name: ""));
+  /// GET all data from api
+  getCityListSelected() {
+    if (Get.find<NetWorkController>().connectionStatus.value) {
+      _cityApi.getList().then((value) {
+        cities = value.data;
+
+        cities.insert(0, RefJson(id: 0, name: ""));
+        towns = [];
+        town = null;
+        getCity = false;
+        update();
+      });
+    }
+  }
+
+  /// Update city from dropDown
+  updateCity(RefJson selectedCity) {
+    city = selectedCity;
+
+    if (selectedCity.id == 0) {
+      Filter.remove(key: "city");
+      Filter.remove(key: "town");
+      town = null;
       update();
-    });
-  }
-
-  clearData() {
-    city = null;
-
-    town = null;
-    update();
-  }
-
-  updateCity(RefJson ci) {
-    if (ci.id == 0) {
-      if (Filter.data["city"] != null) {
-        Filter.data.remove("city");
-      }
-      if (Filter.data["town"] != null) {
-        Filter.data.remove("town");
-      }
-      town = null;
-      tapHomeViewController.filterUpdate();
     } else {
-      city = ci;
-      tapPublishViewController.citie = ci;
+      city = selectedCity;
+      Filter.set(key: "city", val: selectedCity.id);
+      tapPublishViewController.citie = selectedCity;
       town = null;
-      tapHomeViewController.setSearch("city", ci.id);
-      tapPublishViewController.myAds["city"] = ci.id;
-      tapPublishViewController.myAdsView["city"] = ci.name;
-      tapHomeViewController.searchAddLinke =
-          tapHomeViewController.searchAddLinke + "city=${ci.id}&";
-
-      updateTowns(ci.id);
+      tapPublishViewController.myAds["city"] = selectedCity.id;
+      tapPublishViewController.myAdsView["city"] = selectedCity.name;
+      getTowListSelected(selectedCity.id);
       update();
     }
   }
 
+  /// Update city from dropDown
   updateTown(RefJson town) {
     if (town.id == 0) {
-      if (Filter.data["town"] != null) {
-        Filter.data.remove("town");
-      }
+      Filter.remove(key: "town");
       town = null;
-      tapHomeViewController.filterUpdate();
+      update();
     } else {
+      Filter.set(key: "town", val: town.id);
       this.town = town;
-      tapHomeViewController.searchAddLinke =
-          tapHomeViewController.searchAddLinke + "town=${town.id}&";
       tapPublishViewController.town = town;
-      tapHomeViewController.setSearch("town", town.id);
       tapPublishViewController.myAds["town"] = town.id;
       tapPublishViewController.myAdsView["town"] = town.name;
       update();
     }
   }
 
-  Future updateTowns(id) async {
+  // Get all data of twon from api
+  Future getTowListSelected(id) async {
+    tapPublishViewController.town = null;
     _townsApi.cityId = id.toString();
     await _townsApi.getList().then((value) {
       towns = value.data;
       if (index == 0) {
         towns.insert(0, RefJson(id: 0, name: ""));
       }
-
       update();
     });
   }
@@ -95,7 +94,13 @@ class LocController extends GetxController {
     tapPublishViewController.citie = null;
     tapPublishViewController.town = null;
     town = null;
+    update();
+  }
 
+  /// Clear all data of city and twon (EXP:lorsque on cliq sur l icone + de publir l annonce data de city et town sont supprimées)
+  clearDataCityAndTown() {
+    city = null;
+    town = null;
     update();
   }
 }
