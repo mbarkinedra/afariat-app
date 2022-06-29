@@ -38,7 +38,7 @@ class AccountViewController extends GetxController {
 
     _userApi.id = Get.find<AccountInfoStorage>().readUserId();
     print(user.toJson(form: true)); //user.toJson(form: true)
-    _userApi.putResource(dataToPost: {}).then(
+    _userApi.putData(dataToPost: user.toJson(form: true)).then(
       (value) {
         Get.find<AccountInfoStorage>().saveName(user.name);
         validateServer.validateServer(

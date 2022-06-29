@@ -427,7 +427,8 @@ AdvertApi _advertApi =AdvertApi();
     /// Method Modif Adverts
     if (dataAdverts) {
       _modifAdsApi.id = modifAdsJson.id;
-      await _modifAdsApi.putData(dataToPost: myAds).then((value) async {
+      await _modifAdsApi.putData(
+          dataToPost: myAds).then((value) async {
         buttonPublier.value = false;
         validator.validatorServer.validateServer(
             value: value,

@@ -38,8 +38,8 @@ class SettingsApp {
   static const String deleteNotificationUrl = baseApiUrl + '/notifications';
   static const String notificationCountUrl =
       baseApiUrl + '/notifications/unread/count';
-  static const String converstions = baseApiUrl + '/conversations';
-  static const String getConverstion = baseApiUrl + '/conversation';
+  static const String conversations = baseApiUrl + '/conversations';
+  static const String getConversation = baseApiUrl + '/conversation';
   static const String Converstionreply = baseApiUrl + '/conversations/reply';
   static const String favorite = baseApiUrl + '/favorites';
   static const String deleteFavoriteByAdvert =
