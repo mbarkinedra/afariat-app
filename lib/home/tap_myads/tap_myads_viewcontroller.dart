@@ -1,14 +1,12 @@
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/controllers/network_controller.dart';
-import 'package:afariat/networking/api/delete_ads.dart';
 import 'package:afariat/networking/api/my_ads_api.dart';
 import 'package:afariat/networking/json/my_ads_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TapMyAdsViewController extends GetxController {
-  MyAdsApi _myAdsApi = MyAdsApi();
-  DeleteAds _deleteAds = DeleteAds();
+ MyAdsApi _myAdsApi = MyAdsApi();
   List<Adverts> adverts = [];
   bool deleteData = false;
   bool getAdsFromServer = false;
@@ -51,9 +49,9 @@ class TapMyAdsViewController extends GetxController {
   getAllAds() {
     if (Get.find<NetWorkController>().connectionStatus.value &&
         Get.find<AccountInfoStorage>().readUserId() != null) {
-      _myAdsApi.userId = Get.find<AccountInfoStorage>().readUserId();
+      _myAdsApi.id = Get.find<AccountInfoStorage>().readUserId();
       getAdsFromServer = true;
-      _myAdsApi.getList().then((value) {
+      _myAdsApi.getResource().then((value) {
         MyAdsJson myAdsJson = MyAdsJson();
         myAdsJson = value;
         adverts = myAdsJson.eEmbedded.adverts;
@@ -63,14 +61,13 @@ class TapMyAdsViewController extends GetxController {
       });
     }
   }
-
   /// Delete Ads From List
-  Future deleteAds(int i) async {
+  Future deleteAds(int id) async {
     deleteData = true;
     update();
-    _deleteAds.id = i;
+   // _advertApii.id = i;
 
-    await _deleteAds.deleteAdverts().then((value) {
+    await _myAdsApi.deleteResource(id.toString()).then((value) {
       getAllAds();
       deleteData = false;
 

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:developer' as devlog;
 import 'dart:convert';
 import 'package:afariat/config/settings_app.dart';
+import 'package:afariat/networking/api/advert_api.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/model/filter.dart';
 
@@ -14,7 +15,6 @@ import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
 import 'package:afariat/validator/validator_Adverts.dart';
 import 'package:afariat/mywidget/custom_dialogue_felecitation.dart';
 import 'package:afariat/networking/api/modif_ads_api.dart';
-import 'package:afariat/networking/api/publish_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
 import 'package:afariat/networking/json/modif_ads_json.dart';
@@ -86,6 +86,7 @@ class TapPublishViewController extends GetxController {
   YearsModelsApi _yearsModelsApi = YearsModelsApi();
   EnergieApi _energieApi = EnergieApi();
   RoomsNumberApi _roomsNumberApi = RoomsNumberApi();
+AdvertApi _advertApi =AdvertApi();
 
   /// Convert image to base64
   photoBase64Encode(im) {
@@ -423,8 +424,6 @@ class TapPublishViewController extends GetxController {
       photoBase64Encode(i);
     }
     myAds["photos"] = photos;
-    PublishApi publishApi = PublishApi();
-
     /// Method Modif Adverts
     if (dataAdverts) {
       _modifAdsApi.id = modifAdsJson.id;
@@ -468,7 +467,7 @@ class TapPublishViewController extends GetxController {
       devlog.log(jsonEncode(myAds));
 
       /// Method Post Adverts
-      await publishApi.securePost(dataToPost: myAds).then((value) {
+      await _advertApi.postResource(dataToPost: myAds).then((value) {
         buttonPublier.value = false;
         validator.validatorServer.validateServer(
           value: value,

@@ -88,11 +88,9 @@ class Link {
 }
 
 class Embedded {
-  Embedded({
-    this.adverts,
-  });
-
   List<AdvertJson> adverts;
+
+  Embedded({this.adverts});
 
   Embedded.fromJson(Map<String, dynamic> json) {
     adverts =
@@ -114,29 +112,26 @@ class AdvertJson {
   Links links;
   bool is_favorite;
 
-  AdvertJson({
-    this.id,
-    this.categoryGroup,
-    this.photo,
-    this.description,
-    this.title,
-    this.price,
-    this.region,
-    this.city,
-    this.town,
-    this.modifiedAt,
-    this.links,
-    this.is_favorite
-  });
+  AdvertJson(
+      {this.id,
+      this.categoryGroup,
+      this.photo,
+      this.description,
+      this.title,
+      this.price,
+      this.region,
+      this.city,
+      this.town,
+      this.modifiedAt,
+      this.links,
+      this.is_favorite});
 
   AdvertJson.fromJson(Map<String, dynamic> json) {
-
     id = json['id'];
     categoryGroup = CategoryGroup.fromJson(json['categoryGroup']);
 
     if (json['photo'] != null) {
-        photo = SettingsApp.baseUrl + "/" + json['photo'];
-
+      photo = SettingsApp.baseUrl + "/" + json['photo'];
     }
 
     description = json['description'];

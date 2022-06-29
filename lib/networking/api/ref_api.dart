@@ -16,11 +16,11 @@ class CityApi extends RefApi {
   String apiUrl() => SettingsApp.cityUrl;
 }
 
-
 class TownApi extends RefApi {
   String cityId;
+
   @override
-  String apiUrl() => SettingsApp.townUrl +"/"+ cityId ;
+  String apiUrl() => SettingsApp.townUrl + "/" + cityId;
 }
 
 //Refs
@@ -33,20 +33,24 @@ class VehicleBrandsApi extends RefApi {
   @override
   String apiUrl() => SettingsApp.vehicleBrandsUrl;
 }
+
 class RoomsNumberApi extends RefApi {
   @override
   String apiUrl() => SettingsApp.roomsNumberUrl;
 }
-class EnergieApi extends RefApi{
+
+class EnergieApi extends RefApi {
   @override
   String apiUrl() => SettingsApp.energiesUrl;
 }
-class VehicleModelApi extends RefApi {
-  int  vehicleModelId;
-  @override
-  String apiUrl() => SettingsApp.vehiculeModelUrl + "/" + vehicleModelId.toString();
-}
 
+class VehicleModelApi extends RefApi {
+  int vehicleModelId;
+
+  @override
+  String apiUrl() =>
+      SettingsApp.vehiculeModelUrl + "/" + vehicleModelId.toString();
+}
 
 class MotoBrandsApi extends RefApi {
   @override
@@ -63,9 +67,9 @@ class YearsModelsApi extends RefApi {
   String apiUrl() => SettingsApp.yearsModelsUrl;
 }
 
-
 class AdvertTypesApi extends RefApi {
-  int  advertTypeId;
+  int advertTypeId;
+
   @override
-  String apiUrl() => SettingsApp.advertTypesUrl+  advertTypeId.toString();
+  String apiUrl() => SettingsApp.advertTypesUrl + advertTypeId.toString();
 }

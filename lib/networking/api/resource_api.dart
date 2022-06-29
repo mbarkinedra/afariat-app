@@ -11,7 +11,7 @@ abstract class ResourceApi extends ApiManager {
 
   String apiPutUrl({dataToPost});
 
-  String apiPostUrl(dataToPost);
+  String apiPostUrl({dataToPost});
 
   //Delete User From User
   Future<Response<dynamic>> deleteResource(String id) async {
@@ -56,25 +56,24 @@ abstract class ResourceApi extends ApiManager {
   }
 
   /// POST DATA TO SERVER
-  Future<Response<dynamic>> postResource(dataToPost) async {
+  Future<Response<dynamic>> postResource({dataToPost}) async {
+    //generer le wsse
+    String wsse = Wsse.generateWsseFromStorage();
+    Options options = Options(headers: {
+      "Accept": "application/json",
+      'apikey': SettingsApp.apiKey,
+      'Content-Type': 'application/json',
+      'X-WSSE': wsse,
+    });
     return dioSingleton.dio
         .post(
-      apiPostUrl(dataToPost),
+      apiPostUrl(),
+      options: options,
       data: jsonEncode(dataToPost),
-      options: Options(
-          headers: {
-            "Accept": "application/json",
-            'apikey': SettingsApp.apiKey,
-            'Content-Type': 'application/json',
-          },
-          followRedirects: false,
-          validateStatus: (status) {
-            return status < 405;
-          }),
     )
         .then((value) {
       return value;
-    }).catchError((error) {
+    }).catchError((error, stackTrace) {
       processServerError(error);
     });
   }

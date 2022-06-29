@@ -15,7 +15,12 @@ class SignInApi extends AbstractUserAPi {
     return SettingsApp.loginUrl;
   }
 }
-
+class SignUpApi extends AbstractUserAPi {
+  @override
+  String apiUrl() {
+    return SettingsApp.registerUrl;
+  }
+}
 class GetSaltApi extends AbstractUserAPi {
   @override
   String apiUrl() {
