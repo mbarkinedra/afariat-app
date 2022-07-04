@@ -18,7 +18,7 @@ class FavoriteViewController extends GetxController {
 
   ///Add favovorite advert from homescrenn and advertDetails
   addToMyFavorite(id) {
-    _favoriteApi.securePost(dataToPost: {"id": id}).then((value) {
+    _favoriteApi.postResource(dataToPost: {"id": id}).then((value) {
       getFavorite();
     });
   }

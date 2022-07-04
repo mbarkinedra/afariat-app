@@ -5,8 +5,9 @@ import 'package:dio/dio.dart';
 
 class FavoriteApi extends ResourceApi {
   String _deleteUrl;
-
+String id;
   @override
+
   /// Get list fovorite
   String apiUrl() {
     return SettingsApp.favorite;
@@ -17,13 +18,14 @@ class FavoriteApi extends ResourceApi {
     return _deleteUrl + "/" + id;
   }
 
-
   @override
+
   /// Delete Advert from list favorite
   Future<Response<dynamic>> deleteResource(String id) async {
     _deleteUrl = SettingsApp.favorite;
     return super.deleteResource(id);
   }
+
   /// Delete Favorite from list Advert
   Future<Response<dynamic>> deleteByAdvertId(String advertId) async {
     _deleteUrl = SettingsApp.deleteFavoriteByAdvert;
@@ -32,8 +34,7 @@ class FavoriteApi extends ResourceApi {
 
   @override
   String apiPostUrl({dataToPost}) {
-    // TODO: implement apiPostUrl
-    throw UnimplementedError();
+   return SettingsApp.favorite;
   }
 
   @override
