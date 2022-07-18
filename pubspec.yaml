@@ -91,6 +91,8 @@ flutter:
     - assets/images/Splash_10.png
     - assets/images/Drawer.png
     - assets/images/no-image.jpg
+    - assets/images/NouveauLogoAfariat.png
+    - assets/images/NouveauSplash.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

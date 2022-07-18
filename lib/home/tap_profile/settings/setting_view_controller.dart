@@ -71,7 +71,7 @@ class SettingViewController extends GetxController {
     });
   }
 
-  deleteUser() {
+ deleteUser() {
     _userApi.id = Get.find<AccountInfoStorage>().readUserId();
     _userApi
         .deleteResource(Get.find<AccountInfoStorage>().readUserId())

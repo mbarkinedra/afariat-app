@@ -91,7 +91,7 @@ class HomeView extends GetWidget<HomeViewController> {
               Icons.person,
               key: controller.intro.keys[3],
             ),
-            Obx(() => Get.find<NotificationViewController>()
+      /*      Obx(() => Get.find<NotificationViewController>()
                     .hasNotification
                     .value
                 ? Container(
@@ -100,7 +100,7 @@ class HomeView extends GetWidget<HomeViewController> {
                     height: 10,
                     width: 10,
                   )
-                : SizedBox())
+                : SizedBox())*/
           ],
         ),
         title: ("Profil"),

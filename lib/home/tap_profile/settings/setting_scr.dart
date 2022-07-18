@@ -14,7 +14,7 @@ class Setting extends GetWidget<SettingViewController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Paramètres ",
+          "Changer mot de passe ",
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
         ),
@@ -102,7 +102,7 @@ class Setting extends GetWidget<SettingViewController> {
             SizedBox(
               height: 130,
             ),
-            Padding(
+            /* Padding(
               padding: const EdgeInsets.only(
                   top: 8.0, bottom: 40, right: 8, left: 8),
               child: CustomButton1(
@@ -133,7 +133,7 @@ class Setting extends GetWidget<SettingViewController> {
                       });
                 },
               ),
-            ),
+            ),*/
           ],
         ),
       ),
