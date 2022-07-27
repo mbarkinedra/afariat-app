@@ -17,7 +17,7 @@ class DeleteAccountScr extends GetWidget<DeleteAccountViewController> {
         child: Scaffold(
             appBar: AppBar(
               title: Text(
-                "Supprimer compte",
+                "Suppression du compte compte",
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
