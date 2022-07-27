@@ -117,7 +117,7 @@ class AdvertDetailsScr extends GetView<AdvertDetailsViewController> {
                                   }
                                 } else {
                                   Get.snackbar("",
-                                      "Veuillez vous connecter pour rajouter cette annonce à vos favoris",
+                                      "Veuillez vous connecter pour accéder à vos favoris",
                                       colorText: Colors.white,
                                       backgroundColor: buttonColor);
                                 }

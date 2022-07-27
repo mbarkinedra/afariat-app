@@ -30,7 +30,7 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
             SizedBox(height: 2),
             ProfileMenu(
               iconProfile: Icons.person,
-              text: "Metre à jour compte",
+              text: "Mes informations personnelles",
               press: () => {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (

@@ -318,23 +318,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                     }
                   },
                 ),
-                ListTile(
-                  leading: Icon(
-                    Icons.settings,
-                    color: Colors.grey,
-                  ),
-                  title: const Text(
-                    "Paramètres",
-                    style: TextStyle(
-                        color: ColorText, fontWeight: FontWeight.bold),
-                  ),
-                  onTap: () {
-                    /*   Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FavoriteScr()),
-                    );*/
-                  },
-                ),
+
                 Divider(
                   thickness: 1,
                   color: ColorText,
