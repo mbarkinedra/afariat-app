@@ -71,7 +71,7 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
             ),
             ProfileMenu(
               iconProfile: Icons.delete_outline_sharp,
-              text: "Supprimer compte",
+              text: "Supprimer le compte",
               press: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (
