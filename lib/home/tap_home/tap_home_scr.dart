@@ -15,6 +15,7 @@ import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'favorite/parametres_scr.dart';
 import 'tap_home_viewcontroller.dart';
 
 class TapHomeScr extends GetWidget<TapHomeViewController> {
@@ -329,9 +330,10 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                         color: ColorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
-                    /*   Navigator.push(                      context,
-                     MaterialPageRoute(builder: (context) => FavoriteScr()),
-                    );*/
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ParametreScr()),
+                    );
                   },
                 ),
                 Divider(

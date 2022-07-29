@@ -1,5 +1,6 @@
 import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
 import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
+import 'package:afariat/home/tap_home/favorite/parametre_viewcontroller.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/storage/storage.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
@@ -33,6 +34,7 @@ class AllBindings extends Bindings {
     Get.lazyPut(
       () => NetWorkController(),
     );
+    Get.lazyPut(() => ParametreViewContoller(), fenix: true);
     Get.lazyPut(() => FavoriteViewController(), fenix: true);
     Get.put(TapPublishViewController());
     Get.put(CategoryAndSubcategory());
