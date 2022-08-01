@@ -93,6 +93,7 @@ flutter:
     - assets/images/no-image.jpg
     - assets/images/NouveauLogoAfariat.png
     - assets/images/NouveauSplash.png
+    - assets/images/dawerAfariat.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

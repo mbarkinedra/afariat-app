@@ -273,7 +273,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(
-                            "assets/images/Drawer.png",
+                            "assets/images/dawerAfariat.jpg",
                           ),
                           fit: BoxFit.fill)),
                   child: Container(
