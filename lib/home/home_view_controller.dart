@@ -56,7 +56,9 @@ class HomeViewController extends GetxController {
 // Start introduction une seule fois
   startIntro1() {
     intro.start(context);
-    if (accountInfoStorage.readIntro() == null) {}
+    if (accountInfoStorage.readIntro() == null) {
+
+    }
   }
 
   Intro intro;

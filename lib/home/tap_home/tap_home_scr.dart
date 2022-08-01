@@ -19,6 +19,8 @@ import 'favorite/parametres_scr.dart';
 import 'tap_home_viewcontroller.dart';
 
 class TapHomeScr extends GetWidget<TapHomeViewController> {
+ // GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -38,6 +40,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       InkWell(
+                        key: controller.intro.keys[0],
+
                         onTap: controller.openDrawer,
                         child: const Icon(
                           Icons.menu,
@@ -138,6 +142,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                             ),
                           )),
                       SizedBox(
+                        key: controller.intro.keys[3],
+
                         child: Obx(() {
                           return NotificationMenu(
                             iconProfile: Icons.notifications_active,

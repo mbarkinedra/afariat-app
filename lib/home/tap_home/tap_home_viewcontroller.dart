@@ -17,6 +17,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../home_view_controller.dart';
 
 class TapHomeViewController extends GetxController {
+  BuildContext context;
+
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   final AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
   TextEditingController searchWord = TextEditingController();
@@ -43,6 +45,7 @@ class TapHomeViewController extends GetxController {
         'Pour consulter les paramétres de l\'application appuyer sur le Logo.',
     'Recherchez des annonces ici.',
     'Filtrer le résultat de votre recherche',
+    'Voici votre notifications'
   ];
 
   @override
@@ -277,14 +280,20 @@ class TapHomeViewController extends GetxController {
     if (!await launch(url)) throw 'Could not launch $url';
   }
 
+  updatecontext(v) {
+    context = v;
+  }
+
   // Start intro one time
   startIntro(context) {
+    print("*" * 20);
+    print(context == null);
+    print("*" * 20);
     if (accountInfoStorage.readIntro() == null) {
       intro.start(context);
       accountInfoStorage.saveIntro("intro");
     }
   }
-
   Intro intro;
 
   @override
@@ -296,13 +305,15 @@ class TapHomeViewController extends GetxController {
       noAnimation: false,
 
       /// The total number of guide pages, must be passed
-      stepCount: 3,
+      stepCount: 4,
 
       /// Click on whether the mask is allowed to be closed.
       maskClosable: true,
 
       /// When highlight widget is tapped.
       onHighlightWidgetTap: (introStatus) {},
+
+      /// The padding of the
 
       /// The padding of the highlighted area and the widget
       padding: EdgeInsets.all(8),

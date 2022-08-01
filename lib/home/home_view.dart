@@ -21,6 +21,7 @@ class HomeView extends GetWidget<HomeViewController> {
       screens: controller.buildScreens,
       items: _navBarsItems(),
       selectedTabScreenContext: (BuildContext context) {
+        controller.context = context;
         Get.find<TapPublishViewController>().context = context;
       },
       confineInSafeArea: true,
