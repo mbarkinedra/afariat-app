@@ -1,4 +1,3 @@
-
 import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
 import 'package:afariat/model/filter.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
@@ -18,6 +17,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../home_view_controller.dart';
 
 class TapHomeViewController extends GetxController {
+  BuildContext context;
+
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   final AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
   TextEditingController searchWord = TextEditingController();
@@ -44,6 +45,7 @@ class TapHomeViewController extends GetxController {
         'Pour consulter les paramétres de l\'application appuyer sur le Logo.',
     'Recherchez des annonces ici.',
     'Filtrer le résultat de votre recherche',
+    'Voici votre notifications'
   ];
 
   @override
@@ -210,12 +212,9 @@ class TapHomeViewController extends GetxController {
 
   filterUpdate() {
     //reset the URL of advertApi
-
-    //print(Filter.data);
     _advertApi.url = null;
     if (searchWord.text.isNotEmpty) {
-      Filter.set(
-          key: "search", val: searchWord.text.toString());
+      Filter.set(key: "search", val: searchWord.text.toString());
     }
     _advertApi.getList(filters: Filter.data).then((value) {
       pagingController.itemList.clear();
@@ -262,13 +261,10 @@ class TapHomeViewController extends GetxController {
   updateSlideValue(value) {
     values = value;
 
-    Filter.set(
-        key: "minPrice", val: values.start.toInt().toString());
-    Filter.set(
-        key: "maxPrice", val: values.end.toInt().toString());
+    Filter.set(key: "minPrice", val: values.start.toInt().toString());
+    Filter.set(key: "maxPrice", val: values.end.toInt().toString());
     update();
   }
-
 
   openDrawer() {
     scaffoldKey.currentState.openDrawer();
@@ -284,14 +280,20 @@ class TapHomeViewController extends GetxController {
     if (!await launch(url)) throw 'Could not launch $url';
   }
 
+  updatecontext(v) {
+    context = v;
+  }
+
   // Start intro one time
   startIntro(context) {
+    print("*" * 20);
+    print(context == null);
+    print("*" * 20);
     if (accountInfoStorage.readIntro() == null) {
       intro.start(context);
       accountInfoStorage.saveIntro("intro");
     }
   }
-
   Intro intro;
 
   @override
@@ -303,13 +305,15 @@ class TapHomeViewController extends GetxController {
       noAnimation: false,
 
       /// The total number of guide pages, must be passed
-      stepCount: 3,
+      stepCount: 4,
 
       /// Click on whether the mask is allowed to be closed.
       maskClosable: true,
 
       /// When highlight widget is tapped.
       onHighlightWidgetTap: (introStatus) {},
+
+      /// The padding of the
 
       /// The padding of the highlighted area and the widget
       padding: EdgeInsets.all(8),

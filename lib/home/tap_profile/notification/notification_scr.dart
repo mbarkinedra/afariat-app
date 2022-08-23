@@ -8,9 +8,6 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.white, //change your color here
-        ),
         backgroundColor: framColor,
         title: Text(
           "Notifications",
@@ -23,7 +20,10 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
           child: logic.notifications.isEmpty
               ? Container(
                   child: Center(
-                    child: Text(" Pas des notifications",style: TextStyle(fontWeight: FontWeight.bold),),
+                    child: Text(
+                      " Pas des notifications",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
                 )
               : ListView.builder(

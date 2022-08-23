@@ -1,5 +1,4 @@
 import 'package:afariat/config/settings_app.dart';
-import 'package:afariat/networking/api/api_manager.dart';
 import 'package:afariat/networking/api/resource_api.dart';
 import 'package:afariat/networking/json/my_ads_json.dart';
 
@@ -9,11 +8,6 @@ class MyAdsApi extends ResourceApi {
   @override
   String apiUrl() {
     return SettingsApp.myAdsUrl + id + "&allAdverts=true";
-  }
-
-  @override
-  fromJson(data) {
-    return MyAdsJson.fromJson(data);
   }
 
   @override
@@ -31,5 +25,10 @@ class MyAdsApi extends ResourceApi {
   String apiPutUrl({dataToPost}) {
     // TODO: implement apiPutUrl
     throw UnimplementedError();
+  }
+
+  @override
+  fromJson(data) {
+    return MyAdsJson.fromJson(data);
   }
 }

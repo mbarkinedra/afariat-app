@@ -80,9 +80,11 @@ class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
                                 : Padding(
                                     padding:
                                         const EdgeInsets.only(bottom: 16.0),
-                                    child: RefreshIndicator(onRefresh:controller.onRefreshAds ,
-                                      child:
-                                      ListView.builder(controller: controller.scrollController,
+                                    child: RefreshIndicator(
+                                      onRefresh: controller.onRefreshAds,
+                                      child: ListView.builder(
+                                          controller:
+                                              controller.scrollController,
                                           itemCount: logic.adverts.length,
                                           itemBuilder: (context, position) {
                                             return AdsItem(
@@ -96,8 +98,9 @@ class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
                                                         okFunction: () async {
                                                           await controller
                                                               .deleteAds(logic
-                                                              .adverts[position]
-                                                              .id);
+                                                                  .adverts[
+                                                                      position]
+                                                                  .id);
                                                           Navigator.of(context)
                                                               .pop(true);
                                                         },
@@ -109,7 +112,7 @@ class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
                                                         },
                                                         buttonText2: "Annuler",
                                                         description:
-                                                        "Êtes-vous sûr de  vouloir supprimer votre annonce?",
+                                                            "Êtes-vous sûr de  vouloir supprimer votre annonce?",
                                                         buttonText: "Ok",
                                                         phone: false,
                                                       );
@@ -117,17 +120,17 @@ class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
                                               },
                                               editAds: () {
                                                 TapPublishViewController
-                                                tapPublishViewController =
-                                                Get.find<
-                                                    TapPublishViewController>();
+                                                    tapPublishViewController =
+                                                    Get.find<
+                                                        TapPublishViewController>();
                                                 tapPublishViewController
                                                     .dataAdverts = true;
 
                                                 tapPublishViewController
                                                     .modifAds.value = true;
                                                 tapPublishViewController
-                                                    .getAllData(
-                                                    logic.adverts[position].id);
+                                                    .getAllData(logic
+                                                        .adverts[position].id);
                                                 Get.find<HomeViewController>()
                                                     .changeItemFilter(2);
                                               },
@@ -137,7 +140,6 @@ class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
                                             // }else{
                                             //
                                             // }
-
                                           }),
                                     ),
                                   );
@@ -157,8 +159,7 @@ class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
                           Text(
                             "Pas de connexion internet",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: ColorText),
+                                fontWeight: FontWeight.bold, color: ColorText),
                           ),
                         ],
                       )),

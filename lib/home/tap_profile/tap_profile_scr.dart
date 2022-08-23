@@ -1,6 +1,6 @@
+import 'package:afariat/home/tap_profile/delete_account/delete_account_scr.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
-import 'package:afariat/home/tap_profile/notification/notification_scr.dart';
 import 'package:afariat/mywidget/profile_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,19 +17,19 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 40),
+           SizedBox(height: 40),
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image.asset(
-                "assets/images/Splash_10.png",
-                width: 120,
+                "assets/images/NouveauLogoAfariat.png",
+                width: 200,
                 height: 120,
               ),
             ),
-            SizedBox(height: 5),
+            SizedBox(height: 2),
             ProfileMenu(
               iconProfile: Icons.person,
-              text: "Mon compte",
+              text: "Mes informations personnelles",
               press: () => {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (
@@ -38,28 +38,28 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
                         Account())),
               },
             ),
-            Obx(() {
-              return ProfileMenu(
-                iconProfile: Icons.notifications_outlined,
-                text: "Notifications",
-                hasNotification: Get.find<NotificationViewController>()
-                    .hasNotification
-                    .value,
-                isNotification: true,
-                press: () {
-                  Get.find<NotificationViewController>().hasNotification.value =
-                      false;
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (
-                    context,
-                  ) =>
-                          NotificationSrc()));
-                },
-              );
-            }),
+            // Obx(() {
+            //   return ProfileMenu(
+            //     iconProfile: Icons.notifications_outlined,
+            //     text: "Notifications",
+            //     hasNotification: Get.find<NotificationViewController>()
+            //         .hasNotification
+            //         .value,
+            //     isNotification: true,
+            //     press: () {
+            //       Get.find<NotificationViewController>().hasNotification.value =
+            //           false;
+            //       Navigator.of(context).push(MaterialPageRoute(
+            //           builder: (
+            //         context,
+            //       ) =>
+            //               NotificationSrc()));
+            //     },
+            //   );
+            // }),
             ProfileMenu(
               iconProfile: Icons.settings,
-              text: "Paramètres",
+              text: "Changer Mot de passe",
               press: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (
@@ -69,11 +69,21 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
               },
             ),
             ProfileMenu(
+              iconProfile: Icons.delete_outline_sharp,
+              text: "Supprimer le compte",
+              press: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (
+                        context,
+                        ) =>
+                        DeleteAccountScr()));
+              },
+            ),
+            ProfileMenu(
               iconProfile: Icons.logout,
               text: "Déconnexion",
               press: () {
                 Get.find<AccountInfoStorage>().logout();
-                Get.find<HomeViewController>().updateList();
                 Get.find<NotificationViewController>().hasNotification.value =
                     false;
                 Get.find<TapHomeViewController>().deleteAllFavoritesList();

@@ -1,6 +1,5 @@
 import 'package:afariat/config/utility.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -27,8 +26,8 @@ class MyApp extends StatelessWidget {
       ),
       home: AnimatedSplashScreen(
           duration: 3000,
-          splashIconSize: 200,
-          splash: Image.asset("assets/images/Splash_9.png"),
+          splashIconSize: 130,
+          splash: Image.asset("assets/images/NouveauSplash.png"),
           nextScreen: HomeView(),
           splashTransition: SplashTransition.slideTransition,
           backgroundColor: framColor),

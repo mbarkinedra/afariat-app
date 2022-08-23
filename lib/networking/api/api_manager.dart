@@ -188,7 +188,7 @@ abstract class ApiManager {
       return dioSingleton.dio
           .put(
         apiUrl(),
-        data: jsonEncode(dataToPost),
+      data: jsonEncode(dataToPost),
         options: Options(
             headers: {
               "Accept": "application/json",

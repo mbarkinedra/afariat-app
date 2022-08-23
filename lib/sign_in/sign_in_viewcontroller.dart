@@ -47,14 +47,10 @@ class SignInViewController extends GetxController {
                     //save user info to local storage
 
                     await Get.find<FavoriteViewController>().getFavorite();
-
                     Get.find<AccountInfoStorage>()
                         .saveUserId(value.data["user_id"].toString());
-
                     Get.find<HomeViewController>().changeItemFilter(0);
                     Get.find<HomeViewController>().updateList();
-                    // Get.find<HomeViewController>().controller =
-                    //     PersistentTabController(initialIndex: 0);
                     Get.find<AccountViewController>().getUserData();
                     Get.find<NotificationViewController>().getAllNotification();
                     email.clear();

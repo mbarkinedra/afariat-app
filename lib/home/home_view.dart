@@ -2,15 +2,11 @@ import 'package:afariat/config/utility.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'home_view_controller.dart';
-
-import 'tap_profile/notification/notification_view_controller.dart';
-
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-
 import 'tap_publish/tap_publish_viewcontroller.dart';
 
+// ignore: must_be_immutable
 class HomeView extends GetWidget<HomeViewController> {
   Key key;
 
@@ -25,6 +21,7 @@ class HomeView extends GetWidget<HomeViewController> {
       screens: controller.buildScreens,
       items: _navBarsItems(),
       selectedTabScreenContext: (BuildContext context) {
+        controller.context = context;
         Get.find<TapPublishViewController>().context = context;
       },
       confineInSafeArea: true,
@@ -95,7 +92,7 @@ class HomeView extends GetWidget<HomeViewController> {
               Icons.person,
               key: controller.intro.keys[3],
             ),
-            Obx(() => Get.find<NotificationViewController>()
+      /*      Obx(() => Get.find<NotificationViewController>()
                     .hasNotification
                     .value
                 ? Container(
@@ -104,7 +101,7 @@ class HomeView extends GetWidget<HomeViewController> {
                     height: 10,
                     width: 10,
                   )
-                : SizedBox())
+                : SizedBox())*/
           ],
         ),
         title: ("Profil"),

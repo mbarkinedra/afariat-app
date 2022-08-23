@@ -1,4 +1,3 @@
-import 'package:afariat/model/filter.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';

@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'advert_details_viewcontroller.dart';
 
-class AdvertDetailsScr extends GetView<AdvertDetailsViewcontroller> {
+class AdvertDetailsScr extends GetView<AdvertDetailsViewController> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -27,7 +27,7 @@ class AdvertDetailsScr extends GetView<AdvertDetailsViewcontroller> {
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),
-      body: GetBuilder<AdvertDetailsViewcontroller>(builder: (logic) {
+      body: GetBuilder<AdvertDetailsViewController>(builder: (logic) {
         return logic.loading
             ? Center(child: CircularProgressIndicator())
             : Padding(
@@ -117,7 +117,7 @@ class AdvertDetailsScr extends GetView<AdvertDetailsViewcontroller> {
                                   }
                                 } else {
                                   Get.snackbar("",
-                                      "Veuillez vous connecter pour rajouter cette annonce à vos favoris",
+                                      "Veuillez vous connecter pour accéder à vos favoris",
                                       colorText: Colors.white,
                                       backgroundColor: buttonColor);
                                 }

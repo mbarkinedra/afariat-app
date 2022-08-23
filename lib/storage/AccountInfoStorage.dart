@@ -1,3 +1,4 @@
+import 'package:afariat/home/home_view_controller.dart';
 import 'package:afariat/storage/storage.dart';
 import 'package:get/get.dart';
 
@@ -82,6 +83,7 @@ class AccountInfoStorage extends GetxController {
     _secureStorage.deleteSecureData(_key_name);
     _secureStorage.deleteSecureData(_key_name);
     _secureStorage.deleteSecureData(_key_hashedPassword);
+    Get.find<HomeViewController>().updateList();
   }
 
   bool isLoggedIn() {

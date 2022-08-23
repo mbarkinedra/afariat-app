@@ -1,11 +1,11 @@
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/api/resource_api.dart';
 import 'package:afariat/networking/json/user_json.dart';
-import 'package:dio/dio.dart';
 
 class UserApi extends ResourceApi {
   String id;
-String url;
+  String url;
+
   @override
   String apiUrl() {
     return SettingsApp.userUrl + "/" + id;
@@ -20,7 +20,6 @@ String url;
   String apiPutUrl({dataToPost}) {
     return SettingsApp.userUrl + "/" + id;
   }
-
 
   @override
   fromJson(data) {

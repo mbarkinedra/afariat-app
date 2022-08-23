@@ -1,6 +1,5 @@
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/mywidget/custom_button_1.dart';
-import 'package:afariat/mywidget/custom_dialogue_delete.dart';
 import 'package:afariat/mywidget/parametres_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +13,7 @@ class Setting extends GetWidget<SettingViewController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Paramètres ",
+          "Changer mot de passe ",
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
         ),
@@ -58,7 +57,6 @@ class Setting extends GetWidget<SettingViewController> {
                 ),
               );
             }),
-
             SizedBox(
               height: 12,
             ),
@@ -103,7 +101,7 @@ class Setting extends GetWidget<SettingViewController> {
             SizedBox(
               height: 130,
             ),
-            Padding(
+            /* Padding(
               padding: const EdgeInsets.only(
                   top: 8.0, bottom: 40, right: 8, left: 8),
               child: CustomButton1(
@@ -112,7 +110,6 @@ class Setting extends GetWidget<SettingViewController> {
                 label: "Supprimer mon compte",
                 icon: Icons.delete_outline_sharp,
                 iconcolor: Colors.white,
-
                 btcolor: framColor,
                 labcolor: Colors.white,
                 function: () async {
@@ -129,13 +126,13 @@ class Setting extends GetWidget<SettingViewController> {
                           description:
                               "Êtes-vous sûr de  vouloir supprimer votre compte ?",
                           buttonText: "Ok",
-                          phone: false, okFunction: null,
+                          phone: false,
+                          okFunction: controller.deleteUser,
                         );
                       });
-
                 },
               ),
-            ),
+            ),*/
           ],
         ),
       ),

@@ -1,5 +1,7 @@
 import 'package:afariat/advert_details/advert_details_scr.dart';
 import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
+import 'package:afariat/home/tap_profile/notification/notification_scr.dart';
+import 'package:afariat/home/tap_profile/notification/notification_view_controller.dart';
 import 'package:afariat/model/filter.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/network_controller.dart';
@@ -7,13 +9,17 @@ import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/bottom_sheet_filter.dart';
 import 'package:afariat/home/tap_home/favorite/favorite_scr.dart';
 import 'package:afariat/mywidget/myhomeitem.dart';
+import 'package:afariat/mywidget/notification_menu.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'favorite/parametres_scr.dart';
 import 'tap_home_viewcontroller.dart';
 
 class TapHomeScr extends GetWidget<TapHomeViewController> {
+ // GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -30,21 +36,22 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
               title: Container(
                 height: 60,
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(
+                      InkWell(
                         key: controller.intro.keys[0],
-                        width: _size.width * .13,
-                        child: InkWell(
-                          onTap: controller.openDrawer,
-                          child: Image.asset(
-                            "assets/images/Splash_10.png",
-                            fit: BoxFit.fill,
-                          ),
+
+                        onTap: controller.openDrawer,
+                        child: const Icon(
+                          Icons.menu,
+                          size: 40,
+                          color: framColor,
                         ),
                       ),
                       SizedBox(
-                        width: _size.width * .6,
+                        width: 20,
+                      ),
+                      Expanded(
                         child: DecoratedBox(
                             decoration: BoxDecoration(
                                 color: Colors.white,
@@ -95,41 +102,75 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                             )),
                       ),
                       SizedBox(
-                        key: controller.intro.keys[2],
-                        width: _size.width * .1,
-                        child: InkWell(
-                          onTap: () {
-                            Get.find<TapPublishViewController>().isButtonSheet =
-                                true;
-                            Get.bottomSheet(
-                                Container(
-                                    decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(30.0),
-                                          topRight: Radius.circular(30.0),
-                                        )),
-                                    child: BottomSheetFilter()),
-                                isDismissible: true,
-                                elevation: 10,
-                                enableDrag: true,
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(30.0),
-                                  topRight: Radius.circular(30.0),
-                                )));
-                            Get.find<TapPublishViewController>().isButtonSheet =
-                                false;
-                            Get.find<TapPublishViewController>().clearAllData();
-                            Filter.data.clear();
-                          },
-                          child: const Icon(
-                            Icons.filter_alt_outlined,
-                            size: 30,
-                            color: ColorGrey,
-                          ),
-                        ),
-                      )
+                        width: 20,
+                      ),
+                      SizedBox(
+                          key: controller.intro.keys[2],
+                          // width: _size.width * .1,
+                          child: InkWell(
+                            onTap: () {
+                              Get.find<TapPublishViewController>()
+                                  .isButtonSheet = true;
+                              Get.bottomSheet(
+                                  Container(
+                                      decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(30.0),
+                                            topRight: Radius.circular(30.0),
+                                          )),
+                                      child: BottomSheetFilter()),
+                                  isDismissible: true,
+                                  elevation: 10,
+                                  enableDrag: true,
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30.0),
+                                    topRight: Radius.circular(30.0),
+                                  )));
+                              Get.find<TapPublishViewController>()
+                                  .isButtonSheet = false;
+                              Get.find<TapPublishViewController>()
+                                  .clearAllData();
+                              Filter.data.clear();
+                            },
+                            child: const Icon(
+                              Icons.filter_alt_outlined,
+                              size: 30,
+                              color: ColorGrey,
+                            ),
+                          )),
+                      SizedBox(
+                        key: controller.intro.keys[3],
+
+                        child: Obx(() {
+                          return NotificationMenu(
+                            iconProfile: Icons.notifications_active,
+                            hasNotification:
+                                Get.find<NotificationViewController>()
+                                    .hasNotification
+                                    .value,
+                            isNotification: true,
+                            press: () {
+                              if (Get.find<AccountInfoStorage>().isLoggedIn()) {
+                                Get.find<NotificationViewController>()
+                                    .hasNotification
+                                    .value = false;
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (
+                                  context,
+                                ) =>
+                                        NotificationSrc()));
+                              } else {
+                                Get.snackbar("",
+                                    " Veuillez vous connecter pour affiher vos notifications",
+                                    colorText: Colors.white,
+                                    backgroundColor: buttonColor);
+                              }
+                            },
+                          );
+                        }),
+                      ),
                     ]),
               ))),
       body: Padding(
@@ -172,10 +213,10 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                           return InkWell(
                                             onTap: () {
                                               Get.find<
-                                                      AdvertDetailsViewcontroller>()
+                                                      AdvertDetailsViewController>()
                                                   .loading = true;
                                               Get.find<
-                                                      AdvertDetailsViewcontroller>()
+                                                      AdvertDetailsViewController>()
                                                   .getAdvertDetails(item.id);
                                               Navigator.push(
                                                 context,
@@ -231,7 +272,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(
-                            "assets/images/Drawer.png",
+                            "assets/images/dawerAfariat.jpg",
                           ),
                           fit: BoxFit.fill)),
                   child: Container(
@@ -277,10 +318,27 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                       );
                     } else {
                       Get.snackbar("",
-                          "Veuillez vous connecter pour rajouter cette annonce à vos favoris",
+                          "Veuillez vous connecter pour accéder à vos favoris",
                           colorText: Colors.white,
                           backgroundColor: buttonColor);
                     }
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.settings,
+                    color: Colors.grey,
+                  ),
+                  title: const Text(
+                    "Paramètres",
+                    style: TextStyle(
+                        color: ColorText, fontWeight: FontWeight.bold),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ParametreScr()),
+                    );
                   },
                 ),
                 Divider(
