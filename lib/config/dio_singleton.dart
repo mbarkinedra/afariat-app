@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:afariat/config/settings_app.dart';
 
+import 'Environment.dart';
+
 class DioSingleton {
   Dio dio = Dio(BaseOptions(
       receiveDataWhenStatusError: true,
@@ -8,7 +10,7 @@ class DioSingleton {
       receiveTimeout: 60 * 1000 // 60 seconds
       ,
       headers: {
-        'apikey': SettingsApp.apiKey,
+        'apikey': Environment.apikey,
         'Content-Type': 'application/json'
       }));
 

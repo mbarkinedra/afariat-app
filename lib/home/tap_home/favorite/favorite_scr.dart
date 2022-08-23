@@ -7,6 +7,7 @@ import 'package:afariat/networking/json/favorite_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import '../../../config/Environment.dart';
 import 'favorite_viewController.dart';
 
 class FavoriteScr extends GetView<FavoriteViewController> {
@@ -72,7 +73,7 @@ class FavoriteScr extends GetView<FavoriteViewController> {
 }
 
 class SingleAdvert extends StatelessWidget {
-  final numberFormat = NumberFormat("###,##0", SettingsApp.locale);
+  final numberFormat = NumberFormat("###,##0", Environment.locale);
 
   final Size size;
   final Favorites favorite;
@@ -145,7 +146,7 @@ class SingleAdvert extends StatelessWidget {
                 Text(
                   numberFormat.format(favorite.advert.price) +
                       ' ' +
-                      SettingsApp.moneySymbol,
+                      Environment.currencySymbol,
                   style: TextStyle(
                       color: framColor,
                       fontWeight: FontWeight.bold,

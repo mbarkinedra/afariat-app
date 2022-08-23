@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:afariat/networking/json/ref_json.dart';
+import '../config/Environment.dart';
 import 'custom_button_1.dart';
 
 class BottomSheetFilter extends StatefulWidget {
@@ -139,7 +140,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                             (dynamic actualValue, String formattedText) {
                           return logic.prices[actualValue.toInt() - 1].name +
                               " " +
-                              SettingsApp.moneySymbol;
+                              Environment.currencySymbol;
                         },
                         labelFormatterCallback:
                             (dynamic actualValue, String formattedText) {
@@ -147,7 +148,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                               actualValue == logic.prices.length) {
                             return logic.prices[actualValue.toInt() - 1].name +
                                 " " +
-                                SettingsApp.moneySymbol;
+                                Environment.currencySymbol;
                           }
                           return ' ';
                         },
@@ -162,11 +163,11 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                             Text(logic.prices[logic.values.start.toInt() - 1]
                                     .name +
                                 " " +
-                                SettingsApp.moneySymbol),
+                                Environment.currencySymbol),
                             Text(logic
                                     .prices[logic.values.end.toInt() - 1].name +
                                 " " +
-                                SettingsApp.moneySymbol)
+                                Environment.currencySymbol)
                           ],
                         ),
                       )

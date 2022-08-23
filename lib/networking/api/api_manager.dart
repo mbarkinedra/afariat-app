@@ -9,6 +9,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' as a;
 import 'package:get/get_core/src/get_main.dart';
+import '../../config/Environment.dart';
 import '../../storage/AccountInfoStorage.dart';
 
 abstract class ApiManager {
@@ -104,7 +105,7 @@ abstract class ApiManager {
       options: Options(
           headers: {
             "Accept": "application/json",
-            'apikey': SettingsApp.apiKey,
+            'apikey': Environment.apikey,
             'Content-Type': 'application/json',
           },
           followRedirects: false,
@@ -132,7 +133,7 @@ abstract class ApiManager {
         options: Options(
             headers: {
               "Accept": "application/json",
-              'apikey': SettingsApp.apiKey,
+              'apikey': Environment.apikey,
               'Content-Type': 'application/json',
               'X-WSSE': wsse,
             },
@@ -165,7 +166,7 @@ abstract class ApiManager {
       options: Options(
           headers: {
             "Accept": "application/json",
-            'apikey': SettingsApp.apiKey,
+            'apikey': Environment.apikey,
             'Content-Type': 'application/json',
             'X-WSSE': xwsse,
           },
@@ -192,7 +193,7 @@ abstract class ApiManager {
         options: Options(
             headers: {
               "Accept": "application/json",
-              'apikey': SettingsApp.apiKey,
+              'apikey': Environment.apikey,
               'Content-Type': 'application/json',
               'X-WSSE': wsse,
             },
@@ -224,7 +225,7 @@ abstract class ApiManager {
       options: Options(
           headers: {
             "Accept": "application/json",
-            'apikey': SettingsApp.apiKey,
+            'apikey': Environment.apikey,
             'Content-Type': 'application/json',
             'X-WSSE': wsse,
           },
@@ -246,7 +247,7 @@ abstract class ApiManager {
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(headers: {
       "Accept": "application/json",
-      'apikey': SettingsApp.apiKey,
+      'apikey': Environment.apikey,
       'Content-Type': 'application/json',
       'X-WSSE': wsse,
     });

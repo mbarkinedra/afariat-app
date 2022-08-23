@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'bindings/bindings.dart';
 import 'home/home_view.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load();
   await GetStorage.init();
 
   runApp(MyApp());

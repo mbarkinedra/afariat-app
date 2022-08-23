@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../config/Environment.dart';
+
 class MyHomeItem extends StatelessWidget {
   final Size size;
 
@@ -15,7 +17,7 @@ class MyHomeItem extends StatelessWidget {
 
   final AdvertJson adverts;
 
-  final numberFormat = NumberFormat("###,##0", SettingsApp.locale);
+  final numberFormat = NumberFormat("###,##0", Environment.locale);
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +81,7 @@ class MyHomeItem extends StatelessWidget {
                     Text(
                       numberFormat.format(adverts.price) +
                           ' ' +
-                          SettingsApp.moneySymbol,
+                          Environment.currencySymbol,
                       style: TextStyle(
                           color: framColor,
                           fontWeight: FontWeight.bold,

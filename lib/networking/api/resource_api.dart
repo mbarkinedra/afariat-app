@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:afariat/networking/security/wsse.dart';
+import '../../config/Environment.dart';
 import 'api_manager.dart';
 import 'package:dio/dio.dart';
 import 'package:afariat/config/settings_app.dart';
@@ -20,7 +21,7 @@ abstract class ResourceApi extends ApiManager {
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(headers: {
       "Accept": "application/json",
-      'apikey': SettingsApp.apiKey,
+      'apikey': Environment.apikey,
       'Content-Type': 'application/json',
       'X-WSSE': wsse,
     });
@@ -38,7 +39,7 @@ abstract class ResourceApi extends ApiManager {
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(headers: {
       "Accept": "application/json",
-      'apikey': SettingsApp.apiKey,
+      'apikey': Environment.apikey,
       'Content-Type': 'application/json',
       'X-WSSE': wsse,
     });
@@ -60,7 +61,7 @@ abstract class ResourceApi extends ApiManager {
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(headers: {
       "Accept": "application/json",
-      'apikey': SettingsApp.apiKey,
+      'apikey': Environment.apikey,
       'Content-Type': 'application/json',
       'X-WSSE': wsse,
     });

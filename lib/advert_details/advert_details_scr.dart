@@ -8,13 +8,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import '../config/Environment.dart';
 import 'advert_details_viewcontroller.dart';
 
 class AdvertDetailsScr extends GetView<AdvertDetailsViewController> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
-    final numberFormat = NumberFormat("###,##0", SettingsApp.locale);
+    final numberFormat = NumberFormat("###,##0", Environment.locale);
 
     return Scaffold(
       appBar: AppBar(
@@ -161,7 +162,7 @@ class AdvertDetailsScr extends GetView<AdvertDetailsViewController> {
                       Text(
                           numberFormat.format(logic.advert.price) +
                               ' ' +
-                              SettingsApp.moneySymbol,
+                              Environment.currencySymbol,
                           style: TextStyle(
                               color: framColor,
                               fontWeight: FontWeight.bold,

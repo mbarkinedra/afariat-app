@@ -1,47 +1,79 @@
-class SettingsApp {
-  static const apiKey =
-      '850f2303a496c53746d52ba751efcdbe8ce9636d27eb805455ad5e0c02cb5750';
-  static const String locale = 'fr_TN';
-  static const moneySymbol = 'DT';
-  static const String baseUrl = 'https://afariat.com';
-  static const String baseApiUrl = '$baseUrl/api/v1';
-  static const String loginUrl = baseApiUrl + '/users/login';
-  static const String registerUrl = baseApiUrl + '/users';
-  static const String resetPasswordUrl = baseApiUrl + '/users/reset-password';
-  static const String changePasswordUrl = baseApiUrl + '/users/change-password';
-  static const String getSaltUrl = baseApiUrl + '/users/get-salt';
-  static const String advertUrl = baseApiUrl + '/adverts';
-  static const String publishURL = baseApiUrl + '/adverts';
-  static const String SearchUrl = baseApiUrl + '/adverts';
-  static const String advertDeatilsUrl = baseApiUrl + '/adverts';
-  static const String myAdsUrl = baseApiUrl + '/adverts?user=';
-  static const String cityUrl = baseApiUrl + '/simple/cities';
-  static const String townUrl = baseApiUrl + '/simple/towns';
-  static const String roomsNumberUrl = baseApiUrl + '/simple/rooms-number';
-  static const String grouppedCategoriesUrl =
-      baseApiUrl + '/simple/categories-groupped';
-  static const String priceUrl = baseApiUrl + '/simple/prices';
-  static const String vehicleBrandsUrl = baseApiUrl + '/simple/vehicle-brands';
-  static const String vehiculeModelUrl = baseApiUrl + '/simple/vehicle-models';
-  static const String motoBrandsUrl = baseApiUrl + '/simple/moto-brands';
-  static const String energiesUrl = baseApiUrl + '/simple/energies';
+import 'package:afariat/config/Environment.dart';
 
-  static const String mileagesUrl = baseApiUrl + '/simple/mileages';
-  static const String yearsModelsUrl = baseApiUrl + '/simple/year-models';
-  static const String advertTypesUrl =
+class SettingsApp {
+  static String get baseUrl => Environment.baseUrl;
+
+  static String get baseApiUrl => baseUrl + '/api/v1';
+
+  static String get loginUrl => baseApiUrl + '/users/login';
+
+  static String get registerUrl => baseApiUrl + '/users';
+
+  static String get resetPasswordUrl => baseApiUrl + '/users/reset-password';
+
+  static String get changePasswordUrl => baseApiUrl + '/users/change-password';
+
+  static String get getSaltUrl => baseApiUrl + '/users/get-salt';
+
+  static String get advertUrl => baseApiUrl + '/adverts';
+
+  static String get publishURL => baseApiUrl + '/adverts';
+
+  static String get SearchUrl => baseApiUrl + '/adverts';
+
+  static String get advertDeatilsUrl => baseApiUrl + '/adverts';
+
+  static String get myAdsUrl => baseApiUrl + '/adverts?user=';
+
+  static String get cityUrl => baseApiUrl + '/simple/cities';
+
+  static String get townUrl => baseApiUrl + '/simple/towns';
+
+  static String get roomsNumberUrl => baseApiUrl + '/simple/rooms-number';
+
+  static String get grouppedCategoriesUrl =>
+      baseApiUrl + '/simple/categories-groupped';
+
+  static String get priceUrl => baseApiUrl + '/simple/prices';
+
+  static String get vehicleBrandsUrl => baseApiUrl + '/simple/vehicle-brands';
+
+  static String get vehiculeModelUrl => baseApiUrl + '/simple/vehicle-models';
+
+  static String get motoBrandsUrl => baseApiUrl + '/simple/moto-brands';
+
+  static String get energiesUrl => baseApiUrl + '/simple/energies';
+
+  static String get mileagesUrl => baseApiUrl + '/simple/mileages';
+
+  static String get yearsModelsUrl => baseApiUrl + '/simple/year-models';
+
+  static String get advertTypesUrl =>
       baseApiUrl + '/simple/category/advert-types/';
-  static const String deleteAds = baseApiUrl + '/adverts';
-  static const String modifAds = baseApiUrl + '/adverts';
-  static const String userUrl = baseApiUrl + '/users';
-  static const String notificationUrl = baseApiUrl + '/notifications';
-  static const String putNotificationUrl = baseApiUrl + '/notifications';
-  static const String deleteNotificationUrl = baseApiUrl + '/notifications';
-  static const String notificationCountUrl =
+
+  static String get deleteAds => baseApiUrl + '/adverts';
+
+  static String get modifAds => baseApiUrl + '/adverts';
+
+  static String get userUrl => baseApiUrl + '/users';
+
+  static String get notificationUrl => baseApiUrl + '/notifications';
+
+  static String get putNotificationUrl => baseApiUrl + '/notifications';
+
+  static String get deleteNotificationUrl => baseApiUrl + '/notifications';
+
+  static String get notificationCountUrl =>
       baseApiUrl + '/notifications/unread/count';
-  static const String conversations = baseApiUrl + '/conversations';
-  static const String getConversation = baseApiUrl + '/conversation';
-  static const String Converstionreply = baseApiUrl + '/conversations/reply';
-  static const String favorite = baseApiUrl + '/favorites';
-  static const String deleteFavoriteByAdvert =
+
+  static String get conversations => baseApiUrl + '/conversations';
+
+  static String get getConversation => baseApiUrl + '/conversation';
+
+  static String get Converstionreply => baseApiUrl + '/conversations/reply';
+
+  static String get favorite => baseApiUrl + '/favorites';
+
+  static String get deleteFavoriteByAdvert =>
       baseApiUrl + '/favorites-by-advert';
 }

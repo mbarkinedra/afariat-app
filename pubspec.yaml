@@ -54,6 +54,7 @@ dependencies:
   logger: ^1.1.0
   connectivity_plus: ^2.2.1
   flutter_intro: ^2.3.1
+  flutter_dotenv: ^5.0.2
   #firebase_core: ^1.4.0
   #firebase_messaging: ^10.0.4
 dev_dependencies:
@@ -94,6 +95,7 @@ flutter:
     - assets/images/NouveauLogoAfariat.png
     - assets/images/NouveauSplash.png
     - assets/images/dawerAfariat.jpg
+    - .env
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
 
+import '../config/Environment.dart';
+
 class AdsItem extends StatelessWidget {
   final Size size;
   final Adverts adverts;
   final Function deleteAds;
   final Function editAds;
-  final numberFormat = NumberFormat("###,##0", SettingsApp.locale);
+  final numberFormat = NumberFormat("###,##0", Environment.locale);
 
   AdsItem({this.size, this.adverts, this.deleteAds, this.editAds});
 
@@ -112,7 +114,7 @@ class AdsItem extends StatelessWidget {
                         child: Text(
                           numberFormat.format(adverts.price) +
                               ' ' +
-                              SettingsApp.moneySymbol,
+                              Environment.currencySymbol,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: framColor,

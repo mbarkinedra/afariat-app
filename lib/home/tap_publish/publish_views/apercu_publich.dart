@@ -11,10 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../config/Environment.dart';
+
 class ApercuPublich extends GetWidget<TapPublishViewController> {
   final categoryAndSubcategory = Get.find<CategoryAndSubcategory>();
   final locController = Get.find<LocController>();
-  final numberFormat = NumberFormat("###,##0", SettingsApp.locale);
+  final numberFormat = NumberFormat("###,##0", Environment.locale);
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +112,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
               data: numberFormat.format(int.tryParse(
                       controller.myAdsView["prix"].replaceAll(" DT", ""))) +
                   ' ' +
-                  SettingsApp.moneySymbol,
+                  Environment.currencySymbol,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

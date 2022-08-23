@@ -20,6 +20,7 @@ import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../config/Environment.dart';
 import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
@@ -646,7 +647,7 @@ class TapPublishViewController extends GetxController {
   /// Method Default Options
   void defaultOptions() {
     if (globalKey.currentState.validate()) {
-      myAdsView["prix"] = prix.text + " " + SettingsApp.moneySymbol;
+      myAdsView["prix"] = prix.text + " " + Environment.currencySymbol;
       myAds["price"] = prix.text;
       myAdsView["title"] = title.text;
       myAds["title"] = title.text;
