@@ -1,6 +1,5 @@
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_profile/notification/notification_view_controller.dart';
-import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,7 +1,6 @@
 import 'package:afariat/home/tap_profile/delete_account/delete_account_scr.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
-import 'package:afariat/home/tap_profile/notification/notification_scr.dart';
 import 'package:afariat/mywidget/profile_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

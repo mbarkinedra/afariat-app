@@ -1,6 +1,5 @@
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/mywidget/custom_button_1.dart';
-import 'package:afariat/mywidget/custom_dialogue_delete.dart';
 import 'package:afariat/mywidget/parametres_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

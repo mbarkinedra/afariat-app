@@ -4,7 +4,6 @@ import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:afariat/mywidget/custom_dialogue_delete.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 import 'delete_account_viewcontroller.dart';
 

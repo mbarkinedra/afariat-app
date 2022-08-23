@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'home_view_controller.dart';
-import 'tap_profile/notification/notification_view_controller.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'tap_publish/tap_publish_viewcontroller.dart';
 
+// ignore: must_be_immutable
 class HomeView extends GetWidget<HomeViewController> {
   Key key;
 
