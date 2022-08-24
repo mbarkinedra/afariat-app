@@ -62,6 +62,9 @@ class NotificationViewController extends GetxController {
 
   getAllNotification() {
     _notificationApi.secureGet().then((value) {
+      if (value == null) {
+        return null;
+      }
       NotificationJson notificationJson = NotificationJson.fromJson(value.data);
       List<Notification> notification = notificationJson.eEmbedded.notification;
       if (notification.length < 20) {
@@ -77,7 +80,9 @@ class NotificationViewController extends GetxController {
     });
 
     _notificationApi.getUnread().then((value) {
-      notifCount.value = value.data["totalUnread"];
+      if(value != null){
+        notifCount.value = value.data["totalUnread"];
+      }
     });
   }
 
