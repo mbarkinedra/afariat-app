@@ -158,7 +158,7 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                                 }
                               },
                               child: Image.asset(
-                                "assets/images/placeholder.png",
+                                "assets/images/common/placeholder.png",
                                 width: size.width,
                                 height: size.height * .5,
                               ),
@@ -216,7 +216,7 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                                 }
                               },
                               child: Image.asset(
-                                "assets/images/placeholder.png",
+                                "assets/images/common/placeholder.png",
                                 width: size.width,
                                 height: size.height * .5,
                               ),

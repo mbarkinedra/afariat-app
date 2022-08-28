@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="lecoinoccasion" type="FlutterRunConfigurationType" factoryName="Flutter">
+    <option name="buildFlavor" value="lecoinoccasion" />
+    <option name="filePath" value="$PROJECT_DIR$/lib/main_lecoinoccasion.dart" />
+    <method v="2" />
+  </configuration>
+</component>

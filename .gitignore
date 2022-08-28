@@ -119,4 +119,4 @@ app.*.symbols
 !/dev/ci/**/Gemfile.lock
 
 #Env file
-.env
+.env--

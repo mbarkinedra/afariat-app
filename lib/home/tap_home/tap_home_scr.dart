@@ -14,6 +14,8 @@ import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import '../../config/Environment.dart';
+import '../../config/app_config.dart';
 import 'favorite/parametres_scr.dart';
 import 'tap_home_viewcontroller.dart';
 
@@ -22,6 +24,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
 
   @override
   Widget build(BuildContext context) {
+    var appConfig = AppConfig.of(context);
     Size _size = MediaQuery.of(context).size;
     Future.delayed(Duration(seconds: 1), () {
       controller.startIntro(context);
@@ -272,7 +275,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(
-                            "assets/images/dawerAfariat.jpg",
+                            "assets/images/"+appConfig.appName+"/drawer.jpg",
                           ),
                           fit: BoxFit.fill)),
                   child: Container(
@@ -356,7 +359,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                         color: ColorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
-                    controller.launchURL("https://afariat.com/aide.html");
+                    controller.launchURL(Environment.helpUrl);
                   },
                 ),
                 ListTile(
@@ -370,7 +373,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                         color: ColorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
-                    controller.launchURL("https://afariat.com/règlement.html");
+                    controller.launchURL(Environment.rulesUrl);
                   },
                 ),
                 ListTile(
@@ -385,7 +388,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   ),
                   onTap: () {
                     controller
-                        .launchURL("https://afariat.com/confidentialite.html");
+                        .launchURL(Environment.privacyUrl);
                   },
                 ),
                 ListTile(
@@ -400,7 +403,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   ),
                   onTap: () {
                     controller.launchURL(
-                        "https://afariat.com/conditions-générales-d-utilisation.html");
+                        Environment.cguUrl);
                   },
                 ),
                 SizedBox(

@@ -4,6 +4,7 @@ import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/mywidget/profile_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../config/app_config.dart';
 import '../home_view_controller.dart';
 import 'account/account_scr.dart';
 import 'notification/notification_view_controller.dart';
@@ -13,6 +14,7 @@ import 'tap_profile_viewcontroller.dart';
 class TapProfileScr extends GetWidget<TapProfileViewController> {
   @override
   Widget build(BuildContext context) {
+    var appConfig = AppConfig.of(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -21,7 +23,7 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image.asset(
-                "assets/images/NouveauLogoAfariat.png",
+                "assets/images/"+appConfig.appName+"/logo.png",
                 width: 200,
                 height: 120,
               ),

@@ -647,7 +647,7 @@ class TapPublishViewController extends GetxController {
   /// Method Default Options
   void defaultOptions() {
     if (globalKey.currentState.validate()) {
-      myAdsView["prix"] = prix.text + " " + Environment.currencySymbol;
+      myAdsView["prix"] = prix.text;
       myAds["price"] = prix.text;
       myAdsView["title"] = title.text;
       myAds["title"] = title.text;
@@ -656,7 +656,7 @@ class TapPublishViewController extends GetxController {
 
       if (surface.text.length > 0) {
         myAds["area"] = surface.text;
-        myAdsView["Superficie"] = surface.text + " " + "m²";
+        myAdsView["Superficie"] = surface.text;
       }
       myAds["showPhoneNumber"] = lights ? "yes" : "no";
       myAdsView["showPhoneNumber"] = lights ? "Check" : "no";

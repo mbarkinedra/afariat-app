@@ -55,7 +55,7 @@ class AdsItem extends StatelessWidget {
                         width: size.width * .4,
                         fit: BoxFit.fill,
                       )
-                    : Image.asset("assets/images/no-image.jpg"),
+                    : Image.asset("assets/images/common/no-image.jpg"),
               ),
               SizedBox(
                 width: 10,

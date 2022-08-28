@@ -68,11 +68,11 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
               data: controller.myAdsView["description"],
             ),
             CustomApercu(
-              label: "Commune:",
+              label: Environment.townLabel+":",
               data: controller.myAdsView["town"],
             ),
             CustomApercu(
-              label: "Gouvernorat :",
+              label: Environment.cityLabel+" :",
               data: controller.myAdsView["city"],
             ),
             ListTile(
@@ -109,8 +109,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
             ),
             CustomApercu(
               label: "prix :",
-              data: numberFormat.format(int.tryParse(
-                      controller.myAdsView["prix"].replaceAll(" DT", ""))) +
+              data: controller.myAdsView["prix"] +
                   ' ' +
                   Environment.currencySymbol,
             ),

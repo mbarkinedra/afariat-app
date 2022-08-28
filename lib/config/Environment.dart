@@ -16,4 +16,15 @@ class Environment {
   static String get locale => getParameter('LOCALE');
 
   static String get currencySymbol => getParameter('CURRENCY_SYMBOL');
+
+  static String get helpUrl => getParameter('HELP_URL');
+
+  static String get rulesUrl => getParameter('RULES_URL');
+
+  static String get privacyUrl => getParameter('PRIVACY_URL');
+
+  static String get cguUrl => getParameter('CGU_URL');
+
+  static String get cityLabel => getParameter('CITY_LABEL');
+  static String get townLabel => getParameter('TOWN_LABEL');
 }

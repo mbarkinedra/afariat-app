@@ -5,12 +5,14 @@ import 'package:afariat/mywidget/custom_text_filed.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../config/app_config.dart';
 import 'account_view_controller.dart';
 
 class Account extends GetWidget<AccountViewController> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    var appConfig = AppConfig.of(context);
 
     return Material(
       child: SingleChildScrollView(
@@ -23,8 +25,8 @@ class Account extends GetWidget<AccountViewController> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.asset(
-                  "assets/images/Splash_10.png",
-                  width: 120,
+                  "assets/images/"+appConfig.appName+"/logo.png",
+                  width: 200,
                   height: 120,
                 ),
               ),

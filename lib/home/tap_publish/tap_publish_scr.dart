@@ -1,3 +1,4 @@
+import 'package:afariat/config/Environment.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/network_controller.dart';
@@ -370,7 +371,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                                 .number),
                                                   ),
                                                   Text(
-                                                    "DT",
+                                                    Environment.currencySymbol,
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -441,7 +442,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                                       left: 8.0,
                                                                       right: 8),
                                                                   child: Text(
-                                                                      "Gouvernorat"),
+                                                                      Environment.cityLabel),
                                                                 ),
                                                                 validator:
                                                                     (RefJson) {
@@ -522,7 +523,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                                       right:
                                                                           10),
                                                                   child: Text(
-                                                                      "Commune"),
+                                                                      Environment.townLabel),
                                                                 ),
                                                                 validator:
                                                                     (RefJson) {

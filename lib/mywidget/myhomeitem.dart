@@ -55,7 +55,7 @@ class MyHomeItem extends StatelessWidget {
                         adverts.photo,
                         fit: BoxFit.fill,
                       )
-                    : Image.asset("assets/images/no-image.jpg"),
+                    : Image.asset("assets/images/common/no-image.jpg"),
               ),
             ),
             Expanded(

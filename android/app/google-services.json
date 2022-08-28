@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:264409657549:android:62e3e4c0988aa69c533984",
         "android_client_info": {
-          "package_name": "com.example.afariat"
+          "package_name": "com.skonsoft.afariat"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "264409657549-p26t20qjo3hkb1cvjm3fnhs80f5opb5h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.afariat",
+            "package_name": "com.skonsoft.afariat",
             "certificate_hash": "e2759709c08d6b7932328fbf4a4a5aae13b0091a"
           }
         },
