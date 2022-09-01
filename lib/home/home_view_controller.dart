@@ -101,7 +101,7 @@ class HomeViewController extends GetxController {
         /// Guide page text
         texts: [
           'Gérér vos annonces déjà déposées en appuyant sur le menu "Annonces"',
-          'Appuyer sur le bouton "+" pour déposer une nouvelle annonce',
+          'Appuyer sur le bouton "+" pour passer une nouvelle annonce',
           'Consulter vos messages en appuyant sur "Chat"',
           'Gérer votre profil ici',
         ],

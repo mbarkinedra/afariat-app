@@ -42,10 +42,10 @@ class TapHomeViewController extends GetxController {
   ScrollController scrollController = ScrollController();
   List text = [
     'Hello ! Voici les principales fonctionnalités de l\'appication.\n\n'
-        'Pour consulter les paramétres de l\'application appuyer sur le Logo.',
+        'Appuyer sur cette icone pour afficher le menu de l\'application.',
     'Recherchez des annonces ici.',
     'Filtrer le résultat de votre recherche',
-    'Voici votre notifications'
+    'Vos notifications'
   ];
 
   @override
