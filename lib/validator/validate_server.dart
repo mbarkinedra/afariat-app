@@ -23,6 +23,7 @@ class ServerValidator {
       Function failure,
       Function authFailure,
       Function notFound}) {
+
     switch (value.statusCode) {
       case 200:
       case 201:

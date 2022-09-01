@@ -286,9 +286,6 @@ class TapHomeViewController extends GetxController {
 
   // Start intro one time
   startIntro(context) {
-    print("*" * 20);
-    print(context == null);
-    print("*" * 20);
     if (accountInfoStorage.readIntro() == null) {
       intro.start(context);
       accountInfoStorage.saveIntro("intro");

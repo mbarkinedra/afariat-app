@@ -1,3 +1,4 @@
+import 'package:afariat/config/Environment.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/model/type_register.dart';
@@ -49,8 +50,8 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                 LogInItem(
                     key: Key('phone'),
                     textEditingController: controller.phone,
-                    label: "Phone Number",
-                    hint: "Pone Number",
+                    label: "N° de Téléphone",
+                    hint: Environment.phonePlaceholder,
                     icon: Icons.add_call,
                     validator: controller.validator.validatePhone),
                 SizedBox(
@@ -96,7 +97,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                         width: double.infinity,
                         child: DropdownButtonFormField<RefJson>(
                           key: Key('city'),
-                          hint: Text("City"),
+                          hint: Text(Environment.cityLabel),
                           validator: (RefJson) {
                             return controller.validator.validateCity(RefJson);
                           },
@@ -127,8 +128,8 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                 LogInItem(
                     key: Key('email'),
                     textEditingController: controller.email,
-                    label: "Email",
-                    hint: "Email",
+                    label: "E-mail",
+                    hint: "Votre adresse email",
                     icon: Icons.email,
                     validator: controller.validator.validateEmail),
                 SizedBox(
@@ -137,7 +138,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                 GetBuilder<SignUpViewController>(builder: (logic) {
                   return LogInItem(
                     validator: controller.validator.validatePassword,
-                    label: "Password",
+                    label: "Mot de passe",
                     hint: "**********",
                     icon: Icons.lock_outline,
                     //Ajouter
