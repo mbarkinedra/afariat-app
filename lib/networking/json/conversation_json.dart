@@ -5,39 +5,39 @@ class ConversationJson extends AbstractJsonResource {
   int limit;
   int pages;
   int total;
-  Links lLinks;
-  Embedded eEmbedded;
+  Links links;
+  Embedded embedded;
 
   ConversationJson(
       {this.page,
       this.limit,
       this.pages,
       this.total,
-      this.lLinks,
-      this.eEmbedded});
+      this.links,
+      this.embedded});
 
   ConversationJson.fromJson(Map<String, dynamic> json) {
     page = json['page'];
     limit = json['limit'];
     pages = json['pages'];
     total = json['total'];
-    lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
-    eEmbedded = json['_embedded'] != null
-        ? new Embedded.fromJson(json['_embedded'])
+    links = json['_links'] != null ? Links.fromJson(json['_links']) : null;
+    embedded = json['_embedded'] != null
+        ? Embedded.fromJson(json['_embedded'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['page'] = this.page;
-    data['limit'] = this.limit;
-    data['pages'] = this.pages;
-    data['total'] = this.total;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['page'] = page;
+    data['limit'] = limit;
+    data['pages'] = pages;
+    data['total'] = total;
+    if (links != null) {
+      data['_links'] = links.toJson();
     }
-    if (this.eEmbedded != null) {
-      data['_embedded'] = this.eEmbedded.toJson();
+    if (embedded != null) {
+      data['_embedded'] = embedded.toJson();
     }
     return data;
   }
@@ -51,21 +51,21 @@ class Links {
   Links({this.self, this.first, this.last});
 
   Links.fromJson(Map<String, dynamic> json) {
-    self = json['self'] != null ? new Self.fromJson(json['self']) : null;
-    first = json['first'] != null ? new Self.fromJson(json['first']) : null;
-    last = json['last'] != null ? new Self.fromJson(json['last']) : null;
+    self = json['self'] != null ? Self.fromJson(json['self']) : null;
+    first = json['first'] != null ? Self.fromJson(json['first']) : null;
+    last = json['last'] != null ? Self.fromJson(json['last']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.self != null) {
-      data['self'] = this.self.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (self != null) {
+      data['self'] = self.toJson();
     }
-    if (this.first != null) {
-      data['first'] = this.first.toJson();
+    if (first != null) {
+      data['first'] = first.toJson();
     }
-    if (this.last != null) {
-      data['last'] = this.last.toJson();
+    if (last != null) {
+      data['last'] = last.toJson();
     }
     return data;
   }
@@ -81,8 +81,8 @@ class Self {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['href'] = href;
     return data;
   }
 }
@@ -96,15 +96,15 @@ class Embedded {
     if (json['conversation'] != null) {
       conversation = <Conversation>[];
       json['conversation'].forEach((v) {
-        conversation.add(new Conversation.fromJson(v));
+        conversation.add(Conversation.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.conversation != null) {
-      data['conversation'] = this.conversation.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (conversation != null) {
+      data['conversation'] = conversation.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -118,7 +118,7 @@ class Conversation {
   From to;
   bool read;
   int totalUnreadMessagesCount;
-  Links lLinks;
+  Links links;
 
   Conversation(
       {this.createdAt,
@@ -128,34 +128,34 @@ class Conversation {
       this.to,
       this.read,
       this.totalUnreadMessagesCount,
-      this.lLinks});
+      this.links});
 
   Conversation.fromJson(Map<String, dynamic> json) {
     createdAt = json['created_at'];
     id = json['id'];
     message = json['message'];
-    from = json['from'] != null ? new From.fromJson(json['from']) : null;
-    to = json['to'] != null ? new From.fromJson(json['to']) : null;
+    from = json['from'] != null ? From.fromJson(json['from']) : null;
+    to = json['to'] != null ? From.fromJson(json['to']) : null;
     read = json['read'];
     totalUnreadMessagesCount = json['totalUnreadMessagesCount'];
-    lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
+    links = json['_links'] != null ? Links.fromJson(json['_links']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['created_at'] = this.createdAt;
-    data['id'] = this.id;
-    data['message'] = this.message;
-    if (this.from != null) {
-      data['from'] = this.from.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['created_at'] = createdAt;
+    data['id'] = id;
+    data['message'] = message;
+    if (from != null) {
+      data['from'] = from.toJson();
     }
-    if (this.to != null) {
-      data['to'] = this.to.toJson();
+    if (to != null) {
+      data['to'] = to.toJson();
     }
-    data['read'] = this.read;
-    data['totalUnreadMessagesCount'] = this.totalUnreadMessagesCount;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
+    data['read'] = read;
+    data['totalUnreadMessagesCount'] = totalUnreadMessagesCount;
+    if (links != null) {
+      data['_links'] = links.toJson();
     }
     return data;
   }
@@ -175,10 +175,10 @@ class From {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['username'] = this.username;
-    data['id'] = this.id;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['username'] = username;
+    data['id'] = id;
+    data['name'] = name;
     return data;
   }
 }

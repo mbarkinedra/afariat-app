@@ -8,11 +8,11 @@ import 'tap_publish/tap_publish_viewcontroller.dart';
 
 // ignore: must_be_immutable
 class HomeView extends GetWidget<HomeViewController> {
-  Key key;
+  const HomeView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       controller.context = context;
     });
     return PersistentTabView(
@@ -41,12 +41,12 @@ class HomeView extends GetWidget<HomeViewController> {
       ),
       //  popAllScreensOnTapOfSelectedTab: true,
       // popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: ItemAnimationProperties(
+      itemAnimationProperties: const ItemAnimationProperties(
         // Navigation Bar's items animation properties.
         duration: Duration(seconds: 1),
         curve: Curves.easeInCubic,
       ),
-      screenTransitionAnimation: ScreenTransitionAnimation(
+      screenTransitionAnimation: const ScreenTransitionAnimation(
         // Screen transition animation on change of selected tab.
         animateTabTransition: true,
         curve: Curves.ease,
@@ -60,7 +60,7 @@ class HomeView extends GetWidget<HomeViewController> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(CupertinoIcons.home),
+        icon: const Icon(CupertinoIcons.home),
         title: ("Acceuil"),
         activeColorPrimary: framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,

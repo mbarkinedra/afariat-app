@@ -69,7 +69,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                     bottomRight: Radius.circular(35)),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: ColorGrey,
+                                    color: colorGrey,
                                     spreadRadius: 1,
                                     blurRadius: 1,
                                   ),
@@ -140,7 +140,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                             child: const Icon(
                               Icons.filter_alt_outlined,
                               size: 30,
-                              color: ColorGrey,
+                              color: colorGrey,
                             ),
                           )),
                       SizedBox(
@@ -257,7 +257,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                               "Pas de connexion internet",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: ColorText),
+                                  color: colorText),
                             ),
                           ],
                         )),
@@ -311,7 +311,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   title: const Text(
                     "Mes favoris",
                     style: TextStyle(
-                        color: ColorText, fontWeight: FontWeight.bold),
+                        color: colorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
                     if (Get.find<AccountInfoStorage>().isLoggedIn()) {
@@ -335,7 +335,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   title: const Text(
                     "Paramètres",
                     style: TextStyle(
-                        color: ColorText, fontWeight: FontWeight.bold),
+                        color: colorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
                     Navigator.push(
@@ -346,17 +346,17 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                 ),
                 Divider(
                   thickness: 1,
-                  color: ColorText,
+                  color: colorText,
                 ),
                 ListTile(
                   leading: Icon(
                     Icons.help_center,
-                    color: ColorText,
+                    color: colorText,
                   ),
                   title: const Text(
                     "Centre d'aide",
                     style: TextStyle(
-                        color: ColorText, fontWeight: FontWeight.bold),
+                        color: colorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
                     controller.launchURL(Environment.helpUrl);
@@ -365,12 +365,12 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                 ListTile(
                   leading: Icon(
                     Icons.checklist,
-                    color: ColorText,
+                    color: colorText,
                   ),
                   title: const Text(
                     "Règlement",
                     style: TextStyle(
-                        color: ColorText, fontWeight: FontWeight.bold),
+                        color: colorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
                     controller.launchURL(Environment.rulesUrl);
@@ -379,12 +379,12 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                 ListTile(
                   leading: Icon(
                     Icons.https,
-                    color: ColorText,
+                    color: colorText,
                   ),
                   title: const Text(
                     "Confidentialité ",
                     style: TextStyle(
-                        color: ColorText, fontWeight: FontWeight.bold),
+                        color: colorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
                     controller
@@ -394,12 +394,12 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                 ListTile(
                   leading: Icon(
                     Icons.gavel,
-                    color: ColorText,
+                    color: colorText,
                   ),
                   title: const Text(
                     "CGU ",
                     style: TextStyle(
-                        color: ColorText, fontWeight: FontWeight.bold),
+                        color: colorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
                     controller.launchURL(

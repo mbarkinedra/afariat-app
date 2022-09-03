@@ -16,9 +16,9 @@ class AdvertDetailsViewController extends GetxController {
   AdvertDetailsJson advert;
   TextEditingController textEditingController = TextEditingController();
   bool loading = true;
-  AdvertDetailsApi _advertDetailsApi = AdvertDetailsApi();
+  final AdvertDetailsApi _advertDetailsApi = AdvertDetailsApi();
   PhotoViewController photoViewController;
-  ConversationsApi _convertionsApi = ConversationsApi();
+  final ConversationsApi _convertionsApi = ConversationsApi();
 
   getAdvertDetails(int id) {
     _advertDetailsApi.advertTypeId = id;
@@ -71,7 +71,7 @@ class AdvertDetailsViewController extends GetxController {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Container(
+          title: SizedBox(
             width: double.infinity,
             height: 60,
             child: Column(
@@ -79,9 +79,12 @@ class AdvertDetailsViewController extends GetxController {
               children: [
                 Container(
                   color: framColor,
-                  padding: EdgeInsets.all(8),
-                  child: FittedBox(
-                    child: Text("Contacter l'annonceur par messagerie",
+                  padding: const EdgeInsets.all(8),
+
+                  width: double.infinity,
+                  child: const FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text("Envoyer un message",
                         style: TextStyle(
                             fontSize: 18,
                             color: Colors.white,
@@ -91,15 +94,15 @@ class AdvertDetailsViewController extends GetxController {
               ],
             ),
           ),
-          content: Container(
-            width: 400,
+          content: SizedBox(
+            width: 600,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   TextField(
-                    maxLines: 5,
+                    maxLines: 10,
                     controller: textEditingController,
                   ),
                   Row(
@@ -110,7 +113,7 @@ class AdvertDetailsViewController extends GetxController {
                             Navigator.pop(context);
                           },
                           child: Row(
-                            children: [
+                            children: const [
                               Icon(Icons.arrow_back),
                               Text('retour'),
                               SizedBox(
@@ -149,7 +152,7 @@ class AdvertDetailsViewController extends GetxController {
                                 });
                               },
                               child: Row(
-                                children: [
+                                children: const [
                                   SizedBox(
                                     width: 8,
                                   ),
@@ -170,7 +173,7 @@ class AdvertDetailsViewController extends GetxController {
   }
 
   Widget confirmBtn() {
-    return ElevatedButton(onPressed: () {}, child: Text("Confirmer"));
+    return ElevatedButton(onPressed: () {}, child: const Text("Confirmer"));
   }
 
 // Agrandir photo avec annimation
@@ -178,7 +181,7 @@ class AdvertDetailsViewController extends GetxController {
     showGeneralDialog(
       context: context,
       barrierDismissible: false,
-      transitionDuration: Duration(milliseconds: 300),
+      transitionDuration: const Duration(milliseconds: 300),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         return FadeTransition(
           opacity: animation,
@@ -195,38 +198,37 @@ class AdvertDetailsViewController extends GetxController {
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 color: Colors.white,
                 child: Center(
-                  child: Container(
-                      child: PhotoViewGallery.builder(
+                  child: PhotoViewGallery.builder(
                     scrollPhysics: const BouncingScrollPhysics(),
                     builder: (BuildContext context, int index) {
-                      return PhotoViewGalleryPageOptions(
-                        controller: photoViewController,
-                        imageProvider: NetworkImage(
-                          advert.photos[index].path,
-                        ),
-                        maxScale: PhotoViewComputedScale.covered * 2,
-                        minScale: PhotoViewComputedScale.contained * .8,
-                        heroAttributes: PhotoViewHeroAttributes(
-                            tag: advert.photos[index].path),
-                      );
+                  return PhotoViewGalleryPageOptions(
+                    controller: photoViewController,
+                    imageProvider: NetworkImage(
+                      advert.photos[index].path,
+                    ),
+                    maxScale: PhotoViewComputedScale.covered * 2,
+                    minScale: PhotoViewComputedScale.contained * .8,
+                    heroAttributes: PhotoViewHeroAttributes(
+                        tag: advert.photos[index].path),
+                  );
                     },
                     itemCount: advert.photos.length,
                     loadingBuilder: (context, event) => Center(
-                      child: Container(
-                        width: 20.0,
-                        height: 20.0,
-                        child: CircularProgressIndicator(
-                          value: event == null
-                              ? 0
-                              : event.cumulativeBytesLoaded /
-                                  event.expectedTotalBytes,
-                        ),
-                      ),
+                  child: SizedBox(
+                    width: 20.0,
+                    height: 20.0,
+                    child: CircularProgressIndicator(
+                      value: event == null
+                          ? 0
+                          : event.cumulativeBytesLoaded /
+                              event.expectedTotalBytes,
                     ),
-                  )),
+                  ),
+                    ),
+                  ),
                 ),
               ),
               Align(
@@ -239,7 +241,7 @@ class AdvertDetailsViewController extends GetxController {
                       },
                       child: Container(
                           color: Colors.grey[100],
-                          child: Icon(
+                          child: const Icon(
                             Icons.close,
                             color:framColor,
                             size: 30,
@@ -258,6 +260,6 @@ class AdvertDetailsViewController extends GetxController {
         onPressed: () {
           Get.back();
         },
-        child: Text("Annuler"));
+        child: const Text("Annuler"));
   }
 }

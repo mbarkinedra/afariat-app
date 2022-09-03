@@ -17,7 +17,7 @@ class CategoryAndSubcategory extends GetxController {
   SubCategoryJson subcategories1;
   CategoryGroupedJson categoryGroupedJson;
   List<CategoryGroupedJson> categoryGroupList = [];
-  AdvertTypesApi _refApi = AdvertTypesApi();
+  final AdvertTypesApi _refApi = AdvertTypesApi();
 
   @override
   void onInit() {

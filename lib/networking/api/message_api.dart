@@ -15,7 +15,7 @@ class MessageApi extends ResourceApi {
   /// Function Post messageReply from screen chat user
   @override
   String apiPostUrl({dataToPost}) {
-    return SettingsApp.Converstionreply + "/" + id;
+    return SettingsApp.conversationReply + "/" + id;
   }
 
   @override

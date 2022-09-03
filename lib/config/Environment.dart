@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Environment {
@@ -5,7 +6,9 @@ class Environment {
     if (dotenv.env.containsKey(parameter)) {
       return dotenv.env[parameter];
     }
-    print('Error: Argument $parameter not found in env file');
+    if (kDebugMode) {
+      print('Error: Argument $parameter not found in env file');
+    }
     return null;
   }
 

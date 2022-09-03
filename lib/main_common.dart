@@ -8,14 +8,16 @@ import 'config/app_config.dart';
 import 'home/home_view.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void mainCommon(String FileEnv) async {
+void mainCommon(String fileEnv) async {
   // Here would be background init code, if any
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: FileEnv);
+  await dotenv.load(fileName: fileEnv);
   await GetStorage.init();
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
               splashIconSize: 130,
               splash: Image.asset(
                   "assets/images/" + appConfig.appName + "/splash.png"),
-              nextScreen: HomeView(),
+              nextScreen: const HomeView(),
               splashTransition: SplashTransition.slideTransition,
               backgroundColor: framColor),
         ));

@@ -32,7 +32,7 @@ class TapChatViewController extends GetxController {
   getAllConversations() {
     _conversationApi.secureGet().then((value) {
       ConversationJson conversationJson = ConversationJson.fromJson(value.data);
-      conversations = conversationJson.eEmbedded.conversation;
+      conversations = conversationJson.embedded.conversation;
       print(conversationJson.toJson());
       getData = false;
 

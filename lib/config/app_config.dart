@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppConfig extends InheritedWidget {
-  AppConfig({this.appName,this.appId,
+  const AppConfig({this.appName,this.appId,
     Widget child}):super(child: child);
 
   final String appName;

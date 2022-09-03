@@ -3,11 +3,11 @@ import '../main_common.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
-  const ENV_FILE='.env.afariat.com';
+  const envFile='.env.afariat.com';
 
-  await mainCommon(ENV_FILE);
+  await mainCommon(envFile);
 
-  var configuredApp = AppConfig(
+  var configuredApp = const AppConfig(
     appName: "afariat.com",
     appId: 1,
     child: MyApp(),

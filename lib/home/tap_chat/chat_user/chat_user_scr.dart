@@ -5,17 +5,19 @@ import 'package:get/get.dart';
 import 'chat_user_viewcontroller.dart';
 
 class ChatUserScr extends GetWidget<ChatUserViewController> {
+  const ChatUserScr({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.white, //change your color here
         ),
         backgroundColor: framColor,
         title: Text(
           controller.name,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
       ),
       body: GetBuilder<ChatUserViewController>(builder: (logic) {

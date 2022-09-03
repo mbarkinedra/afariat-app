@@ -159,7 +159,7 @@ class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
                           Text(
                             "Pas de connexion internet",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, color: ColorText),
+                                fontWeight: FontWeight.bold, color: colorText),
                           ),
                         ],
                       )),

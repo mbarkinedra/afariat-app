@@ -13,12 +13,12 @@ class PublishImageScr extends GetView<TapPublishViewController> {
 
     return Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: Colors.white, //change your color here
           ),
           backgroundColor: framColor,
-          title: Text(
-            "Deposer annonces",
+          title: const Text(
+            "Déposer une annonce",
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
           actions: [
@@ -50,25 +50,23 @@ class PublishImageScr extends GetView<TapPublishViewController> {
               children: [
                 Align(
                   alignment: Alignment.topLeft,
-                  child: Container(
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "Rajouter des photos :",
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Text(
-                          "Une annonce avec des images attire beaucoup l'attention des internautes.Utilisez une image réelle de votre objet, et non de catalogues",
+                  child: Column(
+                    children: const [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Rajouter des photos :",
                           style: TextStyle(
-                            fontSize: 12,
-                          ),
+                              fontSize: 15, fontWeight: FontWeight.bold),
                         ),
-                      ],
-                    ),
+                      ),
+                      Text(
+                        "Une annonce avec des images attire beaucoup plus l'attention des internautes. Utilisez une image réelle de votre objet, et non de catalogue",
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 GetBuilder<TapPublishViewController>(builder: (logic) {
@@ -97,7 +95,7 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                                       onTap: () {
                                         logic.delEditImage(e);
                                       },
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.clear,
                                         size: 30,
                                         color: framColor,
@@ -132,7 +130,7 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                                       onTap: () {
                                         logic.deleteImage(e);
                                       },
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.clear,
                                         size: 30,
                                         color: framColor,
@@ -143,8 +141,8 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                           ))
                       .toList();
                   return logic.dataAdverts
-                      ? logic.editAdsImages.length > 0 ||
-                              logic.images.length > 0
+                      ? logic.editAdsImages.isNotEmpty ||
+                              logic.images.isNotEmpty
                           ? Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [...list, ...list2])
@@ -163,7 +161,7 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                                 height: size.height * .5,
                               ),
                             )
-                      : logic.images.length > 0
+                      : logic.images.isNotEmpty
                           ? Column(
                               mainAxisSize: MainAxisSize.max,
                               children: logic.images
@@ -195,7 +193,7 @@ class PublishImageScr extends GetView<TapPublishViewController> {
                                                   onTap: () {
                                                     logic.deleteImage(e);
                                                   },
-                                                  child: Icon(
+                                                  child: const Icon(
                                                     Icons.clear,
                                                     size: 30,
                                                     color: framColor,
@@ -272,23 +270,23 @@ class PublishImageScr extends GetView<TapPublishViewController> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(
-              "Selectionner votre options :",
+            title: const Text(
+              "Sélectionner vos options :",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: [
                   GestureDetector(
-                    child: Text("Prendre une photo"),
+                    child: const Text("Prendre une photo"),
                     onTap: () async {
                       controller.openCamera();
                       Navigator.pop(context);
                     },
                   ),
-                  Padding(padding: EdgeInsets.all(10)),
+                  const Padding(padding: EdgeInsets.all(10)),
                   GestureDetector(
-                    child: Text("Choisir une image"),
+                    child: const Text("Choisir une image"),
                     onTap: () async {
                       controller.openGallery();
                       Navigator.pop(context);

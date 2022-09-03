@@ -1,4 +1,3 @@
-import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
 
 import 'package:afariat/networking/json/my_ads_json.dart';
@@ -15,7 +14,7 @@ class AdsItem extends StatelessWidget {
   final Function editAds;
   final numberFormat = NumberFormat("###,##0", Environment.locale);
 
-  AdsItem({this.size, this.adverts, this.deleteAds, this.editAds});
+  AdsItem({Key key, this.size, this.adverts, this.deleteAds, this.editAds}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +23,10 @@ class AdsItem extends StatelessWidget {
       child: InkWell(
         onTap: editAds,
         child: Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10),
@@ -37,7 +36,7 @@ class AdsItem extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 5,
                 blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
+                offset: const Offset(0, 3), // changes position of shadow
               ),
             ],
           ),
@@ -57,7 +56,7 @@ class AdsItem extends StatelessWidget {
                       )
                     : Image.asset("assets/images/common/no-image.jpg"),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Expanded(
@@ -70,16 +69,16 @@ class AdsItem extends StatelessWidget {
                       padding: const EdgeInsets.all(2.0),
                       child: Text(
                         adverts.title,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
-                     Spacer(),
+                     const Spacer(),
                      Container(
                            width: 140,
                             height: 25,
                             decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(30.0)),
+                                  const BorderRadius.all(Radius.circular(30.0)),
                               color: adverts.status == 0
                                   ? const Color(0xFFFFEBC2)
                                   : adverts.status == 1
@@ -106,7 +105,7 @@ class AdsItem extends StatelessWidget {
                             ),
                           )
                      ,
-                    Spacer(),
+                    const Spacer(),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
@@ -115,14 +114,14 @@ class AdsItem extends StatelessWidget {
                           numberFormat.format(adverts.price) +
                               ' ' +
                               Environment.currencySymbol,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: framColor,
                               fontSize: 15),
                         ),
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -131,16 +130,16 @@ class AdsItem extends StatelessWidget {
                         overflow: TextOverflow.fade,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(),
+                          const SizedBox(),
                           InkWell(
                             onTap: deleteAds,
-                            child: Icon(
+                            child: const Icon(
                               Icons.delete,
                               color: framColor,
                             ),

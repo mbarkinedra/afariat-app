@@ -17,14 +17,14 @@ class HomeViewController extends GetxController {
   BuildContext context;
   PersistentTabController controller;
   int newPublish = 0;
-  int _navigatorValue = 0;
-  String _currentPage = 'Page1';
+  final int _navigatorValue = 0;
+  final String _currentPage = 'Page1';
   var _navigatorKey;
   int loadOrScrollHome = 0;
   int loadOrScrollAds = 0;
   final AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
 
-  List<String> _pageKeys = ['Page1', 'Page2', 'Page3', 'Page4', 'Page5'];
+  final List<String> _pageKeys = ['Page1', 'Page2', 'Page3', 'Page4', 'Page5'];
 
   get navigatorValue => _navigatorValue;
 
@@ -88,10 +88,10 @@ class HomeViewController extends GetxController {
       onHighlightWidgetTap: (introStatus) {},
 
       /// The padding of the highlighted area and the widget
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
 
       /// Border radius of the highlighted area
-      borderRadius: BorderRadius.all(Radius.circular(4)),
+      borderRadius: const BorderRadius.all(Radius.circular(4)),
 
       /// Use the default useDefaultTheme provided by the library to quickly build a guide page
       /// Need to customize the style and content of the guide page, implement the widgetBuilder method yourself

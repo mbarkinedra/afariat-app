@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 void main() async{
 
-  const ENV_FILE='.env.lecoinoccasion.fr';
+  const envFile='.env.lecoinoccasion.fr';
 
-  await mainCommon(ENV_FILE);
+  await mainCommon(envFile);
 
-  var configuredApp = AppConfig(
+  var configuredApp = const AppConfig(
     appName: "lecoinoccasion.fr",
     appId: 2,
     child: MyApp(),

@@ -34,7 +34,7 @@ class ParametreScr extends GetView<ParametreViewContoller> {
                 child: ListTile(
                   title: const Text(
                     'Activer les notifications',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: ColorGrey),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: colorGrey),
                   ),
                   trailing: CupertinoSwitch(
                     value: logic.lights,

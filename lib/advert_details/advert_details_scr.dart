@@ -1,7 +1,6 @@
 import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
-import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/mywidget/custom_button_icon.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -12,6 +11,8 @@ import '../config/Environment.dart';
 import 'advert_details_viewcontroller.dart';
 
 class AdvertDetailsScr extends GetView<AdvertDetailsViewController> {
+  const AdvertDetailsScr({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -19,18 +20,18 @@ class AdvertDetailsScr extends GetView<AdvertDetailsViewController> {
 
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.white, //change your color here
         ),
         backgroundColor: framColor,
-        title: Text(
+        title: const Text(
           "Annonce détaillée",
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
       ),
       body: GetBuilder<AdvertDetailsViewController>(builder: (logic) {
         return logic.loading
-            ? Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator())
             : Padding(
                 padding: const EdgeInsets.only(
                     top: 8.0, bottom: 40, right: 8, left: 8),
@@ -64,7 +65,7 @@ class AdvertDetailsScr extends GetView<AdvertDetailsViewController> {
                                         ))
                                     .toList(),
                               )
-                            : logic.advert.photos.length > 0
+                            : logic.advert.photos.isNotEmpty
                                 ? InkWell(
                                     onTap: () {
                                       logic.displayDialogue(context);
@@ -78,16 +79,16 @@ class AdvertDetailsScr extends GetView<AdvertDetailsViewController> {
                                               fit: BoxFit.fill)),
                                     ),
                                   )
-                                : SizedBox(),
-                      SizedBox(height: 10),
+                                : const SizedBox(),
+                      const SizedBox(height: 10),
                       Row(
                         children: [
-                          Container(
+                          SizedBox(
                             width: _size.width * .8,
                             child: Text(
                               logic.advert.title.toString(),
                               // overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                           ),
@@ -139,227 +140,225 @@ class AdvertDetailsScr extends GetView<AdvertDetailsViewController> {
                               ))
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.location_on,
                             color: Colors.grey,
                             size: 18,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 4,
                           ),
                           Text(
                             "${logic.advert.town.name}, ${logic.advert.city.name}",
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
                           numberFormat.format(logic.advert.price) +
                               ' ' +
                               Environment.currencySymbol,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: framColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 29)),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
-                      Text("Catégorie",
+                      const Text("Catégorie",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           )),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
-                      Container(
+                      SizedBox(
                         width: _size.width * .8,
                         child: Text(logic.advert.category.name,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                             )),
                       ),
                       if (logic.advert.roomsNumber != null)
                         Row(
                           children: [
-                            Text(
+                            const Text(
                               "Nombre de chambre : ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),
                             Text(
-                              "${logic.advert.roomsNumber.value}",
+                              logic.advert.roomsNumber.value,
                             ),
                           ],
                         ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       if (logic.advert.vehicleBrand != null)
                         Row(
                           children: [
-                            Text(
+                            const Text(
                               "Marque : ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),
                             Text(
-                              "${logic.advert.vehicleBrand.value}",
+                              logic.advert.vehicleBrand.value,
                             ),
                           ],
                         ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       if (logic.advert.motoBrand != null)
                         Row(
                           children: [
-                            Text(
+                            const Text(
                               "Marque : ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),
                             Text(
-                              "${logic.advert.motoBrand.value}",
+                              logic.advert.motoBrand.value,
                             ),
                           ],
                         ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       if (logic.advert.vehicleModel != null)
                         Row(
                           children: [
-                            Text(
+                            const Text(
                               "Modèle : ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),
                             Text(
-                              "${logic.advert.vehicleModel.value}",
+                              logic.advert.vehicleModel.value,
                             ),
                           ],
                         ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       if (logic.advert.yearModel != null)
                         Row(
                           children: [
-                            Text(
+                            const Text(
                               "Année : ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),
                             Text(
-                              "${logic.advert.yearModel.value}",
+                              logic.advert.yearModel.value,
                             ),
                           ],
                         ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       if (logic.advert.energy != null)
                         Row(
                           children: [
-                            Text(
+                            const Text(
                               "Energie : ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),
                             Text(
-                              "${logic.advert.energy.value}",
+                              logic.advert.energy.value,
                             ),
                           ],
                         ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       if (logic.advert.mileage != null)
                         Row(
                           children: [
-                            Text(
+                            const Text(
                               "Kilométrage: ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 15),
                             ),
                             Text(
-                              "${logic.advert.mileage.value}",
+                              logic.advert.mileage.value,
                               // overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
-                      Text("Description",
+                      const Text("Description",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           )),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
-                      Container(
+                      SizedBox(
                         width: _size.width * .8,
                         child: Text(logic.advert.description,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              if (logic.havePhoneNumber())
-                                CustomButtonIcon(
-                                  btcolor: buttonColor,
-                                  function: () {
-                                    logic.makePhoneCall(
-                                        logic.advert.mobilePhoneNumber);
-                                  },
-                                  height: 40,
-                                  width: _size.width * .2,
-                                  icon: Icons.add_call,
-                                ),
-                              if (logic.havePhoneNumber())
-                                CustomButtonIcon(
-                                  btcolor: buttonColor,
-                                  function: () {
-                                    logic.makeSms(
-                                        logic.advert.mobilePhoneNumber);
-                                  },
-                                  height: 40,
-                                  width: _size.width * .2,
-                                  icon: Icons.message,
-                                ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (logic.havePhoneNumber())
                               CustomButtonIcon(
                                 btcolor: buttonColor,
-                                function: () async {
-                                  if (controller.advert.isRegistredUser &&
-                                      Get.find<AccountInfoStorage>()
-                                              .readUserId() !=
-                                          null) {
-                                    controller.showDialogue(context);
-                                  }
+                                function: () {
+                                  logic.makePhoneCall(
+                                      logic.advert.mobilePhoneNumber);
                                 },
                                 height: 40,
                                 width: _size.width * .2,
-                                icon: Icons.markunread,
+                                icon: Icons.add_call,
                               ),
-                            ],
-                          ),
+                            if (logic.havePhoneNumber())
+                              CustomButtonIcon(
+                                btcolor: buttonColor,
+                                function: () {
+                                  logic.makeSms(
+                                      logic.advert.mobilePhoneNumber);
+                                },
+                                height: 40,
+                                width: _size.width * .2,
+                                icon: Icons.message,
+                              ),
+                            CustomButtonIcon(
+                              btcolor: buttonColor,
+                              function: () async {
+                                if (controller.advert.isRegistredUser &&
+                                    Get.find<AccountInfoStorage>()
+                                            .readUserId() !=
+                                        null) {
+                                  controller.showDialogue(context);
+                                }
+                              },
+                              height: 40,
+                              width: _size.width * .2,
+                              icon: Icons.markunread,
+                            ),
+                          ],
                         ),
                       ),
                     ],

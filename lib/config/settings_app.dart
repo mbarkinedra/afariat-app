@@ -19,7 +19,7 @@ class SettingsApp {
 
   static String get publishURL => baseApiUrl + '/adverts';
 
-  static String get SearchUrl => baseApiUrl + '/adverts';
+  static String get searchUrl => baseApiUrl + '/adverts';
 
   static String get advertDeatilsUrl => baseApiUrl + '/adverts';
 
@@ -70,7 +70,7 @@ class SettingsApp {
 
   static String get getConversation => baseApiUrl + '/conversation';
 
-  static String get Converstionreply => baseApiUrl + '/conversations/reply';
+  static String get conversationReply => baseApiUrl + '/conversations/reply';
 
   static String get favorite => baseApiUrl + '/favorites';
 

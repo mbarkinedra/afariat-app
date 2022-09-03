@@ -1,4 +1,3 @@
-import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
@@ -14,6 +13,8 @@ import '../config/Environment.dart';
 import 'custom_button_1.dart';
 
 class BottomSheetFilter extends StatefulWidget {
+  const BottomSheetFilter({Key key}) : super(key: key);
+
   @override
   State<BottomSheetFilter> createState() => _BottomSheetFilterState();
 }
@@ -46,10 +47,10 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                         border: Border.all(color: framColor, width: 2),
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButton<CategoryGroupedJson>(
-                      underline: SizedBox(),
+                      underline: const SizedBox(),
                       isExpanded: true,
-                      hint: Padding(
-                        padding: const EdgeInsets.only(left: 8.0, right: 8),
+                      hint: const Padding(
+                        padding: EdgeInsets.only(left: 8.0, right: 8),
                         child: Text("Catégorie"),
                       ),
                       value: logic.categoryGroupedJson,
@@ -78,10 +79,10 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                         border: Border.all(color: framColor, width: 2),
                         borderRadius: BorderRadius.circular(10)),
                     child: DropdownButton<SubCategoryJson>(
-                      underline: SizedBox(),
+                      underline: const SizedBox(),
                       isExpanded: true,
-                      hint: Padding(
-                        padding: const EdgeInsets.only(left: 8.0, right: 8),
+                      hint: const Padding(
+                        padding: EdgeInsets.only(left: 8.0, right: 8),
                         child: Text("Sous Catégories"),
                       ),
                       value: logic.subcategories1,
@@ -111,7 +112,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                 ? WidgetPublish(
                     logic.getView.name,
                   )
-                : SizedBox();
+                : const SizedBox();
           }),
           const Padding(
             padding: EdgeInsets.all(16.0),
@@ -122,7 +123,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
           ),
           GetBuilder<TapHomeViewController>(builder: (logic) {
             return logic.loadPrice
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(),
                   )
                 : Column(
@@ -190,11 +191,11 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       border: Border.all(color: framColor, width: 2),
                       borderRadius: BorderRadius.circular(15)),
                   child: DropdownButton<RefJson>(
-                    underline: SizedBox(),
+                    underline: const SizedBox(),
                     isExpanded: true,
                     hint: Padding(
                       padding: const EdgeInsets.only(left: 8.0, right: 8),
-                      child: Text("Gouvernorat"),
+                      child: Text(Environment.cityLabel),
                     ),
                     value: logic.city,
                     iconSize: 24,
@@ -223,11 +224,11 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                         border: Border.all(color: framColor, width: 2),
                         borderRadius: BorderRadius.circular(15)),
                     child: DropdownButton<RefJson>(
-                      underline: SizedBox(),
+                      underline: const SizedBox(),
                       isExpanded: true,
                       hint: Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 8),
-                        child: Text("Ville"),
+                        child: Text(Environment.townLabel),
                       ),
                       value: logic.town,
                       iconSize: 24,
@@ -253,11 +254,6 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
               height: 50,
               width: _size.width * .4,
               function: () {
-                //Filter.data.clear();
-                /*Filter.data.forEach((key, value) {
-                  ///add filter values to URL parameters
-                  Filter.data[key] = value;
-                });*/
                 Get.find<TapHomeViewController>().filterUpdate();
                 Navigator.pop(context);
               },
