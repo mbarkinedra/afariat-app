@@ -15,7 +15,7 @@ class DeleteAccountScr extends GetWidget<DeleteAccountViewController> {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              title: Text(
+              title: const Text(
                 "Suppression du compte",
                 style: TextStyle(
                     color: Colors.white,
@@ -28,18 +28,18 @@ class DeleteAccountScr extends GetWidget<DeleteAccountViewController> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.all(10.00),
-                    child: Text(" Suppression définitive du compte ?",
+                    child: Text(" Suppression définitive de votre compte ?",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                             color: Colors.black)),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Padding(
@@ -47,67 +47,73 @@ class DeleteAccountScr extends GetWidget<DeleteAccountViewController> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.red[100],
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(
                                   left: 8.0, top: 1.0, bottom: 2.0, right: 8.0),
                               child: RichText(
-                                text: const TextSpan(children: [
-                                  TextSpan(
-                                      text: "Important",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 22,
-                                          color: Colors.black)),
-                                  TextSpan(
-                                      text:
-                                          ": La supression de compte est irreversible. Tous vos données ci-dessous seront perdues à jamais.",
-                                      style: TextStyle(
-                                          fontSize: 15, color: Colors.black)),
-                                ]),
+                                text: const TextSpan(
+                                    text: 'Important \n',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                    )),
+                                textAlign: TextAlign.end,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(" Toutes vos annonces",
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                  "La supression de votre compte est irreversible. Toutes vos données ci-dessous seront perdues à jamais.",
                                   style: TextStyle(
                                       //  fontWeight:  FontWeight.w700,
                                       fontSize: 16,
                                       color: Colors.black)),
                             ),
-                            SizedBox(
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text("\u2022 Toutes vos annonces",
+                                  style: TextStyle(
+                                      //  fontWeight:  FontWeight.w700,
+                                      fontSize: 16,
+                                      color: Colors.black)),
+                            ),
+                            const SizedBox(
                               height: 6,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(" Toutes vos données",
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text("\u2022 Toutes vos données",
                                   style: TextStyle(
                                       //fontWeight:  FontWeight.w700,
                                       fontSize: 16,
                                       color: Colors.black)),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 6,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(" Tous vos messages",
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text("\u2022 Tous vos messages",
                                   style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.black)),
+                                      fontSize: 16, color: Colors.black)),
+                            ),
+                            const SizedBox(
+                              height: 6,
                             ),
                           ]),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 60,
                   ),
                   Center(
@@ -118,9 +124,10 @@ class DeleteAccountScr extends GetWidget<DeleteAccountViewController> {
                         width: MediaQuery.of(context).size.width * .6,
                         height: 50,
                         label: "Supprimer mon compte",
+                        fontWeight: FontWeight.bold,
                         icon: Icons.delete_outline_sharp,
                         iconcolor: Colors.white,
-                        btcolor: framColor,
+                        btcolor: Colors.red,
                         labcolor: Colors.white,
                         function: () async {
                           await showDialog<bool>(

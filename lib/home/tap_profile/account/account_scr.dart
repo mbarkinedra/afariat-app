@@ -1,3 +1,4 @@
+import 'package:afariat/config/Environment.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/mywidget/custom_button_1.dart';
@@ -15,6 +16,8 @@ class Account extends GetWidget<AccountViewController> {
     var appConfig = AppConfig.of(context);
 
     return Material(
+        child: Form(
+      key: controller.registerFormKey,
       child: SingleChildScrollView(
         child: GetBuilder<AccountViewController>(builder: (logic) {
           return Column(
@@ -25,7 +28,7 @@ class Account extends GetWidget<AccountViewController> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.asset(
-                  "assets/images/"+appConfig.appName+"/logo.png",
+                  "assets/images/" + appConfig.appName + "/logo.png",
                   width: 200,
                   height: 120,
                 ),
@@ -35,6 +38,10 @@ class Account extends GetWidget<AccountViewController> {
                 width: size.width * .8,
                 hintText: 'Nom',
                 textEditingController: logic.name,
+                validator: (value) {
+                  return controller.validator.validatorServer
+                      .validate(value, 'name');
+                },
               ),
               SizedBox(
                 height: 10,
@@ -43,9 +50,10 @@ class Account extends GetWidget<AccountViewController> {
                 color: framColor,
                 textEditingController: controller.email,
                 width: size.width * .8,
-                hintText: 'e_mail',
+                hintText: 'e-mail',
                 validator: (value) {
-                  return controller.validateServer.validate(value, 'email');
+                  return controller.validator.validatorServer
+                      .validate(value, 'email');
                 },
               ),
               SizedBox(
@@ -57,7 +65,8 @@ class Account extends GetWidget<AccountViewController> {
                   width: size.width * .8,
                   hintText: 'Numéro de tel',
                   validator: (value) {
-                    return controller.validateServer.validate(value, 'phone');
+                    return controller.validator.validatorServer
+                        .validate(value, 'phone');
                   }),
               SizedBox(
                 height: 10,
@@ -74,7 +83,7 @@ class Account extends GetWidget<AccountViewController> {
                         underline: SizedBox(),
                         hint: Padding(
                           padding: const EdgeInsets.only(left: 8.0, right: 8),
-                          child: Text("Ville"),
+                          child: Text(Environment.cityLabel),
                         ),
                         isExpanded: true,
                         value: logic.city,
@@ -102,7 +111,7 @@ class Account extends GetWidget<AccountViewController> {
               }),
               GetBuilder<AccountViewController>(builder: (logic) {
                 return logic.updateData
-                    ? CircularProgressIndicator()
+                    ? const CircularProgressIndicator()
                     : CustomButton1(
                         height: 50,
                         label: "Mettre à jour",
@@ -111,8 +120,8 @@ class Account extends GetWidget<AccountViewController> {
                         labcolor: Colors.white,
                         width: size.width * .8,
                         btcolor: framColor,
-                        function: () {
-                          controller.updateUserData();
+                        function: () async {
+                          await controller.updateUserData();
                         },
                       );
               }),
@@ -136,6 +145,6 @@ class Account extends GetWidget<AccountViewController> {
           );
         }),
       ),
-    );
+    ));
   }
 }

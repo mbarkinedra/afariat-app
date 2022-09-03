@@ -5,10 +5,12 @@ import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/validator/validate_server.dart';
 import 'package:afariat/networking/json/user_json.dart';
+import 'package:afariat/validator/validator_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AccountViewController extends GetxController {
+  final registerFormKey = GlobalKey<FormState>();
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
@@ -16,7 +18,8 @@ class AccountViewController extends GetxController {
   final localisation = Get.find<LocController>();
   bool updateData = false;
 
-  ServerValidator validateServer = ServerValidator();
+  ValidatorProfile validator = ValidatorProfile();
+
   AccountInfoStorage _storage = AccountInfoStorage();
   UserApi _userApi = UserApi();
   UserJson user = UserJson();
@@ -27,8 +30,9 @@ class AccountViewController extends GetxController {
     getUserData();
   }
 
-  updateUserData() {
+  updateUserData() async {
     updateData = true;
+    update();
     user.type = user.type;
     user.email = email.text;
     user.name = name.text;
@@ -36,22 +40,44 @@ class AccountViewController extends GetxController {
     user.city.id = localisation.city.id;
 
     _userApi.id = Get.find<AccountInfoStorage>().readUserId();
-    print(_userApi.id);
-    print(user.toJson(form: true)); //user.toJson(form: true)
-    _userApi.putResource(dataToPost: user.toJson(form: true)).then(
+    await _userApi.putResource(dataToPost: user.toJson(form: true)).then(
       (value) {
-        Get.find<AccountInfoStorage>().saveName(user.name);
-        validateServer.validateServer(
+        print(value);
+        updateData = false;
+        validator.validatorServer.validateServer(
+            value: value,
             success: () {
-              Get.snackbar("", "Mise à jours avec succès ");
-              updateData = false;
+              Get.snackbar("Succes", "Mise à jour avec succès",
+                  colorText: Colors.black87,
+                  backgroundColor: Colors.greenAccent,
+                  icon: const Icon(Icons.check_circle));
+
+              Get.find<AccountInfoStorage>().saveName(user.name);
               Wsse.generateWsseFromStorage();
+              registerFormKey.currentState.reset();
               update();
             },
-            value: value);
+            failure: () {
+              //validate server errors and show them in the form
+              registerFormKey.currentState.validate();
+              Get.snackbar(
+                'Erreur',
+                'Veuillez corriger les erreurs ci-dessous.',
+                colorText: Colors.white,
+                backgroundColor: Colors.red,
+              );
+              update();
+            });
       },
     ).catchError((e) {
-      updateData = false;
+      print(e);
+      Get.snackbar(
+        'Oups !',
+        'Une erreur s\'est produite. Veuillez relancer l\'appli ou la mettre à jour.',
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+
       update();
     });
   }

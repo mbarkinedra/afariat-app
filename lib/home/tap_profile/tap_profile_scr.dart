@@ -60,8 +60,8 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
             //   );
             // }),
             ProfileMenu(
-              iconProfile: Icons.settings,
-              text: "Changer Mot de passe",
+              iconProfile: Icons.lock_rounded,
+              text: "Changer votre mot de passe",
               press: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (

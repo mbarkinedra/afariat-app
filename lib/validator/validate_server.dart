@@ -14,7 +14,7 @@ class ServerValidator {
       }
     });
 
-    return errorMessage ?? null;
+    return errorMessage;
   }
 
   validateServer(

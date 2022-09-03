@@ -37,12 +37,17 @@ abstract class ResourceApi extends ApiManager {
   //Put User From User
   Future<Response<dynamic>> putResource({dataToPost}) async {
     String wsse = Wsse.generateWsseFromStorage();
-    Options options = Options(headers: {
-      "Accept": "application/json",
-      'apikey': Environment.apikey,
-      'Content-Type': 'application/json',
-      'X-WSSE': wsse,
-    });
+    Options options = Options(
+        headers: {
+          "Accept": "application/json",
+          'apikey': Environment.apikey,
+          'Content-Type': 'application/json',
+          'X-WSSE': wsse,
+        },
+        validateStatus: (status) {
+          return status < 405;
+        });
+
     return dioSingleton.dio
         .put(
       apiPutUrl(),

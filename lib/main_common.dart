@@ -20,20 +20,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appConfig = AppConfig.of(context);
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialBinding: AllBindings(),
-      theme: ThemeData(
-        primaryColor: Colors.deepOrange,
-        primarySwatch: Colors.deepOrange,
-      ),
-      home: AnimatedSplashScreen(
-          duration: 3000,
-          splashIconSize: 130,
-          splash: Image.asset("assets/images/"+appConfig.appName+"/splash.png"),
-          nextScreen: HomeView(),
-          splashTransition: SplashTransition.slideTransition,
-          backgroundColor: framColor),
-    );
+    return GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialBinding: AllBindings(),
+          theme: ThemeData(
+            primaryColor: Colors.deepOrange,
+            primarySwatch: Colors.deepOrange,
+          ),
+          home: AnimatedSplashScreen(
+              duration: 3000,
+              splashIconSize: 130,
+              splash: Image.asset(
+                  "assets/images/" + appConfig.appName + "/splash.png"),
+              nextScreen: HomeView(),
+              splashTransition: SplashTransition.slideTransition,
+              backgroundColor: framColor),
+        ));
   }
 }

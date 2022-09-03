@@ -203,8 +203,10 @@ abstract class ApiManager {
             }),
       )
           .then((value) {
+            print(value);
         return value;
       }).catchError((error, stackTrace) {
+        print(error);
         if (error.type == DioErrorType.connectTimeout) {
           a.Get.snackbar("erreur", "Délai de connection dépassé");
           // throw Exception("Connection  Timeout Exception");
