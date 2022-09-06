@@ -18,7 +18,6 @@ class AccountViewController extends GetxController {
   TextEditingController phone = TextEditingController();
   CityDropdownViewController cityDropdownViewController =
       CityDropdownViewController();
-  final localisation = Get.find<LocController>();
   bool updateData = false;
 
   ValidatorProfile validator = ValidatorProfile();
@@ -45,8 +44,6 @@ class AccountViewController extends GetxController {
     _userApi.id = Get.find<AccountInfoStorage>().readUserId();
     await _userApi.putResource(dataToPost: user.toJson(form: true)).then(
       (value) {
-        print("YOOOOOOOOOOO");
-        print(value);
         updateData = false;
         validator.validatorServer.validateServer(
             value: value,
@@ -93,8 +90,6 @@ class AccountViewController extends GetxController {
     phone.text = _storage.readPhone() ?? "";
 
     await _userApi.secureGet().then((value) {
-      print('Yoyooooooooooooo');
-      print(value);
       user = UserJson.fromJson(value.data);
       name.text = user.name;
       phone.text = user.phone;

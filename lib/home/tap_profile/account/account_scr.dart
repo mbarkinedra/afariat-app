@@ -1,9 +1,6 @@
-import 'package:afariat/config/Environment.dart';
 import 'package:afariat/config/utility.dart';
-import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:afariat/mywidget/custom_text_filed.dart';
-import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../config/app_config.dart';
@@ -72,46 +69,18 @@ class Account extends GetWidget<AccountViewController> {
               SizedBox(
                 height: 10,
               ),
-              GetBuilder<LocController>(builder: (logic) {
-                return Column(
-                  children: [
-                    Container(
-                      width: size.width * .8,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: framColor, width: 2),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: CityDropdown(controller.cityDropdownViewController),
-
-                      /*DropdownButton<RefJson>(
-                        underline: SizedBox(),
-                        hint: Padding(
-                          padding: const EdgeInsets.only(left: 8.0, right: 8),
-                          child: Text(Environment.cityLabel),
-                        ),
-                        isExpanded: true,
-                        value: logic.city,
-                        iconSize: 24,
-                        elevation: 16,
-                        onChanged: logic.updateCity,
-                        items: logic.cities
-                            .where((element) => element.name != "")
-                            .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                          return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 15.0, right: 8),
-                                child: Text(value.name),
-                              ));
-                        }).toList(),
-                      ),*/
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                  ],
-                );
-              }),
+              Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Container(
+                    width: size.width * .8,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: framColor, width: 2),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: CityDropdown(controller.cityDropdownViewController),
+                  )),
+              SizedBox(
+                height: 10,
+              ),
               GetBuilder<AccountViewController>(builder: (logic) {
                 return logic.updateData
                     ? const CircularProgressIndicator()

@@ -10,7 +10,11 @@ abstract class RefDropdown<GetLifeCycleBase>
   @override
   final RefDropdownViewController controller;
 
-  RefDropdown(this.controller, {Key key}) : super(key: key);
+  final String label;
+
+  final Function validator;
+
+  RefDropdown(this.controller, this.label, this.validator, {Key key}) : super(key: key);
 
   //GetLifeCycleBase controller = RefDropdownViewController;
 
@@ -20,37 +24,22 @@ abstract class RefDropdown<GetLifeCycleBase>
         future: controller.fetchItems(),
         builder: (context, AsyncSnapshot<RefListJson> snapshot) {
           if (snapshot.hasData) {
-            return Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: DropdownSearch<RefJson>(
-                  mode: Mode.DIALOG,
-                  showSearchBox: true,
-                  items: controller.items.data,
-                  itemAsString: (RefJson r) => r.toString(),
-                  dropdownSearchDecoration: const InputDecoration(
-                    labelText: "Votre département",
-                    hintText: "country in menu mode",
-                  ),
-                  onChanged: (element) => controller.selectedItem = element,
-                  selectedItem: controller.selectedItem,
-                ));
+            return DropdownSearch<RefJson>(
+              mode: Mode.DIALOG,
+              showSearchBox: true,
+              items: controller.items.data,
+              itemAsString: (RefJson r) => r.toString(),
+              dropdownSearchDecoration: InputDecoration(
+                labelText: label,
+                border: InputBorder.none,
+              ),
+              onChanged: (element) => controller.selectedItem = element,
+              selectedItem: controller.selectedItem,
+              validator: validator,
+            );
           } else {
             return const CircularProgressIndicator();
           }
         });
-    /*return Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: DropdownSearch<RefJson>(
-          mode: Mode.DIALOG,
-          showSearchBox: true,
-          items: controller.items.data,
-          itemAsString: (RefJson r) => r.toString(),
-          dropdownSearchDecoration: InputDecoration(
-            labelText: "Votre département",
-            hintText: "country in menu mode",
-          ),
-          onChanged: print,
-          selectedItem: controller.selectedItem,
-        ));*/
   }
 }

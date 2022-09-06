@@ -25,7 +25,7 @@ class LogInItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text(label),
+        Text(label, style: const TextStyle(fontWeight: FontWeight.bold),),
         Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
           child: TextFormField(
