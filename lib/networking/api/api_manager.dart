@@ -11,11 +11,13 @@ import 'package:get/get.dart' as a;
 import 'package:get/get_core/src/get_main.dart';
 import '../../config/Environment.dart';
 import '../../storage/AccountInfoStorage.dart';
+import '../../validator/validate_server.dart';
 
 abstract class ApiManager {
   final DioSingleton dioSingleton = DioSingleton();
   final storage = a.Get.find<SecureStorage>();
   AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
+  ServerValidator validator = ServerValidator();
 
   /// Returns the API URL of current API ressource
   String apiUrl();
@@ -24,6 +26,36 @@ abstract class ApiManager {
   NetWorkController _netWorkController = a.Get.find<NetWorkController>();
 
   AbstractJsonResource fromJson(data);
+
+  validateResponseStatusCode(Response response) {
+    switch (response.statusCode) {
+      case 200:
+      case 201:
+      case 204:
+        //success
+        break;
+      case 400:
+        // server form errors
+        break;
+      case 401:
+      case 403:
+        //problem happens with auth: bad app key for 403 or 401 for bad credentials
+        //Force the logout the user to be sure that he will login with the right credentials
+        print('Force the logout');
+        Get.find<AccountInfoStorage>().logout();
+        Get.snackbar(
+          'Important',
+          'Vous êtes déconnecté. Veuillez vous connecter de nouveau.',
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+        );
+        break;
+      case 404:
+        // resource not found
+        break;
+    }
+    return response.statusCode;
+  }
 
   processServerError(error) {
     String message;
@@ -60,6 +92,7 @@ abstract class ApiManager {
   Future<dynamic> getResource() async {
     var data;
     await dioSingleton.dio.get(apiUrl()).then((value) {
+      validateResponseStatusCode(value);
       data = value.data;
     });
     return fromJson(data);
@@ -79,6 +112,7 @@ abstract class ApiManager {
     await dioSingleton.dio
         .get(apiUrl(), queryParameters: filters)
         .then((value) {
+      validateResponseStatusCode(value);
       data = value.data;
     });
     jsonList = fromJson(data);
@@ -114,6 +148,7 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
+      validateResponseStatusCode(value);
       return value;
     }).catchError((error) {
       processServerError(error);
@@ -143,6 +178,7 @@ abstract class ApiManager {
             }),
       )
           .then((value) {
+        validateResponseStatusCode(value);
         return value;
       }).catchError((error, stackTrace) {
         if (error.type == DioErrorType.connectTimeout) {
@@ -176,8 +212,11 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
+      //process server status codes
+      validateResponseStatusCode(value);
       return value;
     }).catchError((error, stackTrace) {
+      print(error);
       processServerError(error);
     });
   }
@@ -189,7 +228,7 @@ abstract class ApiManager {
       return dioSingleton.dio
           .put(
         apiUrl(),
-      data: jsonEncode(dataToPost),
+        data: jsonEncode(dataToPost),
         options: Options(
             headers: {
               "Accept": "application/json",
@@ -203,7 +242,7 @@ abstract class ApiManager {
             }),
       )
           .then((value) {
-            print(value);
+        validateResponseStatusCode(value);
         return value;
       }).catchError((error, stackTrace) {
         print(error);
@@ -237,6 +276,7 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
+      validateResponseStatusCode(value);
       return value;
     }).catchError((error, stackTrace) {
       processServerError(error);
@@ -254,6 +294,7 @@ abstract class ApiManager {
       'X-WSSE': wsse,
     });
     return dioSingleton.dio.delete(apiUrl(), options: options).then((value) {
+      validateResponseStatusCode(value);
       return value;
     }).catchError((error, stackTrace) {
       processServerError(error);

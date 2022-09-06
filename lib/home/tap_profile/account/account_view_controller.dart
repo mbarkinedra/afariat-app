@@ -1,4 +1,6 @@
 import 'package:afariat/networking/api/user.dart';
+import 'package:afariat/networking/json/ref_json.dart';
+import 'package:afariat/remote_widget/city_dropdown_viewcontroller.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/networking/security/wsse.dart';
 import 'package:afariat/controllers/loc_controller.dart';
@@ -14,7 +16,8 @@ class AccountViewController extends GetxController {
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
-  TextEditingController city = TextEditingController();
+  CityDropdownViewController cityDropdownViewController =
+      CityDropdownViewController();
   final localisation = Get.find<LocController>();
   bool updateData = false;
 
@@ -25,9 +28,9 @@ class AccountViewController extends GetxController {
   UserJson user = UserJson();
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-    getUserData();
+    await getUserData();
   }
 
   updateUserData() async {
@@ -37,11 +40,12 @@ class AccountViewController extends GetxController {
     user.email = email.text;
     user.name = name.text;
     user.phone = phone.text;
-    user.city.id = localisation.city.id;
+    user.city.id = cityDropdownViewController.selectedItem.id;
 
     _userApi.id = Get.find<AccountInfoStorage>().readUserId();
     await _userApi.putResource(dataToPost: user.toJson(form: true)).then(
       (value) {
+        print("YOOOOOOOOOOO");
         print(value);
         updateData = false;
         validator.validatorServer.validateServer(
@@ -82,26 +86,24 @@ class AccountViewController extends GetxController {
     });
   }
 
-  getUserData() {
+  getUserData() async {
     _userApi.id = Get.find<AccountInfoStorage>().readUserId();
     name.text = _storage.readName() ?? "";
     email.text = _storage.readEmail() ?? "";
     phone.text = _storage.readPhone() ?? "";
 
-    _userApi.secureGet().then((value) {
+    await _userApi.secureGet().then((value) {
+      print('Yoyooooooooooooo');
+      print(value);
       user = UserJson.fromJson(value.data);
       name.text = user.name;
       phone.text = user.phone;
       email.text = user.email;
       Get.find<AccountInfoStorage>().saveName(user.name);
       Get.find<TapHomeViewController>().setUserName(user.username);
-
-      localisation.cities.forEach((element) {
-        if (element.id == user.city.id) {
-          localisation.updateCity(element);
-          update();
-        }
-      });
+      cityDropdownViewController.selectedItem =
+          RefJson(id: user.city.id, name: user.city.name);
+      update();
       //_userApi.id = null;
     });
   }

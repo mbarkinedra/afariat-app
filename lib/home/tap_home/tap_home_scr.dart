@@ -14,13 +14,15 @@ import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:infinite_scroll_pagination/src/ui/default_indicators/first_page_error_indicator.dart';
 import '../../config/Environment.dart';
 import '../../config/app_config.dart';
+import '../../mywidget/infinite_scroll/CustomFirstPageErrorIndicator.dart';
 import 'favorite/parametres_scr.dart';
 import 'tap_home_viewcontroller.dart';
 
 class TapHomeScr extends GetWidget<TapHomeViewController> {
- // GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey();
+  // GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                     children: <Widget>[
                       InkWell(
                         key: controller.intro.keys[0],
-
                         onTap: controller.openDrawer,
                         child: const Icon(
                           Icons.menu,
@@ -145,7 +146,6 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                           )),
                       SizedBox(
                         key: controller.intro.keys[3],
-
                         child: Obx(() {
                           return NotificationMenu(
                             iconProfile: Icons.notifications_active,
@@ -237,6 +237,12 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                           return const SizedBox();
                                         }
                                       },
+                                      firstPageErrorIndicatorBuilder: (_) =>
+                                          CustomFirstPageErrorIndicator(
+                                        onTryAgain: () => controller
+                                            .pagingController
+                                            .refresh(),
+                                      ),
                                     ),
                                   ),
                                 );
@@ -275,7 +281,9 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(
-                            "assets/images/"+appConfig.appName+"/drawer.jpg",
+                            "assets/images/" +
+                                appConfig.appName +
+                                "/drawer.jpg",
                           ),
                           fit: BoxFit.fill)),
                   child: Container(
@@ -387,8 +395,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                         color: colorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
-                    controller
-                        .launchURL(Environment.privacyUrl);
+                    controller.launchURL(Environment.privacyUrl);
                   },
                 ),
                 ListTile(
@@ -402,8 +409,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                         color: colorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
-                    controller.launchURL(
-                        Environment.cguUrl);
+                    controller.launchURL(Environment.cguUrl);
                   },
                 ),
                 SizedBox(

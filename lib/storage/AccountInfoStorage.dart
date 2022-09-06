@@ -81,9 +81,10 @@ class AccountInfoStorage extends GetxController {
     _secureStorage.deleteSecureData(_key_phone);
     _secureStorage.deleteSecureData(_key_user_id);
     _secureStorage.deleteSecureData(_key_name);
-    _secureStorage.deleteSecureData(_key_name);
+    _secureStorage.deleteSecureData(_key_password);
     _secureStorage.deleteSecureData(_key_hashedPassword);
     Get.find<HomeViewController>().updateList();
+    Get.find<HomeViewController>().update();
   }
 
   bool isLoggedIn() {

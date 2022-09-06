@@ -7,6 +7,7 @@ import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../config/app_config.dart';
+import '../../../remote_widget/city_dropdown_src.dart';
 import 'account_view_controller.dart';
 
 class Account extends GetWidget<AccountViewController> {
@@ -79,7 +80,9 @@ class Account extends GetWidget<AccountViewController> {
                       decoration: BoxDecoration(
                           border: Border.all(color: framColor, width: 2),
                           borderRadius: BorderRadius.circular(10)),
-                      child: DropdownButton<RefJson>(
+                      child: CityDropdown(controller.cityDropdownViewController),
+
+                      /*DropdownButton<RefJson>(
                         underline: SizedBox(),
                         hint: Padding(
                           padding: const EdgeInsets.only(left: 8.0, right: 8),
@@ -101,7 +104,7 @@ class Account extends GetWidget<AccountViewController> {
                                 child: Text(value.name),
                               ));
                         }).toList(),
-                      ),
+                      ),*/
                     ),
                     const SizedBox(
                       height: 8,

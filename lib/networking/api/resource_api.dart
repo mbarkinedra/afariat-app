@@ -36,6 +36,7 @@ abstract class ResourceApi extends ApiManager {
 
   //Put User From User
   Future<Response<dynamic>> putResource({dataToPost}) async {
+    print(dataToPost);
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(
         headers: {
@@ -55,6 +56,8 @@ abstract class ResourceApi extends ApiManager {
       data: jsonEncode(dataToPost),
     )
         .then((value) {
+          print(value.statusCode);
+          print(value.data);
       return value;
     }).catchError((error, stackTrace) {
       processServerError(error);

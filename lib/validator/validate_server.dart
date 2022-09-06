@@ -1,3 +1,8 @@
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../storage/AccountInfoStorage.dart';
+
 class ServerValidator {
   Map<String, dynamic> serverErrors;
 
@@ -37,6 +42,9 @@ class ServerValidator {
       case 401:
       case 403:
         serverErrors = value.data;
+        //Force the logout the user to be sure that he will login with the right credentials
+        print('Force the logout');
+        Get.find<AccountInfoStorage>().logout();
         authFailure();
         break;
       case 404:

@@ -8,6 +8,7 @@ class RefListJson extends AbstractJsonResource {
   RefListJson({this.data});
 
   RefListJson.fromJson(Map<String, dynamic> json) {
+    print(json);
     if (json['data'] != null) {
       data = <RefJson>[];
       json['data'].forEach((v) {
@@ -22,6 +23,20 @@ class RefListJson extends AbstractJsonResource {
       data['data'] = this.data.map((v) => v.toJson()).toList();
     }
     return data;
+  }
+
+  bool isEmpty() {
+    if (data == null) {
+      return true;
+    }
+    return data.isEmpty;
+  }
+
+  bool isNotEmpty() {
+    if (data != null) {
+      return data.isNotEmpty;
+    }
+    return false;
   }
 }
 
@@ -42,5 +57,14 @@ class RefJson extends AbstractJsonResource {
     data['id'] = this.id;
     data['name'] = this.name;
     return data;
+  }
+
+  @override
+  String toString() {
+    return name ?? '';
+  }
+
+  bool isEqual(RefJson refJson) {
+    return this.id == refJson.id;
   }
 }
