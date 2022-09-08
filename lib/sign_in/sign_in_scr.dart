@@ -61,21 +61,7 @@ class SignInScr extends GetWidget<SignInViewController> {
                   ),
                 );
               }),
-              SizedBox(
-                height: _size.height * .05,
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ForgotPassword()),
-                  );
-                },
-                child: Text(
-                  "Mot de passe oublié ? ",
-                  style: TextStyle(color: Colors.grey[700]),
-                ),
-              ),
+
               SizedBox(
                 height: _size.height * .05,
               ),
@@ -132,7 +118,25 @@ class SignInScr extends GetWidget<SignInViewController> {
                     ),
                   ),
                 ),
-              )
+              ),
+              SizedBox(
+                height: _size.height * .05,
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ForgotPassword()),
+                  );
+                },
+                child: Text(
+                  "Mot de passe oublié ? ",
+                  style: TextStyle(
+                      color: Colors.grey[700],
+                    fontSize: 16,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

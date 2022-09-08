@@ -12,14 +12,14 @@ class ForgotPassword extends GetWidget<ForgotPasswordViewController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Forgot Password ",
+          "Mot de passe oublié",
         ),
         backgroundColor:framColor,
       ),
       body: Column(
         children: [
           SizedBox(
-            height: 20,
+            height: 40,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -37,7 +37,7 @@ class ForgotPassword extends GetWidget<ForgotPasswordViewController> {
           CustomTextFiled(
             color: framColor,
             width: size.width * .8,
-            hintText: 'Email',
+            hintText: 'Saisissez votre email',
             textEditingController: controller.password,
           ),
           SizedBox(height: 50,),

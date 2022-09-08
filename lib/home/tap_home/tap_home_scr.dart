@@ -328,7 +328,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                         MaterialPageRoute(builder: (context) => FavoriteScr()),
                       );
                     } else {
-                      Get.snackbar("",
+                      Get.snackbar("Connexion requise",
                           "Veuillez vous connecter pour accéder à vos favoris",
                           colorText: Colors.white,
                           backgroundColor: buttonColor);

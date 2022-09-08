@@ -67,7 +67,6 @@ class SignInViewController extends GetxController {
                     Get.snackbar("Erreur", response.message);
                   });
             }).catchError((e) {
-              print(e);
               Get.snackbar("Erreur", "Votre password est incorrect");
             });
           },

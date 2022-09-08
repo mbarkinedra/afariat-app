@@ -137,8 +137,8 @@ class MyHomeItem extends StatelessWidget {
                                     .addToFavoritesList(adverts.id);
                               }
                             } else {
-                              Get.snackbar("",
-                                  "Veuillez vous connecter pour accéder à vos favoris",
+                              Get.snackbar("Connexion requise",
+                                  "Veuillez vous connecter pour enregistrer cette annonce dans vos favoris",
                                   colorText: Colors.white,
                                   backgroundColor: buttonColor);
                             }

@@ -8,7 +8,6 @@ class RefListJson extends AbstractJsonResource {
   RefListJson({this.data});
 
   RefListJson.fromJson(Map<String, dynamic> json) {
-    print(json);
     if (json['data'] != null) {
       data = <RefJson>[];
       json['data'].forEach((v) {

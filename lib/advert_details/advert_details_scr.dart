@@ -21,7 +21,7 @@ class AdvertDetailsScr extends GetView<AdvertDetailsViewController> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
-          color: Colors.white, //change your color here
+          color: Colors.white,
         ),
         backgroundColor: framColor,
         title: const Text(
@@ -118,10 +118,11 @@ class AdvertDetailsScr extends GetView<AdvertDetailsViewController> {
                                     // controller.update();
                                   }
                                 } else {
-                                  Get.snackbar("",
-                                      "Veuillez vous connecter pour accéder à vos favoris",
-                                      colorText: Colors.white,
-                                      backgroundColor: buttonColor);
+                                  Get.snackbar(
+                                    "Connexion requise",
+                                    "Veuillez vous connecter pour enregistrer cette annonce dans vos favoris",
+                                    colorText: Colors.black,
+                                  );
                                 }
                               },
                               child: Icon(
@@ -326,8 +327,15 @@ class AdvertDetailsScr extends GetView<AdvertDetailsViewController> {
                               CustomButtonIcon(
                                 btcolor: buttonColor,
                                 function: () {
-                                  logic.makePhoneCall(
-                                      logic.advert.mobilePhoneNumber);
+                                  if (!Get.find<AccountInfoStorage>()
+                                      .isLoggedIn()) {
+                                    Get.snackbar("Connexion requise",
+                                        "Veuillez vous connecter pour pouvoir appeler l'annonceur",
+                                        colorText: Colors.black);
+                                  } else {
+                                    logic.makePhoneCall(
+                                        logic.advert.mobilePhoneNumber);
+                                  }
                                 },
                                 height: 40,
                                 width: _size.width * .2,
@@ -337,8 +345,15 @@ class AdvertDetailsScr extends GetView<AdvertDetailsViewController> {
                               CustomButtonIcon(
                                 btcolor: buttonColor,
                                 function: () {
-                                  logic.makeSms(
-                                      logic.advert.mobilePhoneNumber);
+                                  if (!Get.find<AccountInfoStorage>()
+                                      .isLoggedIn()) {
+                                    Get.snackbar("Connexion requise",
+                                        "Veuillez vous connecter pour envoyer un SMS à l'annonceur",
+                                        colorText: Colors.black);
+                                  } else {
+                                    logic.makeSms(
+                                        logic.advert.mobilePhoneNumber);
+                                  }
                                 },
                                 height: 40,
                                 width: _size.width * .2,
@@ -347,10 +362,16 @@ class AdvertDetailsScr extends GetView<AdvertDetailsViewController> {
                             CustomButtonIcon(
                               btcolor: buttonColor,
                               function: () async {
+                                if (!Get.find<AccountInfoStorage>()
+                                    .isLoggedIn()) {
+                                  Get.snackbar("Connexion requise",
+                                      "Veuillez vous connecter pour envoyer des messages",
+                                      colorText: Colors.black);
+                                }
+
                                 if (controller.advert.isRegistredUser &&
                                     Get.find<AccountInfoStorage>()
-                                            .readUserId() !=
-                                        null) {
+                                        .isLoggedIn()) {
                                   controller.showDialogue(context);
                                 }
                               },

@@ -41,7 +41,6 @@ abstract class ApiManager {
       case 403:
         //problem happens with auth: bad app key for 403 or 401 for bad credentials
         //Force the logout the user to be sure that he will login with the right credentials
-        print('Force the logout');
         Get.find<AccountInfoStorage>().logout();
         Get.snackbar(
           'Important',
@@ -216,7 +215,6 @@ abstract class ApiManager {
       validateResponseStatusCode(value);
       return value;
     }).catchError((error, stackTrace) {
-      print(error);
       processServerError(error);
     });
   }
@@ -245,7 +243,6 @@ abstract class ApiManager {
         validateResponseStatusCode(value);
         return value;
       }).catchError((error, stackTrace) {
-        print(error);
         if (error.type == DioErrorType.connectTimeout) {
           a.Get.snackbar("erreur", "Délai de connection dépassé");
           // throw Exception("Connection  Timeout Exception");

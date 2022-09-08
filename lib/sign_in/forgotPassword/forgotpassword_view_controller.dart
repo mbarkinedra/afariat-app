@@ -12,6 +12,10 @@ class ForgotPasswordViewController extends GetxController {
   ParameterBag userData = ParameterBag();
 
   forgotPassword() {
+    if (password.text.isEmpty) {
+      Get.snackbar("Erreur", 'Veuillez saisir votre adresse email');
+      return;
+    }
     userData.data["username"] = password.text;
     _forgotPasswordApi.post(userData.data).then((value) {
       if (value == null) {
@@ -23,8 +27,7 @@ class ForgotPasswordViewController extends GetxController {
         failure: () {},
         value: value,
       );
-      Get.snackbar("message", value.data["message"]);
-    }).catchError((error) {
-    });
+      Get.snackbar("Message", value.data["message"]);
+    }).catchError((error) {});
   }
 }

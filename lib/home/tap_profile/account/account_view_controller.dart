@@ -71,7 +71,6 @@ class AccountViewController extends GetxController {
             });
       },
     ).catchError((e) {
-      print(e);
       Get.snackbar(
         'Oups !',
         'Une erreur s\'est produite. Veuillez relancer l\'appli ou la mettre à jour.',

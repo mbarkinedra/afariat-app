@@ -43,7 +43,6 @@ class ServerValidator {
       case 403:
         serverErrors = value.data;
         //Force the logout the user to be sure that he will login with the right credentials
-        print('Force the logout');
         Get.find<AccountInfoStorage>().logout();
         authFailure();
         break;

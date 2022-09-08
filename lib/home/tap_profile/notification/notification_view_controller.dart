@@ -43,7 +43,7 @@ class NotificationViewController extends GetxController {
     if (Get.find<NetWorkController>().connectionStatus.value) {
       getAllNotification();
     } else {
-      print('Connectivity problem');
+      print('Problème de connexion');
       //do nothing, user is not logged in
     }
     scrollController.addListener(() {
@@ -64,8 +64,6 @@ class NotificationViewController extends GetxController {
       return; // user should be logged in to call the WS.
     }
     _notificationApi.secureGet().then((value) {
-      print(value);
-      print(value.statusCode);
 
       if (value == null) {
         return null;
