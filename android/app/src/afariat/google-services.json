@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "346620136541",
+    "project_id": "afariat",
+    "storage_bucket": "afariat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346620136541:android:9cdedac924bad88a37d1b4",
+        "android_client_info": {
+          "package_name": "com.skonsoft.afariat.tn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "346620136541-0od1oesom9uqeidjlmr97mjs9evan0r0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDw-mpg1Ms_2JizQCtHEKcomS1--KilJSI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "346620136541-0od1oesom9uqeidjlmr97mjs9evan0r0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

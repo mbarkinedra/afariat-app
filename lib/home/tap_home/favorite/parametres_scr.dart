@@ -4,6 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../mywidget/menu_entry.dart';
+import '../../../settings/notification_settings_src.dart';
+
 class ParametreScr extends GetView<ParametreViewContoller> {
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,23 @@ class ParametreScr extends GetView<ParametreViewContoller> {
               Navigator.of(context).pop();
             }),
       ),
-      body: Row(
+      body: SingleChildScrollView(
+        child: Column(children: [
+          SizedBox(height: 40),
+          MenuEntry(
+            icon: Icons.notifications,
+            text: "Préférence de notifications",
+            press: () => {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (
+                context,
+              ) =>
+                      NotificationSettingsView())),
+            },
+          ),
+        ]),
+      ),
+      /* body: Row(
         children: [
           Flexible(
             flex: 1,
@@ -49,7 +68,7 @@ class ParametreScr extends GetView<ParametreViewContoller> {
             }),
           ),
         ],
-      ),
+      ),*/
     );
   }
 }

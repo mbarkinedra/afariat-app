@@ -1,4 +1,4 @@
-package com.skonsoft.afariat
+package com.skonsoft
 
 import io.flutter.embedding.android.FlutterActivity
 

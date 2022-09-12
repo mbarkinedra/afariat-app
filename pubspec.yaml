@@ -57,8 +57,9 @@ dependencies:
   flutter_dotenv: ^5.0.2
   flutter_launcher_icons: ^0.10.0
   dropdown_search: ^3.0.1
-  #firebase_core: ^1.4.0
-  #firebase_messaging: ^10.0.4
+  firebase_core: ^1.22.0
+  firebase_messaging: ^13.0.1
+  device_info_plus: ^4.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

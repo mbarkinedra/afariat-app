@@ -34,7 +34,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
     return Scaffold(
       key: controller.scaffoldKey,
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60.0), // here the desired height
+          preferredSize: const Size.fromHeight(60.0), // here the desired height
           child: AppBar(
               automaticallyImplyLeading: false,
               backgroundColor: Colors.white,
