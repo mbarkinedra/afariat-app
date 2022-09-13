@@ -11,7 +11,7 @@ abstract class ResourceApi extends ApiManager {
   String apiDeleteUrl(String id);
 
   ///Returns the API Put URL of given resource {dataToPost}
-  String apiPutUrl({dataToPost});
+  String apiPutUrl({Map<String, String>queryParams});
 
   ///Returns the API POST URL of given resource {dataToPost}
   String apiPostUrl({dataToPost});
@@ -35,7 +35,7 @@ abstract class ResourceApi extends ApiManager {
   }
 
   //Put User From User
-  Future<Response<dynamic>> putResource({dataToPost}) async {
+  Future<Response<dynamic>> putResource({dataToPost, Map<String, String>queryParams}) async {
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(
         headers: {
@@ -50,11 +50,12 @@ abstract class ResourceApi extends ApiManager {
 
     return dioSingleton.dio
         .put(
-      apiPutUrl(),
+      apiPutUrl(queryParams: queryParams),
       options: options,
       data: jsonEncode(dataToPost),
     )
         .then((value) {
+      validateResponseStatusCode(value);
       return value;
     }).catchError((error, stackTrace) {
       processServerError(error);
@@ -77,6 +78,7 @@ abstract class ResourceApi extends ApiManager {
       data: jsonEncode(dataToPost),
     )
         .then((value) {
+      validateResponseStatusCode(value);
       return value;
     }).catchError((error, stackTrace) {
       processServerError(error);

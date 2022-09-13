@@ -76,4 +76,6 @@ class SettingsApp {
 
   static String get deleteFavoriteByAdvert =>
       baseApiUrl + '/favorites-by-advert';
+
+  static String get preference => baseApiUrl + '/preference';
 }

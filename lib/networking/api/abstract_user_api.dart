@@ -28,9 +28,6 @@ class SignInApi extends AbstractUserAPi {
     DeviceInfoModel info = await DeviceInfo.commonInfo();
     String jsonInfo = info.toJson();
     String base64Info = base64.encode(utf8.encode(jsonInfo));
-    print('Device Info to SEND: ');
-    print(jsonInfo);
-    print(base64Info);
 
     return dioSingleton.dio
         .get(

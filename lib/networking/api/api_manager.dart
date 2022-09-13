@@ -35,7 +35,12 @@ abstract class ApiManager {
         //success
         break;
       case 400:
-        // server form errors
+        Get.snackbar(
+          'Erreur serveur 400',
+          'Veuillez mettre à jour l\'application',
+          /*colorText: Colors.white,
+          backgroundColor: Colors.red,*/
+        );
         break;
       case 401:
       case 403:

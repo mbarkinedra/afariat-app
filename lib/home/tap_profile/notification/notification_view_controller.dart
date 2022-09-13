@@ -20,7 +20,7 @@ class NotificationViewController extends GetxController {
       notifications.remove(index);
       update();
     });
-    Get.snackbar("", "Notification supprimée avec succès");
+    Get.snackbar("Succès", "Notification supprimée avec succès");
   }
 
   /// Function for refrech a new notifications
