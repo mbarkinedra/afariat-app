@@ -22,7 +22,6 @@ class DeviceInfo {
         if (Platform.isAndroid) {
           deviceData =
               _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
-          print(deviceData);
           info = DeviceInfoModel.name(deviceData['id'], deviceData['device'],
               deviceData['board'], 'Android', deviceData['model'], null);
         } else if (Platform.isIOS) {

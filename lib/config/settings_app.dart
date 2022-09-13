@@ -6,6 +6,7 @@ class SettingsApp {
   static String get baseApiUrl => baseUrl + '/api/v1';
 
   static String get loginUrl => baseApiUrl + '/users/login';
+  static String get logoutUrl => baseApiUrl + '/users/logout';
 
   static String get registerUrl => baseApiUrl + '/users';
 

@@ -19,6 +19,12 @@ abstract class ApiManager {
   AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
   ServerValidator validator = ServerValidator();
 
+  Map<String, dynamic> defaultHeaders = {
+    "Accept": "application/json",
+    'apikey': Environment.apikey,
+    'Content-Type': 'application/json',
+  };
+
   /// Returns the API URL of current API ressource
   String apiUrl();
 
@@ -141,11 +147,7 @@ abstract class ApiManager {
       apiUrl(),
       data: jsonEncode(dataToPost),
       options: Options(
-          headers: {
-            "Accept": "application/json",
-            'apikey': Environment.apikey,
-            'Content-Type': 'application/json',
-          },
+          headers: defaultHeaders,
           followRedirects: false,
           validateStatus: (status) {
             return status < 405;
@@ -171,10 +173,8 @@ abstract class ApiManager {
         data: jsonEncode(dataToPost),
         options: Options(
             headers: {
-              "Accept": "application/json",
-              'apikey': Environment.apikey,
-              'Content-Type': 'application/json',
-              'X-WSSE': wsse,
+              ...defaultHeaders,
+              ...{'X-WSSE': wsse},
             },
             followRedirects: false,
             validateStatus: (status) {
@@ -198,17 +198,15 @@ abstract class ApiManager {
 
   /// Get Data  User From Server
   Future<Response<dynamic>> secureGet({Map<String, dynamic> filters}) async {
-    String xwsse = Wsse.generateWsseFromStorage();
+    String wsse = Wsse.generateWsseFromStorage();
     return dioSingleton.dio
         .get(
       apiUrl(),
       queryParameters: filters,
       options: Options(
           headers: {
-            "Accept": "application/json",
-            'apikey': Environment.apikey,
-            'Content-Type': 'application/json',
-            'X-WSSE': xwsse,
+            ...defaultHeaders,
+            ...{'X-WSSE': wsse},
           },
           followRedirects: false,
           validateStatus: (status) {
@@ -234,10 +232,8 @@ abstract class ApiManager {
         data: jsonEncode(dataToPost),
         options: Options(
             headers: {
-              "Accept": "application/json",
-              'apikey': Environment.apikey,
-              'Content-Type': 'application/json',
-              'X-WSSE': wsse,
+              ...defaultHeaders,
+              ...{'X-WSSE': wsse},
             },
             followRedirects: false,
             validateStatus: (status) {
@@ -267,10 +263,8 @@ abstract class ApiManager {
       apiUrl(),
       options: Options(
           headers: {
-            "Accept": "application/json",
-            'apikey': Environment.apikey,
-            'Content-Type': 'application/json',
-            'X-WSSE': wsse,
+            ...defaultHeaders,
+            ...{'X-WSSE': wsse},
           },
           followRedirects: false,
           validateStatus: (status) {
@@ -290,10 +284,8 @@ abstract class ApiManager {
     //generer le wsse
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(headers: {
-      "Accept": "application/json",
-      'apikey': Environment.apikey,
-      'Content-Type': 'application/json',
-      'X-WSSE': wsse,
+      ...defaultHeaders,
+      ...{'X-WSSE': wsse},
     });
     return dioSingleton.dio.delete(apiUrl(), options: options).then((value) {
       validateResponseStatusCode(value);

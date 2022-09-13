@@ -1,7 +1,9 @@
 import 'package:afariat/home/home_view_controller.dart';
 import 'package:afariat/storage/storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+import '../networking/api/abstract_user_api.dart';
 import '../networking/json/preference_json.dart';
 
 class AccountInfoStorage extends GetxController {
@@ -88,6 +90,17 @@ class AccountInfoStorage extends GetxController {
   }
 
   logout() {
+    //try to logout from server
+    LogoutApi _logoutApi = LogoutApi();
+    try {
+      _logoutApi.logout();
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+
+    //Now remove everything in the local storage
     _secureStorage.deleteSecureData(_key_email);
     _secureStorage.deleteSecureData(_key_phone);
     _secureStorage.deleteSecureData(_key_user_id);
