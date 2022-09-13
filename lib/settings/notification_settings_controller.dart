@@ -32,6 +32,8 @@ class NotificationSettingsViewController extends GetxController {
       if (response != null) {
         preference = PreferenceJson.fromJson(response.data);
         await Get.find<AccountInfoStorage>().savePreference(preference);
+        initLights();
+        update();
       }
     } catch (e) {
       if (kDebugMode) {
@@ -39,13 +41,13 @@ class NotificationSettingsViewController extends GetxController {
       }
     }
     loading = false;
-    initLights();
-    update();
-
     return this;
   }
 
   initLights() {
+    if(preference == null){
+      return ;
+    }
     optinLight.value = preference.optin;
     messageLight.value = preference.notifyOnMessage;
     statisticsLight.value = preference.notifyForStatistics;
@@ -57,6 +59,10 @@ class NotificationSettingsViewController extends GetxController {
   }
 
   updateData(int id, bool value) async {
+    if(!Get.find<AccountInfoStorage>().isLoggedIn()){
+      Get.snackbar("Erreur", "Veuillez vous connecter pour mette à joru vos notifications");
+      return ;
+    }
     var response;
     switch (id) {
       case 1:
