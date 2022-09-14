@@ -22,6 +22,9 @@ import 'package:afariat/sign_in/sign_in_viewcontroller.dart';
 import 'package:afariat/sign_up/sign_up_viewcontroller.dart';
 import 'package:get/get.dart';
 
+import '../remote_widget/city_dropdown_viewcontroller.dart';
+import '../remote_widget/ref_dropdown_viewcontroller.dart';
+
 class AllBindings extends Bindings {
   @override
   void dependencies() async {
@@ -51,6 +54,7 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => SettingViewController());
     Get.lazyPut(() => NotificationViewController(), fenix: true);
     Get.lazyPut(() => ChatUserViewController());
+    Get.lazyPut(() => CityDropdownViewController());
     Get.lazyPut(() => TapChatViewController());
   }
 }

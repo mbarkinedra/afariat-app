@@ -4,13 +4,13 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
-/// Default [FirebaseOptions] for use with your firebase apps.
+/// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:
 /// ```dart
 /// import 'firebase_options_lecoinoccasion.dart';
 /// // ...
-/// await firebase.initializeApp(
+/// await Firebase.initializeApp(
 ///   options: DefaultFirebaseOptions.currentPlatform,
 /// );
 /// ```
@@ -47,30 +47,30 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCI7Z-Llt6OpiuySUeNi9ce_tvhN8_GLz8',
-    appId: '1:902171315942:web:71ea3b1b4ee85f66fc3527',
-    messagingSenderId: '902171315942',
-    projectId: 'lecoinoccasion',
-    authDomain: 'lecoinoccasion.firebaseapp.com',
-    storageBucket: 'lecoinoccasion.appspot.com',
-    measurementId: 'G-QZR8KTP1BR',
+    apiKey: 'AIzaSyDKEny9wIvhrqOUn37NjLOxgFp2tOCBopM',
+    appId: '1:37182458127:web:9227e02d06b7b4365cd67a',
+    messagingSenderId: '37182458127',
+    projectId: 'lecoinoccasion-3d60e',
+    authDomain: 'lecoinoccasion-3d60e.firebaseapp.com',
+    storageBucket: 'lecoinoccasion-3d60e.appspot.com',
+    measurementId: 'G-XP3597ET4T',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBuBn34kCSbCXHmzH_JDDMZzig5d1DUk4g',
-    appId: '1:902171315942:android:7adf69c4d5ff4f42fc3527',
-    messagingSenderId: '902171315942',
-    projectId: 'lecoinoccasion',
-    storageBucket: 'lecoinoccasion.appspot.com',
+    apiKey: 'AIzaSyAZ_lotjvBEBkfLKEkIGUN6ApDrmG7WHC8',
+    appId: '1:37182458127:android:ff9b239ab673fac45cd67a',
+    messagingSenderId: '37182458127',
+    projectId: 'lecoinoccasion-3d60e',
+    storageBucket: 'lecoinoccasion-3d60e.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyChFW9mCg1M71NgyxxYAdtFionWv2HsquE',
-    appId: '1:902171315942:ios:bd6faf4ef1a06c36fc3527',
-    messagingSenderId: '902171315942',
-    projectId: 'lecoinoccasion',
-    storageBucket: 'lecoinoccasion.appspot.com',
-    iosClientId: '902171315942-g7c4nah1p67gsg0losh4fc7skc841620.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDF1x9j6qsKO5kQQyF1_ZW_rYAqe5jRGQc',
+    appId: '1:37182458127:ios:2c4ff32e2612130e5cd67a',
+    messagingSenderId: '37182458127',
+    projectId: 'lecoinoccasion-3d60e',
+    storageBucket: 'lecoinoccasion-3d60e.appspot.com',
+    iosClientId: '37182458127-s0t5ce6itskijhdtrgggjnn5m78mts9f.apps.googleusercontent.com',
     iosBundleId: 'com.skonsoft.lecoinoccasion.fr',
   );
 }

@@ -5,12 +5,14 @@ import '../main_common.dart';
 import 'package:flutter/material.dart';
 
 import 'firebase_options_afariat.dart';
+import 'networking/firebase/push_notification/Messaging.dart';
 
 void main() async {
   const envFile='.env.afariat.com';
-
   await mainCommon(envFile);
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform);
+  Messaging.registerNotification();
 
   var configuredApp = const AppConfig(
     appName: "afariat.com",

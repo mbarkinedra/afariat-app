@@ -2,6 +2,7 @@ import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/api/notification_api.dart';
 import 'package:afariat/networking/json/notification_json.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
 
@@ -43,7 +44,9 @@ class NotificationViewController extends GetxController {
     if (Get.find<NetWorkController>().connectionStatus.value) {
       getAllNotification();
     } else {
-      print('Problème de connexion');
+      if (kDebugMode) {
+        print('Problème de connexion');
+      }
       //do nothing, user is not logged in
     }
     scrollController.addListener(() {

@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "902171315942",
-    "project_id": "lecoinoccasion",
-    "storage_bucket": "lecoinoccasion.appspot.com"
+    "project_number": "37182458127",
+    "project_id": "lecoinoccasion-3d60e",
+    "storage_bucket": "lecoinoccasion-3d60e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:902171315942:android:7adf69c4d5ff4f42fc3527",
+        "mobilesdk_app_id": "1:37182458127:android:ff9b239ab673fac45cd67a",
         "android_client_info": {
           "package_name": "com.skonsoft.lecoinoccasion.fr"
         }
       },
       "oauth_client": [
         {
-          "client_id": "902171315942-0ku42i8qr2t2da2apcnagfokkpbiba87.apps.googleusercontent.com",
+          "client_id": "37182458127-bf7f8sku6ekfj3jer5da00v5od2h50sm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBuBn34kCSbCXHmzH_JDDMZzig5d1DUk4g"
+          "current_key": "AIzaSyAZ_lotjvBEBkfLKEkIGUN6ApDrmG7WHC8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "902171315942-0ku42i8qr2t2da2apcnagfokkpbiba87.apps.googleusercontent.com",
+              "client_id": "37182458127-bf7f8sku6ekfj3jer5da00v5od2h50sm.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

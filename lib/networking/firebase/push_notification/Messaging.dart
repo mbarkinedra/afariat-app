@@ -24,12 +24,13 @@ class Messaging {
   static String token;
 
   static void registerNotification() async {
-    if (kDebugMode) {
-      print('start register messages');
-    }
     FirebaseMessaging _messaging = FirebaseMessaging.instance;
-
     if (kDebugMode) {
+      print('start register messages for app: ' +
+          _messaging.app.options.projectId);
+    }
+    if (kDebugMode) {
+      print("APP: " + _messaging.app.toString());
       print(_messaging.app.options);
     }
     _messaging.getToken().then((token) {
@@ -68,20 +69,15 @@ class Messaging {
           print('Notification image URL: ' +
               message.notification.android.imageUrl);
           print('Message ID: ' + message.messageId);
-          print('Message TTL: ' + message.ttl.toString());
-          print('Message Type: ' + message.messageType);
-          print('Message FROM: ' + message.from);
           print('Message DATA: ' + message.data.toString());
         }
 
         //update the notifcation count in profile's notifications
         // show a notification in snackbar
-        Get.snackbar(
-          notification.title,
-          notification.body,
-          colorText: Colors.white,
-          backgroundColor: Colors.cyan.shade700,
-        );
+        Get.snackbar(notification.title, notification.body,
+            colorText: Colors.white,
+            backgroundColor: Colors.teal.shade700,
+            duration: const Duration(seconds: 3));
       });
 
       // For handling notification when the app is in background
@@ -91,16 +87,19 @@ class Messaging {
           title: message.notification?.title,
           body: message.notification?.body,
         );
-
         //open the notification page
         // TODO: insert the notification inside the notification src if offline mode ?
         Get.to(() => NotificationSrc());
       });
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
-      print('User granted provisional permission');
+      if (kDebugMode) {
+        print('User granted provisional permission');
+      }
     } else {
-      print('User declined or has not accepted permission');
+      if (kDebugMode) {
+        print('User declined or has not accepted permission');
+      }
     }
   }
 }
