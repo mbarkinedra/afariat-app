@@ -28,7 +28,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
   Widget build(BuildContext context) {
     var appConfig = AppConfig.of(context);
     Size _size = MediaQuery.of(context).size;
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       controller.startIntro(context);
     });
     return Scaffold(
@@ -38,7 +38,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
           child: AppBar(
               automaticallyImplyLeading: false,
               backgroundColor: Colors.white,
-              title: Container(
+              title: SizedBox(
                 height: 60,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -52,7 +52,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                           color: framColor,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Expanded(
@@ -61,7 +61,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(5)),
                             child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(35),
@@ -84,13 +84,11 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                   keyboardType: TextInputType.text,
                                   onChanged: controller.filterWord,
                                   decoration: InputDecoration(
-                                      prefixIcon: Icon(Icons.search),
+                                      prefixIcon: const Icon(Icons.search),
                                       suffixIcon: logic.searchWord.text
-                                                  .toString()
-                                                  .length >
-                                              0
+                                                  .toString().isNotEmpty
                                           ? IconButton(
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 Icons.clear,
                                               ),
                                               onPressed: () {
@@ -105,7 +103,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                               }),
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       SizedBox(
@@ -123,7 +121,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                             topLeft: Radius.circular(30.0),
                                             topRight: Radius.circular(30.0),
                                           )),
-                                      child: BottomSheetFilter()),
+                                      child: const BottomSheetFilter()),
                                   isDismissible: true,
                                   elevation: 10,
                                   enableDrag: true,
@@ -271,8 +269,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
               ],
             )),
       ),
-      drawer: Container(
-        width: _size.width * .6,
+      drawer: SizedBox(
+        width: _size.width * .7,
         child: Drawer(
           child: SingleChildScrollView(
             child: Column(
@@ -286,7 +284,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                 "/drawer.jpg",
                           ),
                           fit: BoxFit.fill)),
-                  child: Container(
+                  child: SizedBox(
                     width: _size.width * .6,
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -299,7 +297,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                           child: GetBuilder<TapHomeViewController>(
                               builder: (logic) {
                             return Text(logic.name,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold));
                           }),
@@ -336,7 +334,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.settings,
                     color: Colors.grey,
                   ),
@@ -352,12 +350,12 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                     );
                   },
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
                   color: colorText,
                 ),
                 ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.help_center,
                     color: colorText,
                   ),
@@ -371,7 +369,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.checklist,
                     color: colorText,
                   ),
@@ -385,7 +383,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.https,
                     color: colorText,
                   ),
@@ -399,7 +397,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.gavel,
                     color: colorText,
                   ),
@@ -412,7 +410,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                     controller.launchURL(Environment.cguUrl);
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
               ],

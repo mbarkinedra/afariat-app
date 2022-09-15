@@ -9,7 +9,7 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: framColor,
-        title: Text(
+        title: const Text(
           "Notifications",
           style: TextStyle(color: Colors.white),
         ),
@@ -18,14 +18,12 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
         return RefreshIndicator(
           onRefresh: controller.onRefreshNotification,
           child: logic.notifications.isEmpty
-              ? Container(
-                  child: Center(
-                    child: Text(
-                      " Pas des notifications",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                )
+              ? const Center(
+                child: Text(
+                  " Pas des notifications",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              )
               : ListView.builder(
                   controller: controller.scrollController,
                   itemCount: logic.notifications.length + 1,
@@ -34,11 +32,11 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
 
                     if (logic.notifications.length - 1 < pos) {
                       return controller.loadMoreData
-                          ? Container(
+                          ? const SizedBox(
                               height: 50,
                               width: 50,
                               child: Center(child: CircularProgressIndicator()))
-                          : SizedBox();
+                          : const SizedBox();
                     } else {
                       final item = logic.notifications[pos];
                       return GestureDetector(
@@ -48,7 +46,7 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
                         child: Dismissible(
                           background: Container(
                             color: Colors.red,
-                            child: Icon(
+                            child: const Icon(
                               Icons.delete,
                               size: 35,
                               color: Colors.white,
@@ -91,16 +89,45 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
                                         ),
                                       ],
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        logic.notifications[pos].message,
-                                        style: TextStyle(
-                                            fontWeight:
-                                                logic.notifications[pos].read
-                                                    ? FontWeight.normal
-                                                    : FontWeight.bold),
-                                      ),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                            flex: 1,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                logic
+                                                    .notifications[pos].title,
+                                                style: TextStyle(
+                                                    fontWeight: logic
+                                                            .notifications[pos]
+                                                            .read
+                                                        ? FontWeight.normal
+                                                        : FontWeight.bold),
+                                              ),
+                                            )),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                            flex: 1,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                logic
+                                                    .notifications[pos].message,
+                                                style: TextStyle(
+                                                    fontWeight: logic
+                                                            .notifications[pos]
+                                                            .read
+                                                        ? FontWeight.normal
+                                                        : FontWeight.bold),
+                                              ),
+                                            )),
+                                      ],
                                     ),
                                   ],
                                 ),
