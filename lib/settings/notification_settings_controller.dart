@@ -15,8 +15,8 @@ class NotificationSettingsViewController extends GetxController {
   RxBool messageLight = false.obs;
   RxBool statisticsLight = false.obs;
   RxBool advertStatusLight = false.obs;
+  RxBool alertLight = false.obs;
   RxBool canalSmsLight = false.obs;
-  RxBool canalPhoneLight = false.obs;
   RxBool canalEmailLight = false.obs;
   RxBool canalAppLight = false.obs;
 
@@ -52,8 +52,8 @@ class NotificationSettingsViewController extends GetxController {
     messageLight.value = preference.notifyOnMessage;
     statisticsLight.value = preference.notifyForStatistics;
     advertStatusLight.value = preference.notifyForAdvertStatusChange;
+    alertLight.value = preference.notifyForAlerts;
     canalSmsLight.value = preference.canalSms;
-    canalPhoneLight.value = preference.canalPhone;
     canalEmailLight.value = preference.canalEmail;
     canalAppLight.value = preference.canalApp;
   }
@@ -81,8 +81,8 @@ class NotificationSettingsViewController extends GetxController {
       case 5:
         canalSmsLight.value = preference.canalSms = value;
         break;
-      case 6:
-        canalPhoneLight.value = preference.canalPhone = value;
+      case 10:
+        alertLight.value = preference.notifyForAlerts = value;
         break;
       case 7:
         canalEmailLight.value = preference.canalEmail = value;

@@ -114,7 +114,7 @@ class NotificationSettingsView
                                     ),
                                     ListTile(
                                       title: const Text(
-                                        'Abonnement aux statistiques',
+                                        'Statistiques une fois par semaine',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16,
@@ -146,6 +146,25 @@ class NotificationSettingsView
                                           activeColor: framColor,
                                           onChanged: (bool value) {
                                             controller.updateData(4, value);
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    ListTile(
+                                      title: const Text(
+                                        'Alertes pour les nouvelles annonces',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                            color: Colors.black87),
+                                      ),
+                                      trailing: Obx(
+                                            () => CupertinoSwitch(
+                                          value: controller
+                                              .alertLight.value,
+                                          activeColor: framColor,
+                                          onChanged: (bool value) {
+                                            controller.updateData(10, value);
                                           },
                                         ),
                                       ),
@@ -202,25 +221,6 @@ class NotificationSettingsView
                                           activeColor: framColor,
                                           onChanged: (bool value) {
                                             controller.updateData(5, value);
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                    ListTile(
-                                      title: const Text(
-                                        'Téléphone',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                            color: Colors.black87),
-                                      ),
-                                      trailing: Obx(
-                                        () => CupertinoSwitch(
-                                          value:
-                                              controller.canalPhoneLight.value,
-                                          activeColor: framColor,
-                                          onChanged: (bool value) {
-                                            controller.updateData(6, value);
                                           },
                                         ),
                                       ),

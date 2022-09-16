@@ -6,7 +6,7 @@ class PreferenceJson extends AbstractJsonResource {
   bool notifyForStatistics;
   bool notifyForAdvertStatusChange;
   bool canalSms;
-  bool canalPhone;
+  bool notifyForAlerts;
   bool canalEmail;
   bool canalApp;
 
@@ -16,7 +16,7 @@ class PreferenceJson extends AbstractJsonResource {
       this.notifyForStatistics,
       this.notifyForAdvertStatusChange,
       this.canalSms,
-      this.canalPhone,
+      this.notifyForAlerts,
       this.canalEmail,
       this.canalApp});
 
@@ -26,7 +26,7 @@ class PreferenceJson extends AbstractJsonResource {
     notifyForStatistics = json['notify_for_statistics'];
     notifyForAdvertStatusChange = json['notify_for_advert_status_change'];
     canalSms = json['notify_by_sms'];
-    canalPhone = json['notify_by_phone'];
+    notifyForAlerts = json['notify_for_alerts'];
     canalEmail = json['notify_by_email'];
     canalApp = json['notify_by_app'];
   }
@@ -38,7 +38,7 @@ class PreferenceJson extends AbstractJsonResource {
     data['notify_for_statistics'] = notifyForStatistics;
     data['notify_for_advert_status_change'] = notifyForAdvertStatusChange;
     data['notify_by_sms'] = canalSms;
-    data['notify_by_phone'] = canalPhone;
+    data['notify_for_alerts'] = notifyForAlerts;
     data['notify_by_email'] = canalEmail;
     data['notify_by_app'] = canalApp;
     return data;
