@@ -1,6 +1,10 @@
 import 'package:afariat/home/home_view_controller.dart';
 import 'package:afariat/storage/storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+
+import '../networking/api/abstract_user_api.dart';
+import '../networking/json/preference_json.dart';
 
 class AccountInfoStorage extends GetxController {
   static const _key_email = 'username';
@@ -9,8 +13,9 @@ class AccountInfoStorage extends GetxController {
   static const _key_name = 'name';
   static const _key_password = 'password';
   static const _key_intro = 'intro';
-
   static const _key_phone = 'phone';
+  static const _key_preference = 'preference';
+
   SecureStorage _secureStorage = Get.find<SecureStorage>();
 
   saveEmail(String email) {
@@ -39,6 +44,10 @@ class AccountInfoStorage extends GetxController {
 
   saveIntro(String intro) {
     _secureStorage.writeSecureData(_key_intro, intro);
+  }
+
+  savePreference(PreferenceJson preference) async {
+    await _secureStorage.write(_key_preference, preference);
   }
 
   String readEmail() {
@@ -71,19 +80,36 @@ class AccountInfoStorage extends GetxController {
     return _secureStorage.readSecureData(_key_user_id);
   }
 
+  Future<dynamic> readPreference() async {
+    return await _secureStorage.read(_key_preference);
+  }
+
   /// Removes the hashed password from the secure storage, so user is no longer loggen in.
   removeHashedPassword() {
     return _secureStorage.deleteSecureData(_key_hashedPassword);
   }
 
   logout() {
+    //try to logout from server
+    LogoutApi _logoutApi = LogoutApi();
+    try {
+      _logoutApi.logout();
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+
+    //Now remove everything in the local storage
     _secureStorage.deleteSecureData(_key_email);
     _secureStorage.deleteSecureData(_key_phone);
     _secureStorage.deleteSecureData(_key_user_id);
     _secureStorage.deleteSecureData(_key_name);
-    _secureStorage.deleteSecureData(_key_name);
+    _secureStorage.deleteSecureData(_key_password);
     _secureStorage.deleteSecureData(_key_hashedPassword);
+    _secureStorage.deleteSecureData(_key_preference);
     Get.find<HomeViewController>().updateList();
+    Get.find<HomeViewController>().update();
   }
 
   bool isLoggedIn() {

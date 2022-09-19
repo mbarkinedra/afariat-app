@@ -50,7 +50,7 @@ class ChatUserViewController extends GetxController {
 
 
       ConversationJson conversationJson = ConversationJson.fromJson(data.data);
-      final newItems = conversationJson.eEmbedded.conversation;
+      final newItems = conversationJson.embedded.conversation;
       final isLastPage = newItems.length < _pageSize;
       if (isLastPage) {
         pagingController.appendLastPage(newItems);
@@ -67,7 +67,7 @@ class ChatUserViewController extends GetxController {
     _getMessageApi.id = id;
     await _getMessageApi.secureGet().then((value) {
       ConversationJson conversationJson = ConversationJson.fromJson(value.data);
-      conversations = conversationJson.eEmbedded.conversation;
+      conversations = conversationJson.embedded.conversation;
       messages.clear();
       conversations.forEach((element) {
         final textMessage = types.TextMessage(

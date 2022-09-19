@@ -2,6 +2,7 @@ import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/api/notification_api.dart';
 import 'package:afariat/networking/json/notification_json.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
 
@@ -20,7 +21,7 @@ class NotificationViewController extends GetxController {
       notifications.remove(index);
       update();
     });
-    Get.snackbar("", "Notification supprimée avec succès");
+    Get.snackbar("Succès", "Notification supprimée avec succès");
   }
 
   /// Function for refrech a new notifications
@@ -41,10 +42,11 @@ class NotificationViewController extends GetxController {
   void onInit() {
     super.onInit();
     if (Get.find<NetWorkController>().connectionStatus.value) {
-      if (Get.find<AccountInfoStorage>().readUserId() != null) {
-        getAllNotification();
-      }
+      getAllNotification();
     } else {
+      if (kDebugMode) {
+        print('Problème de connexion');
+      }
       //do nothing, user is not logged in
     }
     scrollController.addListener(() {
@@ -61,11 +63,19 @@ class NotificationViewController extends GetxController {
   }
 
   getAllNotification() {
+    if (!Get.find<AccountInfoStorage>().isLoggedIn()) {
+      return; // user should be logged in to call the WS.
+    }
     _notificationApi.secureGet().then((value) {
+
       if (value == null) {
         return null;
       }
       NotificationJson notificationJson = NotificationJson.fromJson(value.data);
+      if (notificationJson == null || notificationJson.eEmbedded == null) {
+        printError(info: 'Notification list are NULL');
+        return;
+      }
       List<Notification> notification = notificationJson.eEmbedded.notification;
       if (notification.length < 20) {
         loadMoreData = false;
@@ -80,7 +90,7 @@ class NotificationViewController extends GetxController {
     });
 
     _notificationApi.getUnread().then((value) {
-      if(value != null){
+      if (value != null) {
         notifCount.value = value.data["totalUnread"];
       }
     });

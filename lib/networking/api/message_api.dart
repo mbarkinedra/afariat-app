@@ -15,11 +15,11 @@ class MessageApi extends ResourceApi {
   /// Function Post messageReply from screen chat user
   @override
   String apiPostUrl({dataToPost}) {
-    return SettingsApp.Converstionreply + "/" + id;
+    return SettingsApp.conversationReply + "/" + id;
   }
 
   @override
-  String apiPutUrl({dataToPost}) {
+  String apiPutUrl({ Map<String, String>queryParams}) {
     // TODO: implement apiPutUrl
     throw UnimplementedError();
   }

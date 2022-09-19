@@ -36,7 +36,7 @@ class NotificationApi extends ResourceApi {
   }
 
   @override
-  String apiPutUrl({dataToPost}) {
+  String apiPutUrl({ Map<String, String>queryParams}) {
     return SettingsApp.putNotificationUrl + "/" + id;
   }
 

@@ -7,6 +7,8 @@ import 'package:afariat/sign_up/sign_up_succes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../remote_widget/city_dropdown_viewcontroller.dart';
+
 class SignUpViewController extends GetxController {
   final registerFormKey = GlobalKey<FormState>();
   final cityDropDown = Get.find<LocController>();
@@ -14,6 +16,8 @@ class SignUpViewController extends GetxController {
   TextEditingController password = TextEditingController();
   TextEditingController phone = TextEditingController();
   TextEditingController email = TextEditingController();
+  CityDropdownViewController cityDropdownViewController =
+  CityDropdownViewController();
   ValidatorSignUp validator = ValidatorSignUp();
   SignUpApi _signUpApi = SignUpApi();
   bool isVisiblePassword = true;
@@ -46,7 +50,7 @@ class SignUpViewController extends GetxController {
         first: password?.text,
         second: password?.text,
         phone: phone?.text,
-        city: cityDropDown.city.id,
+        city: cityDropdownViewController.selectedItem.id,
         name: name.text,
         email: email.text);
 

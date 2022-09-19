@@ -62,16 +62,19 @@ class _SignUpSuccesState extends State<SignUpSucces> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(10.0),
             child: Text(
               message,
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 16,
+                  letterSpacing: 1.1,
+                  wordSpacing: 2,
+                  height: 1.6,
+                  fontSize: 18,
                   fontWeight: FontWeight.normal),
             ),
           ),
-          Expanded(flex: 1, child: SizedBox()),
+          const Expanded(flex: 1, child: SizedBox()),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(

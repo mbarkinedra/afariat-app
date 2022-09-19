@@ -48,24 +48,19 @@ class UserJson extends AbstractJsonResource {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (form != true) {
       data['id'] = this.id;
-    }
-    data['username'] = this.username;
-    data['email'] = this.email;
-    if (form != true) {
-      data['salt'] = this.salt;
-    }
-    data['name'] = this.name;
-    if (form != true) {
+      data['username'] = this.username;
+      data['email'] = this.email;
       data['slug'] = this.slug;
-    }
-    data['phone'] = this.phone;
-    data['type'] = this.type;
-    if (form != true) {
       data['autopublish'] = this.autopublish;
-
       data['updated_at'] = this.updatedAt;
       data['created_at'] = this.createddAt;
+      data['salt'] = this.salt;
     }
+
+    data['name'] = this.name;
+    data['phone'] = this.phone;
+    data['type'] = this.type;
+
     if (this.city != null) {
       if (form != true) {
         data['city'] = this.city.toJson();

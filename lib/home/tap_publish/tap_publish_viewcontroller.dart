@@ -172,11 +172,11 @@ class TapPublishViewController extends GetxController {
       energies = refListJson;
       if (dataAdverts) {
         if (modifAdsJson.energy != null) {
-          energies.forEach((element) {
+          for (var element in energies) {
             if (element.name == modifAdsJson.energy.value) {
               updateEnergie(element);
             }
-          });
+          }
         }
       }
       update();
@@ -187,10 +187,7 @@ class TapPublishViewController extends GetxController {
   Future getVehicleBrand() async {
     await _vehicleBrandsApi.getList().then((value) {
       vehiculeModel = null;
-
       vehiculeBrands = value.data;
-      vehiculeBrands.forEach((element) {});
-
       update();
     });
   }
@@ -200,11 +197,11 @@ class TapPublishViewController extends GetxController {
     _vehicleModelApi.getList().then((value) {
       vehiculeModels = value.data;
       if (modifAdsJson.vehicleModel != null) {
-        vehiculeModels.forEach((element) {
+        for (var element in vehiculeModels) {
           if (element.name == modifAdsJson.vehicleModel.value) {
             updateModel(element);
           }
-        });
+        }
       }
       getEnergie();
       update();
@@ -585,11 +582,11 @@ class TapPublishViewController extends GetxController {
         }
       }
       if (modifAdsJson.mileage != null) {
-        mileages.forEach((element) {
+        for (var element in mileages) {
           if (element.name == modifAdsJson.mileage.value) {
             updateKilometrage(element);
           }
-        });
+        }
       }
 
       if (modifAdsJson.motoBrand != null) {
@@ -618,9 +615,9 @@ class TapPublishViewController extends GetxController {
       }
 
       editAdsImages.clear();
-      modifAdsJson.photos.forEach((element) {
+      for (var element in modifAdsJson.photos) {
         editAdsImages.add(element.path);
-      });
+      }
     });
   }
 
@@ -647,16 +644,16 @@ class TapPublishViewController extends GetxController {
   /// Method Default Options
   void defaultOptions() {
     if (globalKey.currentState.validate()) {
-      myAdsView["prix"] = prix.text + " " + Environment.currencySymbol;
+      myAdsView["prix"] = prix.text;
       myAds["price"] = prix.text;
       myAdsView["title"] = title.text;
       myAds["title"] = title.text;
       myAdsView["description"] = description.text;
       myAds["description"] = description.text;
 
-      if (surface.text.length > 0) {
+      if (surface.text.isNotEmpty) {
         myAds["area"] = surface.text;
-        myAdsView["Superficie"] = surface.text + " " + "m²";
+        myAdsView["Superficie"] = surface.text;
       }
       myAds["showPhoneNumber"] = lights ? "yes" : "no";
       myAdsView["showPhoneNumber"] = lights ? "Check" : "no";

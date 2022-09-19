@@ -112,16 +112,20 @@ class Embedded {
 
 class Notification {
   int id;
+  String title;
   String message;
+  int type;
   User user;
   String createdAt;
   bool read;
 
-  Notification({this.id, this.message, this.user, this.createdAt, this.read});
+  Notification({this.id, this.title ,this.message, this.type ,this.user, this.createdAt, this.read});
 
   Notification.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    title = json['title'];
     message = json['message'];
+    type = json['type'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
     createdAt = json['created_at'];
     read = json['read'];
@@ -130,7 +134,9 @@ class Notification {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['title'] = this.title;
     data['message'] = this.message;
+    data['type'] = this.type;
     if (this.user != null) {
       data['user'] = this.user.toJson();
     }

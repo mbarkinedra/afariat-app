@@ -13,7 +13,7 @@ class TapChatScr extends GetWidget<TapChatViewController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             "Messagerie",
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
@@ -25,25 +25,28 @@ class TapChatScr extends GetWidget<TapChatViewController> {
             children: [
               Get.find<NetWorkController>().connectionStatus.value == false
                   ? Container(
-                      child: Center(child: CircularProgressIndicator()),
+                      child: const Center(child: CircularProgressIndicator()),
                       height: 50,
                       width: 50,
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               Get.find<NetWorkController>().connectionStatus.value
                   ? Expanded(
                       child:
                           GetBuilder<TapChatViewController>(builder: (logic) {
                         return logic.getData
-                            ? Center(child: const CircularProgressIndicator())
+                            ? const Center(child: CircularProgressIndicator())
                             : RefreshIndicator(
                                 onRefresh: controller.onRefreshAds,
                                 child: logic.conversations.isEmpty
-                                    ? Center(
+                                    ? const Center(
                                         child: Text(
-                                          "Aucune conversations trouvé",
+                                          "Aucun message",
                                           style: TextStyle(
-                                              fontWeight: FontWeight.bold),
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black38,
+                                            fontSize: 22
+                                          ),
                                         ),
                                       )
                                     : ListView.builder(
@@ -55,7 +58,7 @@ class TapChatScr extends GetWidget<TapChatViewController> {
                                           return Dismissible(
                                             background: Container(
                                               color: Colors.red,
-                                              child: Icon(
+                                              child: const Icon(
                                                 Icons.delete,
                                                 size: 35,
                                                 color: Colors.white,

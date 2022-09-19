@@ -4,18 +4,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../mywidget/menu_entry.dart';
+import '../../../settings/notification_settings_src.dart';
+import '../../../storage/AccountInfoStorage.dart';
+
 class ParametreScr extends GetView<ParametreViewContoller> {
+  const ParametreScr({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           " Paramètres",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: framColor,
         leading: IconButton(
-            icon: Icon(
+            icon: const Icon(
               //
               Icons.arrow_back_ios,
               color: Colors.white,
@@ -24,31 +30,30 @@ class ParametreScr extends GetView<ParametreViewContoller> {
               Navigator.of(context).pop();
             }),
       ),
-      body: Row(
-        children: [
-          Flexible(
-            flex: 1,
-            child: GetBuilder<ParametreViewContoller>(builder: (logic) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                  title: const Text(
-                    'Activer les notifications',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: ColorGrey),
-                  ),
-                  trailing: CupertinoSwitch(
-                    value: logic.lights,
-                    activeColor: framColor,
-                    onChanged: logic.updateLight,
-                  ),
-                  onTap: () {
-                    logic.lights = !logic.lights;
-                  },
-                ),
-              );
-            }),
+      body: SingleChildScrollView(
+        child: Column(children: [
+          const SizedBox(height: 40),
+          MenuEntry(
+            icon: Icons.notifications,
+            text: "Préférence des notifications",
+            press: () => {
+              if (!Get.find<AccountInfoStorage>().isLoggedIn())
+                {
+                  Get.snackbar("Connexion requise",
+                      "Veuillez vous connecter pour accéder à vos préférences",
+                      colorText: Colors.black)
+                }
+              else
+                {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (
+                    context,
+                  ) =>
+                          const NotificationSettingsView())),
+                }
+            },
           ),
-        ],
+        ]),
       ),
     );
   }

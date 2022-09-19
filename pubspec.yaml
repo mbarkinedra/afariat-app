@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+7
+version: 1.0.0+14
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -43,7 +43,7 @@ dependencies:
   email_launcher: ^1.1.1
   image_picker: ^0.8.4+10
   flutter_chat_bubble: ^2.0.0
-  infinite_scroll_pagination: ^3.1.0
+  infinite_scroll_pagination: '<3.2.0' #The 3.2.0 version is a NULL safety not compatible here
   convex_bottom_bar: ^3.0.0
   photo_view: ^0.13.0
   flutter_chat_ui: ^1.5.5
@@ -55,17 +55,19 @@ dependencies:
   connectivity_plus: ^2.2.1
   flutter_intro: ^2.3.1
   flutter_dotenv: ^5.0.2
-  #firebase_core: ^1.4.0
-  #firebase_messaging: ^10.0.4
+  flutter_launcher_icons: ^0.10.0
+  dropdown_search: ^3.0.1
+  firebase_core: ^1.22.0
+  firebase_messaging: ^13.0.1
+  device_info_plus: ^4.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.9.2
-flutter_icons:
-  image_path: "assets/images/Splash_5.png"
+#flutter_icons:
+#  image_path: "assets/images/Splash_5.png"
   #image_path_android: "assets/images/Splash_2.png"
-  android: true
-  ios: true
+#  android: true
+#  ios: true
 
 
   # For information on the generic Dart part of this file, see the
@@ -81,21 +83,16 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/placeholder.png
-    - assets/images/Splash_1.png
-    - assets/images/Splash_2.png
-    - assets/images/Splash_3.png
-    - assets/images/Splash_5.png
-    - assets/images/Splash_6.png
-    - assets/images/Splash_8.png
-    - assets/images/Splash_9.png
-    - assets/images/Splash_10.png
-    - assets/images/Drawer.png
-    - assets/images/no-image.jpg
-    - assets/images/NouveauLogoAfariat.png
-    - assets/images/NouveauSplash.png
-    - assets/images/dawerAfariat.jpg
-    - .env
+    - assets/images/common/placeholder.png
+    - assets/images/common/no-image.jpg
+    - assets/images/afariat.com/drawer.jpg
+    - assets/images/afariat.com/logo.png
+    - assets/images/afariat.com/splash.png
+    - assets/images/lecoinoccasion.fr/splash.png
+    - assets/images/lecoinoccasion.fr/logo.png
+    - assets/images/lecoinoccasion.fr/drawer.jpg
+    - .env.afariat.com
+    - .env.lecoinoccasion.fr
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

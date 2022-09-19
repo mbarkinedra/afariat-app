@@ -55,7 +55,7 @@ class MyHomeItem extends StatelessWidget {
                         adverts.photo,
                         fit: BoxFit.fill,
                       )
-                    : Image.asset("assets/images/no-image.jpg"),
+                    : Image.asset("assets/images/common/no-image.jpg"),
               ),
             ),
             Expanded(
@@ -137,8 +137,8 @@ class MyHomeItem extends StatelessWidget {
                                     .addToFavoritesList(adverts.id);
                               }
                             } else {
-                              Get.snackbar("",
-                                  "Veuillez vous connecter pour accéder à vos favoris",
+                              Get.snackbar("Connexion requise",
+                                  "Veuillez vous connecter pour enregistrer cette annonce dans vos favoris",
                                   colorText: Colors.white,
                                   backgroundColor: buttonColor);
                             }

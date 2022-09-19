@@ -23,6 +23,20 @@ class RefListJson extends AbstractJsonResource {
     }
     return data;
   }
+
+  bool isEmpty() {
+    if (data == null) {
+      return true;
+    }
+    return data.isEmpty;
+  }
+
+  bool isNotEmpty() {
+    if (data != null) {
+      return data.isNotEmpty;
+    }
+    return false;
+  }
 }
 
 /// Used to model a signle refrential json object. E.g: City, Region, Price,...
@@ -42,5 +56,14 @@ class RefJson extends AbstractJsonResource {
     data['id'] = this.id;
     data['name'] = this.name;
     return data;
+  }
+
+  @override
+  String toString() {
+    return name ?? '';
+  }
+
+  bool isEqual(RefJson refJson) {
+    return this.id == refJson.id;
   }
 }

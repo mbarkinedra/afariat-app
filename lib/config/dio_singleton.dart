@@ -1,6 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:afariat/config/settings_app.dart';
-
 import 'Environment.dart';
 
 class DioSingleton {

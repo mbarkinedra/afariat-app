@@ -11,11 +11,19 @@ import 'package:get/get.dart' as a;
 import 'package:get/get_core/src/get_main.dart';
 import '../../config/Environment.dart';
 import '../../storage/AccountInfoStorage.dart';
+import '../../validator/validate_server.dart';
 
 abstract class ApiManager {
   final DioSingleton dioSingleton = DioSingleton();
   final storage = a.Get.find<SecureStorage>();
   AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
+  ServerValidator validator = ServerValidator();
+
+  Map<String, dynamic> defaultHeaders = {
+    "Accept": "application/json",
+    'apikey': Environment.apikey,
+    'Content-Type': 'application/json',
+  };
 
   /// Returns the API URL of current API ressource
   String apiUrl();
@@ -24,6 +32,40 @@ abstract class ApiManager {
   NetWorkController _netWorkController = a.Get.find<NetWorkController>();
 
   AbstractJsonResource fromJson(data);
+
+  validateResponseStatusCode(Response response) {
+    switch (response.statusCode) {
+      case 200:
+      case 201:
+      case 204:
+        //success
+        break;
+      case 400:
+        Get.snackbar(
+          'Erreur serveur 400',
+          'Veuillez mettre à jour l\'application',
+          /*colorText: Colors.white,
+          backgroundColor: Colors.red,*/
+        );
+        break;
+      case 401:
+      case 403:
+        //problem happens with auth: bad app key for 403 or 401 for bad credentials
+        //Force the logout the user to be sure that he will login with the right credentials
+        Get.find<AccountInfoStorage>().logout();
+        Get.snackbar(
+          'Important',
+          'Vous êtes déconnecté. Veuillez vous connecter de nouveau.',
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+        );
+        break;
+      case 404:
+        // resource not found
+        break;
+    }
+    return response.statusCode;
+  }
 
   processServerError(error) {
     String message;
@@ -60,6 +102,7 @@ abstract class ApiManager {
   Future<dynamic> getResource() async {
     var data;
     await dioSingleton.dio.get(apiUrl()).then((value) {
+      validateResponseStatusCode(value);
       data = value.data;
     });
     return fromJson(data);
@@ -79,6 +122,7 @@ abstract class ApiManager {
     await dioSingleton.dio
         .get(apiUrl(), queryParameters: filters)
         .then((value) {
+      validateResponseStatusCode(value);
       data = value.data;
     });
     jsonList = fromJson(data);
@@ -103,17 +147,14 @@ abstract class ApiManager {
       apiUrl(),
       data: jsonEncode(dataToPost),
       options: Options(
-          headers: {
-            "Accept": "application/json",
-            'apikey': Environment.apikey,
-            'Content-Type': 'application/json',
-          },
+          headers: defaultHeaders,
           followRedirects: false,
           validateStatus: (status) {
             return status < 405;
           }),
     )
         .then((value) {
+      validateResponseStatusCode(value);
       return value;
     }).catchError((error) {
       processServerError(error);
@@ -132,10 +173,8 @@ abstract class ApiManager {
         data: jsonEncode(dataToPost),
         options: Options(
             headers: {
-              "Accept": "application/json",
-              'apikey': Environment.apikey,
-              'Content-Type': 'application/json',
-              'X-WSSE': wsse,
+              ...defaultHeaders,
+              ...{'X-WSSE': wsse},
             },
             followRedirects: false,
             validateStatus: (status) {
@@ -143,6 +182,7 @@ abstract class ApiManager {
             }),
       )
           .then((value) {
+        validateResponseStatusCode(value);
         return value;
       }).catchError((error, stackTrace) {
         if (error.type == DioErrorType.connectTimeout) {
@@ -158,17 +198,15 @@ abstract class ApiManager {
 
   /// Get Data  User From Server
   Future<Response<dynamic>> secureGet({Map<String, dynamic> filters}) async {
-    String xwsse = Wsse.generateWsseFromStorage();
+    String wsse = Wsse.generateWsseFromStorage();
     return dioSingleton.dio
         .get(
       apiUrl(),
       queryParameters: filters,
       options: Options(
           headers: {
-            "Accept": "application/json",
-            'apikey': Environment.apikey,
-            'Content-Type': 'application/json',
-            'X-WSSE': xwsse,
+            ...defaultHeaders,
+            ...{'X-WSSE': wsse},
           },
           followRedirects: false,
           validateStatus: (status) {
@@ -176,6 +214,8 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
+      //process server status codes
+      validateResponseStatusCode(value);
       return value;
     }).catchError((error, stackTrace) {
       processServerError(error);
@@ -189,13 +229,11 @@ abstract class ApiManager {
       return dioSingleton.dio
           .put(
         apiUrl(),
-      data: jsonEncode(dataToPost),
+        data: jsonEncode(dataToPost),
         options: Options(
             headers: {
-              "Accept": "application/json",
-              'apikey': Environment.apikey,
-              'Content-Type': 'application/json',
-              'X-WSSE': wsse,
+              ...defaultHeaders,
+              ...{'X-WSSE': wsse},
             },
             followRedirects: false,
             validateStatus: (status) {
@@ -203,6 +241,7 @@ abstract class ApiManager {
             }),
       )
           .then((value) {
+        validateResponseStatusCode(value);
         return value;
       }).catchError((error, stackTrace) {
         if (error.type == DioErrorType.connectTimeout) {
@@ -224,10 +263,8 @@ abstract class ApiManager {
       apiUrl(),
       options: Options(
           headers: {
-            "Accept": "application/json",
-            'apikey': Environment.apikey,
-            'Content-Type': 'application/json',
-            'X-WSSE': wsse,
+            ...defaultHeaders,
+            ...{'X-WSSE': wsse},
           },
           followRedirects: false,
           validateStatus: (status) {
@@ -235,6 +272,7 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
+      validateResponseStatusCode(value);
       return value;
     }).catchError((error, stackTrace) {
       processServerError(error);
@@ -246,12 +284,11 @@ abstract class ApiManager {
     //generer le wsse
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(headers: {
-      "Accept": "application/json",
-      'apikey': Environment.apikey,
-      'Content-Type': 'application/json',
-      'X-WSSE': wsse,
+      ...defaultHeaders,
+      ...{'X-WSSE': wsse},
     });
     return dioSingleton.dio.delete(apiUrl(), options: options).then((value) {
+      validateResponseStatusCode(value);
       return value;
     }).catchError((error, stackTrace) {
       processServerError(error);

@@ -14,33 +14,37 @@ import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:infinite_scroll_pagination/src/ui/default_indicators/first_page_error_indicator.dart';
+import '../../config/Environment.dart';
+import '../../config/app_config.dart';
+import '../../mywidget/infinite_scroll/CustomFirstPageErrorIndicator.dart';
 import 'favorite/parametres_scr.dart';
 import 'tap_home_viewcontroller.dart';
 
 class TapHomeScr extends GetWidget<TapHomeViewController> {
- // GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey();
+  // GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey();
 
   @override
   Widget build(BuildContext context) {
+    var appConfig = AppConfig.of(context);
     Size _size = MediaQuery.of(context).size;
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       controller.startIntro(context);
     });
     return Scaffold(
       key: controller.scaffoldKey,
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60.0), // here the desired height
+          preferredSize: const Size.fromHeight(60.0), // here the desired height
           child: AppBar(
               automaticallyImplyLeading: false,
               backgroundColor: Colors.white,
-              title: Container(
+              title: SizedBox(
                 height: 60,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       InkWell(
                         key: controller.intro.keys[0],
-
                         onTap: controller.openDrawer,
                         child: const Icon(
                           Icons.menu,
@@ -48,7 +52,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                           color: framColor,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       Expanded(
@@ -57,7 +61,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(5)),
                             child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(35),
@@ -66,7 +70,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                     bottomRight: Radius.circular(35)),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: ColorGrey,
+                                    color: colorGrey,
                                     spreadRadius: 1,
                                     blurRadius: 1,
                                   ),
@@ -80,13 +84,11 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                   keyboardType: TextInputType.text,
                                   onChanged: controller.filterWord,
                                   decoration: InputDecoration(
-                                      prefixIcon: Icon(Icons.search),
+                                      prefixIcon: const Icon(Icons.search),
                                       suffixIcon: logic.searchWord.text
-                                                  .toString()
-                                                  .length >
-                                              0
+                                                  .toString().isNotEmpty
                                           ? IconButton(
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 Icons.clear,
                                               ),
                                               onPressed: () {
@@ -101,7 +103,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                               }),
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       SizedBox(
@@ -119,7 +121,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                             topLeft: Radius.circular(30.0),
                                             topRight: Radius.circular(30.0),
                                           )),
-                                      child: BottomSheetFilter()),
+                                      child: const BottomSheetFilter()),
                                   isDismissible: true,
                                   elevation: 10,
                                   enableDrag: true,
@@ -137,12 +139,11 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                             child: const Icon(
                               Icons.filter_alt_outlined,
                               size: 30,
-                              color: ColorGrey,
+                              color: colorGrey,
                             ),
                           )),
                       SizedBox(
                         key: controller.intro.keys[3],
-
                         child: Obx(() {
                           return NotificationMenu(
                             iconProfile: Icons.notifications_active,
@@ -234,6 +235,12 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                           return const SizedBox();
                                         }
                                       },
+                                      firstPageErrorIndicatorBuilder: (_) =>
+                                          CustomFirstPageErrorIndicator(
+                                        onTryAgain: () => controller
+                                            .pagingController
+                                            .refresh(),
+                                      ),
                                     ),
                                   ),
                                 );
@@ -254,7 +261,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                               "Pas de connexion internet",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: ColorText),
+                                  color: colorText),
                             ),
                           ],
                         )),
@@ -262,8 +269,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
               ],
             )),
       ),
-      drawer: Container(
-        width: _size.width * .6,
+      drawer: SizedBox(
+        width: _size.width * .7,
         child: Drawer(
           child: SingleChildScrollView(
             child: Column(
@@ -272,10 +279,12 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(
-                            "assets/images/dawerAfariat.jpg",
+                            "assets/images/" +
+                                appConfig.appName +
+                                "/drawer.jpg",
                           ),
                           fit: BoxFit.fill)),
-                  child: Container(
+                  child: SizedBox(
                     width: _size.width * .6,
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -288,7 +297,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                           child: GetBuilder<TapHomeViewController>(
                               builder: (logic) {
                             return Text(logic.name,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold));
                           }),
@@ -308,7 +317,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   title: const Text(
                     "Mes favoris",
                     style: TextStyle(
-                        color: ColorText, fontWeight: FontWeight.bold),
+                        color: colorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
                     if (Get.find<AccountInfoStorage>().isLoggedIn()) {
@@ -317,7 +326,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                         MaterialPageRoute(builder: (context) => FavoriteScr()),
                       );
                     } else {
-                      Get.snackbar("",
+                      Get.snackbar("Connexion requise",
                           "Veuillez vous connecter pour accéder à vos favoris",
                           colorText: Colors.white,
                           backgroundColor: buttonColor);
@@ -325,14 +334,14 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.settings,
                     color: Colors.grey,
                   ),
                   title: const Text(
                     "Paramètres",
                     style: TextStyle(
-                        color: ColorText, fontWeight: FontWeight.bold),
+                        color: colorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
                     Navigator.push(
@@ -341,69 +350,67 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                     );
                   },
                 ),
-                Divider(
+                const Divider(
                   thickness: 1,
-                  color: ColorText,
+                  color: colorText,
                 ),
                 ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.help_center,
-                    color: ColorText,
+                    color: colorText,
                   ),
                   title: const Text(
                     "Centre d'aide",
                     style: TextStyle(
-                        color: ColorText, fontWeight: FontWeight.bold),
+                        color: colorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
-                    controller.launchURL("https://afariat.com/aide.html");
+                    controller.launchURL(Environment.helpUrl);
                   },
                 ),
                 ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.checklist,
-                    color: ColorText,
+                    color: colorText,
                   ),
                   title: const Text(
                     "Règlement",
                     style: TextStyle(
-                        color: ColorText, fontWeight: FontWeight.bold),
+                        color: colorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
-                    controller.launchURL("https://afariat.com/règlement.html");
+                    controller.launchURL(Environment.rulesUrl);
                   },
                 ),
                 ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.https,
-                    color: ColorText,
+                    color: colorText,
                   ),
                   title: const Text(
                     "Confidentialité ",
                     style: TextStyle(
-                        color: ColorText, fontWeight: FontWeight.bold),
+                        color: colorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
-                    controller
-                        .launchURL("https://afariat.com/confidentialite.html");
+                    controller.launchURL(Environment.privacyUrl);
                   },
                 ),
                 ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.gavel,
-                    color: ColorText,
+                    color: colorText,
                   ),
                   title: const Text(
                     "CGU ",
                     style: TextStyle(
-                        color: ColorText, fontWeight: FontWeight.bold),
+                        color: colorText, fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
-                    controller.launchURL(
-                        "https://afariat.com/conditions-générales-d-utilisation.html");
+                    controller.launchURL(Environment.cguUrl);
                   },
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
               ],

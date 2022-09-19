@@ -19,9 +19,9 @@ class LocController extends GetxController {
   bool getCity = true;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-    getCityListSelected();
+    await getCityListSelected();
   }
 
   /// GET all data from api

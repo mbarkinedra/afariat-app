@@ -6,6 +6,7 @@ class SettingsApp {
   static String get baseApiUrl => baseUrl + '/api/v1';
 
   static String get loginUrl => baseApiUrl + '/users/login';
+  static String get logoutUrl => baseApiUrl + '/users/logout';
 
   static String get registerUrl => baseApiUrl + '/users';
 
@@ -19,7 +20,7 @@ class SettingsApp {
 
   static String get publishURL => baseApiUrl + '/adverts';
 
-  static String get SearchUrl => baseApiUrl + '/adverts';
+  static String get searchUrl => baseApiUrl + '/adverts';
 
   static String get advertDeatilsUrl => baseApiUrl + '/adverts';
 
@@ -70,10 +71,12 @@ class SettingsApp {
 
   static String get getConversation => baseApiUrl + '/conversation';
 
-  static String get Converstionreply => baseApiUrl + '/conversations/reply';
+  static String get conversationReply => baseApiUrl + '/conversations/reply';
 
   static String get favorite => baseApiUrl + '/favorites';
 
   static String get deleteFavoriteByAdvert =>
       baseApiUrl + '/favorites-by-advert';
+
+  static String get preference => baseApiUrl + '/preference';
 }

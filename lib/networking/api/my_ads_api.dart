@@ -22,7 +22,7 @@ class MyAdsApi extends ResourceApi {
   }
 
   @override
-  String apiPutUrl({dataToPost}) {
+  String apiPutUrl({ Map<String, String>queryParams}) {
     // TODO: implement apiPutUrl
     throw UnimplementedError();
   }

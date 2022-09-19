@@ -31,7 +31,7 @@ final int size;
               Icon(
                 iconProfile,
                 size: 30,
-                color:ColorGrey
+                color:colorGrey
               ),
               SizedBox(width: 10),
 

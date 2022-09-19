@@ -9,6 +9,8 @@ import 'package:afariat/validator/validator_signIn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../networking/json/error_json_resource.dart';
+
 class SignInViewController extends GetxController {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -35,20 +37,23 @@ class SignInViewController extends GetxController {
       }
       validator.validatorServer.validateServer(
           success: () {
+            //Try to login user
             String hashedPassword =
                 Wsse.hashPassword(password.text, value.data["salt"]);
-            Get.find<AccountInfoStorage>().saveEmail(email.text);
-            Get.find<AccountInfoStorage>().saveHashedPassword(hashedPassword);
-            //Try to login user
-            _signInApi.getData().then((value) {
+
+            _signInApi.login(email.text, hashedPassword).then((value) {
               validator.validatorServer.validateServer(
                   value: value,
                   success: () async {
                     //save user info to local storage
-
-                    await Get.find<FavoriteViewController>().getFavorite();
+                    Get.find<AccountInfoStorage>().saveEmail(email.text);
+                    Get.find<AccountInfoStorage>()
+                        .saveHashedPassword(hashedPassword);
                     Get.find<AccountInfoStorage>()
                         .saveUserId(value.data["user_id"].toString());
+
+                    await Get.find<FavoriteViewController>().getFavorite();
+
                     Get.find<HomeViewController>().changeItemFilter(0);
                     Get.find<HomeViewController>().updateList();
                     Get.find<AccountViewController>().getUserData();
@@ -57,7 +62,9 @@ class SignInViewController extends GetxController {
                     password.clear();
                   },
                   authFailure: () {
-                    Get.snackbar("Erreur", "Login ou mot de passe incorrect");
+                    ErrorJsonResource response =
+                    ErrorJsonResource.fromJson(value.data);
+                    Get.snackbar("Erreur", response.message);
                   });
             }).catchError((e) {
               Get.snackbar("Erreur", "Votre password est incorrect");

@@ -1,12 +1,13 @@
+import 'package:afariat/config/Environment.dart';
 import 'package:afariat/config/utility.dart';
-import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/model/type_register.dart';
 import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:afariat/mywidget/log_in_item.dart';
-import 'package:afariat/networking/json/ref_json.dart';
 import 'package:afariat/sign_up/sign_up_viewcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../remote_widget/city_dropdown_src.dart';
 
 class SignUpScr extends GetWidget<SignUpViewController> {
   @override
@@ -49,8 +50,8 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                 LogInItem(
                     key: Key('phone'),
                     textEditingController: controller.phone,
-                    label: "Phone Number",
-                    hint: "Pone Number",
+                    label: "N° de Téléphone",
+                    hint: Environment.phonePlaceholder,
                     icon: Icons.add_call,
                     validator: controller.validator.validatePhone),
                 SizedBox(
@@ -58,7 +59,13 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                 ),
                 GetBuilder<SignUpViewController>(builder: (logic) {
                   return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const Text(
+                        'Vous êtes ?',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       Container(
                         width: double.infinity,
                         child: DropdownButton<TypeRegister>(
@@ -88,47 +95,39 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                 SizedBox(
                   height: _size.height * .02,
                 ),
-                GetBuilder<LocController>(builder: (logic) {
-                  return Column(
+                Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      const Text('Localisation',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
                       Container(
                         width: double.infinity,
-                        child: DropdownButtonFormField<RefJson>(
-                          key: Key('city'),
-                          hint: Text("City"),
-                          validator: (RefJson) {
-                            return controller.validator.validateCity(RefJson);
-                          },
-                          isExpanded: true,
-                          value: logic.city,
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: logic.updateCity,
-                          items: logic.cities
-                              .where((element) => element.name != "")
-                              .map<DropdownMenuItem<RefJson>>((RefJson value) {
-                            return DropdownMenuItem<RefJson>(
-                              value: value,
-                              child: Text(value.name),
-                            );
-                          }).toList(),
+                        margin: const EdgeInsets.only(bottom: 10.0),
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide( //                   <--- left side
+                              color: Colors.black38,
+                              width: 0.75,
+                            ),
+                          ),
                         ),
+                        child:
+                            CityDropdown(
+                                controller.cityDropdownViewController,
+                              validator: controller.validator.validateCity,
+                            ),
                       ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                    ],
-                  );
-                }),
+                    ]),
                 SizedBox(
                   height: _size.height * .02,
                 ),
                 LogInItem(
                     key: Key('email'),
                     textEditingController: controller.email,
-                    label: "Email",
-                    hint: "Email",
+                    label: "E-mail",
+                    hint: "Votre adresse email",
                     icon: Icons.email,
                     validator: controller.validator.validateEmail),
                 SizedBox(
@@ -137,7 +136,7 @@ class SignUpScr extends GetWidget<SignUpViewController> {
                 GetBuilder<SignUpViewController>(builder: (logic) {
                   return LogInItem(
                     validator: controller.validator.validatePassword,
-                    label: "Password",
+                    label: "Mot de passe",
                     hint: "**********",
                     icon: Icons.lock_outline,
                     //Ajouter

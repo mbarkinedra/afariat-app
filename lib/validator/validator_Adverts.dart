@@ -1,3 +1,4 @@
+import 'package:afariat/config/Environment.dart';
 import 'package:afariat/validator/validate_server.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +40,7 @@ class ValidatorAdverts {
   String validateSurface(String value) {
     if (!validationType) {
       if (value.isEmpty) {
-        return "Veuillez renseigner la surface.";
+        return "Veuillez renseigner la supérficie.";
       }
       int parsedValue = int.tryParse(value);
       if (parsedValue == null) return "Veuillez saisir un nombre";
@@ -66,21 +67,21 @@ class ValidatorAdverts {
 
   String validateCity(object) {
     if (object == null) {
-      return " La ville est obligatoire";
+      return " La "+Environment.cityLabel+" est obligatoire";
     }
     return null;
   }
 
   String validateTown(object) {
     if (object == null) {
-      return " La commune est obligatoire";
+      return " La "+Environment.townLabel+" est obligatoire";
     }
     return null;
   }
 
   String validateCategory(object) {
     if (object == null) {
-      return " La category est obligatoire";
+      return " La categorie est obligatoire";
     }
     return null;
   }

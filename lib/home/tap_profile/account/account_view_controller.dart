@@ -1,81 +1,103 @@
 import 'package:afariat/networking/api/user.dart';
+import 'package:afariat/networking/json/ref_json.dart';
+import 'package:afariat/remote_widget/city_dropdown_viewcontroller.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/networking/security/wsse.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/validator/validate_server.dart';
 import 'package:afariat/networking/json/user_json.dart';
+import 'package:afariat/validator/validator_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AccountViewController extends GetxController {
+  final registerFormKey = GlobalKey<FormState>();
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
-  TextEditingController city = TextEditingController();
-  final localisation = Get.find<LocController>();
+  CityDropdownViewController cityDropdownViewController =
+      CityDropdownViewController();
   bool updateData = false;
 
-  ServerValidator validateServer = ServerValidator();
+  ValidatorProfile validator = ValidatorProfile();
+
   AccountInfoStorage _storage = AccountInfoStorage();
   UserApi _userApi = UserApi();
   UserJson user = UserJson();
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-    getUserData();
+    await getUserData();
   }
 
-  updateUserData() {
+  updateUserData() async {
     updateData = true;
+    update();
     user.type = user.type;
     user.email = email.text;
     user.name = name.text;
     user.phone = phone.text;
-    user.city.id = localisation.city.id;
+    user.city.id = cityDropdownViewController.selectedItem.id;
 
     _userApi.id = Get.find<AccountInfoStorage>().readUserId();
-    print(_userApi.id);
-    print(user.toJson(form: true)); //user.toJson(form: true)
-    _userApi.putResource(dataToPost: user.toJson(form: true)).then(
+    await _userApi.putResource(dataToPost: user.toJson(form: true)).then(
       (value) {
-        Get.find<AccountInfoStorage>().saveName(user.name);
-        validateServer.validateServer(
+        updateData = false;
+        validator.validatorServer.validateServer(
+            value: value,
             success: () {
-              Get.snackbar("", "Mise à jours avec succès ");
-              updateData = false;
+              Get.snackbar("Succes", "Mise à jour avec succès",
+                  colorText: Colors.black87,
+                  backgroundColor: Colors.greenAccent,
+                  icon: const Icon(Icons.check_circle));
+
+              Get.find<AccountInfoStorage>().saveName(user.name);
               Wsse.generateWsseFromStorage();
+              registerFormKey.currentState.reset();
               update();
             },
-            value: value);
+            failure: () {
+              //validate server errors and show them in the form
+              registerFormKey.currentState.validate();
+              Get.snackbar(
+                'Erreur',
+                'Veuillez corriger les erreurs ci-dessous.',
+                colorText: Colors.white,
+                backgroundColor: Colors.red,
+              );
+              update();
+            });
       },
     ).catchError((e) {
-      updateData = false;
+      Get.snackbar(
+        'Oups !',
+        'Une erreur s\'est produite. Veuillez relancer l\'appli ou la mettre à jour.',
+        colorText: Colors.white,
+        backgroundColor: Colors.red,
+      );
+
       update();
     });
   }
 
-  getUserData() {
+  getUserData() async {
     _userApi.id = Get.find<AccountInfoStorage>().readUserId();
     name.text = _storage.readName() ?? "";
     email.text = _storage.readEmail() ?? "";
     phone.text = _storage.readPhone() ?? "";
 
-    _userApi.secureGet().then((value) {
+    await _userApi.secureGet().then((value) {
       user = UserJson.fromJson(value.data);
       name.text = user.name;
       phone.text = user.phone;
       email.text = user.email;
       Get.find<AccountInfoStorage>().saveName(user.name);
       Get.find<TapHomeViewController>().setUserName(user.username);
-
-      localisation.cities.forEach((element) {
-        if (element.id == user.city.id) {
-          localisation.updateCity(element);
-          update();
-        }
-      });
+      cityDropdownViewController.selectedItem =
+          RefJson(id: user.city.id, name: user.city.name);
+      update();
       //_userApi.id = null;
     });
   }
