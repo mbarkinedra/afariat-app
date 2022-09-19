@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:afariat/config/dio_singleton.dart';
-import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/storage/storage.dart';
 import 'package:afariat/networking/security/wsse.dart';
 import 'package:afariat/controllers/network_controller.dart';

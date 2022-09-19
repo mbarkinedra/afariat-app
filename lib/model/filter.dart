@@ -4,32 +4,29 @@ class ParameterBag {
   String toHttpQuery() => Uri(
       queryParameters:
           data.map((key, value) => MapEntry(key, value?.toString()))).query;
-}
 
-//class Filter extends ParameterBag {}
+  set(k, v) => data[k] = v;
 
-class Filter {
-  //TODO: make it as dynamic and inherits from ParameterBag
-  static Map<String, dynamic> data = {};
-
-  static String toHttpQuery() => Uri(
-      queryParameters:
-          data.map((key, value) => MapEntry(key, value?.toString()))).query;
-
-  /// Set data to map searchData
-  static set({key, val}) {
-    data[key] = val;
-  }
-
-  /// Delete data  from map searchData
-  static remove({key}) {
-    if (data[key] != null) {
-      data.remove(key);
+  remove(k) {
+    if (data[k] != null) {
+      data.remove(k);
     }
   }
 
+  clear() => data.clear();
+}
+
+class Filter {
+  static ParameterBag parameters = ParameterBag();
+
+  static String toHttpQuery() => parameters.toHttpQuery();
+
+  /// Set data to map searchData
+  static set(k, v) => parameters.set(k, v);
+
+  /// Delete data  from map searchData
+  static remove(k) => parameters.remove(k);
+
   /// Clear the filter data
-  static clear() {
-    data.clear();
-  }
+  static clear() => parameters.clear();
 }

@@ -44,13 +44,13 @@ class LocController extends GetxController {
     city = selectedCity;
 
     if (selectedCity.id == 0) {
-      Filter.remove(key: "city");
-      Filter.remove(key: "town");
+      Filter.remove("city");
+      Filter.remove("town");
       town = null;
       update();
     } else {
       city = selectedCity;
-      Filter.set(key: "city", val: selectedCity.id);
+      Filter.set("city", selectedCity.id);
       tapPublishViewController.citie = selectedCity;
       town = null;
       tapPublishViewController.myAds["city"] = selectedCity.id;
@@ -63,11 +63,11 @@ class LocController extends GetxController {
   /// Update city from dropDown
   updateTown(RefJson town) {
     if (town.id == 0) {
-      Filter.remove(key: "town");
+      Filter.remove("town");
       town = null;
       update();
     } else {
-      Filter.set(key: "town", val: town.id);
+      Filter.set("town", town.id);
       this.town = town;
       tapPublishViewController.town = town;
       tapPublishViewController.myAds["town"] = town.id;

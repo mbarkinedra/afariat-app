@@ -189,7 +189,7 @@ class TapHomeViewController extends GetxController {
   ///When you click on the home icon, the paging package calls the 1st page
   clearDataFilter() {
     _advertApi.url = null;
-    Filter.data.clear();
+    Filter.clear();
     pagingController.refresh();
   }
 
@@ -214,9 +214,9 @@ class TapHomeViewController extends GetxController {
     //reset the URL of advertApi
     _advertApi.url = null;
     if (searchWord.text.isNotEmpty) {
-      Filter.set(key: "search", val: searchWord.text.toString());
+      Filter.set("search", searchWord.text.toString());
     }
-    _advertApi.getList(filters: Filter.data).then((value) {
+    _advertApi.getList(filters: Filter.parameters.data).then((value) {
       pagingController.itemList.clear();
       advertListJson = value;
       resetPriceSlider();
@@ -261,8 +261,8 @@ class TapHomeViewController extends GetxController {
   updateSlideValue(value) {
     values = value;
 
-    Filter.set(key: "minPrice", val: values.start.toInt().toString());
-    Filter.set(key: "maxPrice", val: values.end.toInt().toString());
+    Filter.set("minPrice",  values.start.toInt().toString());
+    Filter.set( "maxPrice", values.end.toInt().toString());
     update();
   }
 

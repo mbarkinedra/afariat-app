@@ -134,7 +134,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                   .isButtonSheet = false;
                               Get.find<TapPublishViewController>()
                                   .clearAllData();
-                              Filter.data.clear();
+                              Filter.clear();
                             },
                             child: const Icon(
                               Icons.filter_alt_outlined,

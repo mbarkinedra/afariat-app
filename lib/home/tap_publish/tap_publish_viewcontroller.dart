@@ -20,7 +20,6 @@ import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../config/Environment.dart';
 import '../home_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
@@ -260,7 +259,7 @@ class TapPublishViewController extends GetxController {
     vehiculebrands = newValue;
     //set filter if we are in context filter
     if (isFilterContext == true) {
-      Filter.set(key: "vehicleBrand", val: newValue.id);
+      Filter.set("vehicleBrand", newValue.id);
     }
     getVehicleModel();
 
@@ -275,7 +274,7 @@ class TapPublishViewController extends GetxController {
 
     //set filter if we are in context filter
     if (isFilterContext == true) {
-      Filter.set(key: "motoBrand", val: newValue.id);
+      Filter.set( "motoBrand",  newValue.id);
     }
 
     update();
@@ -289,7 +288,7 @@ class TapPublishViewController extends GetxController {
 
     //set filter if we are in context filter
     if (isFilterContext == true) {
-      Filter.set(key: "vehicleModel", val: newValue.id);
+      Filter.set("vehicleModel",  newValue.id);
     }
 
     update();
@@ -303,7 +302,7 @@ class TapPublishViewController extends GetxController {
 
     //set filter if we are in context filter
     if (isFilterContext == true) {
-      Filter.set(key: "mileage", val: newValue.id);
+      Filter.set("mileage",  newValue.id);
     }
 
     update();
@@ -316,7 +315,7 @@ class TapPublishViewController extends GetxController {
 
     //set filter if we are in context filter
     if (isFilterContext == true) {
-      Filter.set(key: "yearModel", val: newValue.id);
+      Filter.set("yearModel",  newValue.id);
     }
 
     update();
@@ -329,7 +328,7 @@ class TapPublishViewController extends GetxController {
 
     //set filter if we are in context filter
     if (isFilterContext == true) {
-      Filter.set(key: "energy", val: newValue.id);
+      Filter.set("energy",  newValue.id);
     }
 
     update();
@@ -342,7 +341,7 @@ class TapPublishViewController extends GetxController {
 
     //set filter if we are in context filter
     if (isFilterContext == true) {
-      Filter.set(key: "roomsNumber", val: newValue.id);
+      Filter.set("roomsNumber",  newValue.id);
     }
 
     update();
@@ -428,7 +427,7 @@ class TapPublishViewController extends GetxController {
             value: value,
             success: () async {
               Get.find<TapMyAdsViewController>().getAllAds();
-              Filter.data.clear();
+              Filter.clear();
               clearAllData();
               Get.find<CategoryAndSubcategory>()
                   .clearDataCategroyAndSubCategory();
@@ -467,7 +466,7 @@ class TapPublishViewController extends GetxController {
         validator.validatorServer.validateServer(
           value: value,
           success: () async {
-            Filter.data.clear();
+            Filter.clear();
             clearAllData();
             Get.find<CategoryAndSubcategory>().subcategories1 = null;
             Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
