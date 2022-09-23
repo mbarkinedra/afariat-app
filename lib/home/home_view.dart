@@ -1,3 +1,4 @@
+import 'package:afariat/config/app_routing.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

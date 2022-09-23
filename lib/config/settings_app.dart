@@ -79,4 +79,6 @@ class SettingsApp {
       baseApiUrl + '/favorites-by-advert';
 
   static String get preference => baseApiUrl + '/preference';
+
+  static String get autocompleteLocalization => baseApiUrl + '/autocomplete/localization';
 }

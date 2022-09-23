@@ -1,3 +1,4 @@
+import 'package:afariat/config/app_routing.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,11 @@ class MyApp extends StatelessWidget {
                   "assets/images/" + appConfig.appName + "/splash.png"),
               nextScreen: const HomeView(),
               splashTransition: SplashTransition.slideTransition,
-              backgroundColor: framColor),
-        ));
+              backgroundColor: framColor
+          ),
+          getPages: AppRouting.pages,
+          //routes: AppRouting.routes,
+        ),
+    );
   }
 }

@@ -1,32 +1,45 @@
+import 'package:get/get.dart';
+
 class ParameterBag {
   Map<String, dynamic> data = {};
+
+  //Observable count to make it accessible from views
+  RxInt count = 0.obs;
 
   String toHttpQuery() => Uri(
       queryParameters:
           data.map((key, value) => MapEntry(key, value?.toString()))).query;
 
-  set(k, v) => data[k] = v;
+  set(k, v) {
+    data[k] = v;
+    count.value = data.length;
+  }
 
   remove(k) {
     if (data[k] != null) {
       data.remove(k);
     }
+    count.value = data.length;
   }
 
   clear() => data.clear();
 }
 
 class Filter {
-  static ParameterBag parameters = ParameterBag();
+  static Rx<ParameterBag> rxParameters = ParameterBag().obs;
 
-  static String toHttpQuery() => parameters.toHttpQuery();
+  static ParameterBag parameters() => rxParameters.value;
+
+  static String toHttpQuery() => rxParameters.value.toHttpQuery();
 
   /// Set data to map searchData
-  static set(k, v) => parameters.set(k, v);
+  static set(k, v) => rxParameters.value.set(k, v);
 
   /// Delete data  from map searchData
-  static remove(k) => parameters.remove(k);
+  static remove(k) => rxParameters.value.remove(k);
 
   /// Clear the filter data
-  static clear() => parameters.clear();
+  static clear() => rxParameters.value.clear();
+
+  static int count() => rxParameters.value.count.value;
 }

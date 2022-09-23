@@ -7,86 +7,95 @@ import '../networking/api/abstract_user_api.dart';
 import '../networking/json/preference_json.dart';
 
 class AccountInfoStorage extends GetxController {
-  static const _key_email = 'username';
-  static const _key_hashedPassword = 'hashedPassword';
-  static const _key_user_id = 'user_id';
-  static const _key_name = 'name';
-  static const _key_password = 'password';
-  static const _key_intro = 'intro';
-  static const _key_phone = 'phone';
-  static const _key_preference = 'preference';
+  static const _keyEmail = 'username';
+  static const _keyHashedPassword = 'hashedPassword';
+  static const _keyUserId = 'user_id';
+  static const _keyName = 'name';
+  static const _keyPassword = 'password';
+  static const _keyIntro = 'intro';
+  static const _keyPhone = 'phone';
+  static const _keyPreference = 'preference';
+  static const _keyLocalization = 'localization';
 
   SecureStorage _secureStorage = Get.find<SecureStorage>();
 
   saveEmail(String email) {
-    _secureStorage.writeSecureData(_key_email, email);
+    _secureStorage.writeSecureData(_keyEmail, email);
   }
 
   saveHashedPassword(String hashedPassword) {
-    _secureStorage.writeSecureData(_key_hashedPassword, hashedPassword);
+    _secureStorage.writeSecureData(_keyHashedPassword, hashedPassword);
   }
 
   savePassword(String password) {
-    _secureStorage.writeSecureData(_key_password, password);
+    _secureStorage.writeSecureData(_keyPassword, password);
   }
 
   saveUserId(String userId) {
-    _secureStorage.writeSecureData(_key_user_id, userId);
+    _secureStorage.writeSecureData(_keyUserId, userId);
   }
 
   saveName(String name) {
-    _secureStorage.writeSecureData(_key_name, name);
+    _secureStorage.writeSecureData(_keyName, name);
   }
 
   savePhone(String phone) {
-    _secureStorage.writeSecureData(_key_phone, phone);
+    _secureStorage.writeSecureData(_keyPhone, phone);
   }
 
   saveIntro(String intro) {
-    _secureStorage.writeSecureData(_key_intro, intro);
+    _secureStorage.writeSecureData(_keyIntro, intro);
   }
 
   savePreference(PreferenceJson preference) async {
-    await _secureStorage.write(_key_preference, preference);
+    await _secureStorage.write(_keyPreference, preference);
+  }
+
+  saveLocalization(Map<String, dynamic> localizationList) async {
+    await _secureStorage.write(_keyLocalization, localizationList);
   }
 
   String readEmail() {
-    String email = _secureStorage.readSecureData(_key_email);
+    String email = _secureStorage.readSecureData(_keyEmail);
 
     return email;
   }
 
   String readName() {
-    return _secureStorage.readSecureData(_key_name);
+    return _secureStorage.readSecureData(_keyName);
   }
 
   String readIntro() {
-    return _secureStorage.readSecureData(_key_intro);
+    return _secureStorage.readSecureData(_keyIntro);
   }
 
   String readPassword() {
-    return _secureStorage.readSecureData(_key_password);
+    return _secureStorage.readSecureData(_keyPassword);
   }
 
   String readPhone() {
-    return _secureStorage.readSecureData(_key_phone);
+    return _secureStorage.readSecureData(_keyPhone);
   }
 
   String readHashedPassword() {
-    return _secureStorage.readSecureData(_key_hashedPassword);
+    return _secureStorage.readSecureData(_keyHashedPassword);
   }
 
   String readUserId() {
-    return _secureStorage.readSecureData(_key_user_id);
+    return _secureStorage.readSecureData(_keyUserId);
   }
 
   Future<dynamic> readPreference() async {
-    return await _secureStorage.read(_key_preference);
+    return await _secureStorage.read(_keyPreference);
+  }
+
+  Future<dynamic> readLocalization() async {
+    return _secureStorage.read(_keyLocalization);
   }
 
   /// Removes the hashed password from the secure storage, so user is no longer loggen in.
   removeHashedPassword() {
-    return _secureStorage.deleteSecureData(_key_hashedPassword);
+    return _secureStorage.deleteSecureData(_keyHashedPassword);
   }
 
   logout() {
@@ -101,19 +110,19 @@ class AccountInfoStorage extends GetxController {
     }
 
     //Now remove everything in the local storage
-    _secureStorage.deleteSecureData(_key_email);
-    _secureStorage.deleteSecureData(_key_phone);
-    _secureStorage.deleteSecureData(_key_user_id);
-    _secureStorage.deleteSecureData(_key_name);
-    _secureStorage.deleteSecureData(_key_password);
-    _secureStorage.deleteSecureData(_key_hashedPassword);
-    _secureStorage.deleteSecureData(_key_preference);
+    _secureStorage.deleteSecureData(_keyEmail);
+    _secureStorage.deleteSecureData(_keyPhone);
+    _secureStorage.deleteSecureData(_keyUserId);
+    _secureStorage.deleteSecureData(_keyName);
+    _secureStorage.deleteSecureData(_keyPassword);
+    _secureStorage.deleteSecureData(_keyHashedPassword);
+    _secureStorage.deleteSecureData(_keyPreference);
     Get.find<HomeViewController>().updateList();
     Get.find<HomeViewController>().update();
   }
 
   bool isLoggedIn() {
-    var hashedPassword = _secureStorage.readImmediatlyData(_key_hashedPassword);
+    var hashedPassword = _secureStorage.readImmediatlyData(_keyHashedPassword);
     if ((hashedPassword ?? '') == '') {
       return false;
     }

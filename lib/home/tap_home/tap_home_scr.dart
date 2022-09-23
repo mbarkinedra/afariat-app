@@ -86,7 +86,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                   decoration: InputDecoration(
                                       prefixIcon: const Icon(Icons.search),
                                       suffixIcon: logic.searchWord.text
-                                                  .toString().isNotEmpty
+                                              .toString()
+                                              .isNotEmpty
                                           ? IconButton(
                                               icon: const Icon(
                                                 Icons.clear,
@@ -333,6 +334,21 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                     }
                   },
                 ),
+                ListTile(
+                    leading: Icon(
+                      Icons.search,
+                      color: Get.find<AccountInfoStorage>().isLoggedIn()
+                          ? Colors.red
+                          : Colors.grey,
+                    ),
+                    title: const Text(
+                      "Rechercher",
+                      style: TextStyle(
+                          color: colorText, fontWeight: FontWeight.bold),
+                    ),
+                    onTap: () {
+                      Get.toNamed('/search');
+                    }),
                 ListTile(
                   leading: const Icon(
                     Icons.settings,

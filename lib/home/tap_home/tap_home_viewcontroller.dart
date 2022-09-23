@@ -216,7 +216,7 @@ class TapHomeViewController extends GetxController {
     if (searchWord.text.isNotEmpty) {
       Filter.set("search", searchWord.text.toString());
     }
-    _advertApi.getList(filters: Filter.parameters.data).then((value) {
+    _advertApi.getList(filters: Filter.parameters().data).then((value) {
       pagingController.itemList.clear();
       advertListJson = value;
       resetPriceSlider();
