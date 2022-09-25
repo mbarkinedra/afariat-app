@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-
 import '../../model/filter.dart';
 import '../../networking/api/autocomplete_api.dart';
 import '../../networking/json/localization_json.dart';
 import '../../storage/AccountInfoStorage.dart';
 import 'filter_app_bar_viewcontroller.dart';
+import 'filter_viewcontroller.dart';
 
 class LocalizationViewController extends GetxController {
   final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
@@ -72,6 +71,9 @@ class LocalizationViewController extends GetxController {
     }
     //update the label of localization
     Get.find<FilterAppBarViewController>().setLocalizationLabel();
+    //refresh the list of the filter controller => does not work
+    await Get.find<FilterViewController>().loadLocalizationsFromStorage();
+    Get.find<FilterViewController>().localizationsJsonList.refresh();
     Navigator.pop(context);
   }
 }

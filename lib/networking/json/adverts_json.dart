@@ -28,9 +28,7 @@ class AdvertListJson extends AbstractJsonResource {
     embedded = Embedded.fromJson(json['_embedded']);
   }
 
-  List<AdvertJson> adverts() {
-    return embedded != null ? embedded.adverts : null;
-  }
+  List<AdvertJson> adverts() => embedded?.adverts;
 }
 
 class Links {
@@ -110,7 +108,7 @@ class AdvertJson {
   Town town;
   String modifiedAt;
   Links links;
-  bool is_favorite;
+  bool isFavorite;
 
   AdvertJson(
       {this.id,
@@ -124,7 +122,7 @@ class AdvertJson {
       this.town,
       this.modifiedAt,
       this.links,
-      this.is_favorite});
+      this.isFavorite});
 
   AdvertJson.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -137,7 +135,7 @@ class AdvertJson {
     description = json['description'];
     title = json['title'];
     price = json['price'];
-    is_favorite = json['is_favorite'];
+    isFavorite = json['is_favorite'];
 
     region = Region.fromJson(json['region']);
     city = City.fromJson(json['city']);

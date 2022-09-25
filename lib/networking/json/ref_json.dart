@@ -37,6 +37,12 @@ class RefListJson extends AbstractJsonResource {
     }
     return false;
   }
+
+  RefJson first() => isNotEmpty() ? data.first : null;
+
+  RefJson last() => isNotEmpty() ? data.last : null;
+
+  int length() => isNotEmpty() ? data.length : 0;
 }
 
 /// Used to model a signle refrential json object. E.g: City, Region, Price,...

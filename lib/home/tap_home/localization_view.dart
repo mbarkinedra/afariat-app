@@ -2,11 +2,13 @@ import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import '../../config/utility.dart';
 import '../../networking/json/localization_json.dart';
+import 'filter_viewcontroller.dart';
 import 'localization_viewcontroller.dart';
 
 class LocalizationView extends GetWidget<LocalizationViewController> {
@@ -142,7 +144,6 @@ class LocalizationView extends GetWidget<LocalizationViewController> {
                             .localizationsJsonList.value
                             .toList()[index]
                             .toString())),
-                        selectedColor: Colors.red,
                         onDeleted: () {
                           controller.localizationsJsonList.value
                               .removeAt(index);

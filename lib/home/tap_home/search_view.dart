@@ -1,10 +1,14 @@
 import 'package:afariat/home/tap_home/search_viewcontroller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-import '../../config/utility.dart';
+import '../../mywidget/advert_card_grid.dart';
+import '../../mywidget/advert_card_list.dart';
+import '../../mywidget/myhomeitem.dart';
+import '../../networking/json/adverts_json.dart';
 import 'filter_app_bar_view.dart';
 import 'search_app_bar_view.dart';
 
@@ -15,27 +19,64 @@ class SearchView extends GetWidget<SearchViewController> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
     return Scaffold(
+      key: controller.key,
       // No appbar provided to the Scaffold, only a body with a
       // CustomScrollView.
       body: SafeArea(
         child: CustomScrollView(
+          controller: controller.scrollController,
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
           slivers: [
             const SearchAppBarView(),
             const FilterAppBarView(),
-            // Next, create a SliverList
-            SliverList(
-              // Use a delegate to build items as they're scrolled on screen.
-              delegate: SliverChildBuilderDelegate(
-                // The builder function returns a ListTile with a title that
-                // displays the index of the current item.
-                (context, index) => ListTile(title: Text('Item #$index')),
-                // Builds 1000 ListTiles
-                childCount: 1000,
-              ),
+            CupertinoSliverRefreshControl(
+              onRefresh: () async {
+                await Future.delayed(const Duration(milliseconds: 500),
+                    () async => await controller.swipeDown());
+              },
             ),
+            // Next, create a SliverList
+            _buildGrid(context),
+            SliverToBoxAdapter(
+              child: Obx(() => controller.isLoadingMore.value != false
+                  ? const Center(child: CupertinoActivityIndicator())
+                  : const SizedBox.shrink()),
+            )
           ],
         ),
       ),
     );
+  }
+
+  _buildGrid(context) {
+    Size _size = MediaQuery.of(context).size;
+    return Obx(() => controller.isGrid.value
+        ? PagedSliverGrid<int, AdvertJson>(
+            pagingController: controller.pagingController,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              childAspectRatio: 100 / 150,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              crossAxisCount: 2,
+            ),
+            builderDelegate: PagedChildBuilderDelegate<AdvertJson>(
+              animateTransitions: true,
+              itemBuilder: (context, item, index) => AdvertCardGrid(
+                advert: item,
+                userInitials: 'LC',
+              ),
+            ),
+          )
+        : PagedSliverList<int, AdvertJson>(
+            pagingController: controller.pagingController,
+            builderDelegate: PagedChildBuilderDelegate<AdvertJson>(
+              animateTransitions: true,
+              itemBuilder: (context, item, index) => AdvertCardList(
+                advert: item,
+                userInitials: 'LC',
+              ),
+            ),
+          ));
   }
 }

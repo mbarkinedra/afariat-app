@@ -147,7 +147,7 @@ class MyHomeItem extends StatelessWidget {
                             Get.find<TapHomeViewController>()
                                         .favorites
                                         .contains(adverts.id) ||
-                                    adverts.is_favorite
+                                    adverts.isFavorite
                                 ? Icons.favorite
                                 : Icons.favorite_outline_rounded,
                             color:
@@ -155,7 +155,7 @@ class MyHomeItem extends StatelessWidget {
                                         Get.find<TapHomeViewController>()
                                             .favorites
                                             .contains(adverts.id) ||
-                                        adverts.is_favorite
+                                        adverts.isFavorite
                                     ? Colors.red
                                     : Colors.grey,
                           ),

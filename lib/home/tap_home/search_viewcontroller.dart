@@ -1,5 +1,70 @@
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class SearchViewController  extends GetxController {
+import '../../networking/api/advert_api.dart';
+import '../../networking/json/adverts_json.dart';
 
+class SearchViewController extends GetxController {
+  final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
+  final PagingController<int, AdvertJson> pagingController =
+      PagingController(firstPageKey: 0);
+  ScrollController scrollController = ScrollController();
+  final AdvertApi _api = AdvertApi();
+  AdvertListJson advertListJson;
+  RxBool isGrid = false.obs;
+  RxBool isLoadingMore = false.obs;
+
+  @override
+  void onInit() {
+    fetchPage();
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.offset >=
+            scrollController.position.maxScrollExtent) {
+          onSwipeUp();
+        } /*else
+          if (scrollController.offset >=
+            scrollController.position.minScrollExtent) {
+          onSwipeDown();
+        }*/
+      }
+    });
+    super.onInit();
+  }
+
+  Future<void> fetchPage([String url]) async {
+    try {
+      _api.url = url;
+      await _api.getList().then((value) {
+        advertListJson = value;
+      });
+
+      pagingController.appendLastPage(advertListJson.adverts());
+      update();
+    } catch (error) {
+      pagingController.error = error;
+    }
+  }
+
+  Future<void> onSwipeUp() async {
+    isLoadingMore.value = true;
+    if (advertListJson.links.next == null) {
+      await fetchPage(advertListJson.links.getLastUrl());
+    } else {
+      await fetchPage(advertListJson.links.getNextUrl());
+      isLoadingMore.value = false;
+    }
+  }
+
+  Future<void> swipeDown() async {
+    await print('swipedown');
+    pagingController.itemList?.clear();
+
+    if (advertListJson.links.previous == null) {
+      await fetchPage(advertListJson.links.getFirstUrl());
+    } else {
+      await fetchPage(advertListJson.links.getPreviousUrl());
+    }
+  }
 }

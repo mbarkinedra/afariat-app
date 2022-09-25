@@ -79,7 +79,7 @@ class TapHomeViewController extends GetxController {
       });
 
       advertListJson.embedded.adverts.forEach((element) {
-        if (element.is_favorite) {
+        if (element.isFavorite) {
           favorites.add(element.id);
         }
       });
@@ -112,7 +112,7 @@ class TapHomeViewController extends GetxController {
     if (pagingController.itemList != null) {
       pagingController.itemList.forEach((element) {
         if (favorites.contains(element.id)) {
-          element.is_favorite = true;
+          element.isFavorite = true;
         }
       });
     }
@@ -124,9 +124,9 @@ class TapHomeViewController extends GetxController {
     favorites.remove(id);
     pagingController.itemList.forEach((element) {
       if (favorites.contains(element.id)) {
-        element.is_favorite = true;
+        element.isFavorite = true;
       } else {
-        element.is_favorite = false;
+        element.isFavorite = false;
       }
     });
     update();
@@ -137,7 +137,7 @@ class TapHomeViewController extends GetxController {
     favorites.clear();
     if (pagingController.itemList != null) {
       pagingController.itemList.forEach((element) {
-        element.is_favorite = false;
+        element.isFavorite = false;
       });
     }
     update();

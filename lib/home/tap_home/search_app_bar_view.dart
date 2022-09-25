@@ -4,6 +4,7 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 import '../../config/utility.dart';
+import '../../mywidget/search_field_appbar.dart';
 import 'search_app_bar_viewcontroller.dart';
 
 class SearchAppBarView extends GetWidget<SearchAppBarViewController> {
@@ -17,56 +18,7 @@ class SearchAppBarView extends GetWidget<SearchAppBarViewController> {
       title: Column(children: <Widget>[
         Row(children: [
           Expanded(
-            child: DecoratedBox(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5)),
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(5),
-                        topRight: Radius.circular(5),
-                        bottomLeft: Radius.circular(5),
-                        bottomRight: Radius.circular(5)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: colorGrey,
-                        spreadRadius: 1,
-                        blurRadius: 1,
-                      ),
-                    ],
-                  ),
-                  child: GetBuilder<SearchAppBarViewController>(builder: (logic) {
-                    return const TextField(
-                      cursorColor: framColor,
-                      //key: controller.intro.keys[1],
-                      //controller: controller.searchWord,
-                      keyboardType: TextInputType.text,
-                      //onChanged: controller.filterWord,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        /*suffixIcon: logic.searchWord.text
-                                            .toString()
-                                            .isNotEmpty
-                                            ? IconButton(
-                                          icon: const Icon(
-                                            Icons.clear,
-                                          ),
-                                          onPressed: () {
-                                            /* Clear the search field */
-                                            //controller.filterClearSearch();
-                                          },
-                                        )
-                                            : null,*/
-                        hintText: 'Rechercher...',
-                        border: InputBorder.none,
-                        focusColor: framColor,
-                        hoverColor: framColor,
-                      ),
-                    );
-                  }),
-                )),
+            child:SearchFieldAppbar(),
           ),
           const SizedBox(
             width: 5,

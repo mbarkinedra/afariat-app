@@ -1,8 +1,6 @@
+import 'package:afariat/home/tap_home/search_viewcontroller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import '../../config/utility.dart';
 import '../../model/filter.dart';
 import 'filter_app_bar_viewcontroller.dart';
@@ -12,10 +10,10 @@ class FilterAppBarView extends GetWidget<FilterAppBarViewController> {
 
   @override
   Widget build(BuildContext context) {
-    List _isSelected = <bool>[
+    RxList _isSelected = <bool>[
       true,
       false,
-    ];
+    ].obs;
     return SliverAppBar(
       floating: true,
       pinned: true,
@@ -31,7 +29,9 @@ class FilterAppBarView extends GetWidget<FilterAppBarViewController> {
               height: 40.0,
               width: 110.0,
               child: OutlinedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed('/filter');
+                },
                 child: Row(
                   children: [
                     const Text('Filtres',
@@ -85,18 +85,17 @@ class FilterAppBarView extends GetWidget<FilterAppBarViewController> {
             const SizedBox(
               width: 10.0,
             ),
-            ToggleButtons(
-              children: const <Widget>[
-                Icon(Icons.list_outlined),
-                Icon(Icons.grid_view_outlined),
-              ],
-              isSelected: _isSelected,
-              onPressed: (int index) {
-                //setState(() {
-                _isSelected[index] = !_isSelected[index];
-                //});
-              },
-            ),
+            Obx(() => ToggleButtons(
+                  children: const <Widget>[
+                    Icon(Icons.list_outlined),
+                    Icon(Icons.grid_view_outlined),
+                  ],
+                  isSelected: _isSelected.value,
+                  onPressed: (int index) {
+                    _isSelected.value = _isSelected.value.map((e) => !e).toList();
+                    Get.find<SearchViewController>().isGrid.value = index == 1 ? true : false;
+                  },
+                )),
           ])),
       toolbarHeight: 60,
       //expandedHeight: 40,

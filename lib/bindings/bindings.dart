@@ -23,11 +23,13 @@ import 'package:afariat/sign_in/sign_in_viewcontroller.dart';
 import 'package:afariat/sign_up/sign_up_viewcontroller.dart';
 import 'package:get/get.dart';
 
+import '../home/tap_home/category_group_viewcontroller.dart';
 import '../home/tap_home/filter_app_bar_viewcontroller.dart';
+import '../home/tap_home/filter_viewcontroller.dart';
 import '../home/tap_home/localization_viewcontroller.dart';
 import '../home/tap_home/search_app_bar_viewcontroller.dart';
 import '../remote_widget/city_dropdown_viewcontroller.dart';
-import '../remote_widget/ref_dropdown_viewcontroller.dart';
+import '../remote_widget/price_range_slider_viewcontroller.dart';
 
 class AllBindings extends Bindings {
   @override
@@ -38,9 +40,11 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => AccountViewController());
     Get.lazyPut(() => HomeViewController(), fenix: true);
     Get.lazyPut(() => SearchViewController(), fenix: true);
+    Get.lazyPut(() => FilterViewController(), fenix: true);
     Get.lazyPut(() => SearchAppBarViewController(), fenix: true);
     Get.lazyPut(() => FilterAppBarViewController(), fenix: true);
     Get.lazyPut(() => LocalizationViewController(), fenix: true);
+    Get.lazyPut(() => CategoryGroupViewController(), fenix: true);
     Get.lazyPut(() => TapHomeViewController(), fenix: true);
 
     Get.lazyPut(
@@ -64,5 +68,6 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => ChatUserViewController());
     Get.lazyPut(() => CityDropdownViewController());
     Get.lazyPut(() => TapChatViewController());
+    Get.lazyPut(() => PriceRangeSliderViewController());
   }
 }

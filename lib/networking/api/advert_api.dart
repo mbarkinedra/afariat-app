@@ -11,11 +11,11 @@ class AdvertApi extends ResourceApi {
     String parameters =
         Filter.toHttpQuery() != '' ? '?' + Filter.toHttpQuery() : '';
 
-    String defaultUrl = SettingsApp.advertUrl + parameters;
     if (url != null) {
-      return defaultUrl = SettingsApp.baseUrl + url;
-    } else
-      return defaultUrl;
+      return  SettingsApp.baseUrl + url;
+    } else {
+      return SettingsApp.advertUrl + parameters;
+    }
   }
 
   @override
