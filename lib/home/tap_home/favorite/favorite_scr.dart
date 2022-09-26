@@ -1,5 +1,5 @@
-import 'package:afariat/advert_details/advert_details_scr.dart';
-import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
+//import 'package:afariat/advert_details/advert_details_scr.dart';
+//import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
@@ -84,10 +84,11 @@ class SingleAdvert extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        /* TODO: call the route instead
         Get.find<AdvertDetailsViewController>()
             .getAdvertDetails(favorite.advert.id);
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AdvertDetailsScr()));
+            MaterialPageRoute(builder: (context) => AdvertDetailsScr()));*/
       },
       child: new Container(
         margin: EdgeInsets.all(5),

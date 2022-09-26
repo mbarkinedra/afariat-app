@@ -1,4 +1,3 @@
-import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
 import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
 import 'package:afariat/home/tap_home/favorite/parametre_viewcontroller.dart';
 import 'package:afariat/home/tap_home/search_viewcontroller.dart';
@@ -23,6 +22,7 @@ import 'package:afariat/sign_in/sign_in_viewcontroller.dart';
 import 'package:afariat/sign_up/sign_up_viewcontroller.dart';
 import 'package:get/get.dart';
 
+import '../home/tap_home/advert_details_viewcontroller.dart';
 import '../home/tap_home/category_group_viewcontroller.dart';
 import '../home/tap_home/filter_app_bar_viewcontroller.dart';
 import '../home/tap_home/filter_viewcontroller.dart';
@@ -45,6 +45,7 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => FilterAppBarViewController(), fenix: true);
     Get.lazyPut(() => LocalizationViewController(), fenix: true);
     Get.lazyPut(() => CategoryGroupViewController(), fenix: true);
+    Get.lazyPut(() => AdvertDetailsViewController(), fenix: true);
     Get.lazyPut(() => TapHomeViewController(), fenix: true);
 
     Get.lazyPut(

@@ -3,18 +3,18 @@ import 'package:afariat/networking/api/api_manager.dart';
 import 'package:afariat/networking/json/advert_details_json.dart';
 
 class AdvertDetailsApi extends ApiManager {
-  int advertTypeId;
+  String advertTypeId;
 
   @override
   String apiUrl() {
-    return SettingsApp.advertDeatilsUrl + "/" + advertTypeId.toString();
+    return SettingsApp.advertDeatilsUrl + "/" + advertTypeId;
   }
 
   @override
   Future<dynamic> getResource() async {
     //if user is logged in, use the secure call.
-    if (this.accountInfoStorage.isLoggedIn()) {
-      return await this.secureGetResource();
+    if (accountInfoStorage.isLoggedIn()) {
+      return await secureGetResource();
     }
     return await super.getResource();
   }

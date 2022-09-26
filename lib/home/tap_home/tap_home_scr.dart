@@ -1,5 +1,5 @@
-import 'package:afariat/advert_details/advert_details_scr.dart';
-import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
+//import 'package:afariat/advert_details/advert_details_scr.dart';
+//import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
 import 'package:afariat/home/tap_profile/notification/notification_scr.dart';
 import 'package:afariat/home/tap_profile/notification/notification_view_controller.dart';
 import 'package:afariat/model/filter.dart';
@@ -213,7 +213,8 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                                 logic.searchWord.text
                                                     .toLowerCase())) {
                                           return InkWell(
-                                            onTap: () {
+                                            //TODO: Fixme
+                                           /* onTap: () {
                                               Get.find<
                                                       AdvertDetailsViewController>()
                                                   .loading = true;
@@ -226,7 +227,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                                                     builder: (context) =>
                                                         AdvertDetailsScr()),
                                               );
-                                            },
+                                            },*/
                                             child: MyHomeItem(
                                               size: _size,
                                               adverts: item,

@@ -1,13 +1,11 @@
 import 'package:afariat/home/tap_home/search_viewcontroller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../mywidget/advert_card_grid.dart';
 import '../../mywidget/advert_card_list.dart';
-import '../../mywidget/myhomeitem.dart';
 import '../../networking/json/adverts_json.dart';
 import 'filter_app_bar_view.dart';
 import 'search_app_bar_view.dart';
