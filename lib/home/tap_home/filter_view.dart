@@ -18,7 +18,7 @@ class FilterView extends GetWidget<FilterViewController> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
     return Scaffold(
-      key: controller.key,
+      //key: controller.key,
       appBar: AppBar(
         title: SearchFieldAppbar(),
         backgroundColor: Colors.white,

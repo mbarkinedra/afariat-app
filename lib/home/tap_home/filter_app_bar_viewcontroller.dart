@@ -15,6 +15,12 @@ class FilterAppBarViewController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void dispose() {
+    accountInfoStorage.dispose();
+    super.dispose();
+  }
+
   Future<RxString> setLocalizationLabel() async {
     dynamic json = await accountInfoStorage.readLocalization();
     if (json != null) {

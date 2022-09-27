@@ -6,7 +6,7 @@ import '../../remote_widget/price_range_slider_viewcontroller.dart';
 import '../../storage/AccountInfoStorage.dart';
 
 class FilterViewController extends GetxController {
-  final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
+  //GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   final AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
   final PriceRangeSliderViewController priceRangeSliderViewController =
       PriceRangeSliderViewController();
@@ -18,6 +18,13 @@ class FilterViewController extends GetxController {
   void onInit() async {
     initLocalizationsFromStorageIfEmpty();
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    accountInfoStorage.dispose();
+    priceRangeSliderViewController.dispose();
+    super.dispose();
   }
 
   Future<Rx<LocalizationListJson>> initLocalizationsFromStorageIfEmpty() async {

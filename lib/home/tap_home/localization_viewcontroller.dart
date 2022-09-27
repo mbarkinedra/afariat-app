@@ -8,7 +8,7 @@ import 'filter_app_bar_viewcontroller.dart';
 import 'filter_viewcontroller.dart';
 
 class LocalizationViewController extends GetxController {
-  final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
+  //GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   TextEditingController searchFiled = TextEditingController();
 
   //TODO: Init the list by the saved localizations in the storage
@@ -20,6 +20,12 @@ class LocalizationViewController extends GetxController {
   void onInit() async {
     loadLocalizationsFromStorage();
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    searchFiled.dispose();
+    super.dispose();
   }
 
   Future<Rx<LocalizationListJson>> loadLocalizationsFromStorage() async {

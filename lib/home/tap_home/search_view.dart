@@ -17,7 +17,7 @@ class SearchView extends GetWidget<SearchViewController> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
     return Scaffold(
-      key: controller.key,
+     // key: controller.key,
       // No appbar provided to the Scaffold, only a body with a
       // CustomScrollView.
       body: SafeArea(

@@ -19,7 +19,7 @@ import '../home_view_controller.dart';
 class TapHomeViewController extends GetxController {
   BuildContext context;
 
-  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  //GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
   TextEditingController searchWord = TextEditingController();
   List<int> favorites = [];
@@ -266,9 +266,9 @@ class TapHomeViewController extends GetxController {
     update();
   }
 
-  openDrawer() {
+  /*openDrawer() {
     scaffoldKey.currentState.openDrawer();
-  }
+  }*/
 
   @override
   void dispose() {

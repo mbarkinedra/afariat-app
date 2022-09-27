@@ -6,7 +6,7 @@ import '../../networking/api/advert_api.dart';
 import '../../networking/json/adverts_json.dart';
 
 class SearchViewController extends GetxController {
-  final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
+  //GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   final PagingController<int, AdvertJson> pagingController =
       PagingController(firstPageKey: 0);
   ScrollController scrollController = ScrollController();
@@ -31,6 +31,13 @@ class SearchViewController extends GetxController {
       }
     });
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    pagingController.dispose();
+    scrollController.dispose();
+    super.dispose();
   }
 
   Future<void> fetchPage([String url]) async {

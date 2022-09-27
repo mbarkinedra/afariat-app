@@ -22,17 +22,18 @@ import 'favorite/parametres_scr.dart';
 import 'tap_home_viewcontroller.dart';
 
 class TapHomeScr extends GetWidget<TapHomeViewController> {
-  // GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey();
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     var appConfig = AppConfig.of(context);
+
     Size _size = MediaQuery.of(context).size;
     Future.delayed(const Duration(seconds: 1), () {
       controller.startIntro(context);
     });
     return Scaffold(
-      key: controller.scaffoldKey,
+      key: scaffoldKey,
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60.0), // here the desired height
           child: AppBar(
@@ -45,7 +46,7 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                     children: <Widget>[
                       InkWell(
                         key: controller.intro.keys[0],
-                        onTap: controller.openDrawer,
+                        onTap: () => scaffoldKey.currentState.openDrawer(),
                         child: const Icon(
                           Icons.menu,
                           size: 40,
@@ -348,7 +349,9 @@ class TapHomeScr extends GetWidget<TapHomeViewController> {
                           color: colorText, fontWeight: FontWeight.bold),
                     ),
                     onTap: () {
-                      Get.toNamed('/search');
+                      //Get.toNamed('/search');
+                      Get.offAndToNamed('/search');
+
                     }),
                 ListTile(
                   leading: const Icon(

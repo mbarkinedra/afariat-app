@@ -12,8 +12,8 @@ import 'filter_app_bar_viewcontroller.dart';
 import 'filter_viewcontroller.dart';
 
 class CategoryGroupViewController extends GetxController {
-  final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
-  final GlobalKey<ScaffoldState> keyCat = GlobalKey();
+  /*GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
+  GlobalKey keyCat = GlobalKey();*/
 
   //TODO: Init the list by the saved localizations in the storage
   CategoriesGroupedJsonList groupJsonList = CategoriesGroupedJsonList();
@@ -24,6 +24,11 @@ class CategoryGroupViewController extends GetxController {
   void onInit() async {
     fetchGroups();
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Future<CategoriesGroupedJsonList> fetchGroups() async {

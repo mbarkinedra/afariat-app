@@ -12,7 +12,7 @@ class CategoryGroupView extends GetWidget<CategoryGroupViewController> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
     return Scaffold(
-      key: controller.key,
+     // key: controller.key,
       appBar: AppBar(
         title: const Text(
           " Catégorie",

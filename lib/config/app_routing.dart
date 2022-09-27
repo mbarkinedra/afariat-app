@@ -15,7 +15,7 @@ class AppRouting {
   static String filter = '/filter';
   static String localization = '/filter/localization';
   static String category = '/filter/category';
-  static String adDetails = '/ad-details/:id';
+  static String adDetails = '/adDetails';
   static String newAd = '/new-ad';
   static String myAds = '/my-ads';
   static String messages = '/account/messages';
@@ -35,6 +35,6 @@ class AppRouting {
     GetPage(name: filter, page: () => const FilterView(), binding: AllBindings()),
     GetPage(name: localization, page: () => const LocalizationView(), binding: AllBindings()),
     GetPage(name: category, page: () => const CategoryGroupView(), binding: AllBindings()),
-    GetPage(name: adDetails, page: () => const AdvertDetailsView(), binding: AllBindings()),
+    GetPage(name: adDetails, page: () => AdvertDetailsView(), binding: AllBindings()),
   ];
 }

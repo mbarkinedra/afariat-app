@@ -14,7 +14,7 @@ class AdvertCardList extends AbstractAdvertCard {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: () => Get.toNamed('/ad-details',parameters: {'id': advert.id.toString()}),
+        onTap: () => Get.toNamed('/adDetails',parameters: {'id': advert.id.toString()}),
         child: Card(
           clipBehavior: Clip.antiAlias,
           margin: const EdgeInsets.all(10),

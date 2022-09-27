@@ -1,5 +1,20 @@
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
+import 'package:get_storage/get_storage.dart';
+
+import '../../model/abstract_collection_list.dart';
+import '../../model/advert_option_labels.dart';
+
+class AdvertOptionList extends AbstractCollectionList {}
+
+class AdvertOption extends AbstractOption {
+  AdvertOption({optionId, value}) : super(optionId: optionId, value: value);
+
+  AdvertOption.fromJson(String id, Map<String, dynamic> json) {
+    optionId = id;
+    value = json['value'];
+  }
+}
 
 class AdvertDetailsJson extends AbstractJsonResource {
   String createdAt;
@@ -12,22 +27,16 @@ class AdvertDetailsJson extends AbstractJsonResource {
   String description;
   int price;
   bool showPhoneNumber;
-  int area;
   AdvertType advertType;
   Category category;
   Region region;
   Category city;
   Category town;
-  RoomsNumber roomsNumber;
   List<Photos> photos;
   String shortUrl;
   Links lLinkss;
-  Mileage mileage;
-  Mileage yearModel;
-  Mileage energy;
-  Mileage vehicleBrand;
-  Mileage vehicleModel;
-  Mileage motoBrand;
+
+  AdvertOptionList options = AdvertOptionList();
   int userId;
   bool is_favorite;
 
@@ -41,22 +50,15 @@ class AdvertDetailsJson extends AbstractJsonResource {
       this.description,
       this.price,
       this.showPhoneNumber,
-      this.area,
       this.advertType,
       this.category,
       this.region,
       this.city,
       this.town,
-      this.roomsNumber,
       this.photos,
       this.shortUrl,
       this.lLinkss,
-      this.yearModel,
-      this.vehicleBrand,
-      this.vehicleModel,
-      this.mileage,
-      this.energy,
-      this.motoBrand,
+      this.options,
       this.isRegistredUser,
       this.userId,
       this.is_favorite});
@@ -76,10 +78,6 @@ class AdvertDetailsJson extends AbstractJsonResource {
     showPhoneNumber = json['show_phone_number'];
     isRegistredUser = json['isRegistredUser'];
 
-    area = json['area'];
-    advertType = json['advert_type'] != null
-        ? new AdvertType.fromJson(json['advert_type'])
-        : null;
     category = json['category'] != null
         ? new Category.fromJson(json['category'])
         : null;
@@ -87,25 +85,15 @@ class AdvertDetailsJson extends AbstractJsonResource {
         json['region'] != null ? new Region.fromJson(json['region']) : null;
     city = json['city'] != null ? new Category.fromJson(json['city']) : null;
     town = json['town'] != null ? new Category.fromJson(json['town']) : null;
-    roomsNumber = json['rooms_number'] != null
-        ? new RoomsNumber.fromJson(json['rooms_number'])
-        : null;
-    mileage =
-        json['mileage'] != null ? new Mileage.fromJson(json['mileage']) : null;
-    yearModel = json['year_model'] != null
-        ? new Mileage.fromJson(json['year_model'])
-        : null;
-    energy =
-        json['energy'] != null ? new Mileage.fromJson(json['energy']) : null;
-    vehicleBrand = json['vehicle_brand'] != null
-        ? new Mileage.fromJson(json['vehicle_brand'])
-        : null;
-    vehicleModel = json['vehicle_model'] != null
-        ? new Mileage.fromJson(json['vehicle_model'])
-        : null;
-    motoBrand = json['moto_brand'] != null
-        ? new Mileage.fromJson(json['moto_brand'])
-        : null;
+
+    for (String optionId in AdvertOptionLabels.optionsIds.keys) {
+      if (json.containsKey(optionId)) {
+        json[optionId] is Map
+            ? options.add(AdvertOption.fromJson(optionId, json[optionId]))
+            : options.add(AdvertOption(optionId:optionId , value: json[optionId].toString()));
+      }
+    }
+
     if (json['photos'] != null) {
       photos = <Photos>[];
       json['photos'].forEach((v) {
@@ -128,7 +116,6 @@ class AdvertDetailsJson extends AbstractJsonResource {
     data['description'] = this.description;
     data['price'] = this.price;
     data['show_phone_number'] = this.showPhoneNumber;
-    data['area'] = this.area;
     data['userId'] = this.userId;
     if (this.advertType != null) {
       data['advert_type'] = this.advertType.toJson();
@@ -144,12 +131,6 @@ class AdvertDetailsJson extends AbstractJsonResource {
     }
     if (this.town != null) {
       data['town'] = this.town.toJson();
-    }
-    if (this.roomsNumber != null) {
-      data['rooms_number'] = this.roomsNumber.toJson();
-    }
-    if (this.mileage != null) {
-      data['mileage'] = this.mileage.toJson();
     }
     if (this.photos != null) {
       data['photos'] = this.photos.map((v) => v.toJson()).toList();
@@ -267,22 +248,6 @@ class RoomsNumber {
   RoomsNumber({this.value});
 
   RoomsNumber.fromJson(Map<String, dynamic> json) {
-    value = json['value'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['value'] = this.value;
-    return data;
-  }
-}
-
-class Mileage {
-  String value;
-
-  Mileage({this.value});
-
-  Mileage.fromJson(Map<String, dynamic> json) {
     value = json['value'];
   }
 
