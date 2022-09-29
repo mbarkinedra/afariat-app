@@ -5,13 +5,17 @@ import '../config/utility.dart';
 import '../mywidget/custom_button_1.dart';
 import '../mywidget/search_field_appbar.dart';
 import '../networking/json/adverts_json.dart';
+import 'drawer_view.dart';
 import 'home_view_controller.dart';
 import '../../mywidget/advert_card_grid.dart';
 
 class HomeView extends GetWidget<HomeViewController> {
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: scaffoldKey,
         body: NestedScrollView(
             floatHeaderSlivers: true,
             headerSliverBuilder:
@@ -23,13 +27,42 @@ class HomeView extends GetWidget<HomeViewController> {
                   expandedHeight: 80,
                   backgroundColor: Colors.white,
                   flexibleSpace: FlexibleSpaceBar(
-                    title: Align(
-                        alignment: Alignment.center,
-                        child: Image.network(
-                          'https://lecoinoccasion.fr/build/images/lecoinoccasion.fr/logo.ad317657.webp',
-                          fit: BoxFit.cover,
-                          height: 26,
-                        )),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: InkWell(
+                            onTap: () => scaffoldKey.currentState.openDrawer(),
+                            child: const Icon(
+                              Icons.menu,
+                              color: colorGrey,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 8,
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Image.network(
+                              'https://lecoinoccasion.fr/build/images/lecoinoccasion.fr/logo.ad317657.webp',
+                              fit: BoxFit.cover,
+                              height: 26,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: InkWell(
+                            onTap: () {},
+                            child: const Icon(
+                              Icons.notifications,
+                              color: colorGrey,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     titlePadding: EdgeInsets.only(top: 60),
                   ),
                 ),
@@ -61,7 +94,7 @@ class HomeView extends GetWidget<HomeViewController> {
               _topCategories(context),
               _buildLastAds(context),
               Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: CustomButton1(
                   function: () async {
                     Get.toNamed('/search');
@@ -76,14 +109,15 @@ class HomeView extends GetWidget<HomeViewController> {
               SizedBox(
                 height: 40,
               ),
-            ]))));
+            ]))),
+    drawer: DrawerView(controller: controller.drawerController,),);
   }
 
   _topCategories(BuildContext context) {
     return SizedBox(
         height: 120,
         child: ListView.builder(
-          itemBuilder: (BuildContext, index) {
+          itemBuilder: (BuildContext context, index) {
             return InkWell(
                 onTap: () => controller
                     .selectCategory(controller.topCategories[index]['id']),
@@ -101,7 +135,7 @@ class HomeView extends GetWidget<HomeViewController> {
                     child: Align(
                       alignment: FractionalOffset.bottomCenter,
                       child: Padding(
-                          padding: EdgeInsets.only(bottom: 5),
+                          padding: const EdgeInsets.only(bottom: 5),
                           child: Container(
                               decoration: BoxDecoration(
                                   color: Colors.black.withOpacity(0.4),
@@ -111,7 +145,7 @@ class HomeView extends GetWidget<HomeViewController> {
                                   padding: EdgeInsets.all(5),
                                   child: Text(
                                     controller.topCategories[index]['label'],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold),
@@ -122,7 +156,7 @@ class HomeView extends GetWidget<HomeViewController> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   elevation: 5,
-                  margin: EdgeInsets.all(5),
+                  margin: const EdgeInsets.all(5),
                   semanticContainer: true,
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                 ));
@@ -171,5 +205,9 @@ class HomeView extends GetWidget<HomeViewController> {
             return const CircularProgressIndicator();
           }
         });
+  }
+
+  _buildDrawer(){
+
   }
 }

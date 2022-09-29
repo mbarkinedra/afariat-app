@@ -1,4 +1,4 @@
-import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
+import 'package:afariat/home/tap_home/favorite/favorite_view_controller.dart';
 import 'package:afariat/home/tap_profile/notification/notification_view_controller.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/networking/security/wsse.dart';

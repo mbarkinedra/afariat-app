@@ -8,15 +8,16 @@ import 'notification_settings_controller.dart';
 
 class NotificationSettingsView
     extends GetWidget<NotificationSettingsViewController> {
-  const NotificationSettingsView({Key key}) : super(key: key);
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             "Paramètres de notifications",
             style: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),

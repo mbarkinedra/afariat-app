@@ -1,18 +1,17 @@
-//import 'package:afariat/advert_details/advert_details_scr.dart';
-//import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
-import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/networking/json/favorite_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../config/Environment.dart';
-import 'favorite_viewController.dart';
+import 'favorite_view_controller.dart';
 
-class FavoriteScr extends GetView<FavoriteViewController> {
+class FavoriteView extends GetView<FavoriteViewController> {
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text(
           " Mes favoris",

@@ -39,7 +39,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
 
   cupertino_icons: ^1.0.2
-  url_launcher: ^6.0.20
+  url_launcher: ^6.1.6
   email_launcher: ^1.1.1
   image_picker: ^0.8.4+10
   flutter_chat_bubble: ^2.0.0

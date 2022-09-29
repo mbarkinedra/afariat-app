@@ -1,5 +1,5 @@
-import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
-import 'package:afariat/home/tap_home/favorite/parametre_viewcontroller.dart';
+import 'package:afariat/home/tap_home/favorite/favorite_view_controller.dart';
+import 'package:afariat/settings/settings_view_controller.dart';
 import 'package:afariat/home/tap_home/search_viewcontroller.dart';
 import 'package:afariat/settings/notification_settings_controller.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
@@ -21,6 +21,7 @@ import 'package:afariat/sign_in/sign_in_viewcontroller.dart';
 import 'package:afariat/sign_up/sign_up_viewcontroller.dart';
 import 'package:get/get.dart';
 
+import '../home/drawer_view_controller.dart';
 import '../home/home_view_controller.dart';
 import '../home/tap_home/advert_details_viewcontroller.dart';
 import '../home/tap_home/category_group_viewcontroller.dart';
@@ -40,6 +41,7 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => AccountViewController());
     Get.lazyPut(() => MainViewController(), fenix: true);
     Get.lazyPut(() => HomeViewController(), fenix: true);
+    Get.lazyPut(() => DrawerViewController(), fenix: true);
     Get.lazyPut(() => SearchViewController(), fenix: true);
     Get.lazyPut(() => FilterViewController(), fenix: true);
     Get.lazyPut(() => SearchAppBarViewController(), fenix: true);
@@ -51,7 +53,7 @@ class AllBindings extends Bindings {
     Get.lazyPut(
       () => NetWorkController(),
     );
-    Get.lazyPut(() => ParametreViewContoller(), fenix: true);
+    Get.lazyPut(() => SettingsViewController(), fenix: true);
     Get.lazyPut(() => FavoriteViewController(), fenix: true);
     Get.lazyPut(() => NotificationSettingsViewController(), fenix: true);
     Get.put(TapPublishViewController());

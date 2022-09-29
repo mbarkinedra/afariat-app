@@ -1,19 +1,21 @@
 import 'package:afariat/config/utility.dart';
-import 'package:afariat/home/tap_home/favorite/parametre_viewcontroller.dart';
+import 'package:afariat/settings/settings_view_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../mywidget/menu_entry.dart';
-import '../../../settings/notification_settings_src.dart';
-import '../../../storage/AccountInfoStorage.dart';
+import '../config/app_routing.dart';
+import '../mywidget/menu_entry.dart';
+import 'notification_settings_view.dart';
+import '../storage/AccountInfoStorage.dart';
 
-class ParametreScr extends GetView<ParametreViewContoller> {
-  const ParametreScr({Key key}) : super(key: key);
+class SettingsView extends GetView<SettingsViewController> {
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: const Text(
           " Paramètres",
@@ -44,13 +46,7 @@ class ParametreScr extends GetView<ParametreViewContoller> {
                       colorText: Colors.black)
                 }
               else
-                {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (
-                    context,
-                  ) =>
-                          const NotificationSettingsView())),
-                }
+                {Get.toNamed(AppRouting.preferences)}
             },
           ),
         ]),

@@ -5,8 +5,10 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import '../networking/api/advert_api.dart';
 import '../networking/json/adverts_json.dart';
 import '../storage/AccountInfoStorage.dart';
+import 'drawer_view_controller.dart';
 
 class HomeViewController extends GetxController {
+  DrawerViewController drawerController = DrawerViewController();
   AdvertListJson advertListJson = AdvertListJson();
 
   final AdvertApi _advertApi = AdvertApi();

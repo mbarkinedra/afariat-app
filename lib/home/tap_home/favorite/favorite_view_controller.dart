@@ -4,15 +4,20 @@ import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:get/get.dart';
 
 class FavoriteViewController extends GetxController {
-  FavoriteApi _favoriteApi = FavoriteApi();
+  final FavoriteApi _favoriteApi = FavoriteApi();
 
   FavoriteJson favoriteJson;
   int idItemDelete;
 
   @override
   void onInit() {
-    super.onInit();
     getFavorite();
+    super.onInit();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   ///Add favovorite advert from homescrenn and advertDetails
