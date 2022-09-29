@@ -93,6 +93,7 @@ flutter:
     - assets/images/lecoinoccasion.fr/splash.png
     - assets/images/lecoinoccasion.fr/logo.png
     - assets/images/lecoinoccasion.fr/drawer.jpg
+    - assets/images/common/categories/
     - .env.afariat.com
     - .env.lecoinoccasion.fr
 

@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'bindings/bindings.dart';
 import 'config/app_config.dart';
-import 'home/home_view.dart';
+import 'home/main_view.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> mainCommon(String fileEnv) async {
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
               splashIconSize: 130,
               splash: Image.asset(
                   "assets/images/" + appConfig.appName + "/splash.png"),
-              nextScreen: const HomeView(),
+              nextScreen: const MainView(),
               splashTransition: SplashTransition.slideTransition,
               backgroundColor: framColor
           ),

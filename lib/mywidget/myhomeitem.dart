@@ -1,7 +1,6 @@
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_home/favorite/favorite_viewController.dart';
-import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/networking/json/adverts_json.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:flutter/material.dart';
@@ -120,7 +119,7 @@ class MyHomeItem extends StatelessWidget {
                           softWrap: true,
                           overflow: TextOverflow.fade,
                         ),
-                        InkWell(
+                        /*InkWell(
                           onTap: () {
                             if (Get.find<AccountInfoStorage>().isLoggedIn()) {
                               if (Get.find<TapHomeViewController>()
@@ -128,8 +127,7 @@ class MyHomeItem extends StatelessWidget {
                                   .contains(adverts.id)) {
                                 Get.find<FavoriteViewController>()
                                     .deleteFavoriteByAdvert(adverts.id);
-                                Get.find<TapHomeViewController>()
-                                    .deleteFromFavoritesList(adverts.id);
+                                Get.find<TapHomeViewController>().deleteFromFavoritesList(adverts.id);
                               } else {
                                 Get.find<FavoriteViewController>()
                                     .addToMyFavorite(adverts.id);
@@ -159,7 +157,7 @@ class MyHomeItem extends StatelessWidget {
                                     ? Colors.red
                                     : Colors.grey,
                           ),
-                        )
+                        )*/
                       ],
                     ),
                   ],

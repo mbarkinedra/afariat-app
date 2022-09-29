@@ -2,7 +2,6 @@
 //import 'package:afariat/advert_details/advert_details_viewcontroller.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
-import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/networking/json/favorite_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -102,10 +101,10 @@ class SingleAdvert extends StatelessWidget {
           children: <Widget>[
             InkWell(
               onTap: () {
-                Get.find<TapHomeViewController>()
+                /*Get.find<TapHomeViewController>()
                     .favorites
-                    .remove(favorite.advert.id);
-                Get.find<TapHomeViewController>().update();
+                    .remove(favorite.advert.id);*/
+                //Get.find<TapHomeViewController>().update();
                 Get.find<FavoriteViewController>().idItemDelete =
                     favorite.advert.id;
                 Get.find<FavoriteViewController>().deleteFavorite(favorite.id);

@@ -13,7 +13,7 @@ import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../home_view_controller.dart';
+import '../main_view_controller.dart';
 import 'tap_publish_viewcontroller.dart';
 
 class TapPublishScr extends GetWidget<TapPublishViewController> {
@@ -29,7 +29,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
             leading: Obx(() => controller.modifAds.value
                 ? InkWell(
                     onTap: () {
-                      Get.find<HomeViewController>().changeItemFilter(1);
+                      Get.find<MainViewController>().changeItemFilter(1);
                     },
                     child: const Icon(Icons.arrow_back))
                 : const SizedBox()),

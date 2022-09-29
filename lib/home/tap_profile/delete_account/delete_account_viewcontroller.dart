@@ -2,7 +2,7 @@ import 'package:afariat/networking/api/user.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:get/get.dart';
 
-import '../../home_view_controller.dart';
+import '../../main_view_controller.dart';
 
 class DeleteAccountViewController extends GetxController{
   UserApi _userApi = UserApi();
@@ -15,7 +15,7 @@ class DeleteAccountViewController extends GetxController{
         .deleteResource(Get.find<AccountInfoStorage>().readUserId())
         .then((value) {
       Get.find<AccountInfoStorage>().logout();
-      Get.find<HomeViewController>().changeItemFilter(0);
+      Get.find<MainViewController>().changeItemFilter(0);
       Get.back();
     });
   }

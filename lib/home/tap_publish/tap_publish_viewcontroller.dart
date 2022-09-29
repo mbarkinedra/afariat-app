@@ -20,7 +20,7 @@ import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import '../home_view_controller.dart';
+import '../main_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
   //if set to true, when update categories, options,... the filter will be set by the selected value.
@@ -432,7 +432,7 @@ class TapPublishViewController extends GetxController {
               Get.find<CategoryAndSubcategory>()
                   .clearDataCategroyAndSubCategory();
               Get.find<LocController>().clearDataCityAndTown();
-              Get.find<HomeViewController>().changeItemFilter(1);
+              Get.find<MainViewController>().changeItemFilter(1);
               await showDialog<bool>(
                   context: context,
                   builder: (context) {
@@ -447,7 +447,7 @@ class TapPublishViewController extends GetxController {
                         Navigator.pop(context);
                         Get.find<TapMyAdsViewController>().getAllAds();
                         Get.find<TapPublishViewController>().clearAllData();
-                        Get.find<HomeViewController>().changeItemFilter(1);
+                        Get.find<MainViewController>().changeItemFilter(1);
                       },
                       description: "Votre annonce est en cours de validation !",
                       buttonText: "Ok",
@@ -486,7 +486,7 @@ class TapPublishViewController extends GetxController {
                       Navigator.pop(context);
                       Get.find<TapPublishViewController>().clearAllData();
                       Get.find<TapMyAdsViewController>().getAllAds();
-                      Get.find<HomeViewController>().changeItemFilter(1);
+                      Get.find<MainViewController>().changeItemFilter(1);
                     },
                     description: "Votre annonce est en cours de validation !",
                     buttonText: "Ok",

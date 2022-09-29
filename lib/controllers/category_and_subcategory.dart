@@ -1,4 +1,3 @@
-import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/networking/api/categories_groupped_api.dart';
 import 'package:afariat/networking/api/ref_api.dart';
@@ -10,7 +9,7 @@ import 'network_controller.dart';
 
 class CategoryAndSubcategory extends GetxController {
   final CategoriesGrouppedApi _categoriesGrouppedApi = CategoriesGrouppedApi();
-  final tapHomeViewController = Get.find<TapHomeViewController>();
+  //final tapHomeViewController = Get.find<TapHomeViewController>();
   final tapPublishViewController = Get.find<TapPublishViewController>();
   Map<int, List<SubCategoryJson>> sc = {};
   List<SubCategoryJson> listSubCategories = [];

@@ -68,6 +68,8 @@ class LocalizationListJson extends AbstractJsonResource {
 
   int count() => isEmpty() ? 0 : data.length;
 
+  void clear() => data?.clear();
+
   bool containsKey(int index) => data.asMap().containsKey(index);
 
   List<LocalizationJson> toList() => data;

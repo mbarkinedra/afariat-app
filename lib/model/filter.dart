@@ -3,14 +3,19 @@ import 'package:get/get.dart';
 class ParameterBag {
   Map<String, dynamic> data = {};
 
+  ParameterBag([this.data]);
+
+  factory ParameterBag.from(ParameterBag p) => ParameterBag(p.data);
+
   //Observable count to make it accessible from views
   RxInt count = 0.obs;
 
   String toHttpQuery() => Uri(
       queryParameters:
-          data.map((key, value) => MapEntry(key, value?.toString()))).query;
+          data?.map((key, value) => MapEntry(key, value?.toString()))).query;
 
   set(k, v) {
+    data ??= {};
     data[k] = v;
     count.value = data.length;
   }
@@ -22,7 +27,18 @@ class ParameterBag {
     count.value = data.length;
   }
 
-  clear() => data.clear();
+  clear() {
+    data.clear();
+    count.value = 0;
+  }
+
+  clearExcept(k) {
+    if (data == null) {
+      return;
+    }
+    data.removeWhere((key, value) => key == k);
+    count.value = data.length;
+  }
 }
 
 class Filter {
@@ -40,6 +56,9 @@ class Filter {
 
   /// Clear the filter data
   static clear() => rxParameters.value.clear();
+
+  ///Clear all except the given index param
+  static clearExcept(k) => rxParameters.value.clearExcept(k);
 
   static int count() => rxParameters.value.count.value;
 }

@@ -1,4 +1,3 @@
-import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:get/get.dart';
 import 'package:afariat/networking/api/ref_api.dart';
@@ -7,7 +6,7 @@ import 'package:afariat/model/filter.dart';
 import 'network_controller.dart';
 
 class LocController extends GetxController {
-  final tapHomeViewController = Get.find<TapHomeViewController>();
+  //final tapHomeViewController = Get.find<TapHomeViewController>();
   final tapPublishViewController = Get.find<TapPublishViewController>();
   final CityApi _cityApi = CityApi();
   final TownApi _townsApi = TownApi();

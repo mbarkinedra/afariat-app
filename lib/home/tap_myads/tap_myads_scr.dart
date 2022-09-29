@@ -6,7 +6,7 @@ import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:afariat/mywidget/custom_dialogue_delete.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../home_view_controller.dart';
+import '../main_view_controller.dart';
 import 'tap_myads_viewcontroller.dart';
 
 class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
@@ -65,7 +65,7 @@ class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
                                         ),
                                         CustomButtonWithoutIcon(
                                             function: () {
-                                              Get.find<HomeViewController>()
+                                              Get.find<MainViewController>()
                                                   .changeItemFilter(2);
                                             },
                                             labColor: Colors.white,
@@ -131,7 +131,7 @@ class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
                                                 tapPublishViewController
                                                     .getAllData(logic
                                                         .adverts[position].id);
-                                                Get.find<HomeViewController>()
+                                                Get.find<MainViewController>()
                                                     .changeItemFilter(2);
                                               },
                                             );

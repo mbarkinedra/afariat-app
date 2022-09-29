@@ -21,8 +21,8 @@ class AdvertApi extends ResourceApi {
   @override
   Future<dynamic> getList({Map<String, dynamic> filters}) async {
     //if user is logged in, use the secure call.
-    if (this.accountInfoStorage.isLoggedIn()) {
-      return await this.secureGetList(filters: filters);
+    if (accountInfoStorage.isLoggedIn()) {
+      return await secureGetList(filters: filters);
     }
     return await super.getList(filters: filters);
   }
@@ -46,6 +46,7 @@ class AdvertApi extends ResourceApi {
 
   @override
   fromJson(data) {
+    print(data);
     return AdvertListJson.fromJson(data);
   }
 }

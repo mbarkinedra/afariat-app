@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../bindings/bindings.dart';
-import '../home/home_view.dart';
+import '../home/main_view.dart';
 import '../home/tap_home/category_group_view.dart';
 import '../home/tap_home/localization_view.dart';
 import '../home/tap_home/search_view.dart';
@@ -27,10 +27,10 @@ class AppRouting {
   static String settings = '/settings';
 
   static Map<String, dynamic> routes = {
-    '/': (context) => const HomeView()
+    '/': (context) => const MainView()
   };
   static List<GetPage> pages = [
-    GetPage(name: home, page: () => const HomeView(), binding: AllBindings()),
+    GetPage(name: home, page: () => const MainView(), binding: AllBindings()),
     GetPage(name: search, page: () => const SearchView(), binding: AllBindings()),
     GetPage(name: filter, page: () => const FilterView(), binding: AllBindings()),
     GetPage(name: localization, page: () => const LocalizationView(), binding: AllBindings()),

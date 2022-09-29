@@ -60,7 +60,12 @@ abstract class ApiManager {
         );
         break;
       case 404:
-        // resource not found
+        Get.snackbar(
+          'Erreur',
+          'Not found',
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+        );
         break;
     }
     return response.statusCode;
@@ -133,7 +138,7 @@ abstract class ApiManager {
   Future<dynamic> secureGetList({Map<String, dynamic> filters}) async {
     AbstractJsonResource jsonList;
 
-    var json = await this.secureGet();
+    var json = await secureGet(filters:filters);
     jsonList = fromJson(json.data);
 
     return jsonList;
@@ -198,6 +203,8 @@ abstract class ApiManager {
   /// Get Data  User From Server
   Future<Response<dynamic>> secureGet({Map<String, dynamic> filters}) async {
     String wsse = Wsse.generateWsseFromStorage();
+    //print(apiUrl());
+    //print(filters);
     return dioSingleton.dio
         .get(
       apiUrl(),

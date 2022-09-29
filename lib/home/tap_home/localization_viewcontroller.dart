@@ -1,3 +1,4 @@
+import 'package:afariat/home/tap_home/search_viewcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../model/filter.dart';
@@ -71,9 +72,9 @@ class LocalizationViewController extends GetxController {
     await accountInfoStorage.saveLocalization(localizationsJsonList.value.toJson());
 
     if (localization.isNotEmpty) {
-      Filter.set('localisation', localizationsJsonList.value.toFilter());
+      Filter.set(AccountInfoStorage.keyLocalization, localizationsJsonList.value.toFilter());
     } else {
-      Filter.remove('localisation');
+      Filter.remove(AccountInfoStorage.keyLocalization);
     }
     //update the label of localization
     Get.find<FilterAppBarViewController>().setLocalizationLabel();
@@ -81,5 +82,7 @@ class LocalizationViewController extends GetxController {
     await Get.find<FilterViewController>().loadLocalizationsFromStorage();
     Get.find<FilterViewController>().localizationsJsonList.refresh();
     Navigator.pop(context);
+
+    Get.find<SearchViewController>().makeSearch();
   }
 }

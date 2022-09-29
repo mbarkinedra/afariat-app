@@ -1,9 +1,12 @@
+import 'package:afariat/home/tap_home/search_viewcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../config/Environment.dart';
 import '../../model/filter.dart';
 import '../../networking/json/localization_json.dart';
 import '../../remote_widget/price_range_slider_viewcontroller.dart';
 import '../../storage/AccountInfoStorage.dart';
+import 'filter_app_bar_viewcontroller.dart';
 
 class FilterViewController extends GetxController {
   //GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
@@ -42,8 +45,17 @@ class FilterViewController extends GetxController {
     }
   }
 
-  clear() {
+  clear(BuildContext context) async {
     //TODO: clean the filter
+    await accountInfoStorage.removeLocalization();
+    if(localizationsJsonList.value != null) {
+      localizationsJsonList.value.clear();
+    }
+    Get.find<FilterAppBarViewController>().localizationLabel.value = Environment.allCountryLabel;
     Filter.clear();
+
+    Get.find<SearchViewController>().makeSearch();
+    Navigator.pop(context);
   }
+
 }

@@ -39,6 +39,7 @@ class FilterAppBarViewController extends GetxController {
           break;
       }
     }
+    update();
     return localizationLabel;
   }
 }

@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../home_view_controller.dart';
+import '../main_view_controller.dart';
 
 class TapHomeViewController extends GetxController {
   BuildContext context;
@@ -360,7 +360,7 @@ class TapHomeViewController extends GetxController {
                       InkWell(
                         onTap: () {
                           params.onFinish();
-                          Get.find<HomeViewController>().startIntro1();
+                          Get.find<MainViewController>().startIntro1();
                         },
                         child: Container(
                             padding: EdgeInsets.all(8),

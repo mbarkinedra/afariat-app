@@ -1,4 +1,5 @@
 import 'package:afariat/config/utility.dart';
+import 'package:afariat/home/tap_home/search_viewcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -124,8 +125,8 @@ class FilterView extends GetWidget<FilterViewController> {
                   foregroundColor:
                       MaterialStateProperty.all<Color>(Colors.black),
                 ),
-                onPressed: () {
-                  controller.clear();
+                onPressed: (){
+                  controller.clear(context);
                 },
                 child: const Text(
                   'Effacer',
@@ -144,7 +145,8 @@ class FilterView extends GetWidget<FilterViewController> {
               flex: 7,
               child: CustomButton1(
                 function: () async {
-                  //TODO: save the filter and refresh the results
+                  Navigator.pop(context);
+                  Get.find<SearchViewController>().makeSearch();
                 },
                 labcolor: Colors.white,
                 height: 40,

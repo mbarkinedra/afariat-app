@@ -39,16 +39,18 @@ class FilterAppBarView extends GetWidget<FilterAppBarViewController> {
                     const SizedBox(
                       width: 5,
                     ),
-                    CircleAvatar(
-                        backgroundColor: framColor,
-                        radius: 14,
-                        child: Obx(
-                          () => Text(
-                              //Filter.count().toString(),
-                              Filter.rxParameters.value.count.toString(),
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold)),
-                        )),
+                    Obx(
+                      () => Filter.rxParameters.value.count > 0
+                          ? CircleAvatar(
+                              backgroundColor: framColor,
+                              radius: 14,
+                              child: Text(
+                                  Filter.rxParameters.value.count.toString(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold)),
+                            )
+                          : SizedBox(),
+                    )
                   ],
                 ),
                 style: OutlinedButton.styleFrom(
@@ -92,8 +94,10 @@ class FilterAppBarView extends GetWidget<FilterAppBarViewController> {
                   ],
                   isSelected: _isSelected.value,
                   onPressed: (int index) {
-                    _isSelected.value = _isSelected.value.map((e) => !e).toList();
-                    Get.find<SearchViewController>().isGrid.value = index == 1 ? true : false;
+                    _isSelected.value =
+                        _isSelected.value.map((e) => !e).toList();
+                    Get.find<SearchViewController>().isGrid.value =
+                        index == 1 ? true : false;
                   },
                 )),
           ])),

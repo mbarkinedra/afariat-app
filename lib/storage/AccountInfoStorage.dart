@@ -1,4 +1,4 @@
-import 'package:afariat/home/home_view_controller.dart';
+import 'package:afariat/home/main_view_controller.dart';
 import 'package:afariat/storage/storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -15,7 +15,7 @@ class AccountInfoStorage extends GetxController {
   static const _keyIntro = 'intro';
   static const _keyPhone = 'phone';
   static const _keyPreference = 'preference';
-  static const _keyLocalization = 'localization';
+  static const keyLocalization = 'localisation';
 
   SecureStorage _secureStorage = Get.find<SecureStorage>();
 
@@ -52,7 +52,7 @@ class AccountInfoStorage extends GetxController {
   }
 
   saveLocalization(Map<String, dynamic> localizationList) async {
-    await _secureStorage.write(_keyLocalization, localizationList);
+    await _secureStorage.write(keyLocalization, localizationList);
   }
 
   String readEmail() {
@@ -90,7 +90,7 @@ class AccountInfoStorage extends GetxController {
   }
 
   Future<dynamic> readLocalization() async {
-    return _secureStorage.read(_keyLocalization);
+    return _secureStorage.read(keyLocalization);
   }
 
   /// Removes the hashed password from the secure storage, so user is no longer loggen in.
@@ -109,6 +109,17 @@ class AccountInfoStorage extends GetxController {
       }
     }
 
+    removeUserData();
+
+    Get.find<MainViewController>().updateList();
+    Get.find<MainViewController>().update();
+  }
+
+  removeLocalization() async {
+    await _secureStorage.remove(keyLocalization);
+  }
+
+  removeUserData() {
     //Now remove everything in the local storage
     _secureStorage.deleteSecureData(_keyEmail);
     _secureStorage.deleteSecureData(_keyPhone);
@@ -117,8 +128,11 @@ class AccountInfoStorage extends GetxController {
     _secureStorage.deleteSecureData(_keyPassword);
     _secureStorage.deleteSecureData(_keyHashedPassword);
     _secureStorage.deleteSecureData(_keyPreference);
-    Get.find<HomeViewController>().updateList();
-    Get.find<HomeViewController>().update();
+  }
+
+  removeAll() {
+    removeUserData();
+    _secureStorage.deleteSecureData(keyLocalization);
   }
 
   bool isLoggedIn() {

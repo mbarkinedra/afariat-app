@@ -1,3 +1,4 @@
+import 'package:afariat/model/filter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -40,6 +41,7 @@ class SearchViewController extends GetxController {
     super.dispose();
   }
 
+  /// fetch page
   Future<void> fetchPage([String url]) async {
     try {
       _api.url = url;
@@ -54,6 +56,25 @@ class SearchViewController extends GetxController {
     }
   }
 
+  ///make search based on the filter values
+  Future<void> makeSearch() async {
+    pagingController.refresh();
+    try {
+      await _api.getList().then((value) {
+        advertListJson = value;
+      });
+
+      pagingController.appendLastPage(advertListJson.adverts());
+
+      update();
+    } catch (error) {
+      pagingController.error = error;
+    }
+
+    update();
+  }
+
+
   Future<void> onSwipeUp() async {
     isLoadingMore.value = true;
     if (advertListJson.links.next == null) {
@@ -65,7 +86,6 @@ class SearchViewController extends GetxController {
   }
 
   Future<void> swipeDown() async {
-    await print('swipedown');
     pagingController.itemList?.clear();
 
     if (advertListJson.links.previous == null) {
