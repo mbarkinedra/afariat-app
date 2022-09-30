@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'notification_view_controller.dart';
 
-class NotificationSrc extends GetWidget<NotificationViewController> {
+class NotificationView extends GetWidget<NotificationViewController> {
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: framColor,
         title: const Text(
@@ -19,11 +22,11 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
           onRefresh: controller.onRefreshNotification,
           child: logic.notifications.isEmpty
               ? const Center(
-                child: Text(
-                  " Pas des notifications",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              )
+                  child: Text(
+                    " Pas des notifications",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )
               : ListView.builder(
                   controller: controller.scrollController,
                   itemCount: logic.notifications.length + 1,
@@ -97,8 +100,7 @@ class NotificationSrc extends GetWidget<NotificationViewController> {
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: Text(
-                                                logic
-                                                    .notifications[pos].title,
+                                                logic.notifications[pos].title,
                                                 style: TextStyle(
                                                     fontWeight: logic
                                                             .notifications[pos]

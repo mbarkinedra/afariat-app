@@ -7,7 +7,7 @@ import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
 
 class NotificationViewController extends GetxController {
-  NotificationApi _notificationApi = NotificationApi();
+  final NotificationApi _notificationApi = NotificationApi();
   material.ScrollController scrollController = material.ScrollController();
   List<Notification> notifications = [];
   RxBool hasNotification = false.obs;

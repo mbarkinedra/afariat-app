@@ -15,7 +15,7 @@ class DeleteAccountViewController extends GetxController{
         .deleteResource(Get.find<AccountInfoStorage>().readUserId())
         .then((value) {
       Get.find<AccountInfoStorage>().logout();
-      Get.find<MainViewController>().changeItemFilter(0);
+      //Get.find<MainViewController>().changeItemFilter(0);
       Get.back();
     });
   }

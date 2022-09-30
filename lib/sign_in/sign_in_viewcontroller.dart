@@ -54,8 +54,8 @@ class SignInViewController extends GetxController {
 
                     await Get.find<FavoriteViewController>().getFavorite();
 
-                    Get.find<MainViewController>().changeItemFilter(0);
-                    Get.find<MainViewController>().updateList();
+                    //Get.find<MainViewController>().changeItemFilter(0);
+                    //Get.find<MainViewController>().updateList();
                     Get.find<AccountViewController>().getUserData();
                     Get.find<NotificationViewController>().getAllNotification();
                     email.clear();

@@ -9,9 +9,11 @@ import 'chat_user/chat_user_viewcontroller.dart';
 import 'tap_chat_viewcontroller.dart';
 
 class TapChatScr extends GetWidget<TapChatViewController> {
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key:scaffoldKey,
         appBar: AppBar(
           title: const Text(
             "Messagerie",

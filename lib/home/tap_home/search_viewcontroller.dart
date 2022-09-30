@@ -78,9 +78,9 @@ class SearchViewController extends GetxController {
   Future<void> onSwipeUp() async {
     isLoadingMore.value = true;
     if (advertListJson.links.next == null) {
-      await fetchPage(advertListJson.links.getLastUrl());
+      await fetchPage(advertListJson.links.lastUrl);
     } else {
-      await fetchPage(advertListJson.links.getNextUrl());
+      await fetchPage(advertListJson.links.nextUrl);
       isLoadingMore.value = false;
     }
   }
@@ -89,9 +89,9 @@ class SearchViewController extends GetxController {
     pagingController.itemList?.clear();
 
     if (advertListJson.links.previous == null) {
-      await fetchPage(advertListJson.links.getFirstUrl());
+      await fetchPage(advertListJson.links.firstUrl);
     } else {
-      await fetchPage(advertListJson.links.getPreviousUrl());
+      await fetchPage(advertListJson.links.previousUrl);
     }
   }
 }

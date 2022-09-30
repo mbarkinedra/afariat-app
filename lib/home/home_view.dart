@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../config/app_config.dart';
+import '../config/app_routing.dart';
 import '../config/utility.dart';
 import '../mywidget/custom_button_1.dart';
 import '../mywidget/search_field_appbar.dart';
@@ -14,103 +16,105 @@ class HomeView extends GetWidget<HomeViewController> {
 
   @override
   Widget build(BuildContext context) {
+    var appConfig = AppConfig.of(context);
     return Scaffold(
-        key: scaffoldKey,
-        body: NestedScrollView(
-            floatHeaderSlivers: true,
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverAppBar(
-                  floating: true,
-                  pinned: false,
-                  expandedHeight: 80,
-                  backgroundColor: Colors.white,
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: InkWell(
-                            onTap: () => scaffoldKey.currentState.openDrawer(),
-                            child: const Icon(
-                              Icons.menu,
-                              color: colorGrey,
-                            ),
+      key: scaffoldKey,
+      body: NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                floating: true,
+                pinned: false,
+                expandedHeight: 80,
+                backgroundColor: Colors.white,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: InkWell(
+                          onTap: () => scaffoldKey.currentState.openDrawer(),
+                          child: const Icon(
+                            Icons.menu,
+                            color: colorGrey,
+                            size: 22,
                           ),
                         ),
-                        Expanded(
-                          flex: 8,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Image.network(
-                              'https://lecoinoccasion.fr/build/images/lecoinoccasion.fr/logo.ad317657.webp',
-                              fit: BoxFit.cover,
-                              height: 26,
-                            ),
+                      ),
+                      Expanded(
+                        flex: 8,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            "assets/images/" + appConfig.appName + "/logo.png",
+                            width: 100,
                           ),
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: InkWell(
-                            onTap: () {},
-                            child: const Icon(
-                              Icons.notifications,
-                              color: colorGrey,
-                            ),
-                          ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: InkWell(
+                          onTap: () {
+                            Get.toNamed(AppRouting.notifications);
+                          },
+                          child: _buildNotifications(),
                         ),
-                      ],
-                    ),
-                    titlePadding: EdgeInsets.only(top: 60),
+                      ),
+                    ],
                   ),
-                ),
-                SliverAppBar(
-                  floating: true,
-                  pinned: true,
-                  snap: true,
-                  backgroundColor: Colors.white,
-                  automaticallyImplyLeading: false,
-                  expandedHeight: 60,
-                  title: Padding(
-                    child: SearchFieldAppbar(),
-                    padding: const EdgeInsets.only(
-                        left: 10, right: 10, bottom: 10, top: 10),
-                  ),
-                ),
-              ];
-            },
-            body: SingleChildScrollView(
-                child: Column(children: [
-              const Padding(
-                padding:
-                    EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 10),
-                child: Text(
-                  'Top catégories',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  titlePadding: const EdgeInsets.only(top: 60),
                 ),
               ),
-              _topCategories(context),
-              _buildLastAds(context),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: CustomButton1(
-                  function: () async {
-                    Get.toNamed('/search');
-                  },
-                  labcolor: Colors.white,
-                  height: 40,
-                  width: context.mediaQuery.size.width * .8,
-                  label: "Toutes les annonces",
-                  btcolor: buttonColor,
+              SliverAppBar(
+                floating: true,
+                pinned: true,
+                snap: true,
+                backgroundColor: Colors.white,
+                automaticallyImplyLeading: false,
+                expandedHeight: 60,
+                title: Padding(
+                  child: SearchFieldAppbar(),
+                  padding: const EdgeInsets.only(
+                      left: 10, right: 10, bottom: 10, top: 10),
                 ),
               ),
-              SizedBox(
+            ];
+          },
+          body: SingleChildScrollView(
+              child: Column(children: [
+            const Padding(
+              padding:
+                  EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 10),
+              child: Text(
+                'Top catégories',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+            ),
+            _topCategories(context),
+            _buildLastAds(context),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: CustomButton1(
+                function: () async {
+                  Get.toNamed('/search');
+                },
+                labcolor: Colors.white,
                 height: 40,
+                width: context.mediaQuery.size.width * .8,
+                label: "Toutes les annonces",
+                btcolor: buttonColor,
               ),
-            ]))),
-    drawer: DrawerView(controller: controller.drawerController,),);
+            ),
+            SizedBox(
+              height: 40,
+            ),
+          ]))),
+      drawer: DrawerView(
+        controller: controller.drawerController,
+      ),
+    );
   }
 
   _topCategories(BuildContext context) {
@@ -142,7 +146,7 @@ class HomeView extends GetWidget<HomeViewController> {
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.circular(5)),
                               child: Padding(
-                                  padding: EdgeInsets.all(5),
+                                  padding: const EdgeInsets.all(5),
                                   child: Text(
                                     controller.topCategories[index]['label'],
                                     style: const TextStyle(
@@ -207,7 +211,44 @@ class HomeView extends GetWidget<HomeViewController> {
         });
   }
 
-  _buildDrawer(){
-
+  _buildNotifications() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 1),
+      child: Stack(
+        children: [
+          const Icon(
+            Icons.notifications,
+            color: colorGrey,
+            size: 22,
+          ),
+          if (controller.notificationController.notifCount.value > 0)
+            Positioned(
+              left: 10,
+              top: 0,
+              child: Container(
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.red),
+                child: Center(
+                  child: Obx(
+                    () => Padding(
+                      padding: const EdgeInsets.all(1),
+                      child: Text(
+                        controller.notificationController.notifCount.value < 10
+                            ? controller.notificationController.notifCount.value
+                                .toString()
+                            : "9+",
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 8),
+                      ),
+                    ),
+                  ),
+                ),
+                height: 14,
+                width: 14,
+              ),
+            )
+        ],
+      ),
+    );
   }
 }

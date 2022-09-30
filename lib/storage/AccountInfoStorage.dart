@@ -111,7 +111,7 @@ class AccountInfoStorage extends GetxController {
 
     removeUserData();
 
-    Get.find<MainViewController>().updateList();
+    //Get.find<MainViewController>().updateList();
     Get.find<MainViewController>().update();
   }
 

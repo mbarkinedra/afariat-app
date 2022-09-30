@@ -1,11 +1,9 @@
-import 'package:afariat/config/app_routing.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'main_view_controller.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'tap_publish/tap_publish_viewcontroller.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 // ignore: must_be_immutable
 class MainView extends GetWidget<MainViewController> {
@@ -17,18 +15,18 @@ class MainView extends GetWidget<MainViewController> {
       controller.context = context;
     });
     return PersistentTabView(
-      context, onItemSelected: controller.changeItemFilter,
-      controller: controller.controller,
+      context, onItemSelected: (int index) => controller.changePage(index),
+      controller: controller.tabController,
       screens: controller.buildScreens,
       items: _navBarsItems(),
       selectedTabScreenContext: (BuildContext context) {
         controller.context = context;
-        Get.find<TapPublishViewController>().context = context;
+        //Get.find<TapPublishViewController>().context = context;
       },
-      confineInSafeArea: true,
+      confineInSafeArea: false,
       backgroundColor: Colors.white,
       // Default is Colors.white.
-      handleAndroidBackButtonPress: false,
+      handleAndroidBackButtonPress: true,
       // Default is true.
       resizeToAvoidBottomInset: true,
       // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
@@ -44,7 +42,7 @@ class MainView extends GetWidget<MainViewController> {
       // popActionScreens: PopActionScreensType.all,
       itemAnimationProperties: const ItemAnimationProperties(
         // Navigation Bar's items animation properties.
-        duration: Duration(seconds: 1),
+        duration: Duration(milliseconds: 200),
         curve: Curves.easeInCubic,
       ),
       screenTransitionAnimation: const ScreenTransitionAnimation(
@@ -65,44 +63,35 @@ class MainView extends GetWidget<MainViewController> {
         title: ("Acceuil"),
         activeColorPrimary: framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
+        routeAndNavigatorSettings: controller.routeAndNavigatorSettings(),
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.photo_size_select_large_outlined,
-            key: controller.intro.keys[0]),
+        icon: Icon(Icons.photo_size_select_large_outlined),
         title: ("Annonces"),
         activeColorPrimary: framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
+        routeAndNavigatorSettings: controller.routeAndNavigatorSettings(),
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.add,
-            color: Colors.white, size: 35, key: controller.intro.keys[1]),
+        icon: Icon(Icons.add, color: Colors.white, size: 35),
         title: ("Publier"),
         activeColorPrimary: framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
+        routeAndNavigatorSettings: controller.routeAndNavigatorSettings(),
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.article_rounded, key: controller.intro.keys[2]),
+        icon: Icon(Icons.article_rounded),
         title: ("Chat"),
         activeColorPrimary: framColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
+        routeAndNavigatorSettings: controller.routeAndNavigatorSettings(),
       ),
       PersistentBottomNavBarItem(
         icon: Stack(
-          children: [
+          children: const [
             Icon(
               Icons.person,
-              key: controller.intro.keys[3],
             ),
-      /*      Obx(() => Get.find<NotificationViewController>()
-                    .hasNotification
-                    .value
-                ? Container(
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.red),
-                    height: 10,
-                    width: 10,
-                  )
-                : SizedBox())*/
           ],
         ),
         title: ("Profil"),

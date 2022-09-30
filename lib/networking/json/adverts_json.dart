@@ -1,6 +1,8 @@
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 
+import 'link.dart';
+
 class AdvertListJson extends AbstractJsonResource {
   int page;
   int limit;
@@ -23,66 +25,11 @@ class AdvertListJson extends AbstractJsonResource {
     limit = json['limit'];
     pages = json['pages'];
     total = json['total'];
-
     links = Links.fromJson(json['_links']);
     embedded = Embedded.fromJson(json['_embedded']);
   }
 
   List<AdvertJson> adverts() => embedded?.adverts;
-}
-
-class Links {
-  Link self;
-  Link first;
-  Link last;
-  Link next;
-  Link previous;
-
-  Links({this.self, this.first, this.last, this.next, this.previous});
-
-  Links.fromJson(Map<String, dynamic> json) {
-    self = json['self'] != null ? Link.fromJson(json['self']) : null;
-    first = json['first'] != null ? Link.fromJson(json['first']) : null;
-    last = json['last'] != null ? Link.fromJson(json['last']) : null;
-    next = json['next'] != null ? Link.fromJson(json['next']) : null;
-    previous =
-        json['previous'] != null ? Link.fromJson(json['previous']) : null;
-  }
-
-  String getFirstUrl() {
-    return (first != null) ? first.href : null;
-  }
-
-  String getNextUrl() {
-    return (next != null) ? next.href : null;
-  }
-
-  String getPreviousUrl() {
-    return (previous != null) ? previous.href : null;
-  }
-
-  String getLastUrl() {
-    return (last != null) ? last.href : null;
-  }
-
-  String getSelfUrl() {
-    return (self != null) ? self.href : null;
-  }
-}
-
-class Link {
-  Link({
-    this.href,
-  });
-
-  String href;
-
-  Link.fromJson(Map<String, dynamic> json) {
-    if (json == null) {
-      return;
-    }
-    href = json['href'];
-  }
 }
 
 class Embedded {
@@ -167,6 +114,13 @@ class CategoryGroup {
 }
 
 class Region {
+  int id;
+  String name;
+  String isoCode;
+  String codeInsee;
+  int order;
+  Links links;
+
   Region({
     this.id,
     this.name,
@@ -175,13 +129,6 @@ class Region {
     this.order,
     this.links,
   });
-
-  int id;
-  String name;
-  String isoCode;
-  String codeInsee;
-  int order;
-  Links links;
 
   Region.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -194,42 +141,54 @@ class Region {
 }
 
 class City {
+  int id;
+  String name;
+  String isoCode;
+  String codeInsee;
+  int order;
+  Links links;
+
   City({
     this.id,
     this.name,
+    this.isoCode,
+    this.codeInsee,
     this.order,
     this.links,
   });
 
-  int id;
-  String name;
-  int order;
-  Links links;
-
   City.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    isoCode = json['iso_code'];
+    codeInsee = json['code_insee'];
     order = json['order'];
     links = Links.fromJson(json['_links']);
   }
 }
 
 class Town {
+  int id;
+  String name;
+  String zipCode;
+  String codeInsee;
+  int order;
+  Links links;
+
   Town({
     this.id,
     this.name,
+    this.zipCode,
+    this.codeInsee,
     this.order,
     this.links,
   });
 
-  int id;
-  String name;
-  int order;
-  Links links;
-
   Town.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    zipCode = json['zip_code'];
+    codeInsee = json['code_insee'];
     order = json['order'];
     links = Links.fromJson(json['_links']);
   }

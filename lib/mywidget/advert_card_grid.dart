@@ -1,4 +1,6 @@
 import 'package:afariat/mywidget/asbtract_advert_card.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../config/Environment.dart';
@@ -21,9 +23,17 @@ class AdvertCardGrid extends AbstractAdvertCard {
                 child: Container(
                   //height: size.height * .2,
                   child: advert.photo != null
-                      ? Image.network(
-                          advert.photo,
-                          fit: BoxFit.fill,
+                      ? CachedNetworkImage(
+                          imageUrl: advert.photo,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) => const Align(
+                                  alignment: Alignment.center,
+                                  child: CupertinoActivityIndicator()),
+                          errorWidget: (context, url, error) => Image.asset(
+                            "assets/images/common/no-image.jpg",
+                            fit: BoxFit.fill,
+                          ),
+
                         )
                       : Image.asset(
                           "assets/images/common/no-image.jpg",

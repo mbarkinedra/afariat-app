@@ -4,17 +4,18 @@ import 'package:afariat/mywidget/profile_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../config/app_config.dart';
-import '../main_view_controller.dart';
 import 'account/account_scr.dart';
 import 'notification/notification_view_controller.dart';
 import 'settings/setting_scr.dart';
 import 'tap_profile_viewcontroller.dart';
 
 class TapProfileScr extends GetWidget<TapProfileViewController> {
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     var appConfig = AppConfig.of(context);
     return Scaffold(
+      key: scaffoldKey,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -89,7 +90,7 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
                     false;
                 //Get.find<TapHomeViewController>().deleteAllFavoritesList();
                 Get.find<NotificationViewController>().clearList();
-                Get.find<MainViewController>().changeItemFilter(0);
+               // Get.find<MainViewController>().changeItemFilter(0);
               //  Get.find<TapHomeViewController>().setUserName("");
               },
             ),

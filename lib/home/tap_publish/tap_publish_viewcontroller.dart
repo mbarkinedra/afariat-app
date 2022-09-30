@@ -31,7 +31,7 @@ class TapPublishViewController extends GetxController {
   bool getDataFromServer = false;
   bool lights = true;
   bool isButtonSheet = false;
-  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKey;
   final storge = Get.find<SecureStorage>();
   final accountInfoStorage = Get.find<AccountInfoStorage>();
   final picker = ImagePicker();
@@ -432,7 +432,7 @@ class TapPublishViewController extends GetxController {
               Get.find<CategoryAndSubcategory>()
                   .clearDataCategroyAndSubCategory();
               Get.find<LocController>().clearDataCityAndTown();
-              Get.find<MainViewController>().changeItemFilter(1);
+              //Get.find<MainViewController>().changeItemFilter(1);
               await showDialog<bool>(
                   context: context,
                   builder: (context) {
@@ -447,7 +447,7 @@ class TapPublishViewController extends GetxController {
                         Navigator.pop(context);
                         Get.find<TapMyAdsViewController>().getAllAds();
                         Get.find<TapPublishViewController>().clearAllData();
-                        Get.find<MainViewController>().changeItemFilter(1);
+                       // Get.find<MainViewController>().changeItemFilter(1);
                       },
                       description: "Votre annonce est en cours de validation !",
                       buttonText: "Ok",
@@ -486,7 +486,7 @@ class TapPublishViewController extends GetxController {
                       Navigator.pop(context);
                       Get.find<TapPublishViewController>().clearAllData();
                       Get.find<TapMyAdsViewController>().getAllAds();
-                      Get.find<MainViewController>().changeItemFilter(1);
+                     // Get.find<MainViewController>().changeItemFilter(1);
                     },
                     description: "Votre annonce est en cours de validation !",
                     buttonText: "Ok",
@@ -642,7 +642,7 @@ class TapPublishViewController extends GetxController {
 
   /// Method Default Options
   void defaultOptions() {
-    if (globalKey.currentState.validate()) {
+    if (formKey.currentState.validate()) {
       myAdsView["prix"] = prix.text;
       myAds["price"] = prix.text;
       myAdsView["title"] = title.text;

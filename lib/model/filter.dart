@@ -28,16 +28,13 @@ class ParameterBag {
   }
 
   clear() {
-    data.clear();
+    data?.clear();
     count.value = 0;
   }
 
   clearExcept(k) {
-    if (data == null) {
-      return;
-    }
-    data.removeWhere((key, value) => key == k);
-    count.value = data.length;
+    data?.removeWhere((key, value) => key == k);
+    count.value = data?.length ?? 0;
   }
 }
 

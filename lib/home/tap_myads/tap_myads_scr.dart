@@ -6,16 +6,17 @@ import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:afariat/mywidget/custom_dialogue_delete.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../main_view_controller.dart';
 import 'tap_myads_viewcontroller.dart';
 
 class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
     controller.getAllAds();
     return SafeArea(
       child: Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
           title: Text(
             "Mes annonces",
@@ -65,8 +66,8 @@ class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
                                         ),
                                         CustomButtonWithoutIcon(
                                             function: () {
-                                              Get.find<MainViewController>()
-                                                  .changeItemFilter(2);
+                                            /*  Get.find<MainViewController>()
+                                                  .changeItemFilter(2);*/
                                             },
                                             labColor: Colors.white,
                                             height: 50,
@@ -131,8 +132,8 @@ class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
                                                 tapPublishViewController
                                                     .getAllData(logic
                                                         .adverts[position].id);
-                                                Get.find<MainViewController>()
-                                                    .changeItemFilter(2);
+                                               /* Get.find<MainViewController>()
+                                                    .changeItemFilter(2);*/
                                               },
                                             );
                                             // if(position>logic.adverts.length-1){

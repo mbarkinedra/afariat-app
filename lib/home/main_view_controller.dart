@@ -1,11 +1,10 @@
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/home/tap_chat/tap_chat_scr.dart';
-import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
-import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/sign_in/sign_in_scr.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import '../config/app_routing.dart';
 import 'home_view.dart';
 import 'tap_myads/tap_myads_scr.dart';
 import 'tap_profile/tap_profile_scr.dart';
@@ -14,7 +13,51 @@ import 'package:flutter_intro/flutter_intro.dart';
 
 class MainViewController extends GetxController {
   BuildContext context;
-  PersistentTabController controller;
+
+  PersistentTabController tabController;
+
+  var currentIndex = 0.obs;
+
+  final pages = <String>[
+    AppRouting.home,
+    AppRouting.myAds,
+    AppRouting.newAd,
+    AppRouting.messages,
+    AppRouting.profile
+  ];
+
+  List<Widget> buildScreens = [
+    HomeView(),
+    Get.find<AccountInfoStorage>().isLoggedIn() ? TapMyAdsScr() : SignInScr(),
+    Get.find<AccountInfoStorage>().isLoggedIn() ? TapPublishScr() : SignInScr(),
+    Get.find<AccountInfoStorage>().isLoggedIn() ? TapChatScr() : SignInScr(),
+    Get.find<AccountInfoStorage>().isLoggedIn() ? TapProfileScr() : SignInScr()
+  ];
+
+  void changePage(int index) {
+    currentIndex.value = index;
+    //Get.toNamed(pages[index]);
+    //tabController.jumpToTab(index);
+  }
+
+  RouteAndNavigatorSettings routeAndNavigatorSettings() {
+    return RouteAndNavigatorSettings(
+      onGenerateRoute: (RouteSettings settings) {
+        GetPage p = AppRouting.getPageByName(settings.name);
+        return p != null
+            ? GetPageRoute(
+                settings: settings,
+                page: p.page,
+                binding: p.binding,
+              )
+            : null;
+      },
+      initialRoute: AppRouting.home,
+    );
+  }
+}
+
+/*
   int newPublish = 0;
   final int _navigatorValue = 0;
   final String _currentPage = 'Page1';
@@ -65,8 +108,10 @@ class MainViewController extends GetxController {
   @override
   void onInit() {
     controller = PersistentTabController(initialIndex: 0);
+
     controller.addListener(() {});
     super.onInit();
+
     currentScreen = PageToView(
       naigatorKey: _navigatorKeys[_pageKeys[0]],
       tabItem: _pageKeys[0],
@@ -208,3 +253,4 @@ class PageToView extends StatelessWidget {
     );
   }
 }
+*/

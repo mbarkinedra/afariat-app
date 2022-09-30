@@ -1,6 +1,6 @@
+import 'package:afariat/home/tap_profile/notification/notification_view_controller.dart';
 import 'package:afariat/model/filter.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 import '../networking/api/advert_api.dart';
 import '../networking/json/adverts_json.dart';
@@ -9,6 +9,7 @@ import 'drawer_view_controller.dart';
 
 class HomeViewController extends GetxController {
   DrawerViewController drawerController = DrawerViewController();
+  NotificationViewController notificationController =  Get.find<NotificationViewController>();
   AdvertListJson advertListJson = AdvertListJson();
 
   final AdvertApi _advertApi = AdvertApi();
@@ -31,7 +32,7 @@ class HomeViewController extends GetxController {
   Future<AdvertListJson> fetchLastAds([int limit = 10]) async {
     isLoadingLastAds.value = true;
     try {
-      _advertApi.url = '/api/v1/adverts?limit=' + limit.toString();
+      _advertApi.url = '/api/v1/adverts?onlyPhoto=true&limit=' + limit.toString();
       await _advertApi.getList().then((value) {
         advertListJson = value;
       });
@@ -39,7 +40,6 @@ class HomeViewController extends GetxController {
       print(error);
     }
     isLoadingLastAds.value = false;
-
     return advertListJson;
   }
 

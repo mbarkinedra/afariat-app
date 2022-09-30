@@ -1,4 +1,4 @@
-import 'package:afariat/networking/json/adverts_json.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,18 +23,18 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
       // key: controller.key,
       appBar: AppBar(
         iconTheme: const IconThemeData(
-          color: Colors.white,
+          color: framColor,
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         title: const Text(
           "Annonce détaillée",
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          style: TextStyle(color: colorText, fontSize: 20),
         ),
         leading: IconButton(
             icon: const Icon(
               //
               Icons.arrow_back_ios,
-              color: Colors.white,
+              color: framColor,
             ),
             onPressed: () {
               Navigator.of(context).pop();
@@ -151,16 +151,20 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
             ),
             items: controller.advert.photos
                 .map((item) => InkWell(
-                      onTap: () {
-                        _showGallery(context);
-                      },
-                      child: Image.network(
-                        item.path,
-                        height: _size.height * .25,
-                        width: _size.width * .8,
+                    onTap: () {
+                      _showGallery(context);
+                    },
+                    child: CachedNetworkImage(
+                      imageUrl: item.path,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => const Align(
+                              alignment: Alignment.center,
+                              child: CupertinoActivityIndicator()),
+                      errorWidget: (context, url, error) => Image.asset(
+                        "assets/images/common/no-image.jpg",
                         fit: BoxFit.fill,
                       ),
-                    ))
+                    )))
                 .toList(),
           )
         : controller.advert.photos.isNotEmpty
@@ -169,12 +173,18 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
                   _showGallery(context);
                 },
                 child: Container(
-                  height: _size.height * .3,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(controller.advert.photos[0].path),
-                          fit: BoxFit.fill)),
-                ),
+                    height: _size.height * .3,
+                    child: CachedNetworkImage(
+                      imageUrl: controller.advert.photos[0].path,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => const Align(
+                              alignment: Alignment.center,
+                              child: CupertinoActivityIndicator()),
+                      errorWidget: (context, url, error) => Image.asset(
+                        "assets/images/common/no-image.jpg",
+                        fit: BoxFit.fill,
+                      ),
+                    )),
               )
             : const SizedBox();
   }
@@ -203,8 +213,14 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
                 padding: const EdgeInsets.only(left: 4),
                 child: Text(
                   controller.advert.town.name +
+                      (controller.advert.town.zipCode != null
+                          ? '(' + controller.advert.town.zipCode + ')'
+                          : '') +
                       ', ' +
-                      controller.advert.city.name,
+                      controller.advert.city.name +
+                      (controller.advert.city.codeInsee != null
+                          ? ' - ' + controller.advert.city.codeInsee
+                          : ''),
                   softWrap: true,
                   style: TextStyle(
                       color: Colors.black.withOpacity(0.6), fontSize: 16),
@@ -233,7 +249,7 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
           height: 10,
         ),
         Text(
-          controller.advert.createdAt,
+          controller.advert.modifiedAt,
           softWrap: true,
           style: TextStyle(color: Colors.black.withOpacity(0.6)),
           overflow: TextOverflow.ellipsis,
@@ -317,13 +333,13 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
         );
       },
       pageBuilder: (context, animation, secondaryAnimation) {
-        return SafeArea(
-          child: Stack(
+        return Scaffold(
+          body: Stack(
             children: [
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(0),
                 color: Colors.white,
                 child: Center(
                   child: PhotoViewGallery.builder(
@@ -359,20 +375,18 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
               Align(
                 alignment: Alignment.topRight,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                      onTap: () {
+                    padding: const EdgeInsets.only(top: 20, right: 10),
+                    child: IconButton(
+                      onPressed: () {
                         Navigator.of(context, rootNavigator: true).pop();
                         //Navigator.pop(context);
                       },
-                      child: Container(
-                          color: Colors.grey[100],
-                          child: const Icon(
-                            Icons.close,
-                            color: framColor,
-                            size: 30,
-                          ))),
-                ),
+                      icon: const Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    )),
               ),
             ],
           ),
