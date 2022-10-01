@@ -34,6 +34,11 @@ class FavoriteListJson extends PaginatedJsonResource {
     embedded.favorites.removeWhere((e) => e.id == element.id);
   }
 
+  removeByAdvertId(int id) {
+    if (favorites() == null) return;
+    embedded.favorites.removeWhere((e) => e.advert.id == id);
+  }
+
   @override
   String toString() {
     return toJson().toString();

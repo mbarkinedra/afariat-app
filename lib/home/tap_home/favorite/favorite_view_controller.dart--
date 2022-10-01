@@ -45,7 +45,7 @@ class FavoriteViewController extends GetxController {
   /// Delete Favorite by advert
   deleteFavoriteByAdvert(int advertId) async {
     //Get.find<TapHomeViewController>().favorites.remove(advertId);
-    await _favoriteApi.deleteByAdvertId(advertId.toString()).then((value) {
+    await _favoriteApi.deleteByAdvertId(advertId).then((value) {
       getFavorite();
     });
   }

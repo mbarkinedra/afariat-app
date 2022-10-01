@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
+import '../../model/favorite_list.dart';
 import '../../networking/api/advert_api.dart';
 import '../../networking/json/advert_list_json.dart';
 import '../../networking/json/advert_minimal_json.dart';
@@ -49,10 +50,18 @@ class SearchViewController extends GetxController {
       });
 
       pagingController.appendLastPage(advertListJson.adverts());
-      update();
+      _setFavorites();
     } catch (error) {
       pagingController.error = error;
     }
+  }
+
+  _setFavorites() {
+    advertListJson?.adverts()?.forEach((advert) {
+      if (advert.isFavorite == true) {
+        FavoriteList.add(advert.id);
+      }
+    });
   }
 
   ///make search based on the filter values
@@ -64,13 +73,10 @@ class SearchViewController extends GetxController {
       });
 
       pagingController.appendLastPage(advertListJson.adverts());
-
-      update();
+      _setFavorites();
     } catch (error) {
       pagingController.error = error;
     }
-
-    update();
   }
 
   Future<void> onSwipeUp() async {

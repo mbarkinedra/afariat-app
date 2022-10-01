@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
+import '../../model/favorite_list.dart';
 import '../../mywidget/advert_card_grid.dart';
 import '../../mywidget/advert_card_list.dart';
 import '../../networking/json/advert_minimal_json.dart';
@@ -17,7 +18,7 @@ class SearchView extends GetWidget<SearchViewController> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
     return Scaffold(
-     // key: controller.key,
+      // key: controller.key,
       // No appbar provided to the Scaffold, only a body with a
       // CustomScrollView.
       body: SafeArea(
@@ -70,10 +71,8 @@ class SearchView extends GetWidget<SearchViewController> {
             pagingController: controller.pagingController,
             builderDelegate: PagedChildBuilderDelegate<AdvertMinimalJson>(
               animateTransitions: true,
-              itemBuilder: (context, item, index) => AdvertCardList(
-                advert: item,
-                userInitials: 'LC',
-              ),
+              itemBuilder: (context, item, index) =>
+                  AdvertCardList(advert: item, userInitials: 'LC'),
             ),
           ));
   }

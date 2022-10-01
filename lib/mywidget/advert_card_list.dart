@@ -5,12 +5,16 @@ import 'package:get/get.dart';
 
 import '../config/Environment.dart';
 import '../config/utility.dart';
+import '../home/tap_profile/favorite/favorite_view_controller.dart';
 import '../networking/json/advert_minimal_json.dart';
+import '../storage/AccountInfoStorage.dart';
 import 'asbtract_advert_card.dart';
+import 'favorite_icon.dart';
 
 class AdvertCardList extends AbstractAdvertCard {
   AdvertCardList({Key key, AdvertMinimalJson advert, String userInitials})
       : super(key: key, advert: advert, userInitials: userInitials);
+  FavoriteViewController favController = Get.find<FavoriteViewController>();
 
   @override
   Widget build(BuildContext context) {
@@ -173,15 +177,25 @@ class AdvertCardList extends AbstractAdvertCard {
                                           ),
                                         ),
                                       ),
-                                      const Expanded(
+                                      Expanded(
                                           flex: 8,
                                           child: Align(
-                                            child: Icon(
-                                                Icons.favorite_outline_rounded),
+                                            child: AdvertFavoriteIcon(
+                                              advertId: advert.id,
+                                              isLoggedIn:
+                                                  Get.find<AccountInfoStorage>()
+                                                      .isLoggedIn(),
+                                              onAdd: () => favController
+                                                  .addAdvertToFavorites(
+                                                      advert.id),
+                                              onDelete: () => favController
+                                                  .removeAdvertFromFavorite(
+                                                      advert.id),
+                                            ),
                                             alignment: Alignment.bottomRight,
                                           ))
                                     ]),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 )
                               ])),

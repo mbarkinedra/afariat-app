@@ -103,6 +103,57 @@ abstract class ApiManager {
   }
 
   //Get one resource
+  Future<dynamic> get(String url) async {
+    var data;
+    await dioSingleton.dio.get(url).then((value) {
+      validateResponseStatusCode(value);
+      data = value.data;
+    });
+    return fromJson(data);
+  }
+
+  /// POST DATA TO SERVER
+  Future<Response<dynamic>> postToUrl({String url, dataToPost}) async {
+    String wsse = Wsse.generateWsseFromStorage();
+    Options options = Options(headers: {
+      "Accept": "application/json",
+      'apikey': Environment.apikey,
+      'Content-Type': 'application/json',
+      'X-WSSE': wsse,
+    });
+    return dioSingleton.dio
+        .post(
+      url,
+      options: options,
+      data: jsonEncode(dataToPost),
+    )
+        .then((value) {
+      validateResponseStatusCode(value);
+      return value;
+    }).catchError((error, stackTrace) {
+      processServerError(error);
+    });
+  }
+
+  //Delete a resource(s) by calling the given url
+  Future<Response<dynamic>> delete(String url) async {
+    String wsse = Wsse.generateWsseFromStorage();
+    Options options = Options(headers: {
+      "Accept": "application/json",
+      'apikey': Environment.apikey,
+      'Content-Type': 'application/json',
+      'X-WSSE': wsse,
+    });
+    return dioSingleton.dio.delete(url, options: options).then((value) {
+      return value;
+    }).catchError((error, stackTrace) {
+      processServerError(error);
+    });
+  }
+
+  //Get one resource
+  @deprecated
+  @Deprecated('Use get method instead of this')
   Future<dynamic> getResource() async {
     var data;
     await dioSingleton.dio.get(apiUrl()).then((value) {
@@ -138,12 +189,14 @@ abstract class ApiManager {
   Future<dynamic> secureGetList({Map<String, dynamic> filters}) async {
     AbstractJsonResource jsonList;
 
-    var json = await secureGet(filters:filters);
+    var json = await secureGet(filters: filters);
     jsonList = fromJson(json.data);
     return jsonList;
   }
 
   /// POST DATA TO SERVER
+  @deprecated
+  @Deprecated('Use postToUrl instead of this. later, delete post and rename postToUrl to post')
   Future<Response<dynamic>> post(dataToPost) async {
     return dioSingleton.dio
         .post(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
+import '../../../model/favorite_list.dart';
 import '../../../networking/api/favorite_api.dart';
 import '../../../networking/json/favorite_json.dart';
 
@@ -84,5 +85,27 @@ class FavoriteViewController extends GetxController {
       print(error);
     }
     isDeleting.value = false;
+  }
+
+  addAdvertToFavorites(int advertId) async {
+    print('add');
+    try {
+      await _api.addAdvert(advertId).then((value) {
+        FavoriteList.add(advertId);
+      });
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  removeAdvertFromFavorite(int advertId) async {
+    print('remove');
+    try {
+      await _api.deleteByAdvertId(advertId).then((value) {
+        FavoriteList.remove(advertId);
+      });
+    } catch (error) {
+      print(error);
+    }
   }
 }

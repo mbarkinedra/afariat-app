@@ -5,11 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../config/Environment.dart';
 import '../config/utility.dart';
+import '../home/tap_profile/favorite/favorite_view_controller.dart';
 import '../networking/json/advert_minimal_json.dart';
+import '../storage/AccountInfoStorage.dart';
+import 'favorite_icon.dart';
 
 class AdvertCardGrid extends AbstractAdvertCard {
   AdvertCardGrid({Key key, AdvertMinimalJson advert, String userInitials})
       : super(key: key, advert: advert, userInitials: userInitials);
+  FavoriteViewController favController = Get.find<FavoriteViewController>();
 
   Widget build(BuildContext context) {
     return InkWell(
@@ -33,7 +37,6 @@ class AdvertCardGrid extends AbstractAdvertCard {
                             "assets/images/common/no-image.jpg",
                             fit: BoxFit.fill,
                           ),
-
                         )
                       : Image.asset(
                           "assets/images/common/no-image.jpg",
@@ -133,8 +136,16 @@ class AdvertCardGrid extends AbstractAdvertCard {
                         overflow: TextOverflow.fade,
                       )),
                 ),
-                const Expanded(
-                    flex: 2, child: Icon(Icons.favorite_outline_rounded))
+                Expanded(
+                    flex: 2,
+                    child: AdvertFavoriteIcon(
+                      advertId: advert.id,
+                      isLoggedIn: Get.find<AccountInfoStorage>().isLoggedIn(),
+                      onAdd: () =>
+                          favController.addAdvertToFavorites(advert.id),
+                      onDelete: () =>
+                          favController.removeAdvertFromFavorite(advert.id),
+                    ))
               ]),
               const SizedBox(
                 height: 10,
