@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 
 import '../config/Environment.dart';
 import '../config/utility.dart';
-import '../networking/json/adverts_json.dart';
+import '../networking/json/advert_minimal_json.dart';
 import 'asbtract_advert_card.dart';
 
 class AdvertCardList extends AbstractAdvertCard {
-  AdvertCardList({Key key, AdvertJson advert, String userInitials})
+  AdvertCardList({Key key, AdvertMinimalJson advert, String userInitials})
       : super(key: key, advert: advert, userInitials: userInitials);
 
   @override

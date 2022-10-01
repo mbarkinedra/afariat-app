@@ -52,7 +52,7 @@ class SignInViewController extends GetxController {
                     Get.find<AccountInfoStorage>()
                         .saveUserId(value.data["user_id"].toString());
 
-                    await Get.find<FavoriteViewController>().getFavorite();
+                    //await Get.find<FavoriteViewController>().getFavorite();
 
                     //Get.find<MainViewController>().changeItemFilter(0);
                     //Get.find<MainViewController>().updateList();

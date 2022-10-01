@@ -1,7 +1,7 @@
 import 'package:afariat/model/filter.dart';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/api/resource_api.dart';
-import 'package:afariat/networking/json/adverts_json.dart';
+import 'package:afariat/networking/json/advert_list_json.dart';
 
 class AdvertApi extends ResourceApi {
   String url;
@@ -46,7 +46,6 @@ class AdvertApi extends ResourceApi {
 
   @override
   fromJson(data) {
-    print(data);
     return AdvertListJson.fromJson(data);
   }
 }

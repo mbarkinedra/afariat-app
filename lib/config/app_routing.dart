@@ -7,7 +7,7 @@ import '../bindings/bindings.dart';
 import '../home/main_view.dart';
 import '../home/tap_chat/tap_chat_scr.dart';
 import '../home/tap_home/category_group_view.dart';
-import '../home/tap_home/favorite/favorite_view.dart';
+import '../home/tap_profile/favorite/favorite_view.dart';
 import '../home/tap_home/localization_view.dart';
 import '../home/tap_home/search_view.dart';
 import '../home/tap_myads/tap_myads_scr.dart';

@@ -116,45 +116,45 @@ class AdvertDetailsJson extends AbstractJsonResource {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    data['modified_at'] = modifiedAt;
-    data['username'] = username;
-    data['mobilePhoneNumber'] = mobilePhoneNumber;
-    data['title'] = title;
-    data['slug'] = slug;
-    data['description'] = description;
-    data['price'] = price;
-    data['show_phone_number'] = showPhoneNumber;
-    data['userId'] = userId;
-    data['isRegistredUser'] = isRegistredUser;
-    data['is_favorite'] = isFavorite;
-    data['status'] = status;
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['id'] = id;
+    json['created_at'] = createdAt;
+    json['updated_at'] = updatedAt;
+    json['modified_at'] = modifiedAt;
+    json['username'] = username;
+    json['mobilePhoneNumber'] = mobilePhoneNumber;
+    json['title'] = title;
+    json['slug'] = slug;
+    json['description'] = description;
+    json['price'] = price;
+    json['show_phone_number'] = showPhoneNumber;
+    json['userId'] = userId;
+    json['isRegistredUser'] = isRegistredUser;
+    json['is_favorite'] = isFavorite;
+    json['status'] = status;
     if (advertType != null) {
-      data['advert_type'] = advertType.toJson();
+      json['advert_type'] = advertType.toJson();
     }
     if (category != null) {
-      data['category'] = category.toJson();
+      json['category'] = category.toJson();
     }
     if (region != null) {
-      data['region'] = region.toJson();
+      json['region'] = region.toJson();
     }
     if (city != null) {
-      data['city'] = city.toJson();
+      json['city'] = city.toJson();
     }
     if (town != null) {
-      data['town'] = town.toJson();
+      json['town'] = town.toJson();
     }
     if (photos != null) {
-      data['photos'] = photos.map((v) => v.toJson()).toList();
+      json['photos'] = photos.map((v) => v.toJson()).toList();
     }
-    data['short_url'] = shortUrl;
+    json['short_url'] = shortUrl;
     if (links != null) {
-      data['_links'] = links.toJson();
+      json['_links'] = links.toJson();
     }
-    return data;
+    return json;
   }
 }
 

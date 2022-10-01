@@ -1,15 +1,25 @@
-import 'package:afariat/mywidget/asbtract_advert_card.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../config/Environment.dart';
 import '../config/utility.dart';
+import '../home/tap_profile/favorite/favorite_view_controller.dart';
 import '../networking/json/advert_minimal_json.dart';
+import '../networking/json/favorite_json.dart';
 
-class AdvertCardGrid extends AbstractAdvertCard {
-  AdvertCardGrid({Key key, AdvertMinimalJson advert, String userInitials})
-      : super(key: key, advert: advert, userInitials: userInitials);
+class FavoriteCardGrid extends StatelessWidget {
+  final FavoriteJson favoriteJson;
+  AdvertMinimalJson advert;
+  final numberFormat = NumberFormat("###,##0", Environment.locale);
+  final FavoriteViewController controller;
+  final int index;
+
+  FavoriteCardGrid({Key key, this.favoriteJson, this.controller, this.index})
+      : super(key: key) {
+    advert = favoriteJson.advert;
+  }
 
   Widget build(BuildContext context) {
     return InkWell(
@@ -33,7 +43,6 @@ class AdvertCardGrid extends AbstractAdvertCard {
                             "assets/images/common/no-image.jpg",
                             fit: BoxFit.fill,
                           ),
-
                         )
                       : Image.asset(
                           "assets/images/common/no-image.jpg",
@@ -43,17 +52,6 @@ class AdvertCardGrid extends AbstractAdvertCard {
               ),
               ListTile(
                 minLeadingWidth: 10,
-                leading: CircleAvatar(
-                  maxRadius: 12,
-                  backgroundColor: Colors.blueGrey.shade50,
-                  child: Text(
-                    userInitials,
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blueGrey.shade900),
-                  ),
-                ),
                 title: Text(
                   advert.title,
                   maxLines: 3,
@@ -126,15 +124,32 @@ class AdvertCardGrid extends AbstractAdvertCard {
                             ' ' +
                             Environment.currencySymbol,
                         style: const TextStyle(
-                            color: framColor,
+                            color: blackcolore,
                             fontWeight: FontWeight.bold,
                             fontSize: 18),
                         softWrap: true,
                         overflow: TextOverflow.fade,
                       )),
                 ),
-                const Expanded(
-                    flex: 2, child: Icon(Icons.favorite_outline_rounded))
+                Expanded(
+                    flex: 2,
+                    child: Obx(() => controller.isDeleting.isTrue
+                        ? const CircularProgressIndicator()
+                        : ElevatedButton(
+                            onPressed: () {
+                              controller.removeFavoriteAdvert(
+                                  favoriteJson, index);
+                            },
+                            child: const Icon(Icons.delete),
+                            style: ElevatedButton.styleFrom(
+                              shape: const CircleBorder(),
+                              padding: const EdgeInsets.all(3),
+                              backgroundColor: Colors.red, // <-- Button color
+                              foregroundColor: Colors.white, // <-- Splash color
+                            ),
+                          ))
+                    //Icon(Icons.delete, color: Colors.red,)
+                    )
               ]),
               const SizedBox(
                 height: 10,

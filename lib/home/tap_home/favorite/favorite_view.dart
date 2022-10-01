@@ -1,5 +1,7 @@
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/networking/json/favorite_json.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -8,36 +10,36 @@ import 'favorite_view_controller.dart';
 
 class FavoriteView extends GetView<FavoriteViewController> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           " Mes favoris",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: framColor,
         leading: IconButton(
-            icon: Icon(
-              //
+            icon: const Icon(
               Icons.arrow_back_ios,
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.of(context).pop();
+              Get.back();
             }),
       ),
       body: GetBuilder<FavoriteViewController>(builder: (logic) {
         return logic.favoriteJson == null
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : logic.favoriteJson.eEmbedded.favorites.length == 0
                 ? Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
+                      children: const [
                         SizedBox(
                           height: 175,
                         ),
@@ -55,11 +57,12 @@ class FavoriteView extends GetView<FavoriteViewController> {
                 : GridView.builder(
                     itemCount:
                         logic.favoriteJson.eEmbedded.favorites.length ?? 0,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.8,
-                        crossAxisSpacing: 5,
-                        mainAxisSpacing: 5),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.8,
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 5),
                     itemBuilder: (BuildContext context, int index) {
                       return SingleAdvert(
                         favorite: logic.favoriteJson.eEmbedded.favorites[index],
@@ -88,8 +91,8 @@ class SingleAdvert extends StatelessWidget {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => AdvertDetailsScr()));*/
       },
-      child: new Container(
-        margin: EdgeInsets.all(5),
+      child: Container(
+        margin: const EdgeInsets.all(5),
         //   height: 400.0,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(5.0)),
@@ -105,48 +108,56 @@ class SingleAdvert extends StatelessWidget {
                     .remove(favorite.advert.id);*/
                 //Get.find<TapHomeViewController>().update();
                 Get.find<FavoriteViewController>().idItemDelete =
-                    favorite.advert.id;
+                    favorite.advertLink.id;
                 Get.find<FavoriteViewController>().deleteFavorite(favorite.id);
               },
               child: Container(
                 alignment: Alignment.topRight,
                 child: Get.find<FavoriteViewController>().idItemDelete ==
-                        favorite.advert.id
-                    ? CircularProgressIndicator()
-                    : Icon(
+                        favorite.advertLink.id
+                    ? const CircularProgressIndicator()
+                    : const Icon(
                         Icons.delete,
                         color: framColor,
                       ),
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Expanded(
               flex: 3,
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width * .4,
-                child: favorite.advert.photo != null
-                    ? Image.network(
-                        favorite.advert.photo,
-                        fit: BoxFit.fill,
+                child: favorite.advertLink.photo != null
+                    ? CachedNetworkImage(
+                        imageUrl: favorite.advertLink.photo,
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) => const Align(
+                                alignment: Alignment.center,
+                                child: CupertinoActivityIndicator()),
+                        errorWidget: (context, url, error) => Image.asset(
+                          "assets/images/common/no-image.jpg",
+                          fit: BoxFit.fill,
+                        ),
                       )
                     : Image.asset("assets/images/common/no-image.jpg"),
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Expanded(
               flex: 1,
-              child: new Text(
-                favorite.advert.title,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              child: Text(
+                favorite.advertLink.title,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
               ),
             ),
             Row(
               children: [
                 Text(
-                  numberFormat.format(favorite.advert.price) +
+                  numberFormat.format(favorite.advertLink.price) +
                       ' ' +
                       Environment.currencySymbol,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: framColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 15),

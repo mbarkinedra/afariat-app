@@ -1,4 +1,3 @@
-import 'package:afariat/home/tap_home/favorite/favorite_view_controller.dart';
 import 'package:afariat/settings/settings_view_controller.dart';
 import 'package:afariat/home/tap_home/search_viewcontroller.dart';
 import 'package:afariat/settings/notification_settings_controller.dart';
@@ -29,6 +28,7 @@ import '../home/tap_home/filter_app_bar_viewcontroller.dart';
 import '../home/tap_home/filter_viewcontroller.dart';
 import '../home/tap_home/localization_viewcontroller.dart';
 import '../home/tap_home/search_app_bar_viewcontroller.dart';
+import '../home/tap_profile/favorite/favorite_view_controller.dart';
 import '../remote_widget/city_dropdown_viewcontroller.dart';
 import '../remote_widget/price_range_slider_viewcontroller.dart';
 

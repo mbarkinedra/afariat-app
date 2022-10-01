@@ -6,7 +6,7 @@ import '../config/app_routing.dart';
 import '../config/utility.dart';
 import '../mywidget/custom_button_1.dart';
 import '../mywidget/search_field_appbar.dart';
-import '../networking/json/adverts_json.dart';
+import '../networking/json/advert_list_json.dart';
 import 'drawer_view.dart';
 import 'home_view_controller.dart';
 import '../../mywidget/advert_card_grid.dart';
@@ -98,7 +98,7 @@ class HomeView extends GetWidget<HomeViewController> {
               padding: const EdgeInsets.all(10),
               child: CustomButton1(
                 function: () async {
-                  Get.toNamed('/search');
+                  Get.toNamed(AppRouting.search);
                 },
                 labcolor: Colors.white,
                 height: 40,

@@ -140,7 +140,6 @@ abstract class ApiManager {
 
     var json = await secureGet(filters:filters);
     jsonList = fromJson(json.data);
-
     return jsonList;
   }
 
@@ -203,8 +202,6 @@ abstract class ApiManager {
   /// Get Data  User From Server
   Future<Response<dynamic>> secureGet({Map<String, dynamic> filters}) async {
     String wsse = Wsse.generateWsseFromStorage();
-    //print(apiUrl());
-    //print(filters);
     return dioSingleton.dio
         .get(
       apiUrl(),

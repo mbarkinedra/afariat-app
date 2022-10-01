@@ -3,7 +3,7 @@ import 'package:afariat/model/filter.dart';
 import 'package:get/get.dart';
 
 import '../networking/api/advert_api.dart';
-import '../networking/json/adverts_json.dart';
+import '../networking/json/advert_list_json.dart';
 import '../storage/AccountInfoStorage.dart';
 import 'drawer_view_controller.dart';
 

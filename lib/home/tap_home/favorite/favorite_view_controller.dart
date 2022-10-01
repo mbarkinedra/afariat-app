@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class FavoriteViewController extends GetxController {
   final FavoriteApi _favoriteApi = FavoriteApi();
 
-  FavoriteJson favoriteJson;
+  FavoriteListJson favoriteJson;
   int idItemDelete;
 
   @override
@@ -32,8 +32,8 @@ class FavoriteViewController extends GetxController {
     if (Get.find<AccountInfoStorage>().isLoggedIn()) {
       await _favoriteApi.secureGet().then((value) {
         //Get.find<TapHomeViewController>().favorites.clear();
-        favoriteJson = FavoriteJson.fromJson(value.data);
-        favoriteJson.eEmbedded.favorites.forEach((element) {
+        favoriteJson = FavoriteListJson.fromJson(value.data);
+        favoriteJson.embedded.favorites.forEach((element) {
           //Get.find<TapHomeViewController>().favorites.add(element.advert.id);
         });
         //Get.find<TapHomeViewController>().update();
@@ -52,7 +52,7 @@ class FavoriteViewController extends GetxController {
 
   // Delete fast from list favorite
   deleteFastFromList(int id) {
-    favoriteJson.eEmbedded.favorites.removeWhere((element) => element.id == id);
+    favoriteJson.embedded.favorites.removeWhere((element) => element.id == id);
   }
 
   /// Delete favorite advert from list favorite

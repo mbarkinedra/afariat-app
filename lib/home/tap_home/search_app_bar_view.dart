@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
@@ -43,7 +44,7 @@ class SearchAppBarView extends GetWidget<SearchAppBarViewController> {
             //color: framColor,
           ),
           onPressed: () {
-            Navigator.of(context).pop();
+            Get.back();
           }),
       backgroundColor: backmenubackground,
       foregroundColor: framColor,

@@ -1,14 +1,13 @@
-import 'package:afariat/model/filter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../networking/api/advert_api.dart';
-import '../../networking/json/adverts_json.dart';
+import '../../networking/json/advert_list_json.dart';
+import '../../networking/json/advert_minimal_json.dart';
 
 class SearchViewController extends GetxController {
-  //GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
-  final PagingController<int, AdvertJson> pagingController =
+  final PagingController<int, AdvertMinimalJson> pagingController =
       PagingController(firstPageKey: 0);
   ScrollController scrollController = ScrollController();
   final AdvertApi _api = AdvertApi();
@@ -73,7 +72,6 @@ class SearchViewController extends GetxController {
 
     update();
   }
-
 
   Future<void> onSwipeUp() async {
     isLoadingMore.value = true;

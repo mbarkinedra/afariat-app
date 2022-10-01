@@ -1,20 +1,17 @@
-import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/config/utility.dart';
-import 'package:afariat/home/tap_home/favorite/favorite_view_controller.dart';
-import 'package:afariat/networking/json/adverts_json.dart';
-import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../config/Environment.dart';
+import '../networking/json/advert_minimal_json.dart';
 
 class MyHomeItem extends StatelessWidget {
   final Size size;
 
   MyHomeItem({this.size, this.adverts});
 
-  final AdvertJson adverts;
+  final AdvertMinimalJson adverts;
 
   final numberFormat = NumberFormat("###,##0", Environment.locale);
 

@@ -54,7 +54,8 @@ class RefJson extends AbstractJsonResource {
   RefJson({this.id, this.name});
 
   RefJson.fromJson(Map<String, dynamic> json) {
-    setFromJson(json);
+    id = json['id'];
+    name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -72,11 +73,6 @@ class RefJson extends AbstractJsonResource {
   bool isEqual(RefJson refJson) {
     return id == refJson.id;
   }
-
-  setFromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-  }
 }
 
 //Define the list of entities model that inherit from Ref
@@ -85,39 +81,24 @@ class JsonEntity extends RefJson {
 
   JsonEntity({int id, String name, this.links}) : super(id: id, name: name);
 
-  JsonEntity.fromJson(Map<String, dynamic> json) {
-    setFromJson(json);
-  }
-
-  @override
-  setFromJson(Map<String, dynamic> json) {
-    super.setFromJson(json);
+  JsonEntity.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     links = json['_links'] != null ? Links.fromJson(json['_links']) : null;
   }
 }
 
 class AdvertTypeEntity extends JsonEntity {
-  AdvertTypeEntity.fromJson(Map<String, dynamic> json) {
-    setFromJson(json);
-  }
+  AdvertTypeEntity.fromJson(Map<String, dynamic> json) : super.fromJson(json) {}
 }
 
 class CategoryGroupEntity extends JsonEntity {
-  CategoryGroupEntity.fromJson(Map<String, dynamic> json) {
-    setFromJson(json);
-  }
+  CategoryGroupEntity.fromJson(Map<String, dynamic> json)
+      : super.fromJson(json) {}
 }
 
 class CategoryEntity extends JsonEntity {
   CategoryGroupEntity group;
 
-  CategoryEntity.fromJson(Map<String, dynamic> json) {
-    setFromJson(json);
-  }
-
-  @override
-  setFromJson(Map<String, dynamic> json) {
-    super.setFromJson(json);
+  CategoryEntity.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     group = json['group'] != null
         ? CategoryGroupEntity.fromJson(json['group'])
         : null;
@@ -127,7 +108,8 @@ class CategoryEntity extends JsonEntity {
 class LocalizationEntity extends JsonEntity {
   String codeInsee;
 
-  LocalizationEntity.fromJson(Map<String, dynamic> json) : super.fromJson(json){
+  LocalizationEntity.fromJson(Map<String, dynamic> json)
+      : super.fromJson(json) {
     codeInsee = json['code_insee'];
   }
 }
@@ -151,13 +133,7 @@ class CityEntity extends LocalizationEntity {
 class TownEntity extends JsonEntity {
   String zipCode;
 
-  TownEntity.fromJson(Map<String, dynamic> json) {
-    setFromJson(json);
-  }
-
-  @override
-  setFromJson(Map<String, dynamic> json) {
-    super.setFromJson(json);
+  TownEntity.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
     zipCode = json['zip_code'];
   }
 }

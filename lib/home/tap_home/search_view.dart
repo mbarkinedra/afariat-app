@@ -6,7 +6,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../mywidget/advert_card_grid.dart';
 import '../../mywidget/advert_card_list.dart';
-import '../../networking/json/adverts_json.dart';
+import '../../networking/json/advert_minimal_json.dart';
 import 'filter_app_bar_view.dart';
 import 'search_app_bar_view.dart';
 
@@ -50,7 +50,7 @@ class SearchView extends GetWidget<SearchViewController> {
   _buildGrid(context) {
     Size _size = MediaQuery.of(context).size;
     return Obx(() => controller.isGrid.value
-        ? PagedSliverGrid<int, AdvertJson>(
+        ? PagedSliverGrid<int, AdvertMinimalJson>(
             pagingController: controller.pagingController,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               childAspectRatio: 100 / 150,
@@ -58,7 +58,7 @@ class SearchView extends GetWidget<SearchViewController> {
               mainAxisSpacing: 10,
               crossAxisCount: 2,
             ),
-            builderDelegate: PagedChildBuilderDelegate<AdvertJson>(
+            builderDelegate: PagedChildBuilderDelegate<AdvertMinimalJson>(
               animateTransitions: true,
               itemBuilder: (context, item, index) => AdvertCardGrid(
                 advert: item,
@@ -66,9 +66,9 @@ class SearchView extends GetWidget<SearchViewController> {
               ),
             ),
           )
-        : PagedSliverList<int, AdvertJson>(
+        : PagedSliverList<int, AdvertMinimalJson>(
             pagingController: controller.pagingController,
-            builderDelegate: PagedChildBuilderDelegate<AdvertJson>(
+            builderDelegate: PagedChildBuilderDelegate<AdvertMinimalJson>(
               animateTransitions: true,
               itemBuilder: (context, item, index) => AdvertCardList(
                 advert: item,

@@ -5,12 +5,17 @@ import 'package:dio/dio.dart';
 
 class FavoriteApi extends ResourceApi {
   String _deleteUrl;
-String id;
-  @override
+  String id;
 
-  /// Get list fovorite
+  String url;
+
+  @override
   String apiUrl() {
-    return SettingsApp.favorite;
+    if (url != null) {
+      return  SettingsApp.baseUrl + url;
+    } else {
+      return SettingsApp.favorite;
+    }
   }
 
   @override
@@ -34,17 +39,17 @@ String id;
 
   @override
   String apiPostUrl({dataToPost}) {
-   return SettingsApp.favorite;
+    return SettingsApp.favorite;
   }
 
   @override
-  String apiPutUrl({ Map<String, String>queryParams}) {
+  String apiPutUrl({Map<String, String> queryParams}) {
     // TODO: implement apiPutUrl
     throw UnimplementedError();
   }
 
   @override
   fromJson(data) {
-    return FavoriteJson.fromJson(data);
+    return FavoriteListJson.fromJson(data);
   }
 }

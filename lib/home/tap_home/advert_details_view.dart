@@ -37,7 +37,7 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
               color: framColor,
             ),
             onPressed: () {
-              Navigator.of(context).pop();
+              Get.back();
             }),
       ),
       body: SingleChildScrollView(

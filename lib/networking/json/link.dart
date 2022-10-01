@@ -48,26 +48,26 @@ class Links {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> json = <String, dynamic>{};
     if (self != null) {
-      data['self'] = self.toJson();
+      json['self'] = self.toJson();
     }
     if (first != null) {
-      data['first'] = first.toJson();
+      json['first'] = first.toJson();
     }
     if (last != null) {
-      data['last'] = last.toJson();
+      json['last'] = last.toJson();
     }
     if (next != null) {
-      data['next'] = next.toJson();
+      json['next'] = next.toJson();
     }
     if (previous != null) {
-      data['previous'] = previous.toJson();
+      json['previous'] = previous.toJson();
     }
     if (search != null) {
-      data['search'] = search.toJson();
+      json['search'] = search.toJson();
     }
-    return data;
+    return json;
   }
 
   String get firstUrl {
