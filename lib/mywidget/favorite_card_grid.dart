@@ -19,6 +19,10 @@ class FavoriteCardGrid extends StatelessWidget {
   FavoriteCardGrid({Key key, this.favoriteJson, this.controller, this.index})
       : super(key: key) {
     advert = favoriteJson.advert;
+    //set to false the default deleting status of current FavAd index
+    Future.delayed(const Duration(milliseconds: 500),
+            () async => controller.deleteStatusList[index] = false);
+
   }
 
   Widget build(BuildContext context) {
@@ -116,9 +120,9 @@ class FavoriteCardGrid extends StatelessWidget {
               //const Divider(thickness: 0.5),
               Row(children: [
                 Expanded(
-                  flex: 8,
+                  flex: 7,
                   child: Padding(
-                      padding: const EdgeInsets.only(left: 8),
+                      padding: const EdgeInsets.only(left: 10),
                       child: Text(
                         numberFormat.format(advert.price) +
                             ' ' +
@@ -132,22 +136,29 @@ class FavoriteCardGrid extends StatelessWidget {
                       )),
                 ),
                 Expanded(
-                    flex: 2,
-                    child: Obx(() => controller.isDeleting.isTrue
-                        ? const CircularProgressIndicator()
-                        : ElevatedButton(
-                            onPressed: () {
-                              controller.removeFavoriteAdvert(
-                                  favoriteJson, index);
-                            },
-                            child: const Icon(Icons.delete),
-                            style: ElevatedButton.styleFrom(
-                              shape: const CircleBorder(),
-                              padding: const EdgeInsets.all(3),
-                              backgroundColor: Colors.red, // <-- Button color
-                              foregroundColor: Colors.white, // <-- Splash color
-                            ),
-                          ))
+                    flex: 3,
+                    child: Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child:
+                            Obx(() => controller.deleteStatusList[index] == true
+                                ? const Align(alignment: Alignment.center,
+                                child:CircularProgressIndicator())
+                                : ElevatedButton(
+                                    onPressed: () {
+                                      controller.removeFavoriteAdvert(
+                                          favoriteJson, index);
+                                    },
+                                    child: const Icon(Icons.delete, size: 18,),
+                                    style: ElevatedButton.styleFrom(
+                                      shape: const CircleBorder(),
+                                      padding: const EdgeInsets.all(4),
+                                      backgroundColor:
+                                          framColor, // <-- Button color
+                                      foregroundColor:
+                                          Colors.white, // <-- Splash color
+                                      fixedSize: Size(30 , 30)
+                                    ),
+                                  )))
                     //Icon(Icons.delete, color: Colors.red,)
                     )
               ]),

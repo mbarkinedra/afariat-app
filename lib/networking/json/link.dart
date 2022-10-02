@@ -44,7 +44,7 @@ class Links {
     next = json['next'] != null ? Link.fromJson(json['next']) : null;
     previous =
         json['previous'] != null ? Link.fromJson(json['previous']) : null;
-    next = json['search'] != null ? Link.fromJson(json['search']) : null;
+    search = json['search'] != null ? Link.fromJson(json['search']) : null;
   }
 
   Map<String, dynamic> toJson() {

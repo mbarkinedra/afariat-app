@@ -25,6 +25,7 @@ abstract class ApiManager {
   };
 
   /// Returns the API URL of current API ressource
+  @deprecated
   String apiUrl();
 
   // Headers responseHeaders;
@@ -112,6 +113,57 @@ abstract class ApiManager {
     return fromJson(data);
   }
 
+  Future<Response<dynamic>> securedGet(String url,
+      {Map<String, dynamic> filters}) async {
+    String wsse = Wsse.generateWsseFromStorage();
+    print('calling: $url');
+    return dioSingleton.dio
+        .get(
+      url,
+      queryParameters: filters,
+      options: Options(
+          headers: {
+            ...defaultHeaders,
+            ...{'X-WSSE': wsse},
+          },
+          followRedirects: false,
+          validateStatus: (status) {
+            return status < 405;
+          }),
+    )
+        .then((value) {
+          print('value: $value');
+      //process server status codes
+      validateResponseStatusCode(value);
+      return value;
+    }).catchError((error, stackTrace) {
+      processServerError(error);
+    });
+  }
+
+  Future<dynamic> getCollection(String url,
+      {Map<String, dynamic> filters}) async {
+    AbstractJsonResource jsonList;
+    var data;
+
+    await dioSingleton.dio.get(url, queryParameters: filters).then((value) {
+      validateResponseStatusCode(value);
+      data = value.data;
+    });
+    jsonList = fromJson(data);
+
+    return jsonList;
+  }
+
+  Future<dynamic> secureGetCollection(String url,
+      {Map<String, dynamic> filters}) async {
+    AbstractJsonResource jsonList;
+
+    var json = await securedGet(url, filters: filters);
+    jsonList = fromJson(json.data);
+    return jsonList;
+  }
+
   /// POST DATA TO SERVER
   Future<Response<dynamic>> postToUrl({String url, dataToPost}) async {
     String wsse = Wsse.generateWsseFromStorage();
@@ -170,6 +222,7 @@ abstract class ApiManager {
   }
 
   // Get list of resources
+  @Deprecated('use getCollection instead')
   Future<dynamic> getList({Map<String, dynamic> filters}) async {
     AbstractJsonResource jsonList;
     var data;
@@ -186,6 +239,8 @@ abstract class ApiManager {
   }
 
   // Get list of resources using the secure method
+  @deprecated
+  @Deprecated('use secureGetCollection instead')
   Future<dynamic> secureGetList({Map<String, dynamic> filters}) async {
     AbstractJsonResource jsonList;
 
@@ -196,7 +251,8 @@ abstract class ApiManager {
 
   /// POST DATA TO SERVER
   @deprecated
-  @Deprecated('Use postToUrl instead of this. later, delete post and rename postToUrl to post')
+  @Deprecated(
+      'Use postToUrl instead of this. later, delete post and rename postToUrl to post')
   Future<Response<dynamic>> post(dataToPost) async {
     return dioSingleton.dio
         .post(
@@ -253,6 +309,7 @@ abstract class ApiManager {
   }
 
   /// Get Data  User From Server
+  @Deprecated('Use securedGet instead')
   Future<Response<dynamic>> secureGet({Map<String, dynamic> filters}) async {
     String wsse = Wsse.generateWsseFromStorage();
     return dioSingleton.dio

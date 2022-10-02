@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -30,58 +31,93 @@ class FavoriteView extends GetWidget<FavoriteViewController> {
                 Get.back();
               }),
         ),
-        body: Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 10),
-            child: _buildGrid(context)));
+        body: SafeArea(
+            child: Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 5),
+                child: CustomScrollView(
+                  controller: controller.scrollController,
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  slivers: [
+                    CupertinoSliverRefreshControl(
+                      onRefresh: () async {
+                        await Future.delayed(const Duration(milliseconds: 500),
+                            () async => await controller.swipeDown());
+                      },
+                    ),
+                    _buildGrid(context),
+                    SliverToBoxAdapter(
+                      child: Obx(() => controller.isLoadingMore.value != false
+                          ? const Center(child: CupertinoActivityIndicator())
+                          : const SizedBox.shrink()),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Obx(() => controller.noMoreResults.value != false
+                          ? const Center(
+                              child: Padding(
+                              padding: EdgeInsets.only(top: 20, bottom: 10),
+                              child: Text(
+                                'Plus d\'annonces sauvegardées',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 18,
+                                    color: colorGrey),
+                              ),
+                            ))
+                          : const SizedBox.shrink()),
+                    ),
+                  ],
+                ))));
   }
 
-  _buildGrid(BuildContext context) {
-    return PagedGridView<int, FavoriteJson>(
-      showNewPageProgressIndicatorAsGridChild: true,
-      showNewPageErrorIndicatorAsGridChild: true,
-      showNoMoreItemsIndicatorAsGridChild: true,
+  _buildGrid(context) {
+    return PagedSliverGrid<int, FavoriteJson>(
       pagingController: controller.pagingController,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         childAspectRatio: 100 / 150,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
-        crossAxisCount: 2,
+        crossAxisCount: controller.pagingController.itemList != null
+            ? (controller.pagingController.itemList.length > 1 ? 2 : 1)
+            : 1,
       ),
       builderDelegate: PagedChildBuilderDelegate<FavoriteJson>(
-          itemBuilder: (context, item, index) => FavoriteCardGrid(
-                favoriteJson: item,
-                controller: controller,
-                index: index,
+        animateTransitions: true,
+        itemBuilder: (context, item, index) => FavoriteCardGrid(
+          favoriteJson: item,
+          controller: controller,
+          index: index,
+        ),
+        noItemsFoundIndicatorBuilder: (_) => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                'Pas d\'annonces \n sauvegardées',
+                style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 36,
+                    color: Colors.grey),
               ),
-          noItemsFoundIndicatorBuilder: (_) => Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Pas d\'annonces \n sauvegardées',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 36,
-                          color: Colors.grey),
-                    ),
-                    const SizedBox(
-                      height: 80,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: CustomButton1(
-                        function: () async {
-                          Get.toNamed(AppRouting.search);
-                        },
-                        labcolor: Colors.white,
-                        height: 40,
-                        width: context.mediaQuery.size.width * .8,
-                        label: "Parcourir les annonces",
-                        btcolor: buttonColor,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ])),
+              const SizedBox(
+                height: 80,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: CustomButton1(
+                  function: () async {
+                    Get.toNamed(AppRouting.search);
+                  },
+                  labcolor: Colors.white,
+                  height: 40,
+                  //width: context.mediaQuery.size.width * .8,
+                  label: "Parcourir les annonces",
+                  btcolor: buttonColor,
+                  fontSize: 16,
+                ),
+              ),
+            ]),
+      ),
     );
   }
 }

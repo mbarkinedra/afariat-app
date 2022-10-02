@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
+import '../../../config/settings_app.dart';
 import '../../../model/favorite_list.dart';
 import '../../../networking/api/favorite_api.dart';
 import '../../../networking/json/favorite_json.dart';
@@ -14,7 +15,8 @@ class FavoriteViewController extends GetxController {
   ScrollController scrollController = ScrollController();
   FavoriteListJson favoriteListJson;
   RxBool isLoadingMore = false.obs;
-  RxBool isDeleting = false.obs;
+  RxBool noMoreResults = false.obs;
+  RxMap<int, bool> deleteStatusList = <int, bool>{}.obs;
 
   @override
   void onInit() {
@@ -40,8 +42,9 @@ class FavoriteViewController extends GetxController {
   /// fetch page
   Future<void> fetchPage([String url]) async {
     try {
-      _api.url = url;
-      await _api.secureGetList().then((value) {
+      String _url =
+      url == null ? SettingsApp.favorite : SettingsApp.baseUrl + url;
+      await _api.secureGetCollection(_url).then((value) {
         favoriteListJson = value;
       });
 
@@ -55,7 +58,9 @@ class FavoriteViewController extends GetxController {
   Future<void> onSwipeUp() async {
     isLoadingMore.value = true;
     if (favoriteListJson.links.next == null) {
-      await fetchPage(favoriteListJson.links.lastUrl);
+      isLoadingMore.value = false;
+      noMoreResults.value = true;
+      return ;
     } else {
       await fetchPage(favoriteListJson.links.nextUrl);
       isLoadingMore.value = false;
@@ -64,17 +69,14 @@ class FavoriteViewController extends GetxController {
 
   Future<void> swipeDown() async {
     pagingController.itemList?.clear();
-
-    if (favoriteListJson.links.previous == null) {
-      await fetchPage(favoriteListJson.links.firstUrl);
-    } else {
-      await fetchPage(favoriteListJson.links.previousUrl);
-    }
+    pagingController.refresh(); //refreshes the UI
+    noMoreResults.value = false;
+    await fetchPage(favoriteListJson.links.firstUrl);
   }
 
   // Delete fast from list favorite
   removeFavoriteAdvert(FavoriteJson element, int index) async {
-    isDeleting.value = true;
+    deleteStatusList[index] = true;
     try {
       await _api.deleteResource(element.id.toString()).then((value) {
         favoriteListJson.remove(element);
@@ -84,14 +86,14 @@ class FavoriteViewController extends GetxController {
     } catch (error) {
       print(error);
     }
-    isDeleting.value = false;
+    deleteStatusList[index] = false;
   }
 
   addAdvertToFavorites(int advertId) async {
-    print('add');
     try {
       await _api.addAdvert(advertId).then((value) {
         FavoriteList.add(advertId);
+        swipeDown();
       });
     } catch (error) {
       print(error);
@@ -99,10 +101,10 @@ class FavoriteViewController extends GetxController {
   }
 
   removeAdvertFromFavorite(int advertId) async {
-    print('remove');
     try {
       await _api.deleteByAdvertId(advertId).then((value) {
         FavoriteList.remove(advertId);
+        swipeDown();
       });
     } catch (error) {
       print(error);

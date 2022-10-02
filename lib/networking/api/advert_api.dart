@@ -4,9 +4,11 @@ import 'package:afariat/networking/api/resource_api.dart';
 import 'package:afariat/networking/json/advert_list_json.dart';
 
 class AdvertApi extends ResourceApi {
+  @deprecated
   String url;
 
   @override
+  @deprecated
   String apiUrl() {
     String parameters =
         Filter.toHttpQuery() != '' ? '?' + Filter.toHttpQuery() : '';
@@ -17,8 +19,18 @@ class AdvertApi extends ResourceApi {
       return SettingsApp.advertUrl + parameters;
     }
   }
-
   @override
+  Future<dynamic> getCollection(String url,
+      {Map<String, dynamic> filters}) async {
+    //if user is logged in, use the secure call.
+
+    if (accountInfoStorage.isLoggedIn()) {
+      return await secureGetCollection(url, filters: filters);
+    }
+    return await super.getCollection(url, filters: filters);
+  }
+  @override
+  @Deprecated('use getCollection')
   Future<dynamic> getList({Map<String, dynamic> filters}) async {
     //if user is logged in, use the secure call.
     if (accountInfoStorage.isLoggedIn()) {

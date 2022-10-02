@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
+import '../../config/settings_app.dart';
 import '../../model/favorite_list.dart';
 import '../../networking/api/advert_api.dart';
 import '../../networking/json/advert_list_json.dart';
@@ -44,8 +45,9 @@ class SearchViewController extends GetxController {
   /// fetch page
   Future<void> fetchPage([String url]) async {
     try {
-      _api.url = url;
-      await _api.getList().then((value) {
+      String _url =
+          url == null ? SettingsApp.advertUrl : SettingsApp.baseUrl + url;
+      await _api.getCollection(_url).then((value) {
         advertListJson = value;
       });
 
@@ -64,11 +66,11 @@ class SearchViewController extends GetxController {
     });
   }
 
-  ///make search based on the filter values
+  //TODO: make search based on the filter values
   Future<void> makeSearch() async {
     pagingController.refresh();
     try {
-      await _api.getList().then((value) {
+      await _api.getCollection(SettingsApp.advertUrl).then((value) {
         advertListJson = value;
       });
 
@@ -82,7 +84,8 @@ class SearchViewController extends GetxController {
   Future<void> onSwipeUp() async {
     isLoadingMore.value = true;
     if (advertListJson.links.next == null) {
-      await fetchPage(advertListJson.links.lastUrl);
+      isLoadingMore.value = false;
+      return ;
     } else {
       await fetchPage(advertListJson.links.nextUrl);
       isLoadingMore.value = false;
@@ -91,11 +94,6 @@ class SearchViewController extends GetxController {
 
   Future<void> swipeDown() async {
     pagingController.itemList?.clear();
-
-    if (advertListJson.links.previous == null) {
-      await fetchPage(advertListJson.links.firstUrl);
-    } else {
-      await fetchPage(advertListJson.links.previousUrl);
-    }
+    await fetchPage(advertListJson.links.firstUrl);
   }
 }

@@ -1,8 +1,6 @@
-import 'package:afariat/home/tap_home/favorite/favorite_view_controller.dart';
 import 'package:afariat/home/tap_profile/notification/notification_view_controller.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/networking/security/wsse.dart';
-import 'package:afariat/home/main_view_controller.dart';
 import 'package:afariat/home/tap_profile/account/account_view_controller.dart';
 import 'package:afariat/networking/api/abstract_user_api.dart';
 import 'package:afariat/validator/validator_signIn.dart';
