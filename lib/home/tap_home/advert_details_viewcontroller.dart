@@ -23,7 +23,6 @@ class AdvertDetailsViewController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    print(Get.parameters['id']);
     String id = Get.parameters['id'];
     if (id != null) {
       await fetchData(id);

@@ -7,7 +7,9 @@ import 'package:afariat/validator/validator_signIn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../home/main_view_controller.dart';
 import '../networking/json/error_json_resource.dart';
+import '../persistent_tab_manager.dart';
 
 class SignInViewController extends GetxController {
   TextEditingController email = TextEditingController();
@@ -52,8 +54,8 @@ class SignInViewController extends GetxController {
 
                     //await Get.find<FavoriteViewController>().getFavorite();
 
-                    //Get.find<MainViewController>().changeItemFilter(0);
-                    //Get.find<MainViewController>().updateList();
+                    PersistentTabManager.changePage(0);
+                    PersistentTabManager.updateScreens();
                     Get.find<AccountViewController>().getUserData();
                     Get.find<NotificationViewController>().getAllNotification();
                     email.clear();

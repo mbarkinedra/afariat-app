@@ -16,4 +16,9 @@ class ModifAdsApi extends ApiManager {
   AbstractJsonResource fromJson(data) {
     return ModifAdsJson.fromJson(data);
   }
+
+  @override
+  String baseApiUrl() {
+    return SettingsApp.modifAds;
+  }
 }

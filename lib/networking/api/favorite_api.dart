@@ -67,4 +67,9 @@ class FavoriteApi extends ResourceApi {
   fromJson(data) {
     return FavoriteListJson.fromJson(data);
   }
+
+  @override
+  String baseApiUrl() {
+    return SettingsApp.favorite;
+  }
 }

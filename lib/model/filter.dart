@@ -10,14 +10,22 @@ class ParameterBag {
   //Observable count to make it accessible from views
   RxInt count = 0.obs;
 
-  String toHttpQuery() => Uri(
-      queryParameters:
+  String toHttpQuery() =>
+      Uri(
+          queryParameters:
           data?.map((key, value) => MapEntry(key, value?.toString()))).query;
 
   set(k, v) {
     data ??= {};
     data[k] = v;
     count.value = data.length;
+  }
+
+  get(k) {
+    if (data == null) {
+      return null;
+    }
+    return data.containsKey(k) ? data[k] : null;
   }
 
   remove(k) {
@@ -47,6 +55,8 @@ class Filter {
 
   /// Set data to map searchData
   static set(k, v) => rxParameters.value.set(k, v);
+
+  static get(k) => rxParameters.value.get(k);
 
   /// Delete data  from map searchData
   static remove(k) => rxParameters.value.remove(k);

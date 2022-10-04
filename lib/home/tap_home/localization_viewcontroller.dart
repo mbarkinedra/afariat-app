@@ -14,7 +14,7 @@ class LocalizationViewController extends GetxController {
 
   //TODO: Init the list by the saved localizations in the storage
   Rx<LocalizationListJson> localizationsJsonList = LocalizationListJson().obs;
-  final LocalizationSearchApi _api = LocalizationSearchApi();
+  final AutocompleteLocalizationApi _api = AutocompleteLocalizationApi();
   final AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
 
   @override

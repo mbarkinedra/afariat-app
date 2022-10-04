@@ -4,6 +4,8 @@ import 'package:afariat/mywidget/profile_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../config/app_config.dart';
+import '../../persistent_tab_manager.dart';
+import '../main_view_controller.dart';
 import 'account/account_scr.dart';
 import 'notification/notification_view_controller.dart';
 import 'settings/setting_scr.dart';
@@ -88,9 +90,8 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
                 Get.find<AccountInfoStorage>().logout();
                 Get.find<NotificationViewController>().hasNotification.value =
                     false;
-                //Get.find<TapHomeViewController>().deleteAllFavoritesList();
                 Get.find<NotificationViewController>().clearList();
-               // Get.find<MainViewController>().changeItemFilter(0);
+
               //  Get.find<TapHomeViewController>().setUserName("");
               },
             ),

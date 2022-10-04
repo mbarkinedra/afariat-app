@@ -26,7 +26,11 @@ abstract class ApiManager {
 
   /// Returns the API URL of current API ressource
   @deprecated
+  @Deprecated('use baseApiUrl')
   String apiUrl();
+
+  /// Returns the base API URL of current API ressource
+  String baseApiUrl();
 
   // Headers responseHeaders;
   NetWorkController _netWorkController = a.Get.find<NetWorkController>();
@@ -132,7 +136,6 @@ abstract class ApiManager {
           }),
     )
         .then((value) {
-          print('value: $value');
       //process server status codes
       validateResponseStatusCode(value);
       return value;
@@ -151,7 +154,6 @@ abstract class ApiManager {
       data = value.data;
     });
     jsonList = fromJson(data);
-
     return jsonList;
   }
 

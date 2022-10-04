@@ -5,40 +5,64 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import '../config/app_routing.dart';
+import '../persistent_tab_manager.dart';
 import 'home_view.dart';
-import 'tap_myads/tap_myads_scr.dart';
+import 'tap_myads/myads_view.dart';
 import 'tap_profile/tap_profile_scr.dart';
 import 'tap_publish/tap_publish_scr.dart';
 import 'package:flutter_intro/flutter_intro.dart';
 
 class MainViewController extends GetxController {
   BuildContext context;
+  //List<Widget> screens;
+ // PersistentTabController tabController;
 
-  PersistentTabController tabController;
+  @override
+  void onInit() {
+    PersistentTabManager.buildScreens();
+    super.onInit();
+   // tabController = PersistentTabController(initialIndex: 0);
+  }
 
-  var currentIndex = 0.obs;
+  //var currentIndex = 0.obs;
 
-  final pages = <String>[
+ /* final pages = <String>[
     AppRouting.home,
     AppRouting.myAds,
     AppRouting.newAd,
     AppRouting.messages,
     AppRouting.profile
-  ];
+  ];*/
 
-  List<Widget> buildScreens = [
-    HomeView(),
-    Get.find<AccountInfoStorage>().isLoggedIn() ? TapMyAdsScr() : SignInScr(),
-    Get.find<AccountInfoStorage>().isLoggedIn() ? TapPublishScr() : SignInScr(),
-    Get.find<AccountInfoStorage>().isLoggedIn() ? TapChatScr() : SignInScr(),
-    Get.find<AccountInfoStorage>().isLoggedIn() ? TapProfileScr() : SignInScr()
-  ];
+ /* updateScreens(){
+    screens = buidScreens();
+  }*/
 
-  void changePage(int index) {
+  /*List<Widget> buidScreens() => [
+        HomeView(),
+        Get.find<AccountInfoStorage>().isLoggedIn() ? MyAdsView() : SignInScr(),
+        Get.find<AccountInfoStorage>().isLoggedIn()
+            ? TapPublishScr()
+            : SignInScr(),
+        Get.find<AccountInfoStorage>().isLoggedIn()
+            ? TapChatScr()
+            : SignInScr(),
+        Get.find<AccountInfoStorage>().isLoggedIn()
+            ? TapProfileScr()
+            : SignInScr()
+      ];*/
+
+  /*void changePage(int index) {
     currentIndex.value = index;
+    tabController.index = index;
+    tabController.jumpToTab(index);
+    Get.routing.current = pages[index];
+    update();
+    print(Get.currentRoute);
+    print(currentIndex.value);
     //Get.toNamed(pages[index]);
     //tabController.jumpToTab(index);
-  }
+  }*/
 
   RouteAndNavigatorSettings routeAndNavigatorSettings() {
     return RouteAndNavigatorSettings(

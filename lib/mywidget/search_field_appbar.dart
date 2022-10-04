@@ -1,12 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../config/utility.dart';
+import '../home/search/search_form_view_controller.dart';
+import '../home/tap_home/search_viewcontroller.dart';
 
 class SearchFieldAppbar extends StatelessWidget {
-  final TextEditingController controller;
+  TextEditingController controller = TextEditingController();
+  final Function onTaped;
+  final String value;
+  final String hintText;
 
-  SearchFieldAppbar({Key key, this.controller}) : super(key: key);
+  SearchFieldAppbar({Key key, this.onTaped, this.value, this.hintText = 'Rechercher...'}) : super(key: key) {
+    controller.text = value;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +38,15 @@ class SearchFieldAppbar extends StatelessWidget {
               ],
             ),
             child: TextField(
+              readOnly: true,
+              onTap: onTaped,
               cursorColor: framColor,
               //key: controller.intro.keys[1],
               controller: controller,
               keyboardType: TextInputType.text,
               //onChanged: controller.filterWord,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.search),
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.search),
                 /*suffixIcon: logic.searchWord.text
                                             .toString()
                                             .isNotEmpty
@@ -50,7 +60,7 @@ class SearchFieldAppbar extends StatelessWidget {
                                           },
                                         )
                                             : null,*/
-                hintText: 'Rechercher...',
+                hintText: hintText,
                 border: InputBorder.none,
                 focusColor: framColor,
                 hoverColor: framColor,

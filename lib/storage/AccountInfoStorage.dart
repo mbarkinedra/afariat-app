@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../networking/api/abstract_user_api.dart';
 import '../networking/json/preference_json.dart';
+import '../persistent_tab_manager.dart';
 
 class AccountInfoStorage extends GetxController {
   static const _keyEmail = 'username';
@@ -111,7 +112,8 @@ class AccountInfoStorage extends GetxController {
 
     removeUserData();
 
-    //Get.find<MainViewController>().updateList();
+    PersistentTabManager.updateScreens();
+    PersistentTabManager.changePage(0);
     Get.find<MainViewController>().update();
   }
 

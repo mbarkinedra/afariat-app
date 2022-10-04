@@ -49,6 +49,11 @@ class SignInApi extends AbstractUserAPi {
       processServerError(error);
     });
   }
+
+  @override
+  String baseApiUrl() {
+    return SettingsApp.loginUrl;
+  }
 }
 
 class LogoutApi extends AbstractUserAPi {
@@ -83,6 +88,11 @@ class LogoutApi extends AbstractUserAPi {
       processServerError(error);
     });
   }
+
+  @override
+  String baseApiUrl() {
+    return SettingsApp.logoutUrl;
+  }
 }
 
 class SignUpApi extends AbstractUserAPi {
@@ -90,11 +100,21 @@ class SignUpApi extends AbstractUserAPi {
   String apiUrl() {
     return SettingsApp.registerUrl;
   }
+
+  @override
+  String baseApiUrl() {
+    return SettingsApp.registerUrl;
+  }
 }
 
 class GetSaltApi extends AbstractUserAPi {
   @override
   String apiUrl() {
+    return SettingsApp.getSaltUrl;
+  }
+
+  @override
+  String baseApiUrl() {
     return SettingsApp.getSaltUrl;
   }
 }

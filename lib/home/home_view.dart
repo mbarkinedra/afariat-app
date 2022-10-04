@@ -1,3 +1,4 @@
+import 'package:afariat/model/filter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -75,9 +76,12 @@ class HomeView extends GetWidget<HomeViewController> {
                 automaticallyImplyLeading: false,
                 expandedHeight: 60,
                 title: Padding(
-                  child: SearchFieldAppbar(),
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 10, bottom: 10, top: 10),
+                  child: SearchFieldAppbar(
+                      onTaped: () => Get.toNamed(AppRouting.searchForm),
+                      value: null,
+                      hintText: 'Rechercher sur Le coin occasion'),
+                  padding:
+                      EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
                 ),
               ),
             ];
@@ -198,7 +202,7 @@ class HomeView extends GetWidget<HomeViewController> {
                               mainAxisSpacing: 4.0),
                       itemBuilder: (context, index) => AdvertCardGrid(
                         advert: controller.advertListJson.adverts()[index],
-                        userInitials: 'LC',
+                        userInitials: 'LCO',
                       ),
                       //scrollDirection: Axis.vertical,
                       shrinkWrap: true,

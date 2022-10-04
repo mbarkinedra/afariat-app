@@ -23,4 +23,9 @@ class AdvertDetailsApi extends ApiManager {
   fromJson(data) {
     return AdvertDetailsJson.fromJson(data);
   }
+
+  @override
+  String baseApiUrl() {
+    SettingsApp.advertDeatilsUrl;
+  }
 }

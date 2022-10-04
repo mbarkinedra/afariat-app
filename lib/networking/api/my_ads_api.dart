@@ -31,4 +31,9 @@ class MyAdsApi extends ResourceApi {
   fromJson(data) {
     return MyAdsJson.fromJson(data);
   }
+
+  @override
+  String baseApiUrl() {
+    return SettingsApp.myAdsUrl;
+  }
 }

@@ -9,7 +9,7 @@ import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/main_view_controller.dart';
 import 'package:afariat/home/tap_chat/chat_user/chat_user_viewcontroller.dart';
 import 'package:afariat/home/tap_chat/tap_chat_viewcontroller.dart';
-import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
+import 'package:afariat/home/tap_myads/myads_view_controller.dart';
 import 'package:afariat/home/tap_profile/account/account_view_controller.dart';
 import 'package:afariat/home/tap_profile/notification/notification_view_controller.dart';
 import 'package:afariat/home/tap_profile/settings/setting_view_controller.dart';
@@ -22,6 +22,7 @@ import 'package:get/get.dart';
 
 import '../home/drawer_view_controller.dart';
 import '../home/home_view_controller.dart';
+import '../home/search/search_form_view_controller.dart';
 import '../home/tap_home/advert_details_viewcontroller.dart';
 import '../home/tap_home/category_group_viewcontroller.dart';
 import '../home/tap_home/filter_app_bar_viewcontroller.dart';
@@ -43,6 +44,7 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => HomeViewController(), fenix: true);
     Get.lazyPut(() => DrawerViewController(), fenix: true);
     Get.lazyPut(() => SearchViewController(), fenix: true);
+    Get.lazyPut(() => SearchFormViewController(), fenix: true);
     Get.lazyPut(() => FilterViewController(), fenix: true);
     Get.lazyPut(() => SearchAppBarViewController(), fenix: true);
     Get.lazyPut(() => FilterAppBarViewController(), fenix: true);
@@ -61,7 +63,7 @@ class AllBindings extends Bindings {
     Get.put(LocController());
     Get.lazyPut(() => SignUpViewController());
     Get.lazyPut(() => SignInViewController());
-    Get.lazyPut(() => TapMyAdsViewController(), fenix: true);
+    Get.lazyPut(() => MyAdsViewController(), fenix: true);
     Get.lazyPut(() => TapProfileViewController());
     Get.lazyPut(() => AdvertDetailsViewController());
     Get.lazyPut(() => TapPublishViewController(), fenix: true);

@@ -15,4 +15,9 @@ class CategoriesGrouppedApi extends ApiManager {
   AbstractJsonResource fromJson(data) {
     return CategoriesGroupedJsonList.fromJson(data);
   }
+
+  @override
+  String baseApiUrl() {
+    return SettingsApp.grouppedCategoriesUrl ;
+  }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-import '../../model/favorite_list.dart';
+import '../../config/utility.dart';
 import '../../mywidget/advert_card_grid.dart';
 import '../../mywidget/advert_card_list.dart';
 import '../../networking/json/advert_minimal_json.dart';
@@ -41,7 +41,22 @@ class SearchView extends GetWidget<SearchViewController> {
               child: Obx(() => controller.isLoadingMore.value != false
                   ? const Center(child: CupertinoActivityIndicator())
                   : const SizedBox.shrink()),
-            )
+            ),
+            SliverToBoxAdapter(
+              child: Obx(() => controller.noMoreResults.value != false
+                  ? const Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 20, bottom: 10),
+                    child: Text(
+                      'Plus d\'annonces. Essayez de modifier vos critères de recherches',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18,
+                          color: colorGrey),
+                    ),
+                  ))
+                  : const SizedBox.shrink()),
+            ),
           ],
         ),
       ),
@@ -63,7 +78,7 @@ class SearchView extends GetWidget<SearchViewController> {
               animateTransitions: true,
               itemBuilder: (context, item, index) => AdvertCardGrid(
                 advert: item,
-                userInitials: 'LC',
+                userInitials: 'LCO',
               ),
             ),
           )
@@ -72,7 +87,7 @@ class SearchView extends GetWidget<SearchViewController> {
             builderDelegate: PagedChildBuilderDelegate<AdvertMinimalJson>(
               animateTransitions: true,
               itemBuilder: (context, item, index) =>
-                  AdvertCardList(advert: item, userInitials: 'LC'),
+                  AdvertCardList(advert: item, userInitials: 'LCO'),
             ),
           ));
   }

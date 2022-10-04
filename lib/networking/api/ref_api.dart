@@ -13,7 +13,10 @@ abstract class RefApi extends ApiManager {
 //Geoloc
 class CityApi extends RefApi {
   @override
+  @deprecated
   String apiUrl() => SettingsApp.cityUrl;
+
+  String baseApiUrl() => SettingsApp.cityUrl;
 }
 
 class TownApi extends RefApi {
@@ -21,27 +24,42 @@ class TownApi extends RefApi {
 
   @override
   String apiUrl() => SettingsApp.townUrl + "/" + cityId;
+
+  @override
+  String baseApiUrl() => SettingsApp.townUrl;
 }
 
 //Refs
 class PriceApi extends RefApi {
   @override
   String apiUrl() => SettingsApp.priceUrl;
+
+  @override
+  String baseApiUrl() => SettingsApp.priceUrl;
 }
 
 class VehicleBrandsApi extends RefApi {
   @override
   String apiUrl() => SettingsApp.vehicleBrandsUrl;
+
+  @override
+  String baseApiUrl() => SettingsApp.vehicleBrandsUrl;
 }
 
 class RoomsNumberApi extends RefApi {
   @override
   String apiUrl() => SettingsApp.roomsNumberUrl;
+
+  @override
+  String baseApiUrl() => SettingsApp.roomsNumberUrl;
 }
 
 class EnergieApi extends RefApi {
   @override
   String apiUrl() => SettingsApp.energiesUrl;
+
+  @override
+  String baseApiUrl() => SettingsApp.energiesUrl;
 }
 
 class VehicleModelApi extends RefApi {
@@ -50,26 +68,42 @@ class VehicleModelApi extends RefApi {
   @override
   String apiUrl() =>
       SettingsApp.vehiculeModelUrl + "/" + vehicleModelId.toString();
+
+  @override
+  String baseApiUrl() => SettingsApp.vehiculeModelUrl;
 }
 
 class MotoBrandsApi extends RefApi {
   @override
   String apiUrl() => SettingsApp.motoBrandsUrl;
+
+  @override
+  String baseApiUrl() => SettingsApp.motoBrandsUrl;
 }
 
 class MileagesApi extends RefApi {
   @override
   String apiUrl() => SettingsApp.mileagesUrl;
+
+  @override
+  String baseApiUrl() => SettingsApp.mileagesUrl;
 }
 
 class YearsModelsApi extends RefApi {
   @override
   String apiUrl() => SettingsApp.yearsModelsUrl;
+
+  @override
+  String baseApiUrl() => SettingsApp.yearsModelsUrl;
 }
 
 class AdvertTypesApi extends RefApi {
   int advertTypeId;
 
   @override
+  @deprecated
   String apiUrl() => SettingsApp.advertTypesUrl + advertTypeId.toString();
+
+  @override
+  String baseApiUrl() => SettingsApp.advertTypesUrl;
 }

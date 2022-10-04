@@ -5,7 +5,7 @@ import 'package:afariat/networking/json/my_ads_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class TapMyAdsViewController extends GetxController {
+class MyAdsViewController extends GetxController {
   MyAdsApi _myAdsApi = MyAdsApi();
   List<Adverts> adverts = [];
   bool deleteData = false;

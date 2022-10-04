@@ -9,7 +9,7 @@ import 'package:afariat/storage/storage.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
-import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
+import 'package:afariat/home/tap_myads/myads_view_controller.dart';
 import 'package:afariat/validator/validator_Adverts.dart';
 import 'package:afariat/mywidget/custom_dialogue_felecitation.dart';
 import 'package:afariat/networking/api/modif_ads_api.dart';
@@ -426,7 +426,7 @@ class TapPublishViewController extends GetxController {
         validator.validatorServer.validateServer(
             value: value,
             success: () async {
-              Get.find<TapMyAdsViewController>().getAllAds();
+              Get.find<MyAdsViewController>().getAllAds();
               Filter.clear();
               clearAllData();
               Get.find<CategoryAndSubcategory>()
@@ -445,7 +445,7 @@ class TapPublishViewController extends GetxController {
                           i++;
                         }
                         Navigator.pop(context);
-                        Get.find<TapMyAdsViewController>().getAllAds();
+                        Get.find<MyAdsViewController>().getAllAds();
                         Get.find<TapPublishViewController>().clearAllData();
                        // Get.find<MainViewController>().changeItemFilter(1);
                       },
@@ -485,7 +485,7 @@ class TapPublishViewController extends GetxController {
                       }
                       Navigator.pop(context);
                       Get.find<TapPublishViewController>().clearAllData();
-                      Get.find<TapMyAdsViewController>().getAllAds();
+                      Get.find<MyAdsViewController>().getAllAds();
                      // Get.find<MainViewController>().changeItemFilter(1);
                     },
                     description: "Votre annonce est en cours de validation !",

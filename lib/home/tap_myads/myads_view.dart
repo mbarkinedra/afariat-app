@@ -6,10 +6,14 @@ import 'package:afariat/mywidget/custom_button_without_icon.dart';
 import 'package:afariat/mywidget/custom_dialogue_delete.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'tap_myads_viewcontroller.dart';
+import '../../config/app_routing.dart';
+import '../../persistent_tab_manager.dart';
+import '../main_view_controller.dart';
+import 'myads_view_controller.dart';
 
-class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
+class MyAdsView extends GetWidget<MyAdsViewController> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
@@ -18,27 +22,35 @@ class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
       child: Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             "Mes annonces",
             style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+                color: colorGrey, fontWeight: FontWeight.bold, fontSize: 20),
           ),
-          backgroundColor: framColor,
+          backgroundColor: Colors.white,
+          leading: IconButton(
+              icon: const Icon(
+                //
+                Icons.arrow_back_ios,
+                color: framColor,
+              ),
+              onPressed: () {
+                PersistentTabManager.changePage(0);
+              }),
         ),
         body: Obx(
           () => Column(
             children: [
               Get.find<NetWorkController>().connectionStatus.value == false
-                  ? Container(
+                  ? const SizedBox(
                       child: Center(child: CircularProgressIndicator()),
                       height: 50,
                       width: 50,
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               Get.find<NetWorkController>().connectionStatus.value
                   ? Expanded(
-                      child:
-                          GetBuilder<TapMyAdsViewController>(builder: (logic) {
+                      child: GetBuilder<MyAdsViewController>(builder: (logic) {
                         return controller.getAdsFromServer
                             ? Center(
                                 child: CircularProgressIndicator(),
@@ -52,7 +64,7 @@ class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
                                         SizedBox(
                                           height: 175,
                                         ),
-                                        Align(
+                                        const Align(
                                           alignment: Alignment.topCenter,
                                           child: Text(
                                               "Vous n'avez déposé aucune annonce",
@@ -65,10 +77,8 @@ class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
                                           height: _size.height * .20,
                                         ),
                                         CustomButtonWithoutIcon(
-                                            function: () {
-                                            /*  Get.find<MainViewController>()
-                                                  .changeItemFilter(2);*/
-                                            },
+                                            function: () =>
+                                                Get.toNamed(AppRouting.newAd),
                                             labColor: Colors.white,
                                             height: 50,
                                             width: 300,
@@ -132,7 +142,7 @@ class TapMyAdsScr extends GetWidget<TapMyAdsViewController> {
                                                 tapPublishViewController
                                                     .getAllData(logic
                                                         .adverts[position].id);
-                                               /* Get.find<MainViewController>()
+                                                /* Get.find<MainViewController>()
                                                     .changeItemFilter(2);*/
                                               },
                                             );

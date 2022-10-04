@@ -3,7 +3,9 @@ import 'package:afariat/config/Environment.dart';
 class SettingsApp {
   static String get baseUrl => Environment.baseUrl;
 
-  static String get baseApiUrl => baseUrl + '/api/v1';
+  static String get apiPrefix => '/api/v1';
+
+  static String get baseApiUrl => baseUrl + apiPrefix;
 
   static String get loginUrl => baseApiUrl + '/users/login';
   static String get logoutUrl => baseApiUrl + '/users/logout';
@@ -81,4 +83,6 @@ class SettingsApp {
   static String get preference => baseApiUrl + '/preference';
 
   static String get autocompleteLocalization => baseApiUrl + '/autocomplete/localization';
+
+  static String get autocompleteSearchSuggestion => baseApiUrl + '/autocomplete/search-suggestions';
 }

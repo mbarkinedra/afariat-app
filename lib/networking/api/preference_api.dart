@@ -8,6 +8,7 @@ class PreferenceApi extends ResourceApi {
 
   /// Get preference's list
   @override
+  @deprecated
   String apiUrl() {
     return SettingsApp.preference;
   }
@@ -38,5 +39,10 @@ class PreferenceApi extends ResourceApi {
   @override
   fromJson(data) {
     return PreferenceJson.fromJson(data);
+  }
+
+  @override
+  String baseApiUrl() {
+    return SettingsApp.preference;;
   }
 }

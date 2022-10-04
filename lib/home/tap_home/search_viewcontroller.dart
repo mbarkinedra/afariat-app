@@ -2,60 +2,61 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
+import '../../Common/abstract_paginated_view_controller.dart';
 import '../../config/settings_app.dart';
 import '../../model/favorite_list.dart';
+import '../../model/filter.dart';
 import '../../networking/api/advert_api.dart';
 import '../../networking/json/advert_list_json.dart';
 import '../../networking/json/advert_minimal_json.dart';
 
-class SearchViewController extends GetxController {
-  final PagingController<int, AdvertMinimalJson> pagingController =
-      PagingController(firstPageKey: 0);
-  ScrollController scrollController = ScrollController();
-  final AdvertApi _api = AdvertApi();
+class SearchViewController
+    extends AbstractPaginatedViewController<AdvertMinimalJson> {
   AdvertListJson advertListJson;
   RxBool isGrid = false.obs;
-  RxBool isLoadingMore = false.obs;
 
   @override
   void onInit() {
-    fetchPage();
-    scrollController.addListener(() {
-      if (scrollController.position.atEdge) {
-        if (scrollController.offset >=
-            scrollController.position.maxScrollExtent) {
-          onSwipeUp();
-        } /*else
-          if (scrollController.offset >=
-            scrollController.position.minScrollExtent) {
-          onSwipeDown();
-        }*/
-      }
-    });
     super.onInit();
   }
 
   @override
+  Future<void> fetchInitialData() async {
+    String httpQuery = Filter.toHttpQuery();
+    fetchPage(apiInstance().generateUrl(httpQuery));
+  }
+
+  @override
   void dispose() {
-    pagingController.dispose();
-    scrollController.dispose();
     super.dispose();
   }
 
-  /// fetch page
-  Future<void> fetchPage([String url]) async {
-    try {
-      String _url =
-          url == null ? SettingsApp.advertUrl : SettingsApp.baseUrl + url;
-      await _api.getCollection(_url).then((value) {
-        advertListJson = value;
-      });
-
-      pagingController.appendLastPage(advertListJson.adverts());
-      _setFavorites();
-    } catch (error) {
-      pagingController.error = error;
+  @override
+  AdvertApi apiInstance() {
+    if(api == null) {
+      return AdvertApi();
     }
+    return api;
+  }
+
+  @override
+  Future<void> onSwipeUp() async {
+    await fetchPage(advertListJson.links.nextUrl);
+  }
+
+  @override
+  Future<void> onSwipeDown() async {
+    await fetchPage(advertListJson.links.firstUrl);
+  }
+
+  @override
+  bool hasNextResults() => advertListJson.links.next != null;
+
+  @override
+  onFetchApiSuccess(value) {
+    advertListJson = value;
+    pagingController.appendLastPage(advertListJson.adverts());
+    _setFavorites();
   }
 
   _setFavorites() {
@@ -68,32 +69,16 @@ class SearchViewController extends GetxController {
 
   //TODO: make search based on the filter values
   Future<void> makeSearch() async {
-    pagingController.refresh();
+    pagingController.itemList?.clear();
     try {
-      await _api.getCollection(SettingsApp.advertUrl).then((value) {
-        advertListJson = value;
+      await apiInstance().getAdverts(httpQuery:  Filter.toHttpQuery()).then((value) {
+        //TODO: save the filter in local storage
+        onFetchApiSuccess(value);
       });
 
-      pagingController.appendLastPage(advertListJson.adverts());
-      _setFavorites();
     } catch (error) {
+      print(error);
       pagingController.error = error;
     }
-  }
-
-  Future<void> onSwipeUp() async {
-    isLoadingMore.value = true;
-    if (advertListJson.links.next == null) {
-      isLoadingMore.value = false;
-      return ;
-    } else {
-      await fetchPage(advertListJson.links.nextUrl);
-      isLoadingMore.value = false;
-    }
-  }
-
-  Future<void> swipeDown() async {
-    pagingController.itemList?.clear();
-    await fetchPage(advertListJson.links.firstUrl);
   }
 }

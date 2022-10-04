@@ -17,7 +17,7 @@ class UserApi extends ResourceApi {
   }
 
   @override
-  String apiPutUrl({ Map<String, String>queryParams}) {
+  String apiPutUrl({Map<String, String> queryParams}) {
     return SettingsApp.userUrl + "/" + id;
   }
 
@@ -30,5 +30,10 @@ class UserApi extends ResourceApi {
   String apiPostUrl({dataToPost}) {
     // TODO: implement apiPostUrl
     throw UnimplementedError();
+  }
+
+  @override
+  String baseApiUrl() {
+    return SettingsApp.userUrl;
   }
 }

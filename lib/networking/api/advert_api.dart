@@ -14,11 +14,12 @@ class AdvertApi extends ResourceApi {
         Filter.toHttpQuery() != '' ? '?' + Filter.toHttpQuery() : '';
 
     if (url != null) {
-      return  SettingsApp.baseUrl + url;
+      return SettingsApp.baseUrl + url;
     } else {
       return SettingsApp.advertUrl + parameters;
     }
   }
+
   @override
   Future<dynamic> getCollection(String url,
       {Map<String, dynamic> filters}) async {
@@ -29,6 +30,7 @@ class AdvertApi extends ResourceApi {
     }
     return await super.getCollection(url, filters: filters);
   }
+
   @override
   @Deprecated('use getCollection')
   Future<dynamic> getList({Map<String, dynamic> filters}) async {
@@ -45,7 +47,7 @@ class AdvertApi extends ResourceApi {
   }
 
   @override
-  String apiPutUrl({ Map<String, String>queryParams}) {
+  String apiPutUrl({Map<String, String> queryParams}) {
     // TODO: implement apiPutUrl
     throw UnimplementedError();
   }
@@ -59,5 +61,24 @@ class AdvertApi extends ResourceApi {
   @override
   fromJson(data) {
     return AdvertListJson.fromJson(data);
+  }
+
+  @override
+  String baseApiUrl() {
+    return SettingsApp.advertUrl;
+  }
+
+  String generateUrl(String httpQuery) {
+    return SettingsApp.apiPrefix +
+        '/adverts' +
+        (httpQuery != '' ? '?' + httpQuery : '');
+  }
+
+  Future<dynamic> getAdverts({String httpQuery}) async {
+    String _url = baseApiUrl() + (httpQuery != '' ? '?' + httpQuery : '');
+    if (accountInfoStorage.isLoggedIn()) {
+      return await secureGetCollection(_url);
+    }
+    return await super.getCollection(_url);
   }
 }

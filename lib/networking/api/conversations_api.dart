@@ -33,4 +33,9 @@ class ConversationsApi extends ResourceApi {
   fromJson(data) {
     return ConversationJson.fromJson(data);
   }
+
+  @override
+  String baseApiUrl() {
+    return SettingsApp.conversations;
+  }
 }
