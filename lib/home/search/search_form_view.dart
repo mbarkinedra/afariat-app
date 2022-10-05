@@ -1,6 +1,7 @@
 import 'package:afariat/config/app_routing.dart';
 import 'package:afariat/home/search/search_form_view_controller.dart';
 import 'package:afariat/model/filter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,8 @@ class SearchFormView extends GetWidget<SearchFormViewController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.source = Get.parameters.containsKey('source') ? Get.parameters['source'] : null;
+    controller.source =
+        Get.parameters.containsKey('source') ? Get.parameters['source'] : null;
 
     return Scaffold(
       appBar: AppBar(
@@ -49,15 +51,77 @@ class SearchFormView extends GetWidget<SearchFormViewController> {
             }),
       ),
       body: SafeArea(
+          child: Padding(
+        padding: const EdgeInsets.only(top: 20, left: 8, right: 8, bottom: 8),
         child: CustomScrollView(
           //controller: controller.scrollController,
           physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics()),
           slivers: [
+            SliverToBoxAdapter(
+              child: ListTile(
+                contentPadding: const EdgeInsets.all(8),
+                title: const Text(
+                  'Uniquement avec photos',
+                  style: TextStyle(fontSize: 16),
+                ),
+                trailing: Obx(
+                  () => CupertinoSwitch(
+                    value: controller.onlyPhotolight.value,
+                    activeColor: framColor,
+                    onChanged: (v) {
+                      controller.updateOnlyPhotoLight(v);
+                    },
+                  ),
+                ),
+              ),
+            ),
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 5,
+              ),
+            ),
+
+            const SliverToBoxAdapter(
+              child: Text(
+                'Mes recherches sauvegardées',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: ListTile(
+                //contentPadding: const EdgeInsets.all(8),
+                title: const Text(
+                  'Toutes catégories',
+                  style: TextStyle(fontSize: 16),
+                ),
+                leading: const Icon(Icons.all_inclusive_sharp),
+                onTap: (){
+                  controller.allCategories();
+                },
+              ),
+            ),
             // _buildSavedSearchList(),
           ],
         ),
+      )),
+      bottomNavigationBar: SizedBox(
+        child: Padding(
+          padding:
+              MediaQuery.of(context).viewInsets, //for floating over keyboard
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: OutlinedButton.icon(
+              icon: const Icon(
+                Icons.filter_alt_outlined,
+              ),
+              label: const Text('Plus de critères'),
+              onPressed: () => Get.toNamed(AppRouting.filter),
+            ),
+          ),
+        ),
       ),
+      resizeToAvoidBottomInset: true,
     );
   }
 

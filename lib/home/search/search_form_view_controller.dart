@@ -5,10 +5,13 @@ import '../../config/app_routing.dart';
 import '../../model/filter.dart';
 import '../../networking/api/autocomplete_api.dart';
 import '../../networking/json/serach_suggestion.dart';
+import '../../storage/AccountInfoStorage.dart';
 import '../tap_home/search_viewcontroller.dart';
 
 class SearchFormViewController extends GetxController {
   TextEditingController searchFiled = TextEditingController();
+
+  RxBool onlyPhotolight = false.obs;
 
   String source;
 
@@ -18,12 +21,23 @@ class SearchFormViewController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    onlyPhotolight.value =
+        Filter.has('onlyPhoto') ? Filter.get('onlyPhoto') : false;
   }
 
   @override
   void dispose() {
     searchFiled.dispose();
     super.dispose();
+  }
+
+  updateOnlyPhotoLight(v) {
+    onlyPhotolight.value = v;
+    if (v) {
+      Filter.set('onlyPhoto', v);
+    } else {
+      Filter.remove('onlyPhoto');
+    }
   }
 
   Future<List<SearchSuggestionJson>> getSuggestions(String query) async {
@@ -42,9 +56,19 @@ class SearchFormViewController extends GetxController {
     } else {
       Filter.remove('search');
     }
+    _redirectToSource();
+  }
+
+  allCategories() async {
+    //reset all filters
+    Filter.clearExcept(AccountInfoStorage.keyLocalization);
+    await _redirectToSource();
+  }
+
+  _redirectToSource() async {
     //refresh the search page to get new results
     SearchViewController searchViewController =
-        Get.find<SearchViewController>();
+    Get.find<SearchViewController>();
     await searchViewController.makeSearch();
     //get back to search page
     if (source == AppRouting.search) {

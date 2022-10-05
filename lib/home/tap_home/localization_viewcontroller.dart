@@ -31,7 +31,7 @@ class LocalizationViewController extends GetxController {
 
   Future<Rx<LocalizationListJson>> loadLocalizationsFromStorage() async {
     //load saved localizations from local storage only if the list is empty(first time, screen back without saving )
-    if(localizationsJsonList.value.isEmpty()) {
+    if (localizationsJsonList.value.isEmpty()) {
       dynamic json = await accountInfoStorage.readLocalization();
       if (json != null) {
         localizationsJsonList.value = LocalizationListJson.fromJson(json);
@@ -66,13 +66,14 @@ class LocalizationViewController extends GetxController {
 
   save(BuildContext context) async {
     //TODO: Save the localization to local storage
-    Map<String, List<int>> localization =
-        localizationsJsonList.value.toFilter();
+    String localization = localizationsJsonList.value.toFilter();
 
-    await accountInfoStorage.saveLocalization(localizationsJsonList.value.toJson());
+    await accountInfoStorage
+        .saveLocalization(localizationsJsonList.value.toJson());
 
     if (localization.isNotEmpty) {
-      Filter.set(AccountInfoStorage.keyLocalization, localizationsJsonList.value.toFilter());
+      Filter.set(AccountInfoStorage.keyLocalization,
+          localizationsJsonList.value.toFilter());
     } else {
       Filter.remove(AccountInfoStorage.keyLocalization);
     }

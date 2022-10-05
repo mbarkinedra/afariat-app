@@ -44,6 +44,10 @@ class ParameterBag {
     data?.removeWhere((key, value) => key == k);
     count.value = data?.length ?? 0;
   }
+
+  has(k){
+    return data == null ? false : data.containsKey(k);
+  }
 }
 
 class Filter {
@@ -57,6 +61,8 @@ class Filter {
   static set(k, v) => rxParameters.value.set(k, v);
 
   static get(k) => rxParameters.value.get(k);
+
+  static has(k) => rxParameters.value.has(k);
 
   /// Delete data  from map searchData
   static remove(k) => rxParameters.value.remove(k);

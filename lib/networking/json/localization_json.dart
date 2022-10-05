@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 
 /// Used to model an autocomplete json list result for localizations
@@ -86,9 +88,9 @@ class LocalizationListJson extends AbstractJsonResource {
     return false;
   }
 
-  Map<String, List<int>> toFilter() {
+  String toFilter() {
     if(isEmpty()){
-      return {} ;
+      return null ;
     }
     List<int> regions = [];
     List<int> cities = [];
@@ -108,7 +110,7 @@ class LocalizationListJson extends AbstractJsonResource {
           break;
       }
     }
-    return {'regions': regions, 'cities': cities, 'towns': towns};
+    return json.encode({'regions': regions, 'cities': cities, 'towns': towns});
   }
 }
 

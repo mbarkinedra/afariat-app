@@ -1,6 +1,7 @@
 import 'package:afariat/home/tap_home/search_viewcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../config/app_routing.dart';
 import '../../config/utility.dart';
 import '../../model/filter.dart';
 import 'filter_app_bar_viewcontroller.dart';
@@ -30,7 +31,7 @@ class FilterAppBarView extends GetWidget<FilterAppBarViewController> {
               width: 110.0,
               child: OutlinedButton(
                 onPressed: () {
-                  Get.toNamed('/filter');
+                  Get.toNamed(AppRouting.filter);
                 },
                 child: Row(
                   children: [
