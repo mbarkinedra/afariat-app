@@ -46,7 +46,6 @@ class HomeViewController extends GetxController {
   selectCategory(id) {
     Filter.clearExcept(AccountInfoStorage.keyLocalization);
     Filter.set('category', id);
-    print(Filter);
     Get.toNamed('/search');
   }
 }
