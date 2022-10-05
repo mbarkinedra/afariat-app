@@ -21,11 +21,13 @@ class SearchAppBarView extends GetWidget<SearchAppBarViewController> {
       title: Column(children: <Widget>[
         Row(children: [
           Expanded(
-            child: SearchFieldAppbar(
-              onTaped: () => Get.toNamed(AppRouting.searchForm,
-                  parameters: {'source': AppRouting.search}),
-              value: Filter.get('search') ?? '',
-              hintText: 'Rechercher',
+            child: Obx(
+              () => SearchFieldAppbar(
+                onTaped: () => Get.toNamed(AppRouting.searchForm,
+                    parameters: {'source': AppRouting.search}),
+                value: Filter.search.value,
+                hintText: 'Rechercher',
+              ),
             ),
           ),
           const SizedBox(

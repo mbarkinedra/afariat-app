@@ -61,12 +61,7 @@ class LocalizationListJson extends AbstractJsonResource {
     return data.isEmpty;
   }
 
-  bool isNotEmpty() {
-    if (data != null) {
-      return data.isNotEmpty;
-    }
-    return false;
-  }
+  bool isNotEmpty() => !isEmpty();
 
   int count() => isEmpty() ? 0 : data.length;
 

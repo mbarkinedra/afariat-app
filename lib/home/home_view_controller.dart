@@ -27,6 +27,8 @@ class HomeViewController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    //init filter from storage
+    await Filter.loadFromStorage();
   }
 
   Future<AdvertListJson> fetchLastAds([int limit = 10]) async {

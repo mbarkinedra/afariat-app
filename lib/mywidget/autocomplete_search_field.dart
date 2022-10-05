@@ -9,6 +9,7 @@ class AutocompleteSearchField<T> extends StatelessWidget {
   final Function onSuggestionSelected;
   final Function suggestionsCallback;
   final Function itemBuilder;
+  final Function onClearText;
   final String value;
   final BuildContext context;
   final String hintText;
@@ -22,9 +23,13 @@ class AutocompleteSearchField<T> extends StatelessWidget {
       this.context,
       this.suggestionsCallback,
       this.itemBuilder,
-      this.hintText, this.autofocus = false})
+      this.hintText,
+      this.autofocus = false,
+      this.onClearText})
       : super(key: key) {
-    controller.text = value;
+    Future.delayed(const Duration(milliseconds: 500), () {
+      controller.text = value;
+    });
   }
 
   @override
@@ -58,7 +63,7 @@ class AutocompleteSearchField<T> extends StatelessWidget {
             ),
             autoFlipDirection: true,
             textFieldConfiguration: TextFieldConfiguration(
-              //controller: controller,
+              controller: controller,
               maxLines: 1,
               autofocus: autofocus,
               decoration: InputDecoration(
@@ -69,6 +74,7 @@ class AutocompleteSearchField<T> extends StatelessWidget {
                     icon: const Icon(Icons.clear_outlined),
                     onPressed: () {
                       controller.clear();
+                      onClearText();
                     }),
               ),
             ),

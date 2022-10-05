@@ -41,12 +41,12 @@ class FilterAppBarView extends GetWidget<FilterAppBarViewController> {
                       width: 5,
                     ),
                     Obx(
-                      () => Filter.rxParameters.value.count > 0
+                      () => Filter.count() > 0
                           ? CircleAvatar(
                               backgroundColor: framColor,
                               radius: 14,
                               child: Text(
-                                  Filter.rxParameters.value.count.toString(),
+                                  Filter.length.value.toString(),
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold)),
                             )
@@ -71,7 +71,7 @@ class FilterAppBarView extends GetWidget<FilterAppBarViewController> {
                 onPressed: () {
                   Get.toNamed('/filter/localization');
                 },
-                label: Obx(() => Text(controller.localizationLabel.value,
+                label: Obx(() => Text(Filter.localizationLabel.value,
                     style: const TextStyle(color: Colors.black87))),
                 icon: const Icon(
                   Icons.location_on,

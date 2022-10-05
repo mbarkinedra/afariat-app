@@ -6,40 +6,13 @@ import '../../networking/json/localization_json.dart';
 import '../../storage/AccountInfoStorage.dart';
 
 class FilterAppBarViewController extends GetxController {
-  final AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
-  RxString localizationLabel = Environment.allCountryLabel.obs;
-
   @override
   void onInit() async {
-    setLocalizationLabel();
     super.onInit();
   }
 
   @override
   void dispose() {
-    accountInfoStorage.dispose();
     super.dispose();
-  }
-
-  Future<RxString> setLocalizationLabel() async {
-    dynamic json = await accountInfoStorage.readLocalization();
-    if (json != null) {
-      LocalizationListJson localizationsJsonList =
-          LocalizationListJson.fromJson(json);
-      switch (localizationsJsonList.count()) {
-        case 0:
-          localizationLabel.value = Environment.allCountryLabel;
-          break;
-        case 1:
-          localizationLabel.value = localizationsJsonList.toList().first.name;
-          break;
-        default:
-          localizationLabel.value = localizationsJsonList.toList().first.name +
-              ' +' + ( localizationsJsonList.count() -1 ).toString();
-          break;
-      }
-    }
-    update();
-    return localizationLabel;
   }
 }

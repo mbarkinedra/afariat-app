@@ -11,8 +11,6 @@ import '../tap_home/search_viewcontroller.dart';
 class SearchFormViewController extends GetxController {
   TextEditingController searchFiled = TextEditingController();
 
-  RxBool onlyPhotolight = false.obs;
-
   String source;
 
   final AutocompleteSearchSuggestionApi _api =
@@ -21,23 +19,12 @@ class SearchFormViewController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    onlyPhotolight.value =
-        Filter.has('onlyPhoto') ? Filter.get('onlyPhoto') : false;
   }
 
   @override
   void dispose() {
     searchFiled.dispose();
     super.dispose();
-  }
-
-  updateOnlyPhotoLight(v) {
-    onlyPhotolight.value = v;
-    if (v) {
-      Filter.set('onlyPhoto', v);
-    } else {
-      Filter.remove('onlyPhoto');
-    }
   }
 
   Future<List<SearchSuggestionJson>> getSuggestions(String query) async {
@@ -52,9 +39,9 @@ class SearchFormViewController extends GetxController {
 
   suggestionSelect(SearchSuggestionJson suggestionJson) async {
     if (suggestionJson.name != null) {
-      Filter.set("search", suggestionJson.name);
+      Filter.search.value = suggestionJson.name;
     } else {
-      Filter.remove('search');
+      Filter.search.value = null;
     }
     _redirectToSource();
   }

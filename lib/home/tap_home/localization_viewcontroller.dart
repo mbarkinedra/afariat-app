@@ -66,22 +66,12 @@ class LocalizationViewController extends GetxController {
 
   save(BuildContext context) async {
     //TODO: Save the localization to local storage
-    String localization = localizationsJsonList.value.toFilter();
+    Filter.setLocalizationList(localizationsJsonList.value);
 
-    await accountInfoStorage
-        .saveLocalization(localizationsJsonList.value.toJson());
-
-    if (localization.isNotEmpty) {
-      Filter.set(AccountInfoStorage.keyLocalization,
-          localizationsJsonList.value.toFilter());
-    } else {
-      Filter.remove(AccountInfoStorage.keyLocalization);
-    }
-    //update the label of localization
-    Get.find<FilterAppBarViewController>().setLocalizationLabel();
     //refresh the list of the filter controller => does not work
-    await Get.find<FilterViewController>().loadLocalizationsFromStorage();
-    Get.find<FilterViewController>().localizationsJsonList.refresh();
+    await Filter.loadFromStorage();
+    Filter.localization.refresh();
+
     Navigator.pop(context);
 
     Get.find<SearchViewController>().makeSearch();

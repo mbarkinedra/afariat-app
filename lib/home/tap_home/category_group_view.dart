@@ -85,7 +85,6 @@ class CategoryGroupView extends GetWidget<CategoryGroupViewController> {
                       child: InkWell(
                           onTap: () {
                             controller.selectGroup(snapshot.data.data[index]);
-                            controller.setFilterCategoryLabel(snapshot.data.data[index].name);
                             Navigator.of(context).pop();
                           },
                           child: Padding(

@@ -7,6 +7,8 @@ import '../networking/api/abstract_user_api.dart';
 import '../networking/json/preference_json.dart';
 import '../persistent_tab_manager.dart';
 
+@deprecated
+@Deprecated('Create a static class that does not depend on Getx')
 class AccountInfoStorage extends GetxController {
   static const _keyEmail = 'username';
   static const _keyHashedPassword = 'hashedPassword';

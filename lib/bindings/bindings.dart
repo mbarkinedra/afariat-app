@@ -37,7 +37,7 @@ class AllBindings extends Bindings {
   @override
   void dependencies() async {
     Get.lazyPut(() => SecureStorage());
-    Get.lazyPut(() => AccountInfoStorage());
+    Get.put( AccountInfoStorage());
 
     Get.lazyPut(() => AccountViewController());
     Get.lazyPut(() => MainViewController(), fenix: true);

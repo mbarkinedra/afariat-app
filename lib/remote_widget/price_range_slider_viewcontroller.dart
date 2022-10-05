@@ -1,20 +1,19 @@
 import 'package:get/get.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
+import '../config/Referentiel.dart';
 import '../networking/api/ref_api.dart';
 import '../networking/json/ref_json.dart';
 
 class PriceRangeSliderViewController extends GetxController {
   final PriceApi _api = PriceApi();
   RefListJson items = RefListJson();
-  int minPriceId = 0;
-  int maxPriceId = 20;
+  RxInt minPriceId = Referential.priceMinId.obs;
+  RxInt maxPriceId = Referential.priceMaxId.obs;
   RxString selectedMinPriceValue = '0'.obs;
   RxString selectedMaxPriceValue = '500 000+'.obs;
-  Rx<SfRangeValues> values = const SfRangeValues(0,20).obs;
 
   @override
   Future<void> onInit() async {
-    fetchItems();
+    await fetchItems();
     super.onInit();
   }
 
@@ -24,9 +23,8 @@ class PriceRangeSliderViewController extends GetxController {
       return items;
     }
     items = await _api.getList();
-    minPriceId = items.first().id;
-    maxPriceId = items.last().id;
-    values.value = SfRangeValues(minPriceId, maxPriceId);
+    minPriceId.value = items.first().id;
+    maxPriceId.value = items.last().id;
     return items;
   }
 }

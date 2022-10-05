@@ -20,24 +20,27 @@ class SearchFormView extends GetWidget<SearchFormViewController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: AutocompleteSearchField<SearchSuggestionJson>(
-          controller: controller.searchFiled,
-          context: context,
-          hintText: 'Que cherchez-vous ?',
-          value: Filter.get('search'),
-          autofocus: true,
-          suggestionsCallback: (query) async =>
-              controller.getSuggestions(query),
-          itemBuilder: (context, SearchSuggestionJson suggestionJson) {
-            return ListTile(
-              leading: const Icon(Icons.search),
-              title: Text(suggestionJson.name),
-            );
-          },
-          onSuggestionSelected: (SearchSuggestionJson suggestionJson) {
-            //set the filter
-            controller.suggestionSelect(suggestionJson);
-          },
+        title: Obx(
+          () => AutocompleteSearchField<SearchSuggestionJson>(
+            controller: controller.searchFiled,
+            context: context,
+            hintText: 'Que cherchez-vous ?',
+            value: Filter.search.value,
+            autofocus: true,
+            suggestionsCallback: (query) async =>
+                controller.getSuggestions(query),
+            itemBuilder: (context, SearchSuggestionJson suggestionJson) {
+              return ListTile(
+                leading: const Icon(Icons.search),
+                title: Text(suggestionJson.name),
+              );
+            },
+            onSuggestionSelected: (SearchSuggestionJson suggestionJson) {
+              //set the filter
+              controller.suggestionSelect(suggestionJson);
+            },
+            onClearText: () => Filter.search.value = null,
+          ),
         ),
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -67,10 +70,10 @@ class SearchFormView extends GetWidget<SearchFormViewController> {
                 ),
                 trailing: Obx(
                   () => CupertinoSwitch(
-                    value: controller.onlyPhotolight.value,
+                    value: Filter.onlyPhoto.value,
                     activeColor: framColor,
                     onChanged: (v) {
-                      controller.updateOnlyPhotoLight(v);
+                      Filter.onlyPhoto.value = v;
                     },
                   ),
                 ),
@@ -96,7 +99,7 @@ class SearchFormView extends GetWidget<SearchFormViewController> {
                   style: TextStyle(fontSize: 16),
                 ),
                 leading: const Icon(Icons.all_inclusive_sharp),
-                onTap: (){
+                onTap: () {
                   controller.allCategories();
                 },
               ),
@@ -116,7 +119,7 @@ class SearchFormView extends GetWidget<SearchFormViewController> {
                 Icons.filter_alt_outlined,
               ),
               label: const Text('Plus de critères'),
-              onPressed: () => Get.toNamed(AppRouting.filter),
+              onPressed: () => Get.toNamed(AppRouting.filter, parameters: {'source': 'searchForm'}),
             ),
           ),
         ),

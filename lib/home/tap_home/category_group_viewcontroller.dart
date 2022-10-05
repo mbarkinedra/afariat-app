@@ -36,30 +36,22 @@ class CategoryGroupViewController extends GetxController {
     return groupJsonList;
   }
 
-  List<SubCategoryJson> getSelectedCategories(){
+  List<SubCategoryJson> getSelectedCategories() {
     return selectedGroup.subcategories;
   }
 
   selectGroup([CategoryGroupedJson group]) {
     selectedGroup = group;
-    Filter.remove('category');
-    if(group != null) {
-      Filter.set('categoryGroup', group.id);
-    }else{ //remove everything
-      Filter.remove('categoryGroup');
-      setFilterCategoryLabel('Toutes les catégories');
+    Filter.category.value = null;
+    if (group != null) {
+      Filter.categoryGroup.value = group;
+    } else {
+      //remove everything
+      Filter.categoryGroup.value = null;
     }
-    print(Filter.parameters().data);
   }
 
-  selectCategory(SubCategoryJson subCategory){
-    Filter.set('category', subCategory.id);
-    //update the label selected category
-    setFilterCategoryLabel(subCategory.name);
-    print(Filter.parameters().data);
-  }
-
-  setFilterCategoryLabel(String label){
-    Get.find<FilterViewController>().categoryLabel.value = label;
+  selectCategory(SubCategoryJson subCategory) {
+    Filter.category.value = subCategory;
   }
 }

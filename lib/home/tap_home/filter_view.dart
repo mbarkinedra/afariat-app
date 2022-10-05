@@ -1,13 +1,17 @@
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/home/tap_home/search_viewcontroller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../../model/filter.dart';
+import '../../mywidget/autocomplete_search_field.dart';
 import '../../mywidget/custom_button_1.dart';
 import '../../mywidget/search_field_appbar.dart';
 import '../../networking/json/localization_json.dart';
+import '../../networking/json/serach_suggestion.dart';
 import '../../remote_widget/price_range_slider_view.dart';
 import 'filter_viewcontroller.dart';
 import '../../config/utility.dart';
@@ -18,10 +22,34 @@ class FilterView extends GetWidget<FilterViewController> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
+    controller.source =
+        Get.parameters.containsKey('source') ? Get.parameters['source'] : null;
     return Scaffold(
       //key: controller.key,
       appBar: AppBar(
-        title: SearchFieldAppbar(),
+        title: Obx(
+          () => AutocompleteSearchField<SearchSuggestionJson>(
+            controller: controller.searchFiled,
+            context: context,
+            hintText: 'Que cherchez-vous ?',
+            value: Filter.search.value,
+            autofocus: false,
+            suggestionsCallback: (query) async =>
+                controller.getSuggestions(query),
+            itemBuilder: (context, SearchSuggestionJson suggestionJson) {
+              return ListTile(
+                leading: const Icon(Icons.search),
+                title: Text(suggestionJson.name),
+              );
+            },
+            onSuggestionSelected: (SearchSuggestionJson suggestionJson) {
+              //set the value in the textEditor
+              controller.searchFiled.text = suggestionJson.name;
+              Filter.search.value = controller.searchFiled.text;
+            },
+            onClearText: () => Filter.search.value = null,
+          ),
+        ),
         backgroundColor: Colors.white,
         leading: IconButton(
             icon: const Icon(
@@ -53,7 +81,7 @@ class FilterView extends GetWidget<FilterViewController> {
                     )),
                     child: TextButton(
                       style: TextButton.styleFrom(
-                        primary: buttonColor,
+                        foregroundColor: buttonColor,
                         padding: const EdgeInsets.only(
                             top: 20, bottom: 20, right: 0, left: 0),
                       ),
@@ -65,7 +93,15 @@ class FilterView extends GetWidget<FilterViewController> {
                           Expanded(
                               flex: 9,
                               child: Obx(() => Text(
-                                    controller.categoryLabel.value,
+                                    (Filter.category.value != null &&
+                                            Filter.category.value.id != null)
+                                        ? Filter.category.value.name
+                                        : ((Filter.categoryGroup.value !=
+                                                    null &&
+                                                Filter.categoryGroup.value.id !=
+                                                    null)
+                                            ? Filter.categoryGroup.value.name
+                                            : 'Toutes les catégories'),
                                     style: const TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.normal),
@@ -104,13 +140,27 @@ class FilterView extends GetWidget<FilterViewController> {
                     child: PriceRangeSlider(
                         controller: controller.priceRangeSliderViewController,
                         onChange: (SfRangeValues values) {
-                          controller.priceRangeSliderViewController.values
-                              .value = values;
-                          Filter.set(
-                              "minPrice", values.start.toInt().toString());
-                          Filter.set("maxPrice", values.end.toInt().toString());
+                          Filter.minPrice.value = values.start.toInt();
+                          Filter.maxPrice.value = values.end.toInt();
+                          //print(Filter.maxPrice.value);
                         }),
-                  )
+                  ),
+                  ListTile(
+                    contentPadding: const EdgeInsets.all(8),
+                    title: const Text(
+                      'Uniquement avec photos',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    trailing: Obx(
+                      () => CupertinoSwitch(
+                        value: Filter.onlyPhoto.value,
+                        activeColor: framColor,
+                        onChanged: (v) {
+                          Filter.onlyPhoto.value = v;
+                        },
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )),
@@ -125,7 +175,7 @@ class FilterView extends GetWidget<FilterViewController> {
                   foregroundColor:
                       MaterialStateProperty.all<Color>(Colors.black),
                 ),
-                onPressed: (){
+                onPressed: () {
                   controller.clear(context);
                 },
                 child: const Text(
@@ -145,8 +195,7 @@ class FilterView extends GetWidget<FilterViewController> {
               flex: 7,
               child: CustomButton1(
                 function: () async {
-                  Navigator.pop(context);
-                  Get.find<SearchViewController>().makeSearch();
+                  controller.search(context);
                 },
                 labcolor: Colors.white,
                 height: 40,
@@ -171,26 +220,31 @@ class FilterView extends GetWidget<FilterViewController> {
               children: [
                 Expanded(
                   flex: 9,
-                  child: Wrap(
-                    spacing: 6.0,
-                    runSpacing: 6.0,
-                    children: List<Widget>.generate(
-                      controller.localizationsJsonList.value.count(),
-                      (int index) {
-                        return Chip(
-                          label: Text(
-                            controller.localizationsJsonList.value
-                                .toList()[index]
-                                .toString(),
-                            style: const TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                          backgroundColor: Colors.grey[300],
-                        );
-                      },
-                    ).toList(),
-                  ),
+                  child: Filter.localization.value.count() > 0
+                      ? Wrap(
+                          spacing: 6.0,
+                          runSpacing: 6.0,
+                          children: List<Widget>.generate(
+                            Filter.localization.value.count(),
+                            (int index) {
+                              return Chip(
+                                label: Text(
+                                  Filter.localization.value
+                                      .toList()[index]
+                                      .toString(),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                backgroundColor: Colors.grey[300],
+                              );
+                            },
+                          ).toList(),
+                        )
+                      : InkWell(
+                          onTap: () => Get.toNamed('/filter/localization'),
+                          child: Text('Toutes la France'),
+                        ),
                 ),
                 Expanded(
                   flex: 1,

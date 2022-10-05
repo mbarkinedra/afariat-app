@@ -1,3 +1,4 @@
+import 'package:afariat/model/filter.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:afariat/remote_widget/price_range_slider_viewcontroller.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +26,10 @@ class PriceRangeSlider extends GetWidget<PriceRangeSliderViewController> {
             return Obx(
               () => Column(children: [
                 SfRangeSlider(
-                  min: controller.minPriceId,
-                  max: controller.maxPriceId,
+                  min: controller.minPriceId.value,
+                  max: controller.maxPriceId.value,
                   activeColor: framColor,
-                  values: controller.values.value,
+                  values: SfRangeValues(Filter.minPrice.value, Filter.maxPrice.value),
                   interval: 1,
                   showTicks: false,
                   showLabels: false,
