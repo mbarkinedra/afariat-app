@@ -4,7 +4,6 @@ import 'package:afariat/remote_widget/city_dropdown_viewcontroller.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/networking/security/wsse.dart';
 import 'package:afariat/controllers/loc_controller.dart';
-import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/validator/validate_server.dart';
 import 'package:afariat/networking/json/user_json.dart';
 import 'package:afariat/validator/validator_profile.dart';
@@ -94,7 +93,7 @@ class AccountViewController extends GetxController {
       phone.text = user.phone;
       email.text = user.email;
       Get.find<AccountInfoStorage>().saveName(user.name);
-      Get.find<TapHomeViewController>().setUserName(user.username);
+      //Get.find<TapHomeViewController>().setUserName(user.username);
       cityDropdownViewController.selectedItem =
           RefJson(id: user.city.id, name: user.city.name);
       update();

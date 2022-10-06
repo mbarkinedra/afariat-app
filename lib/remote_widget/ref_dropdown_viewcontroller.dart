@@ -11,8 +11,8 @@ abstract class RefDropdownViewController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    super.onInit();
     fetchItems();
+    super.onInit();
   }
 
   Future<RefListJson> fetchItems() async {

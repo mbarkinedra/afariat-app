@@ -32,4 +32,6 @@ class Environment {
   static String get townLabel => getParameter('TOWN_LABEL');
 
   static String get phonePlaceholder => getParameter('PHONE_PLACEHOLDER');
+
+  static String get allCountryLabel => getParameter('ALL_COUNTRY_LABEL');
 }

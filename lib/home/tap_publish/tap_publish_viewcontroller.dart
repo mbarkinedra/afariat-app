@@ -1,15 +1,13 @@
 import 'dart:io';
 import 'dart:developer' as devlog;
 import 'dart:convert';
-import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/api/advert_api.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/model/filter.dart';
 import 'package:afariat/storage/storage.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
-import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
-import 'package:afariat/home/tap_myads/tap_myads_viewcontroller.dart';
+import 'package:afariat/home/tap_myads/myads_view_controller.dart';
 import 'package:afariat/validator/validator_Adverts.dart';
 import 'package:afariat/mywidget/custom_dialogue_felecitation.dart';
 import 'package:afariat/networking/api/modif_ads_api.dart';
@@ -20,8 +18,8 @@ import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../config/Environment.dart';
-import '../home_view_controller.dart';
+import '../../networking/network.dart';
+import '../main_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
   //if set to true, when update categories, options,... the filter will be set by the selected value.
@@ -32,7 +30,7 @@ class TapPublishViewController extends GetxController {
   bool getDataFromServer = false;
   bool lights = true;
   bool isButtonSheet = false;
-  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKey;
   final storge = Get.find<SecureStorage>();
   final accountInfoStorage = Get.find<AccountInfoStorage>();
   final picker = ImagePicker();
@@ -157,7 +155,7 @@ class TapPublishViewController extends GetxController {
     myAds["advertType"] = values[0].name;
     myAdsView["advertType"] = values[0].name;
 
-    if (Get.find<NetWorkController>().connectionStatus.value) {
+    if (Network.status.value) {
       getMileages();
       getYearsModels();
     }
@@ -244,7 +242,7 @@ class TapPublishViewController extends GetxController {
       motosBrand = null;
       yearsModele = null;
       kilometrage = null;
-      if (Get.find<NetWorkController>().connectionStatus.value) {
+      if (Network.status.value) {
         getVehicleBrand();
         getMotosBrand();
       }
@@ -260,7 +258,7 @@ class TapPublishViewController extends GetxController {
     vehiculebrands = newValue;
     //set filter if we are in context filter
     if (isFilterContext == true) {
-      Filter.set(key: "vehicleBrand", val: newValue.id);
+      Filter.set("vehicleBrand", newValue.id);
     }
     getVehicleModel();
 
@@ -275,7 +273,7 @@ class TapPublishViewController extends GetxController {
 
     //set filter if we are in context filter
     if (isFilterContext == true) {
-      Filter.set(key: "motoBrand", val: newValue.id);
+      Filter.set( "motoBrand",  newValue.id);
     }
 
     update();
@@ -289,7 +287,7 @@ class TapPublishViewController extends GetxController {
 
     //set filter if we are in context filter
     if (isFilterContext == true) {
-      Filter.set(key: "vehicleModel", val: newValue.id);
+      Filter.set("vehicleModel",  newValue.id);
     }
 
     update();
@@ -303,7 +301,7 @@ class TapPublishViewController extends GetxController {
 
     //set filter if we are in context filter
     if (isFilterContext == true) {
-      Filter.set(key: "mileage", val: newValue.id);
+      Filter.set("mileage",  newValue.id);
     }
 
     update();
@@ -316,7 +314,7 @@ class TapPublishViewController extends GetxController {
 
     //set filter if we are in context filter
     if (isFilterContext == true) {
-      Filter.set(key: "yearModel", val: newValue.id);
+      Filter.set("yearModel",  newValue.id);
     }
 
     update();
@@ -329,7 +327,7 @@ class TapPublishViewController extends GetxController {
 
     //set filter if we are in context filter
     if (isFilterContext == true) {
-      Filter.set(key: "energy", val: newValue.id);
+      Filter.set("energy",  newValue.id);
     }
 
     update();
@@ -342,7 +340,7 @@ class TapPublishViewController extends GetxController {
 
     //set filter if we are in context filter
     if (isFilterContext == true) {
-      Filter.set(key: "roomsNumber", val: newValue.id);
+      Filter.set("roomsNumber",  newValue.id);
     }
 
     update();
@@ -375,7 +373,7 @@ class TapPublishViewController extends GetxController {
 
   /// Clear All Data From Screen Publish
   clearAllData() {
-    if (Get.find<NetWorkController>().connectionStatus.value) {
+    if (Network.status.value) {
       RefJson refJson = RefJson(id: 0, name: "");
       updateGetView(refJson);
       Get.find<LocController>().city = null;
@@ -427,13 +425,13 @@ class TapPublishViewController extends GetxController {
         validator.validatorServer.validateServer(
             value: value,
             success: () async {
-              Get.find<TapMyAdsViewController>().getAllAds();
-              Filter.data.clear();
+              Get.find<MyAdsViewController>().getAllAds();
+              Filter.clear();
               clearAllData();
               Get.find<CategoryAndSubcategory>()
                   .clearDataCategroyAndSubCategory();
               Get.find<LocController>().clearDataCityAndTown();
-              Get.find<HomeViewController>().changeItemFilter(1);
+              //Get.find<MainViewController>().changeItemFilter(1);
               await showDialog<bool>(
                   context: context,
                   builder: (context) {
@@ -446,9 +444,9 @@ class TapPublishViewController extends GetxController {
                           i++;
                         }
                         Navigator.pop(context);
-                        Get.find<TapMyAdsViewController>().getAllAds();
+                        Get.find<MyAdsViewController>().getAllAds();
                         Get.find<TapPublishViewController>().clearAllData();
-                        Get.find<HomeViewController>().changeItemFilter(1);
+                       // Get.find<MainViewController>().changeItemFilter(1);
                       },
                       description: "Votre annonce est en cours de validation !",
                       buttonText: "Ok",
@@ -467,7 +465,7 @@ class TapPublishViewController extends GetxController {
         validator.validatorServer.validateServer(
           value: value,
           success: () async {
-            Filter.data.clear();
+            Filter.clear();
             clearAllData();
             Get.find<CategoryAndSubcategory>().subcategories1 = null;
             Get.find<CategoryAndSubcategory>().getCategoryGrouppedApi();
@@ -486,8 +484,8 @@ class TapPublishViewController extends GetxController {
                       }
                       Navigator.pop(context);
                       Get.find<TapPublishViewController>().clearAllData();
-                      Get.find<TapMyAdsViewController>().getAllAds();
-                      Get.find<HomeViewController>().changeItemFilter(1);
+                      Get.find<MyAdsViewController>().getAllAds();
+                     // Get.find<MainViewController>().changeItemFilter(1);
                     },
                     description: "Votre annonce est en cours de validation !",
                     buttonText: "Ok",
@@ -643,7 +641,7 @@ class TapPublishViewController extends GetxController {
 
   /// Method Default Options
   void defaultOptions() {
-    if (globalKey.currentState.validate()) {
+    if (formKey.currentState.validate()) {
       myAdsView["prix"] = prix.text;
       myAds["price"] = prix.text;
       myAdsView["title"] = title.text;

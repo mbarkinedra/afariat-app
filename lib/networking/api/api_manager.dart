@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:afariat/config/dio_singleton.dart';
-import 'package:afariat/config/settings_app.dart';
+import 'package:afariat/networking/network.dart';
 import 'package:afariat/storage/storage.dart';
 import 'package:afariat/networking/security/wsse.dart';
-import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' as a;
 import 'package:get/get_core/src/get_main.dart';
@@ -26,10 +26,12 @@ abstract class ApiManager {
   };
 
   /// Returns the API URL of current API ressource
+  @deprecated
+  @Deprecated('use baseApiUrl')
   String apiUrl();
 
-  // Headers responseHeaders;
-  NetWorkController _netWorkController = a.Get.find<NetWorkController>();
+  /// Returns the base API URL of current API ressource
+  String baseApiUrl();
 
   AbstractJsonResource fromJson(data);
 
@@ -61,7 +63,12 @@ abstract class ApiManager {
         );
         break;
       case 404:
-        // resource not found
+        Get.snackbar(
+          'Erreur',
+          'Not found',
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+        );
         break;
     }
     return response.statusCode;
@@ -99,6 +106,108 @@ abstract class ApiManager {
   }
 
   //Get one resource
+  Future<dynamic> get(String url) async {
+    var data;
+    await dioSingleton.dio.get(url).then((value) {
+      validateResponseStatusCode(value);
+      data = value.data;
+    });
+    return fromJson(data);
+  }
+
+  Future<Response<dynamic>> securedGet(String url,
+      {Map<String, dynamic> filters}) async {
+    String wsse = Wsse.generateWsseFromStorage();
+    if (kDebugMode) {
+      print('calling: $url');
+    }
+    return dioSingleton.dio
+        .get(
+      url,
+      queryParameters: filters,
+      options: Options(
+          headers: {
+            ...defaultHeaders,
+            ...{'X-WSSE': wsse},
+          },
+          followRedirects: false,
+          validateStatus: (status) {
+            return status < 405;
+          }),
+    )
+        .then((value) {
+      //process server status codes
+      validateResponseStatusCode(value);
+      return value;
+    }).catchError((error, stackTrace) {
+      processServerError(error);
+    });
+  }
+
+  Future<dynamic> getCollection(String url,
+      {Map<String, dynamic> filters}) async {
+    AbstractJsonResource jsonList;
+    var data;
+
+    await dioSingleton.dio.get(url, queryParameters: filters).then((value) {
+      validateResponseStatusCode(value);
+      data = value.data;
+    });
+    jsonList = fromJson(data);
+    return jsonList;
+  }
+
+  Future<dynamic> secureGetCollection(String url,
+      {Map<String, dynamic> filters}) async {
+    AbstractJsonResource jsonList;
+
+    var json = await securedGet(url, filters: filters);
+    jsonList = fromJson(json.data);
+    return jsonList;
+  }
+
+  /// POST DATA TO SERVER
+  Future<Response<dynamic>> postToUrl({String url, dataToPost}) async {
+    String wsse = Wsse.generateWsseFromStorage();
+    Options options = Options(headers: {
+      "Accept": "application/json",
+      'apikey': Environment.apikey,
+      'Content-Type': 'application/json',
+      'X-WSSE': wsse,
+    });
+    return dioSingleton.dio
+        .post(
+      url,
+      options: options,
+      data: jsonEncode(dataToPost),
+    )
+        .then((value) {
+      validateResponseStatusCode(value);
+      return value;
+    }).catchError((error, stackTrace) {
+      processServerError(error);
+    });
+  }
+
+  //Delete a resource(s) by calling the given url
+  Future<Response<dynamic>> delete(String url) async {
+    String wsse = Wsse.generateWsseFromStorage();
+    Options options = Options(headers: {
+      "Accept": "application/json",
+      'apikey': Environment.apikey,
+      'Content-Type': 'application/json',
+      'X-WSSE': wsse,
+    });
+    return dioSingleton.dio.delete(url, options: options).then((value) {
+      return value;
+    }).catchError((error, stackTrace) {
+      processServerError(error);
+    });
+  }
+
+  //Get one resource
+  @deprecated
+  @Deprecated('Use get method instead of this')
   Future<dynamic> getResource() async {
     var data;
     await dioSingleton.dio.get(apiUrl()).then((value) {
@@ -115,6 +224,7 @@ abstract class ApiManager {
   }
 
   // Get list of resources
+  @Deprecated('use getCollection instead')
   Future<dynamic> getList({Map<String, dynamic> filters}) async {
     AbstractJsonResource jsonList;
     var data;
@@ -131,16 +241,20 @@ abstract class ApiManager {
   }
 
   // Get list of resources using the secure method
+  @deprecated
+  @Deprecated('use secureGetCollection instead')
   Future<dynamic> secureGetList({Map<String, dynamic> filters}) async {
     AbstractJsonResource jsonList;
 
-    var json = await this.secureGet();
+    var json = await secureGet(filters: filters);
     jsonList = fromJson(json.data);
-
     return jsonList;
   }
 
   /// POST DATA TO SERVER
+  @deprecated
+  @Deprecated(
+      'Use postToUrl instead of this. later, delete post and rename postToUrl to post')
   Future<Response<dynamic>> post(dataToPost) async {
     return dioSingleton.dio
         .post(
@@ -166,7 +280,7 @@ abstract class ApiManager {
     //generer le wsse
 
     String wsse = Wsse.generateWsseFromStorage();
-    if (_netWorkController.connectionStatus.value) {
+    if (Network.status.value) {
       return dioSingleton.dio
           .post(
         apiUrl(),
@@ -197,6 +311,7 @@ abstract class ApiManager {
   }
 
   /// Get Data  User From Server
+  @Deprecated('Use securedGet instead')
   Future<Response<dynamic>> secureGet({Map<String, dynamic> filters}) async {
     String wsse = Wsse.generateWsseFromStorage();
     return dioSingleton.dio
@@ -225,7 +340,7 @@ abstract class ApiManager {
   Future<Response<dynamic>> putData({dataToPost}) async {
     //generer le wsse
     String wsse = Wsse.generateWsseFromStorage();
-    if (_netWorkController.connectionStatus.value) {
+    if (Network.status.value) {
       return dioSingleton.dio
           .put(
         apiUrl(),

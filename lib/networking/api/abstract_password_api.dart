@@ -14,11 +14,21 @@ class ChangePasswordApi extends AbstractPasswordApi {
   String apiUrl() {
     return SettingsApp.changePasswordUrl;
   }
+
+  @override
+  String baseApiUrl() {
+    return SettingsApp.changePasswordUrl;
+  }
 }
 
 class ForgotPasswordApi extends AbstractPasswordApi {
   @override
   String apiUrl() {
+    return SettingsApp.resetPasswordUrl;
+  }
+
+  @override
+  String baseApiUrl() {
     return SettingsApp.resetPasswordUrl;
   }
 }

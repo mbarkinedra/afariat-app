@@ -4,11 +4,13 @@ import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/json/notification_json.dart';
 
 class NotificationApi extends ResourceApi {
+  @deprecated
   String url;
   String id;
   int page = 0;
 
   @override
+  @deprecated
   String apiUrl() {
     return url;
   }
@@ -44,5 +46,10 @@ class NotificationApi extends ResourceApi {
   String apiPostUrl({dataToPost}) {
     // TODO: implement apiPostUrl
     throw UnimplementedError();
+  }
+
+  @override
+  String baseApiUrl() {
+    return SettingsApp.deleteNotificationUrl;
   }
 }

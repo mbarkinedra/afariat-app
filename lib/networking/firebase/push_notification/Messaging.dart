@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../../../home/tap_profile/notification/notification_scr.dart';
+import '../../../home/tap_profile/notification/notification_view.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print("Handling a background message: ${message.messageId}");
+  if (kDebugMode) {
+    print("Handling a background message: ${message.messageId}");
+  }
 }
 
 class PushNotification {
@@ -89,7 +91,7 @@ class Messaging {
         );
         //open the notification page
         // TODO: insert the notification inside the notification src if offline mode ?
-        Get.to(() => NotificationSrc());
+        Get.to(() => NotificationView());
       });
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {

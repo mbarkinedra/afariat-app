@@ -1,13 +1,12 @@
-import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:get/get.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:afariat/model/filter.dart';
-import 'network_controller.dart';
+import '../networking/network.dart';
 
 class LocController extends GetxController {
-  final tapHomeViewController = Get.find<TapHomeViewController>();
+  //final tapHomeViewController = Get.find<TapHomeViewController>();
   final tapPublishViewController = Get.find<TapPublishViewController>();
   final CityApi _cityApi = CityApi();
   final TownApi _townsApi = TownApi();
@@ -26,7 +25,7 @@ class LocController extends GetxController {
 
   /// GET all data from api
   getCityListSelected() {
-    if (Get.find<NetWorkController>().connectionStatus.value) {
+    if (Network.status.value) {
       _cityApi.getList().then((value) {
         cities = value.data;
 
@@ -44,13 +43,13 @@ class LocController extends GetxController {
     city = selectedCity;
 
     if (selectedCity.id == 0) {
-      Filter.remove(key: "city");
-      Filter.remove(key: "town");
+      Filter.remove("city");
+      Filter.remove("town");
       town = null;
       update();
     } else {
       city = selectedCity;
-      Filter.set(key: "city", val: selectedCity.id);
+      Filter.set("city", selectedCity.id);
       tapPublishViewController.citie = selectedCity;
       town = null;
       tapPublishViewController.myAds["city"] = selectedCity.id;
@@ -63,11 +62,11 @@ class LocController extends GetxController {
   /// Update city from dropDown
   updateTown(RefJson town) {
     if (town.id == 0) {
-      Filter.remove(key: "town");
+      Filter.remove("town");
       town = null;
       update();
     } else {
-      Filter.set(key: "town", val: town.id);
+      Filter.set("town", town.id);
       this.town = town;
       tapPublishViewController.town = town;
       tapPublishViewController.myAds["town"] = town.id;

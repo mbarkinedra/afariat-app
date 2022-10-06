@@ -8,4 +8,5 @@ PRIVACY_URL=https://afariat.com/confidentialite.html
 CGU_URL=https://afariat.com/conditions-générales-d-utilisation.html
 CITY_LABEL=Gouvernorat
 TOWN_LABEL=Délégation
+ALL_COUNTRY_LABEL=Toute la Tunisie
 PHONE_PLACEHOLDER="98 000 000"

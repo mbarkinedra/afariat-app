@@ -37,9 +37,9 @@ class ChatUserScr extends GetWidget<ChatUserViewController> {
             showUserAvatars: true,
             onSendPressed: logic.handleSendPressed,
             user: logic.user,
-            onTextChanged: (v) {
+            /*onTextChanged: (v) {
               logic.message = v;
-            },
+            },*/
           ),
         );
       }),

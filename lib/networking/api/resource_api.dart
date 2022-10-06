@@ -11,12 +11,17 @@ abstract class ResourceApi extends ApiManager {
   String apiDeleteUrl(String id);
 
   ///Returns the API Put URL of given resource {dataToPost}
+  @deprecated
   String apiPutUrl({Map<String, String>queryParams});
 
   ///Returns the API POST URL of given resource {dataToPost}
+  @deprecated
   String apiPostUrl({dataToPost});
 
   //Delete User From User
+  //Get one resource
+  @deprecated
+  @Deprecated('Use delete method instead of this')
   Future<Response<dynamic>> deleteResource(String id) async {
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(headers: {
@@ -34,7 +39,8 @@ abstract class ResourceApi extends ApiManager {
     });
   }
 
-  //Put User From User
+  ///Put User From User
+  @deprecated
   Future<Response<dynamic>> putResource({dataToPost, Map<String, String>queryParams}) async {
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(
@@ -63,6 +69,8 @@ abstract class ResourceApi extends ApiManager {
   }
 
   /// POST DATA TO SERVER
+  @deprecated
+  @Deprecated('Use post method instead of this')
   Future<Response<dynamic>> postResource({dataToPost}) async {
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(headers: {

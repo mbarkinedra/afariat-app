@@ -1,7 +1,6 @@
 import 'package:afariat/config/Environment.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
-import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_publish/publish_views/publish_image_scr.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
@@ -13,23 +12,26 @@ import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../home_view_controller.dart';
+import '../../networking/network.dart';
+import '../main_view_controller.dart';
 import 'tap_publish_viewcontroller.dart';
 
 class TapPublishScr extends GetWidget<TapPublishViewController> {
-  const TapPublishScr({Key key}) : super(key: key);
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-    controller.globalKey = globalKey;
+    controller.formKey = formKey;
+
     return Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
             leading: Obx(() => controller.modifAds.value
                 ? InkWell(
                     onTap: () {
-                      Get.find<HomeViewController>().changeItemFilter(1);
+                      //Get.find<MainViewController>().changeItemFilter(1);
                     },
                     child: const Icon(Icons.arrow_back))
                 : const SizedBox()),
@@ -48,21 +50,21 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
         body: Obx(
           () => Column(
             children: [
-              Get.find<NetWorkController>().connectionStatus.value == false
+              Network.status.value == false
                   ? const SizedBox(
                       child: Center(child: CircularProgressIndicator()),
                       height: 50,
                       width: 50,
                     )
                   : const SizedBox(),
-              Get.find<NetWorkController>().connectionStatus.value
+              Network.status.value
                   ? Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(
                             bottom: 25, left: 25, right: 25, top: 8),
                         child: Form(
                           onWillPop: controller.function,
-                          key: globalKey,
+                          key: formKey,
                           child: SingleChildScrollView(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,11 +78,9 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                         : Column(
                                             children: [
                                               const Padding(
-                                                padding:
-                                                    EdgeInsets.all(8.0),
+                                                padding: EdgeInsets.all(8.0),
                                                 child: Align(
-                                                  alignment:
-                                                      Alignment.topLeft,
+                                                  alignment: Alignment.topLeft,
                                                   child: Text(
                                                     "Catégorie",
                                                     style: TextStyle(
@@ -106,13 +106,9 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                           CategoryGroupedJson>(
                                                     isExpanded: true,
                                                     hint: const Padding(
-                                                      padding:
-                                                          EdgeInsets
-                                                                  .only(
-                                                              left: 8.0,
-                                                              right: 8),
-                                                      child:
-                                                          Text("Catégorie"),
+                                                      padding: EdgeInsets.only(
+                                                          left: 8.0, right: 8),
+                                                      child: Text("Catégorie"),
                                                     ),
                                                     validator:
                                                         (CategoryGroupedJson) {
@@ -127,15 +123,14 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                     elevation: 16,
                                                     decoration:
                                                         const InputDecoration
-                                                            .collapsed(
-                                                                hintText: ''),
+                                                                .collapsed(
+                                                            hintText: ''),
                                                     onChanged:
                                                         logic.updateCategory,
                                                     items: logic
                                                         .categoryGroupList
                                                         .where((element) =>
-                                                            element.name !=
-                                                            "")
+                                                            element.name != "")
                                                         .map<
                                                                 DropdownMenuItem<
                                                                     CategoryGroupedJson>>(
@@ -150,8 +145,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                                       .only(
                                                                   left: 8.0,
                                                                   right: 8),
-                                                          child: Text(
-                                                              value.name),
+                                                          child:
+                                                              Text(value.name),
                                                         ),
                                                       );
                                                     }).toList(),
@@ -178,11 +173,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                     isExpanded: true,
                                                     //   underline: SizedBox(),
                                                     hint: const Padding(
-                                                      padding:
-                                                          EdgeInsets
-                                                                  .only(
-                                                              left: 8.0,
-                                                              right: 8),
+                                                      padding: EdgeInsets.only(
+                                                          left: 8.0, right: 8),
                                                       child: Text(
                                                           "Sous catégorie"),
                                                     ),
@@ -193,21 +185,19 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                           .validateCategory(
                                                               SubCategoryJson);
                                                     },
-                                                    value:
-                                                        logic.subcategories1,
+                                                    value: logic.subcategories1,
                                                     iconSize: 24,
                                                     elevation: 16,
                                                     decoration:
                                                         const InputDecoration
-                                                            .collapsed(
-                                                                hintText: ''),
-                                                    onChanged: logic
-                                                        .updateSubCategory,
+                                                                .collapsed(
+                                                            hintText: ''),
+                                                    onChanged:
+                                                        logic.updateSubCategory,
                                                     items: logic
                                                         .listSubCategories
                                                         .where((element) =>
-                                                            element.name !=
-                                                            "")
+                                                            element.name != "")
                                                         .map<
                                                                 DropdownMenuItem<
                                                                     SubCategoryJson>>(
@@ -222,8 +212,8 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                                       .only(
                                                                   left: 8.0,
                                                                   right: 8),
-                                                          child: Text(
-                                                              value.name),
+                                                          child:
+                                                              Text(value.name),
                                                         ),
                                                       );
                                                     }).toList(),
@@ -368,8 +358,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                       textEditingController:
                                                           controller.prix,
                                                       keyboardType:
-                                                          TextInputType
-                                                              .number),
+                                                          TextInputType.number),
                                                 ),
                                                 Text(
                                                   Environment.currencySymbol,
@@ -418,8 +407,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                     children: [
                                                       Container(
                                                         height: 60,
-                                                        width:
-                                                            double.infinity,
+                                                        width: double.infinity,
                                                         decoration: BoxDecoration(
                                                             border: Border.all(
                                                                 color:
@@ -433,16 +421,17 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                           child:
                                                               DropdownButtonFormField<
                                                                   RefJson>(
-                                                            isExpanded:
-                                                                true,
+                                                            isExpanded: true,
                                                             //underline: SizedBox(),
                                                             hint: Padding(
-                                                              padding: const EdgeInsets
-                                                                      .only(
-                                                                  left: 8.0,
-                                                                  right: 8),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left: 8.0,
+                                                                      right: 8),
                                                               child: Text(
-                                                                  Environment.cityLabel),
+                                                                  Environment
+                                                                      .cityLabel),
                                                             ),
                                                             validator:
                                                                 (RefJson) {
@@ -452,18 +441,17 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                                       RefJson);
                                                             },
 
-                                                            value:
-                                                                logic.city,
+                                                            value: logic.city,
                                                             iconSize: 24,
                                                             elevation: 16,
-                                                            decoration: const InputDecoration
-                                                                .collapsed(
+                                                            decoration:
+                                                                const InputDecoration
+                                                                        .collapsed(
                                                                     hintText:
                                                                         ''),
                                                             onChanged: logic
                                                                 .updateCity,
-                                                            items: logic
-                                                                .cities
+                                                            items: logic.cities
                                                                 .where((element) =>
                                                                     element
                                                                         .name !=
@@ -474,16 +462,12 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                                     value) {
                                                               return DropdownMenuItem<
                                                                   RefJson>(
-                                                                value:
-                                                                    value,
-                                                                child:
-                                                                    Padding(
+                                                                value: value,
+                                                                child: Padding(
                                                                   padding: const EdgeInsets
                                                                           .only(
-                                                                      left:
-                                                                          8.0,
-                                                                      right:
-                                                                          8),
+                                                                      left: 8.0,
+                                                                      right: 8),
                                                                   child: Text(
                                                                       value
                                                                           .name),
@@ -498,8 +482,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                       ),
                                                       Container(
                                                         height: 60,
-                                                        width:
-                                                            double.infinity,
+                                                        width: double.infinity,
                                                         decoration: BoxDecoration(
                                                             border: Border.all(
                                                                 color:
@@ -513,17 +496,18 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                           child:
                                                               DropdownButtonFormField<
                                                                   RefJson>(
-                                                            isExpanded:
-                                                                true,
+                                                            isExpanded: true,
                                                             //underline: SizedBox(),
                                                             hint: Padding(
-                                                              padding: const EdgeInsets
-                                                                      .only(
-                                                                  left: 8.0,
-                                                                  right:
-                                                                      10),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left: 8.0,
+                                                                      right:
+                                                                          10),
                                                               child: Text(
-                                                                  Environment.townLabel),
+                                                                  Environment
+                                                                      .townLabel),
                                                             ),
                                                             validator:
                                                                 (RefJson) {
@@ -532,18 +516,17 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                                   .validateTown(
                                                                       RefJson);
                                                             },
-                                                            value:
-                                                                logic.town,
+                                                            value: logic.town,
                                                             iconSize: 24,
                                                             elevation: 16,
-                                                            decoration: const InputDecoration
-                                                                .collapsed(
+                                                            decoration:
+                                                                const InputDecoration
+                                                                        .collapsed(
                                                                     hintText:
                                                                         ''),
                                                             onChanged: logic
                                                                 .updateTown,
-                                                            items: logic
-                                                                .towns
+                                                            items: logic.towns
                                                                 .where((element) =>
                                                                     element
                                                                         .name !=
@@ -554,16 +537,12 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                                                     value) {
                                                               return DropdownMenuItem<
                                                                   RefJson>(
-                                                                value:
-                                                                    value,
-                                                                child:
-                                                                    Padding(
+                                                                value: value,
+                                                                child: Padding(
                                                                   padding: const EdgeInsets
                                                                           .only(
-                                                                      left:
-                                                                          8.0,
-                                                                      right:
-                                                                          8),
+                                                                      left: 8.0,
+                                                                      right: 8),
                                                                   child: Text(
                                                                       value
                                                                           .name),
@@ -586,12 +565,11 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                     const Icon(Icons.call),
                                     Flexible(
                                       flex: 1,
-                                      child: GetBuilder<
-                                              TapPublishViewController>(
-                                          builder: (logic) {
+                                      child:
+                                          GetBuilder<TapPublishViewController>(
+                                              builder: (logic) {
                                         return ListTile(
-                                          title:
-                                              const Text('Afficher N° Tél'),
+                                          title: const Text('Afficher N° Tél'),
                                           trailing: CupertinoSwitch(
                                             value: logic.lights,
                                             activeColor: framColor,
@@ -607,10 +585,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      top: 8.0,
-                                      bottom: 40,
-                                      right: 8,
-                                      left: 8),
+                                      top: 8.0, bottom: 40, right: 8, left: 8),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceAround,
@@ -629,8 +604,7 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                                             controller.myAds["area"] = controller.surface.text;*/
                                             controller.validator
                                                 .validationType = false;
-                                            if (!controller
-                                                .globalKey.currentState
+                                            if (!controller.formKey.currentState
                                                 .validate()) {
                                               //if client validations fails
                                               //show a snackbar to fix the client errors.
@@ -661,21 +635,21 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
                   : Expanded(
                       child: Center(
                           child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(
-                            Icons.wifi_off_rounded,
-                            size: 80,
-                            color: framColor,
-                          ),
-                          Text(
-                            "Pas de connexion internet",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black45),
-                          ),
-                        ],
-                      )))
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.wifi_off_rounded,
+                          size: 80,
+                          color: framColor,
+                        ),
+                        Text(
+                          "Pas de connexion internet",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black45),
+                        ),
+                      ],
+                    )))
             ],
           ),
         ));

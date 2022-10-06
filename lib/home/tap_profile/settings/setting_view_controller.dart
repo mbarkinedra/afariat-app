@@ -9,7 +9,7 @@ import 'package:afariat/validator/validator_password.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../home_view_controller.dart';
+import '../../main_view_controller.dart';
 
 class SettingViewController extends GetxController {
   final registerFormKey = GlobalKey<FormState>();
@@ -93,7 +93,7 @@ class SettingViewController extends GetxController {
         .deleteResource(Get.find<AccountInfoStorage>().readUserId())
         .then((value) {
       Get.find<AccountInfoStorage>().logout();
-      Get.find<HomeViewController>().changeItemFilter(0);
+    //  Get.find<MainViewController>().changeItemFilter(0);
       Get.back();
     });
   }

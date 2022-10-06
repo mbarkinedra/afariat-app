@@ -10,10 +10,21 @@ class CategoriesGroupedJsonList extends AbstractJsonResource {
     if (json['data'] != null) {
       data = <CategoryGroupedJson>[];
       json['data'].forEach((v) {
-        data.add(new CategoryGroupedJson.fromJson(v));
+        data.add(CategoryGroupedJson.fromJson(v));
       });
     }
   }
+
+  bool isNotEmpty() {
+    if (data != null) {
+      return data.isNotEmpty;
+    }
+    return false;
+  }
+
+  int length() => isNotEmpty() ? data.length : 0;
+
+  List<CategoryGroupedJson> toList() => data;
 }
 
 /// represents a single categoryGrouped json resource

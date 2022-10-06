@@ -1,7 +1,6 @@
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
 import 'package:afariat/controllers/loc_controller.dart';
-import 'package:afariat/home/tap_home/tap_home_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/widget_publish.dart';
 import 'package:afariat/networking/json/categories_grouped_json.dart';
@@ -121,7 +120,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
             ),
           ),
-          GetBuilder<TapHomeViewController>(builder: (logic) {
+          /*GetBuilder<TapHomeViewController>(builder: (logic) {
             return logic.loadPrice
                 ? const Center(
                     child: CircularProgressIndicator(),
@@ -174,7 +173,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
                       )
                     ],
                   );
-          }),
+          }),*/
           const Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
@@ -254,7 +253,7 @@ class _BottomSheetFilterState extends State<BottomSheetFilter> {
               height: 50,
               width: _size.width * .4,
               function: () {
-                Get.find<TapHomeViewController>().filterUpdate();
+                //Get.find<TapHomeViewController>().filterUpdate();
                 Navigator.pop(context);
               },
               labcolor: textbuttonColor,

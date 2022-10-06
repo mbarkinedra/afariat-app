@@ -1,71 +1,81 @@
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 
+import '../../model/abstract_collection_list.dart';
+import '../../model/advert_option_labels.dart';
+import 'link.dart';
+import 'ref_json.dart';
+
+class AdvertOptionList extends AbstractCollectionList {}
+
+class AdvertOption extends AbstractOption {
+  AdvertOption({optionId, value}) : super(optionId: optionId, value: value);
+
+  AdvertOption.fromJson(String id, Map<String, dynamic> json) {
+    optionId = id;
+    value = json['value'];
+  }
+}
+
 class AdvertDetailsJson extends AbstractJsonResource {
-  String createdAt;
   int id;
-  bool isRegistredUser;
-  String username;
-  String mobilePhoneNumber;
+  String createdAt;
+  String updatedAt;
+  String modifiedAt;
   String title;
   String slug;
   String description;
   int price;
   bool showPhoneNumber;
-  int area;
-  AdvertType advertType;
-  Category category;
-  Region region;
-  Category city;
-  Category town;
-  RoomsNumber roomsNumber;
-  List<Photos> photos;
+  AdvertTypeEntity advertType;
+  CategoryEntity category;
+  RegionEntity region;
+  CityEntity city;
+  TownEntity town;
+  List<Photos> photos = <Photos>[];
   String shortUrl;
-  Links lLinkss;
-  Mileage mileage;
-  Mileage yearModel;
-  Mileage energy;
-  Mileage vehicleBrand;
-  Mileage vehicleModel;
-  Mileage motoBrand;
+  Links links;
+  AdvertOptionList options = AdvertOptionList();
+  int status;
   int userId;
-  bool is_favorite;
+  bool isRegistredUser;
+  String username;
+  String mobilePhoneNumber;
+  bool isFavorite;
 
   AdvertDetailsJson(
-      {this.createdAt,
-      this.id,
-      this.username,
-      this.mobilePhoneNumber,
+      {this.id,
+      this.createdAt,
+      this.updatedAt,
+      this.modifiedAt,
       this.title,
       this.slug,
       this.description,
       this.price,
       this.showPhoneNumber,
-      this.area,
       this.advertType,
       this.category,
       this.region,
       this.city,
       this.town,
-      this.roomsNumber,
       this.photos,
       this.shortUrl,
-      this.lLinkss,
-      this.yearModel,
-      this.vehicleBrand,
-      this.vehicleModel,
-      this.mileage,
-      this.energy,
-      this.motoBrand,
-      this.isRegistredUser,
+      this.links,
+      this.options,
+      this.status,
       this.userId,
-      this.is_favorite});
+      this.isRegistredUser,
+      this.username,
+      this.mobilePhoneNumber,
+      this.isFavorite});
 
   AdvertDetailsJson.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    modifiedAt = json['modified_at'];
     id = json['id'];
-    is_favorite = json['is_favorite'];
+    isFavorite = json['is_favorite'];
 
     username = json['username'];
     mobilePhoneNumber = json['mobilePhoneNumber'];
@@ -76,220 +86,75 @@ class AdvertDetailsJson extends AbstractJsonResource {
     showPhoneNumber = json['show_phone_number'];
     isRegistredUser = json['isRegistredUser'];
 
-    area = json['area'];
     advertType = json['advert_type'] != null
-        ? new AdvertType.fromJson(json['advert_type'])
+        ? AdvertTypeEntity.fromJson(json['advert_type'])
         : null;
     category = json['category'] != null
-        ? new Category.fromJson(json['category'])
+        ? CategoryEntity.fromJson(json['category'])
         : null;
     region =
-        json['region'] != null ? new Region.fromJson(json['region']) : null;
-    city = json['city'] != null ? new Category.fromJson(json['city']) : null;
-    town = json['town'] != null ? new Category.fromJson(json['town']) : null;
-    roomsNumber = json['rooms_number'] != null
-        ? new RoomsNumber.fromJson(json['rooms_number'])
-        : null;
-    mileage =
-        json['mileage'] != null ? new Mileage.fromJson(json['mileage']) : null;
-    yearModel = json['year_model'] != null
-        ? new Mileage.fromJson(json['year_model'])
-        : null;
-    energy =
-        json['energy'] != null ? new Mileage.fromJson(json['energy']) : null;
-    vehicleBrand = json['vehicle_brand'] != null
-        ? new Mileage.fromJson(json['vehicle_brand'])
-        : null;
-    vehicleModel = json['vehicle_model'] != null
-        ? new Mileage.fromJson(json['vehicle_model'])
-        : null;
-    motoBrand = json['moto_brand'] != null
-        ? new Mileage.fromJson(json['moto_brand'])
-        : null;
+        json['region'] != null ? RegionEntity.fromJson(json['region']) : null;
+    city = json['city'] != null ? CityEntity.fromJson(json['city']) : null;
+    town = json['town'] != null ? TownEntity.fromJson(json['town']) : null;
+
+    for (String optionId in AdvertOptionLabels.optionsIds.keys) {
+      if (json.containsKey(optionId)) {
+        json[optionId] is Map
+            ? options.add(AdvertOption.fromJson(optionId, json[optionId]))
+            : options.add(AdvertOption(
+                optionId: optionId, value: json[optionId].toString()));
+      }
+    }
+    status = json['status'];
     if (json['photos'] != null) {
-      photos = <Photos>[];
       json['photos'].forEach((v) {
-        photos.add(new Photos.fromJson(v));
+        photos.add(Photos.fromJson(v));
       });
     }
     shortUrl = json['short_url'];
-    lLinkss =
-        json['_links'] != null ? new Links.fromJson(json['_links']) : null;
+    links = json['_links'] != null ? Links.fromJson(json['_links']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['created_at'] = this.createdAt;
-    data['id'] = this.id;
-    data['username'] = this.username;
-    data['mobilePhoneNumber'] = this.mobilePhoneNumber;
-    data['title'] = this.title;
-    data['slug'] = this.slug;
-    data['description'] = this.description;
-    data['price'] = this.price;
-    data['show_phone_number'] = this.showPhoneNumber;
-    data['area'] = this.area;
-    data['userId'] = this.userId;
-    if (this.advertType != null) {
-      data['advert_type'] = this.advertType.toJson();
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['id'] = id;
+    json['created_at'] = createdAt;
+    json['updated_at'] = updatedAt;
+    json['modified_at'] = modifiedAt;
+    json['username'] = username;
+    json['mobilePhoneNumber'] = mobilePhoneNumber;
+    json['title'] = title;
+    json['slug'] = slug;
+    json['description'] = description;
+    json['price'] = price;
+    json['show_phone_number'] = showPhoneNumber;
+    json['userId'] = userId;
+    json['isRegistredUser'] = isRegistredUser;
+    json['is_favorite'] = isFavorite;
+    json['status'] = status;
+    if (advertType != null) {
+      json['advert_type'] = advertType.toJson();
     }
-    if (this.category != null) {
-      data['category'] = this.category.toJson();
+    if (category != null) {
+      json['category'] = category.toJson();
     }
-    if (this.region != null) {
-      data['region'] = this.region.toJson();
+    if (region != null) {
+      json['region'] = region.toJson();
     }
-    if (this.city != null) {
-      data['city'] = this.city.toJson();
+    if (city != null) {
+      json['city'] = city.toJson();
     }
-    if (this.town != null) {
-      data['town'] = this.town.toJson();
+    if (town != null) {
+      json['town'] = town.toJson();
     }
-    if (this.roomsNumber != null) {
-      data['rooms_number'] = this.roomsNumber.toJson();
+    if (photos != null) {
+      json['photos'] = photos.map((v) => v.toJson()).toList();
     }
-    if (this.mileage != null) {
-      data['mileage'] = this.mileage.toJson();
+    json['short_url'] = shortUrl;
+    if (links != null) {
+      json['_links'] = links.toJson();
     }
-    if (this.photos != null) {
-      data['photos'] = this.photos.map((v) => v.toJson()).toList();
-    }
-    data['short_url'] = this.shortUrl;
-    if (this.lLinkss != null) {
-      data['_links'] = this.lLinkss.toJson();
-    }
-    return data;
-  }
-}
-
-class AdvertType {
-  String name;
-
-  AdvertType({this.name});
-
-  AdvertType.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    return data;
-  }
-}
-
-class Category {
-  String name;
-  Links lLinks;
-
-  Category({this.name, this.lLinks});
-
-  Category.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
-    return data;
-  }
-}
-
-class Links {
-  Search search;
-
-  Links({this.search});
-
-  Links.fromJson(Map<String, dynamic> json) {
-    search =
-        json['search'] != null ? new Search.fromJson(json['search']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.search != null) {
-      data['search'] = this.search.toJson();
-    }
-    return data;
-  }
-}
-
-class Search {
-  String href;
-
-  Search({this.href});
-
-  Search.fromJson(Map<String, dynamic> json) {
-    href = json['href'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['href'] = this.href;
-    return data;
-  }
-}
-
-class Region {
-  String name;
-  String isoCode;
-  String codeInsee;
-  Links lLinks;
-
-  Region({this.name, this.isoCode, this.codeInsee, this.lLinks});
-
-  Region.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    isoCode = json['iso_code'];
-    codeInsee = json['code_insee'];
-    lLinks = json['_links'] != null ? new Links.fromJson(json['_links']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['iso_code'] = this.isoCode;
-    data['code_insee'] = this.codeInsee;
-    if (this.lLinks != null) {
-      data['_links'] = this.lLinks.toJson();
-    }
-    return data;
-  }
-}
-
-class RoomsNumber {
-  String value;
-
-  RoomsNumber({this.value});
-
-  RoomsNumber.fromJson(Map<String, dynamic> json) {
-    value = json['value'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['value'] = this.value;
-    return data;
-  }
-}
-
-class Mileage {
-  String value;
-
-  Mileage({this.value});
-
-  Mileage.fromJson(Map<String, dynamic> json) {
-    value = json['value'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['value'] = this.value;
-    return data;
+    return json;
   }
 }
 
@@ -303,26 +168,8 @@ class Photos {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['path'] = this.path;
-    return data;
-  }
-}
-
-class Linkss {
-  Search self;
-
-  Linkss({this.self});
-
-  Linkss.fromJson(Map<String, dynamic> json) {
-    self = json['self'] != null ? new Search.fromJson(json['self']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.self != null) {
-      data['self'] = this.self.toJson();
-    }
     return data;
   }
 }

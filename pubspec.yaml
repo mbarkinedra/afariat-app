@@ -15,7 +15,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+14
+#Note (SKONSOFT): The version code (eg: +15) should be always higher than the previous version.
+version: 2.0.0+17
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -24,12 +25,12 @@ dependencies:
   flutter:
     sdk: flutter
 
-  get: ^4.5.1
+  get: ^4.6.5
   get_storage: ^2.0.3
   dio: ^4.0.4
 
   animated_splash_screen: ^1.1.0
-  persistent_bottom_nav_bar: ^4.0.2
+  persistent_bottom_nav_bar: ^5.0.2
   syncfusion_flutter_sliders: ^19.3.56
   flutter_svg: ^1.0.3
   uuid:
@@ -39,14 +40,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
 
   cupertino_icons: ^1.0.2
-  url_launcher: ^6.0.20
+  url_launcher: ^6.1.6
   email_launcher: ^1.1.1
   image_picker: ^0.8.4+10
   flutter_chat_bubble: ^2.0.0
   infinite_scroll_pagination: '<3.2.0' #The 3.2.0 version is a NULL safety not compatible here
   convex_bottom_bar: ^3.0.0
-  photo_view: ^0.13.0
-  flutter_chat_ui: ^1.5.5
+  photo_view: ^0.14.0
+  flutter_chat_ui: ^1.6.4
   flutter_chat_types: ^3.2.2
   bubble: ^1.2.1
   platform: ^3.1.0
@@ -60,6 +61,9 @@ dependencies:
   firebase_core: ^1.22.0
   firebase_messaging: ^13.0.1
   device_info_plus: ^4.0.0
+  flutter_typeahead: ^3.2.4
+  font_awesome_flutter: ^10.2.1
+  cached_network_image: ^3.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -91,6 +95,7 @@ flutter:
     - assets/images/lecoinoccasion.fr/splash.png
     - assets/images/lecoinoccasion.fr/logo.png
     - assets/images/lecoinoccasion.fr/drawer.jpg
+    - assets/images/common/categories/
     - .env.afariat.com
     - .env.lecoinoccasion.fr
 
