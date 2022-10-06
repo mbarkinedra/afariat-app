@@ -1,3 +1,4 @@
+import 'package:afariat/config/app_routing.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +10,8 @@ import 'package:photo_view/photo_view_gallery.dart';
 import '../../config/Environment.dart';
 import '../../config/utility.dart';
 import '../../model/advert_option_labels.dart';
+import '../../mywidget/advert_card_grid.dart';
+import '../../mywidget/advert_card_list.dart';
 import 'advert_details_viewcontroller.dart';
 
 class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
@@ -57,6 +60,7 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
                     children: [
                       _buildCarousel(context),
                       _buildAdvert(),
+                      _buildRelatedAds(context),
                     ],
                   ),
                 ));
@@ -271,6 +275,9 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
             style: const TextStyle(
               fontSize: 16,
             )),
+        SizedBox(
+          height: 20,
+        ),
       ],
     );
   }
@@ -483,5 +490,74 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
         ],
       ),
     );
+  }
+
+  _buildRelatedAds(BuildContext context) {
+    if (controller.advert.relatedAdverts != null &&
+        controller.advert.relatedAdverts.isNotEmpty) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Divider(
+            height: 30,
+            thickness: 0.5,
+            color: Colors.grey,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 20, top: 10, left: 8, right: 8),
+            child: Text(
+              'Ces annonces peuvent vous intéresser',
+              style: TextStyle(
+                fontSize: 21,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 400,
+            width: double.infinity,
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: controller.advert.relatedAdverts.length + 1,
+              itemBuilder: (BuildContext context, int index) =>
+                  (index != controller.advert.relatedAdverts.length)
+                      ? SizedBox(
+                          width: 250,
+                          child: AdvertCardGrid(
+                            userInitials: 'LCO',
+                            advert: controller.advert.relatedAdverts[index],
+                          ),
+                        )
+                      : SizedBox(
+                          width: 250,
+                          child: InkWell(
+                            onTap: () => Get.toNamed(AppRouting.search),
+                            child: Card(
+                              clipBehavior: Clip.antiAlias,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.add_circle_outline,
+                                    size: 50,
+                                    color: framColor,
+                                  ),
+                                  Text('Afficher plus d\'annonces', style: TextStyle(fontSize: 18, color: framColor),)
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+            ),
+          ),
+        ],
+      );
+    } else {
+      return const SizedBox(
+        child: Text('Nothing'),
+      );
+    }
   }
 }

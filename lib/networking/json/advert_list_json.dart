@@ -1,5 +1,3 @@
-import 'package:afariat/config/settings_app.dart';
-import 'package:afariat/networking/json/abstract_json_resource.dart';
 import 'package:afariat/networking/json/advert_minimal_json.dart';
 import 'package:afariat/networking/json/paginated_resource.dart';
 

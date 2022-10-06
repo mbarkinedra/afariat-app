@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 
 import '../../model/abstract_collection_list.dart';
 import '../../model/advert_option_labels.dart';
+import 'advert_minimal_json.dart';
 import 'link.dart';
 import 'ref_json.dart';
 
@@ -42,32 +45,35 @@ class AdvertDetailsJson extends AbstractJsonResource {
   String username;
   String mobilePhoneNumber;
   bool isFavorite;
+  List<AdvertMinimalJson> relatedAdverts = <AdvertMinimalJson>[];
 
-  AdvertDetailsJson(
-      {this.id,
-      this.createdAt,
-      this.updatedAt,
-      this.modifiedAt,
-      this.title,
-      this.slug,
-      this.description,
-      this.price,
-      this.showPhoneNumber,
-      this.advertType,
-      this.category,
-      this.region,
-      this.city,
-      this.town,
-      this.photos,
-      this.shortUrl,
-      this.links,
-      this.options,
-      this.status,
-      this.userId,
-      this.isRegistredUser,
-      this.username,
-      this.mobilePhoneNumber,
-      this.isFavorite});
+  AdvertDetailsJson({
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.modifiedAt,
+    this.title,
+    this.slug,
+    this.description,
+    this.price,
+    this.showPhoneNumber,
+    this.advertType,
+    this.category,
+    this.region,
+    this.city,
+    this.town,
+    this.photos,
+    this.shortUrl,
+    this.links,
+    this.options,
+    this.status,
+    this.userId,
+    this.isRegistredUser,
+    this.username,
+    this.mobilePhoneNumber,
+    this.isFavorite,
+    this.relatedAdverts,
+  });
 
   AdvertDetailsJson.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -113,6 +119,9 @@ class AdvertDetailsJson extends AbstractJsonResource {
     }
     shortUrl = json['short_url'];
     links = json['_links'] != null ? Links.fromJson(json['_links']) : null;
+
+    List<dynamic> related = jsonDecode(json['json_related_adverts']);
+    for (var element in related) { relatedAdverts.add(AdvertMinimalJson.fromJson(element)); }
   }
 
   Map<String, dynamic> toJson() {
@@ -149,6 +158,9 @@ class AdvertDetailsJson extends AbstractJsonResource {
     }
     if (photos != null) {
       json['photos'] = photos.map((v) => v.toJson()).toList();
+    }
+    if (relatedAdverts != null) {
+      json['json_related_adverts'] = relatedAdverts.map((v) => v.toJson()).toList();
     }
     json['short_url'] = shortUrl;
     if (links != null) {

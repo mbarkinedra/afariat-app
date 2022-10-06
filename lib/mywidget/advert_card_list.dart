@@ -123,7 +123,7 @@ class AdvertCardList extends AbstractAdvertCard {
                                       child: Padding(
                                         padding: const EdgeInsets.only(left: 4),
                                         child: Text(
-                                          advert.modifiedAt,
+                                          advert.modifiedAt ?? advert.createdAt,
                                           softWrap: true,
                                           style: TextStyle(
                                               color: Colors.black

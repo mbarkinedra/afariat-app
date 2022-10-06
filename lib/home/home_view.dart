@@ -178,57 +178,58 @@ class HomeView extends GetWidget<HomeViewController> {
 
   _topCategories(BuildContext context) {
     return SizedBox(
-        height: 120,
-        child: ListView.builder(
-          itemBuilder: (BuildContext context, index) {
-            return InkWell(
-                onTap: () => controller
-                    .selectCategory(controller.topCategories[index]['id']),
-                child: Card(
-                  child: Container(
-                    width: 150,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/common/categories/" +
-                            controller.topCategories[index]['image']),
-                        fit: BoxFit.fitWidth,
-                        alignment: Alignment.topCenter,
-                      ),
-                    ),
-                    child: Align(
-                      alignment: FractionalOffset.bottomCenter,
-                      child: Padding(
-                          padding: const EdgeInsets.only(bottom: 5),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.4),
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: Text(
-                                    controller.topCategories[index]['label'],
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold),
-                                  )))),
+      height: 120,
+      child: ListView.builder(
+        itemBuilder: (BuildContext context, index) {
+          return InkWell(
+              onTap: () => controller
+                  .selectCategory(controller.topCategories[index]['id']),
+              child: Card(
+                child: Container(
+                  width: 150,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/common/categories/" +
+                          controller.topCategories[index]['image']),
+                      fit: BoxFit.fitWidth,
+                      alignment: Alignment.topCenter,
                     ),
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                  child: Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: Padding(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.4),
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(5)),
+                            child: Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: Text(
+                                  controller.topCategories[index]['label'],
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                )))),
                   ),
-                  elevation: 5,
-                  margin: const EdgeInsets.all(5),
-                  semanticContainer: true,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                ));
-          },
-          itemCount: controller.topCategories.length,
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(5),
-          scrollDirection: Axis.horizontal,
-        ));
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                elevation: 5,
+                margin: const EdgeInsets.all(5),
+                semanticContainer: true,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+              ));
+        },
+        itemCount: controller.topCategories.length,
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(5),
+        scrollDirection: Axis.horizontal,
+      ),
+    );
   }
 
   _buildLastAds(BuildContext context) {
