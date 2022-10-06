@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:afariat/config/dio_singleton.dart';
+import 'package:afariat/networking/network.dart';
 import 'package:afariat/storage/storage.dart';
 import 'package:afariat/networking/security/wsse.dart';
-import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' as a;
 import 'package:get/get_core/src/get_main.dart';
@@ -31,9 +32,6 @@ abstract class ApiManager {
 
   /// Returns the base API URL of current API ressource
   String baseApiUrl();
-
-  // Headers responseHeaders;
-  NetWorkController _netWorkController = a.Get.find<NetWorkController>();
 
   AbstractJsonResource fromJson(data);
 
@@ -120,7 +118,9 @@ abstract class ApiManager {
   Future<Response<dynamic>> securedGet(String url,
       {Map<String, dynamic> filters}) async {
     String wsse = Wsse.generateWsseFromStorage();
-    print('calling: $url');
+    if (kDebugMode) {
+      print('calling: $url');
+    }
     return dioSingleton.dio
         .get(
       url,
@@ -280,7 +280,7 @@ abstract class ApiManager {
     //generer le wsse
 
     String wsse = Wsse.generateWsseFromStorage();
-    if (_netWorkController.connectionStatus.value) {
+    if (Network.status.value) {
       return dioSingleton.dio
           .post(
         apiUrl(),
@@ -340,7 +340,7 @@ abstract class ApiManager {
   Future<Response<dynamic>> putData({dataToPost}) async {
     //generer le wsse
     String wsse = Wsse.generateWsseFromStorage();
-    if (_netWorkController.connectionStatus.value) {
+    if (Network.status.value) {
       return dioSingleton.dio
           .put(
         apiUrl(),

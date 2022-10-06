@@ -10,11 +10,15 @@ import 'config/app_config.dart';
 import 'home/main_view.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'networking/network.dart';
+
 Future<void> mainCommon(String fileEnv) async {
   // Here would be background init code, if any
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: fileEnv);
   await GetStorage.init();
+
+  Network.setup();
 }
 
 class MyApp extends StatelessWidget {

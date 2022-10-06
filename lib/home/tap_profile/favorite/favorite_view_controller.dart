@@ -25,7 +25,6 @@ class FavoriteViewController
   }
 
   Future<void> fetchInitialData() async {
-    print('initial data');
     if (accountInfoStorage.isLoggedIn()) {
       fetchPage();
     }

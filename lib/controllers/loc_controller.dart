@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:afariat/networking/api/ref_api.dart';
 import 'package:afariat/networking/json/ref_json.dart';
 import 'package:afariat/model/filter.dart';
-import 'network_controller.dart';
+import '../networking/network.dart';
 
 class LocController extends GetxController {
   //final tapHomeViewController = Get.find<TapHomeViewController>();
@@ -25,7 +25,7 @@ class LocController extends GetxController {
 
   /// GET all data from api
   getCityListSelected() {
-    if (Get.find<NetWorkController>().connectionStatus.value) {
+    if (Network.status.value) {
       _cityApi.getList().then((value) {
         cities = value.data;
 

@@ -32,8 +32,6 @@ class PersistentTabManager {
     tabController.index = index;
     tabController.jumpToTab(index);
     Get.routing.current = pages[index];
-    print(Get.currentRoute);
-    print(currentIndex.value);
     //Get.toNamed(pages[index]);
     //tabController.jumpToTab(index);
   }

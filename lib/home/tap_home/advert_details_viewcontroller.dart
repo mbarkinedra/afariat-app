@@ -28,7 +28,6 @@ class AdvertDetailsViewController extends GetxController {
       await fetchData(id);
     }
     super.onInit();
-    print(advert.showPhoneNumber);
   }
 
   @override

@@ -58,8 +58,6 @@ class MainViewController extends GetxController {
     tabController.jumpToTab(index);
     Get.routing.current = pages[index];
     update();
-    print(Get.currentRoute);
-    print(currentIndex.value);
     //Get.toNamed(pages[index]);
     //tabController.jumpToTab(index);
   }*/

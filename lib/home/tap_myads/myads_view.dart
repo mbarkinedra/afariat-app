@@ -1,5 +1,4 @@
 import 'package:afariat/config/utility.dart';
-import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/mywidget/ads_item.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
@@ -7,6 +6,7 @@ import 'package:afariat/mywidget/custom_dialogue_delete.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../config/app_routing.dart';
+import '../../networking/network.dart';
 import '../../persistent_tab_manager.dart';
 import '../main_view_controller.dart';
 import 'myads_view_controller.dart';
@@ -41,14 +41,14 @@ class MyAdsView extends GetWidget<MyAdsViewController> {
         body: Obx(
           () => Column(
             children: [
-              Get.find<NetWorkController>().connectionStatus.value == false
+              Network.status.value == false
                   ? const SizedBox(
                       child: Center(child: CircularProgressIndicator()),
                       height: 50,
                       width: 50,
                     )
                   : const SizedBox(),
-              Get.find<NetWorkController>().connectionStatus.value
+              Network.status.value
                   ? Expanded(
                       child: GetBuilder<MyAdsViewController>(builder: (logic) {
                         return controller.getAdsFromServer

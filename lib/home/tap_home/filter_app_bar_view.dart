@@ -69,7 +69,7 @@ class FilterAppBarView extends GetWidget<FilterAppBarViewController> {
               width: 160.0,
               child: OutlinedButton.icon(
                 onPressed: () {
-                  Get.toNamed('/filter/localization');
+                  Get.toNamed(AppRouting.localization);
                 },
                 label: Obx(() => Text(Filter.localizationLabel.value,
                     style: const TextStyle(color: Colors.black87))),

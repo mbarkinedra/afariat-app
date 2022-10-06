@@ -8,6 +8,7 @@ import '../config/utility.dart';
 import '../mywidget/custom_button_1.dart';
 import '../mywidget/search_field_appbar.dart';
 import '../networking/json/advert_list_json.dart';
+import '../networking/network.dart';
 import 'drawer_view.dart';
 import 'home_view_controller.dart';
 import '../../mywidget/advert_card_grid.dart';
@@ -68,6 +69,28 @@ class HomeView extends GetWidget<HomeViewController> {
                   titlePadding: const EdgeInsets.only(top: 60),
                 ),
               ),
+              Obx(
+                () => Network.status.value == false
+                    ? SliverAppBar(
+                        floating: true,
+                        pinned: true,
+                        snap: true,
+                        title: Text(
+                          'Pas de connexion Internet',
+                          style:
+                              TextStyle(fontSize: 16, color: Colors.grey[600]),
+                        ),
+                        leading: Icon(
+                          Icons.error_outline_outlined,
+                          color: Colors.grey[600],
+                        ),
+                        expandedHeight: 60,
+                        backgroundColor: Colors.grey[100],
+                      )
+                    : const SliverToBoxAdapter(
+                        child: SizedBox(),
+                      ),
+              ),
               SliverAppBar(
                 floating: true,
                 pinned: true,
@@ -80,14 +103,46 @@ class HomeView extends GetWidget<HomeViewController> {
                       onTaped: () => Get.toNamed(AppRouting.searchForm),
                       value: null,
                       hintText: 'Rechercher sur Le coin occasion'),
-                  padding:
-                      EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
+                  padding: const EdgeInsets.only(
+                      left: 10, right: 10, bottom: 10, top: 10),
                 ),
               ),
             ];
           },
           body: SingleChildScrollView(
               child: Column(children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Obx(
+                () => InputChip(
+                  avatar: const Icon(
+                    Icons.place,
+                    size: 18,
+                  ),
+                  deleteIcon: const Icon(Icons.edit, size: 18),
+                  deleteIconColor: Colors.black87,
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  label: Text(
+                    Filter.localizationLabel.value,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
+                  backgroundColor: Colors.transparent,
+                  shape: const StadiumBorder(
+                      side: BorderSide(color: Colors.black12)),
+                  onPressed: () {
+                    Get.toNamed(AppRouting.localization,
+                        parameters: {'source': 'home'});
+                  },
+                  onDeleted: () {
+                    Get.toNamed(AppRouting.localization,
+                        parameters: {'source': 'home'});
+                  },
+                ),
+              ),
+            ),
             const Padding(
               padding:
                   EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 10),

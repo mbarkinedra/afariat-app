@@ -1,3 +1,4 @@
+import 'package:afariat/config/app_routing.dart';
 import 'package:afariat/home/tap_home/search_viewcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,8 @@ class LocalizationViewController extends GetxController {
   Rx<LocalizationListJson> localizationsJsonList = LocalizationListJson().obs;
   final AutocompleteLocalizationApi _api = AutocompleteLocalizationApi();
   final AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
+
+  String source;
 
   @override
   void onInit() async {
@@ -72,8 +75,14 @@ class LocalizationViewController extends GetxController {
     await Filter.loadFromStorage();
     Filter.localization.refresh();
 
-    Navigator.pop(context);
-
     Get.find<SearchViewController>().makeSearch();
+
+    if (source != null && source == 'home') {
+      // go to search page
+      Get.toNamed(AppRouting.search);
+    } else {
+      // get back
+      Get.back();
+    }
   }
 }

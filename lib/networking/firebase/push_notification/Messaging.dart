@@ -7,7 +7,9 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../../home/tap_profile/notification/notification_view.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print("Handling a background message: ${message.messageId}");
+  if (kDebugMode) {
+    print("Handling a background message: ${message.messageId}");
+  }
 }
 
 class PushNotification {

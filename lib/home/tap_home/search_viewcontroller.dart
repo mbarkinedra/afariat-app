@@ -77,7 +77,6 @@ class SearchViewController
       });
 
     } catch (error) {
-      print(error);
       pagingController.error = error;
     }
   }

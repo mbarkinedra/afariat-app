@@ -453,7 +453,6 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
                 onPressed: () async {
                   if (_sendMsgFormKey.currentState.validate()) {
                     bool success = await controller.sendMessage();
-                    print(success);
                     if (success) {
                       Get.snackbar(
                         'Message envoyé',

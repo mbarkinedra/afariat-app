@@ -1,13 +1,11 @@
 import 'dart:io';
 import 'dart:developer' as devlog;
 import 'dart:convert';
-import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/api/advert_api.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/model/filter.dart';
 import 'package:afariat/storage/storage.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
-import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_myads/myads_view_controller.dart';
 import 'package:afariat/validator/validator_Adverts.dart';
@@ -20,6 +18,7 @@ import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../networking/network.dart';
 import '../main_view_controller.dart';
 
 class TapPublishViewController extends GetxController {
@@ -156,7 +155,7 @@ class TapPublishViewController extends GetxController {
     myAds["advertType"] = values[0].name;
     myAdsView["advertType"] = values[0].name;
 
-    if (Get.find<NetWorkController>().connectionStatus.value) {
+    if (Network.status.value) {
       getMileages();
       getYearsModels();
     }
@@ -243,7 +242,7 @@ class TapPublishViewController extends GetxController {
       motosBrand = null;
       yearsModele = null;
       kilometrage = null;
-      if (Get.find<NetWorkController>().connectionStatus.value) {
+      if (Network.status.value) {
         getVehicleBrand();
         getMotosBrand();
       }
@@ -374,7 +373,7 @@ class TapPublishViewController extends GetxController {
 
   /// Clear All Data From Screen Publish
   clearAllData() {
-    if (Get.find<NetWorkController>().connectionStatus.value) {
+    if (Network.status.value) {
       RefJson refJson = RefJson(id: 0, name: "");
       updateGetView(refJson);
       Get.find<LocController>().city = null;

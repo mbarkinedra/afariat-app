@@ -1,8 +1,9 @@
-import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/api/conversations_api.dart';
 import 'package:afariat/networking/json/conversation_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../networking/network.dart';
 
 class TapChatViewController extends GetxController {
   bool getData = true;
@@ -24,7 +25,7 @@ class TapChatViewController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    if (Get.find<NetWorkController>().connectionStatus.value) {
+    if (Network.status.value) {
       getAllConversations();
     }
   }

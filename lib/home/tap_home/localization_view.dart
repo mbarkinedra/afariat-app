@@ -16,6 +16,8 @@ class LocalizationView extends GetWidget<LocalizationViewController> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
+    controller.source =
+    Get.parameters.containsKey('source') ? Get.parameters['source'] : null;
     return Scaffold(
       //key: controller.key,
       appBar: AppBar(

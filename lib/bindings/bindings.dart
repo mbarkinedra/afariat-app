@@ -4,7 +4,6 @@ import 'package:afariat/settings/notification_settings_controller.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/storage/storage.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
-import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/main_view_controller.dart';
 import 'package:afariat/home/tap_chat/chat_user/chat_user_viewcontroller.dart';
@@ -51,10 +50,6 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => LocalizationViewController(), fenix: true);
     Get.lazyPut(() => CategoryGroupViewController(), fenix: true);
     Get.lazyPut(() => AdvertDetailsViewController(), fenix: true);
-
-    Get.lazyPut(
-      () => NetWorkController(),
-    );
     Get.lazyPut(() => SettingsViewController(), fenix: true);
     Get.lazyPut(() => FavoriteViewController(), fenix: true);
     Get.lazyPut(() => NotificationSettingsViewController(), fenix: true);

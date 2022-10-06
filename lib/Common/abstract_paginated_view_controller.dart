@@ -58,7 +58,6 @@ abstract class AbstractPaginatedViewController<T> extends GetxController {
         });
       }
     } catch (error) {
-      print(error);
       pagingController.error = error;
     }
   }

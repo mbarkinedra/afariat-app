@@ -1,9 +1,9 @@
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/config/utility.dart';
-import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/mywidget/chat_user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../networking/network.dart';
 import '../../persistent_tab_manager.dart';
 import 'chat_user/chat_user_scr.dart';
 import 'chat_user/chat_user_viewcontroller.dart';
@@ -36,14 +36,14 @@ class TapChatScr extends GetWidget<TapChatViewController> {
         body: Obx(
           () => Column(
             children: [
-              Get.find<NetWorkController>().connectionStatus.value == false
+              Network.status.value == false
                   ? Container(
                       child: const Center(child: CircularProgressIndicator()),
                       height: 50,
                       width: 50,
                     )
                   : const SizedBox(),
-              Get.find<NetWorkController>().connectionStatus.value
+              Network.status.value
                   ? Expanded(
                       child:
                           GetBuilder<TapChatViewController>(builder: (logic) {

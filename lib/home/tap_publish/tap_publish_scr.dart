@@ -1,7 +1,6 @@
 import 'package:afariat/config/Environment.dart';
 import 'package:afariat/config/utility.dart';
 import 'package:afariat/controllers/category_and_subcategory.dart';
-import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/controllers/loc_controller.dart';
 import 'package:afariat/home/tap_publish/publish_views/publish_image_scr.dart';
 import 'package:afariat/mywidget/custom_button_without_icon.dart';
@@ -13,6 +12,7 @@ import 'package:afariat/networking/json/ref_json.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../networking/network.dart';
 import '../main_view_controller.dart';
 import 'tap_publish_viewcontroller.dart';
 
@@ -50,14 +50,14 @@ class TapPublishScr extends GetWidget<TapPublishViewController> {
         body: Obx(
           () => Column(
             children: [
-              Get.find<NetWorkController>().connectionStatus.value == false
+              Network.status.value == false
                   ? const SizedBox(
                       child: Center(child: CircularProgressIndicator()),
                       height: 50,
                       width: 50,
                     )
                   : const SizedBox(),
-              Get.find<NetWorkController>().connectionStatus.value
+              Network.status.value
                   ? Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(

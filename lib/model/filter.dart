@@ -88,7 +88,6 @@ class Filter {
         : cpt;
 
     length.value = cpt;
-    print(localization.value.isNotEmpty());
     return cpt;
   }
 
@@ -107,7 +106,7 @@ class Filter {
     if (category.value != null && category.value.id != null) {
       parameterBag.set('category', category.value.id);
     }
-    if (localization.value != null && localization.value.isNotEmpty() != null) {
+    if (localization.value != null && localization.value.isNotEmpty()) {
       parameterBag.set('localisation', localization.value.toFilter());
     }
     if (minPrice.value != null && minPrice.value > Referential.priceMinId) {

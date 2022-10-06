@@ -1,9 +1,10 @@
 import 'package:afariat/storage/AccountInfoStorage.dart';
-import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/api/my_ads_api.dart';
 import 'package:afariat/networking/json/my_ads_json.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../networking/network.dart';
 
 class MyAdsViewController extends GetxController {
   MyAdsApi _myAdsApi = MyAdsApi();
@@ -47,7 +48,7 @@ class MyAdsViewController extends GetxController {
   }
 
   getAllAds() {
-    if (Get.find<NetWorkController>().connectionStatus.value &&
+    if (Network.status.value &&
         Get.find<AccountInfoStorage>().isLoggedIn()) {
       _myAdsApi.id = Get.find<AccountInfoStorage>().readUserId();
       getAdsFromServer = true;

@@ -1,10 +1,11 @@
 import 'package:afariat/storage/AccountInfoStorage.dart';
-import 'package:afariat/controllers/network_controller.dart';
 import 'package:afariat/networking/api/notification_api.dart';
 import 'package:afariat/networking/json/notification_json.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:get/get.dart';
+
+import '../../../networking/network.dart';
 
 class NotificationViewController extends GetxController {
   final NotificationApi _notificationApi = NotificationApi();
@@ -41,7 +42,7 @@ class NotificationViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (Get.find<NetWorkController>().connectionStatus.value) {
+    if (Network.status.value) {
       getAllNotification();
     } else {
       if (kDebugMode) {
@@ -73,7 +74,6 @@ class NotificationViewController extends GetxController {
       }
       NotificationJson notificationJson = NotificationJson.fromJson(value.data);
       if (notificationJson == null || notificationJson.eEmbedded == null) {
-        printError(info: 'Notification list are NULL');
         return;
       }
       List<Notification> notification = notificationJson.eEmbedded.notification;
