@@ -1,16 +1,17 @@
 import 'package:afariat/home/home_view.dart';
-import 'package:afariat/home/tap_home/advert_details_view.dart';
-import 'package:afariat/home/tap_home/filter_view.dart';
+import 'package:afariat/home/advert/advert_details_view.dart';
+import 'package:afariat/home/search/filter/filter_view.dart';
 import 'package:get/get.dart';
 
 import '../bindings/bindings.dart';
 import '../home/main_view.dart';
 import '../home/search/search_form_view.dart';
+import '../home/search/similar_adverts_view.dart';
 import '../home/tap_chat/tap_chat_scr.dart';
-import '../home/tap_home/category_group_view.dart';
+import '../home/search/filter/category_group_view.dart';
 import '../home/tap_profile/favorite/favorite_view.dart';
-import '../home/tap_home/localization_view.dart';
-import '../home/tap_home/search_view.dart';
+import '../home/search/components/localization_view.dart';
+import '../home/search/search_view.dart';
 import '../home/tap_myads/myads_view.dart';
 import '../home/tap_profile/notification/notification_view.dart';
 import '../home/tap_profile/tap_profile_scr.dart';
@@ -27,6 +28,7 @@ class AppRouting {
   static String localization = '/filter/localization';
   static String category = '/filter/category';
   static String adDetails = '/adDetails';
+  static String similarAds = '/similar-ads';
   static String newAd = '/new-ad';
   static String myAds = '/my-ads';
   static String messages = '/account/messages';
@@ -61,6 +63,10 @@ class AppRouting {
     GetPage(
         name: adDetails,
         page: () => AdvertDetailsView(),
+        binding: AllBindings()),
+    GetPage(
+        name: similarAds,
+        page: () => SimilarAdvertsView(),
         binding: AllBindings()),
     GetPage(name: myAds, page: () => MyAdsView(), binding: AllBindings()),
     GetPage(name: newAd, page: () => TapPublishScr(), binding: AllBindings()),

@@ -1,9 +1,9 @@
-import 'package:afariat/home/tap_home/search_viewcontroller.dart';
+import 'package:afariat/home/search/search_viewcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../config/app_routing.dart';
-import '../../config/utility.dart';
-import '../../model/filter.dart';
+import '../../../config/app_routing.dart';
+import '../../../config/utility.dart';
+import '../../../model/filter.dart';
 import 'filter_app_bar_viewcontroller.dart';
 
 class FilterAppBarView extends GetWidget<FilterAppBarViewController> {

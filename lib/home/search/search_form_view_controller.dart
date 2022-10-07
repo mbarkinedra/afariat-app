@@ -6,7 +6,7 @@ import '../../model/filter.dart';
 import '../../networking/api/autocomplete_api.dart';
 import '../../networking/json/serach_suggestion.dart';
 import '../../storage/AccountInfoStorage.dart';
-import '../tap_home/search_viewcontroller.dart';
+import 'search_viewcontroller.dart';
 
 class SearchFormViewController extends GetxController {
   TextEditingController searchFiled = TextEditingController();

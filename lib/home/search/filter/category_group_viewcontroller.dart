@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
-import '../../model/filter.dart';
-import '../../networking/api/autocomplete_api.dart';
-import '../../networking/api/categories_groupped_api.dart';
-import '../../networking/json/categories_grouped_json.dart';
-import '../../networking/json/localization_json.dart';
-import '../../storage/AccountInfoStorage.dart';
+import '../../../model/filter.dart';
+import '../../../networking/api/autocomplete_api.dart';
+import '../../../networking/api/categories_groupped_api.dart';
+import '../../../networking/json/categories_grouped_json.dart';
+import '../../../networking/json/localization_json.dart';
+import '../../../storage/AccountInfoStorage.dart';
 import 'filter_app_bar_viewcontroller.dart';
 import 'filter_viewcontroller.dart';
 

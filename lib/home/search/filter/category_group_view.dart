@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../config/utility.dart';
-import '../../networking/json/categories_grouped_json.dart';
+import '../../../config/utility.dart';
+import '../../../networking/json/categories_grouped_json.dart';
 import 'category_group_viewcontroller.dart';
 import 'category_view.dart';
 

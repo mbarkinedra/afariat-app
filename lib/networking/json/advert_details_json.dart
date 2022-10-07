@@ -119,9 +119,12 @@ class AdvertDetailsJson extends AbstractJsonResource {
     }
     shortUrl = json['short_url'];
     links = json['_links'] != null ? Links.fromJson(json['_links']) : null;
-
-    List<dynamic> related = jsonDecode(json['json_related_adverts']);
-    for (var element in related) { relatedAdverts.add(AdvertMinimalJson.fromJson(element)); }
+    if(json['json_related_adverts'] != null) {
+      List<dynamic> related = jsonDecode(json['json_related_adverts']);
+      for (var element in related) {
+        relatedAdverts.add(AdvertMinimalJson.fromJson(element));
+      }
+    }
   }
 
   Map<String, dynamic> toJson() {

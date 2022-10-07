@@ -47,9 +47,11 @@ abstract class AbstractPaginatedViewController<T> extends GetxController {
 
   Future<void> fetchPage([String url]) async {
     try {
-      String _url = url == null ? _api.baseApiUrl() : SettingsApp.baseUrl + url;
+      String _url = (url == null ) ? _api.baseApiUrl() : url.startsWith('https://') ? url : SettingsApp.baseUrl + url;
       if (accountInfoStorage.isLoggedIn()) {
         await _api.secureGetCollection(_url).then((value) {
+          print('Yooooooooooooo');
+          print(value);
           onFetchApiSuccess(value);
         });
       } else {
@@ -58,6 +60,7 @@ abstract class AbstractPaginatedViewController<T> extends GetxController {
         });
       }
     } catch (error) {
+      throw error;
       pagingController.error = error;
     }
   }

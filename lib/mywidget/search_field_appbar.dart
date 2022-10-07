@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../config/utility.dart';
 import '../home/search/search_form_view_controller.dart';
-import '../home/tap_home/search_viewcontroller.dart';
+import '../home/search/search_viewcontroller.dart';
 
 class SearchFieldAppbar extends StatelessWidget {
   TextEditingController controller = TextEditingController();

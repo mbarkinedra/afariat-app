@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../Common/abstract_paginated_view_controller.dart';
-import '../../config/settings_app.dart';
 import '../../model/favorite_list.dart';
 import '../../model/filter.dart';
 import '../../networking/api/advert_api.dart';

@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
-import '../../model/filter.dart';
-import '../../mywidget/autocomplete_search_field.dart';
-import '../../mywidget/custom_button_1.dart';
-import '../../networking/json/localization_json.dart';
-import '../../networking/json/serach_suggestion.dart';
-import '../../remote_widget/price_range_slider_view.dart';
+import '../../../model/filter.dart';
+import '../../../mywidget/autocomplete_search_field.dart';
+import '../../../mywidget/custom_button_1.dart';
+import '../../../networking/json/localization_json.dart';
+import '../../../networking/json/serach_suggestion.dart';
+import '../../../remote_widget/price_range_slider_view.dart';
 import 'filter_viewcontroller.dart';
 
 class FilterView extends GetWidget<FilterViewController> {

@@ -1,13 +1,13 @@
-import 'package:afariat/home/tap_home/search_viewcontroller.dart';
+import 'package:afariat/home/search/search_viewcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../config/Environment.dart';
-import '../../model/filter.dart';
-import '../../networking/api/autocomplete_api.dart';
-import '../../networking/json/localization_json.dart';
-import '../../networking/json/serach_suggestion.dart';
-import '../../remote_widget/price_range_slider_viewcontroller.dart';
-import '../../storage/AccountInfoStorage.dart';
+import '../../../config/Environment.dart';
+import '../../../model/filter.dart';
+import '../../../networking/api/autocomplete_api.dart';
+import '../../../networking/json/localization_json.dart';
+import '../../../networking/json/serach_suggestion.dart';
+import '../../../remote_widget/price_range_slider_viewcontroller.dart';
+import '../../../storage/AccountInfoStorage.dart';
 import 'filter_app_bar_viewcontroller.dart';
 
 class FilterViewController extends GetxController {

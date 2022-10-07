@@ -81,4 +81,12 @@ class AdvertApi extends ResourceApi {
     }
     return await super.getCollection(_url);
   }
+
+/*Future<dynamic> getSimilarAdverts({int advertId}) async {
+    String _url = SettingsApp.similarAdvert + '/'+ advertId.toString();
+    if (accountInfoStorage.isLoggedIn()) {
+      return await secureGetCollection(_url);
+    }
+    return await super.getCollection(_url);
+  }*/
 }

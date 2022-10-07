@@ -11,6 +11,8 @@ class AdvertDetailsApi extends ApiManager {
   }
 
   @override
+  @deprecated
+  @Deprecated('Use get method instead of this')
   Future<dynamic> getResource() async {
     //if user is logged in, use the secure call.
     if (accountInfoStorage.isLoggedIn()) {
@@ -27,5 +29,18 @@ class AdvertDetailsApi extends ApiManager {
   @override
   String baseApiUrl() {
     SettingsApp.advertDeatilsUrl;
+  }
+
+  @override
+  Future<dynamic> get(String url,  {Map<String, dynamic> filters}) async {
+    if (accountInfoStorage.isLoggedIn()) {
+      return await securedGet(url);
+    }
+    return await super.get(url);
+  }
+
+  Future<dynamic> getAdvert(String advertId) async {
+    String _url = SettingsApp.advertDeatilsUrl + '/' + advertId;
+    return get(_url);
   }
 }

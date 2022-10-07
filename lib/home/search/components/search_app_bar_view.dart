@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
-import '../../config/app_routing.dart';
-import '../../config/utility.dart';
-import '../../model/filter.dart';
-import '../../mywidget/search_field_appbar.dart';
+import '../../../config/app_routing.dart';
+import '../../../config/utility.dart';
+import '../../../model/filter.dart';
+import '../../../mywidget/search_field_appbar.dart';
 import 'search_app_bar_viewcontroller.dart';
 
 class SearchAppBarView extends GetWidget<SearchAppBarViewController> {

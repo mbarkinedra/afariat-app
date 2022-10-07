@@ -532,7 +532,7 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
                       : SizedBox(
                           width: 250,
                           child: InkWell(
-                            onTap: () => Get.toNamed(AppRouting.search),
+                            onTap: () => Get.toNamed(AppRouting.similarAds, parameters: {'id': controller.advert.id.toString() }),
                             child: Card(
                               clipBehavior: Clip.antiAlias,
                               child: Column(

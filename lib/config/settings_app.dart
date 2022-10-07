@@ -26,6 +26,8 @@ class SettingsApp {
 
   static String get advertDeatilsUrl => baseApiUrl + '/adverts';
 
+  static String get similarAdvert => baseApiUrl + '/similar/advert';
+
   static String get myAdsUrl => baseApiUrl + '/adverts?user=';
 
   static String get cityUrl => baseApiUrl + '/simple/cities';

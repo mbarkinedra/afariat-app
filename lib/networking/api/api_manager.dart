@@ -106,17 +106,21 @@ abstract class ApiManager {
   }
 
   //Get one resource
-  Future<dynamic> get(String url) async {
+  Future<dynamic> get(String url, {Map<String, dynamic> filters}) async {
     var data;
-    await dioSingleton.dio.get(url).then((value) {
+    await dioSingleton.dio
+        .get(
+      url,
+      queryParameters: filters,
+    )
+        .then((value) {
       validateResponseStatusCode(value);
       data = value.data;
     });
     return fromJson(data);
   }
 
-  Future<Response<dynamic>> securedGet(String url,
-      {Map<String, dynamic> filters}) async {
+  Future<dynamic> securedGet(String url, {Map<String, dynamic> filters}) async {
     String wsse = Wsse.generateWsseFromStorage();
     if (kDebugMode) {
       print('calling: $url');
@@ -138,7 +142,7 @@ abstract class ApiManager {
         .then((value) {
       //process server status codes
       validateResponseStatusCode(value);
-      return value;
+      return fromJson(value.data);
     }).catchError((error, stackTrace) {
       processServerError(error);
     });
@@ -146,24 +150,12 @@ abstract class ApiManager {
 
   Future<dynamic> getCollection(String url,
       {Map<String, dynamic> filters}) async {
-    AbstractJsonResource jsonList;
-    var data;
-
-    await dioSingleton.dio.get(url, queryParameters: filters).then((value) {
-      validateResponseStatusCode(value);
-      data = value.data;
-    });
-    jsonList = fromJson(data);
-    return jsonList;
+    return await get(url, filters: filters);
   }
 
   Future<dynamic> secureGetCollection(String url,
       {Map<String, dynamic> filters}) async {
-    AbstractJsonResource jsonList;
-
-    var json = await securedGet(url, filters: filters);
-    jsonList = fromJson(json.data);
-    return jsonList;
+    return await securedGet(url, filters: filters);
   }
 
   /// POST DATA TO SERVER

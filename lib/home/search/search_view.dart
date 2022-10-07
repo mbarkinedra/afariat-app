@@ -1,4 +1,4 @@
-import 'package:afariat/home/tap_home/search_viewcontroller.dart';
+import 'package:afariat/home/search/search_viewcontroller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,8 +8,8 @@ import '../../config/utility.dart';
 import '../../mywidget/advert_card_grid.dart';
 import '../../mywidget/advert_card_list.dart';
 import '../../networking/json/advert_minimal_json.dart';
-import 'filter_app_bar_view.dart';
-import 'search_app_bar_view.dart';
+import 'filter/filter_app_bar_view.dart';
+import 'components/search_app_bar_view.dart';
 
 class SearchView extends GetWidget<SearchViewController> {
   const SearchView({Key key}) : super(key: key);

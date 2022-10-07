@@ -1,13 +1,13 @@
 import 'package:afariat/config/app_routing.dart';
-import 'package:afariat/home/tap_home/search_viewcontroller.dart';
+import 'package:afariat/home/search/search_viewcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../model/filter.dart';
-import '../../networking/api/autocomplete_api.dart';
-import '../../networking/json/localization_json.dart';
-import '../../storage/AccountInfoStorage.dart';
-import 'filter_app_bar_viewcontroller.dart';
-import 'filter_viewcontroller.dart';
+import '../../../model/filter.dart';
+import '../../../networking/api/autocomplete_api.dart';
+import '../../../networking/json/localization_json.dart';
+import '../../../storage/AccountInfoStorage.dart';
+import '../filter/filter_app_bar_viewcontroller.dart';
+import '../filter/filter_viewcontroller.dart';
 
 class LocalizationViewController extends GetxController {
   //GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
