@@ -9,7 +9,7 @@ import '../storage/AccountInfoStorage.dart';
 abstract class AbstractPaginatedViewController<T> extends GetxController {
   final PagingController<int, T> pagingController =
       PagingController(firstPageKey: 0);
-  ScrollController scrollController = ScrollController();
+  final ScrollController scrollController = ScrollController();
   RxBool isLoadingMore = false.obs;
   RxBool noMoreResults = false.obs;
   ResourceApi _api;
@@ -50,8 +50,6 @@ abstract class AbstractPaginatedViewController<T> extends GetxController {
       String _url = (url == null ) ? _api.baseApiUrl() : url.startsWith('https://') ? url : SettingsApp.baseUrl + url;
       if (accountInfoStorage.isLoggedIn()) {
         await _api.secureGetCollection(_url).then((value) {
-          print('Yooooooooooooo');
-          print(value);
           onFetchApiSuccess(value);
         });
       } else {

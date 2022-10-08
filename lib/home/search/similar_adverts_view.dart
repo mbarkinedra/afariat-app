@@ -1,4 +1,3 @@
-import 'package:afariat/home/search/search_viewcontroller.dart';
 import 'package:afariat/home/search/similar_adverts_viewcontroller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,21 +8,20 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../config/utility.dart';
 import '../../mywidget/advert_card_grid.dart';
 import '../../mywidget/advert_card_list.dart';
-import '../../mywidget/silver_app_bar.dart';
 import '../../networking/json/advert_minimal_json.dart';
-import 'filter/filter_app_bar_view.dart';
-import 'components/search_app_bar_view.dart';
 
 class SimilarAdvertsView extends GetWidget<SimilarAdvertsViewController> {
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   SimilarAdvertsView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
+
+    //define it here because of the shit of: ScrollController attached to multiple scroll views
+    //controller.scrollController = ScrollController();
     return Scaffold(
-      // key: controller.key,
-      // No appbar provided to the Scaffold, only a body with a
-      // CustomScrollView.
+      key: scaffoldKey,
       body: SafeArea(
         child: FutureBuilder(
           future: controller.fetchInitialData(),
@@ -37,7 +35,8 @@ class SimilarAdvertsView extends GetWidget<SimilarAdvertsViewController> {
                   Obx(
                     () => SliverAppBar(
                       pinned: false,
-                      floating: true,
+                      floating: false,
+                      snap: false,
                       forceElevated: false,
                       elevation: 0,
                       expandedHeight:
@@ -63,13 +62,13 @@ class SimilarAdvertsView extends GetWidget<SimilarAdvertsViewController> {
                                 elevation: 20,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(1000),
-                                  side:
-                                      const BorderSide(width: 3, color: Colors.white),
+                                  side: const BorderSide(
+                                      width: 3, color: Colors.white),
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10000.0),
                                   child: CachedNetworkImage(
-                                    imageUrl: controller.advert.photos[0].path,
+                                    imageUrl: controller.advert.defaultPhoto,
                                     progressIndicatorBuilder: (context, url,
                                             downloadProgress) =>
                                         const Align(
@@ -116,12 +115,13 @@ class SimilarAdvertsView extends GetWidget<SimilarAdvertsViewController> {
                           ),
                         ],
                       ),
-                      centerTitle: !controller.isSliverAppBarCollapsed.value,
+                      centerTitle:! controller.isSliverAppBarCollapsed.value,
                       pinned: true,
                       snap: false,
                       floating: false,
                       forceElevated: controller.isSliverAppBarCollapsed.value,
-                      elevation: controller.isSliverAppBarCollapsed.value ? 20:0,
+                      elevation:
+                          controller.isSliverAppBarCollapsed.value ? 20 : 0,
                       automaticallyImplyLeading:
                           controller.isSliverAppBarCollapsed.value,
                       backgroundColor: Colors.white,

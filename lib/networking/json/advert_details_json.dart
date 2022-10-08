@@ -29,6 +29,7 @@ class AdvertDetailsJson extends AbstractJsonResource {
   String slug;
   String description;
   int price;
+  String defaultPhoto;
   bool showPhoneNumber;
   AdvertTypeEntity advertType;
   CategoryEntity category;
@@ -56,6 +57,7 @@ class AdvertDetailsJson extends AbstractJsonResource {
     this.slug,
     this.description,
     this.price,
+    this.defaultPhoto,
     this.showPhoneNumber,
     this.advertType,
     this.category,
@@ -91,6 +93,10 @@ class AdvertDetailsJson extends AbstractJsonResource {
     price = json['price'];
     showPhoneNumber = json['show_phone_number'];
     isRegistredUser = json['isRegistredUser'];
+
+    defaultPhoto = json['photo'] != null
+        ? SettingsApp.baseUrl + "/" + json['photo']
+        : null;
 
     advertType = json['advert_type'] != null
         ? AdvertTypeEntity.fromJson(json['advert_type'])
@@ -139,6 +145,7 @@ class AdvertDetailsJson extends AbstractJsonResource {
     json['slug'] = slug;
     json['description'] = description;
     json['price'] = price;
+    json['photo'] = defaultPhoto;
     json['show_phone_number'] = showPhoneNumber;
     json['userId'] = userId;
     json['isRegistredUser'] = isRegistredUser;

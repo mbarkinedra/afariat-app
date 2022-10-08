@@ -1,33 +1,35 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../model/filter.dart';
 import '../../networking/api/advert_details_api.dart';
 import '../../networking/api/conversations_api.dart';
 import '../../networking/json/advert_details_json.dart';
 
 class AdvertDetailsViewController extends GetxController {
-  //GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   final AdvertDetailsApi _api = AdvertDetailsApi();
-  final ConversationsApi _convertionsApi = ConversationsApi();
+  final ConversationsApi _conversationApi = ConversationsApi();
   PhotoViewController photoViewController;
-  RxBool loading = false.obs;
+  RxBool loading = true.obs;
   RxBool isSendingMsg = false.obs;
   AdvertDetailsJson advert;
+  String advertId;
 
   final messageController = TextEditingController(
       text: 'Bonjour, \nVotre bien m\'intéresse, est-il toujours disponible ?');
 
   @override
   Future<void> onInit() async {
-    String id = Get.parameters['id'];
-    if (id != null) {
-      await fetchData(id);
-    }
     super.onInit();
+  }
+
+  Future<AdvertDetailsJson> fetchAdvert() async {
+    await _api.getAdvert(advertId).then((value) {
+      advert = value;
+    });
+    loading.value = false;
+    return advert;
   }
 
   @override
@@ -35,15 +37,6 @@ class AdvertDetailsViewController extends GetxController {
     photoViewController.dispose();
     //messageController.dispose();
     super.dispose();
-  }
-
-  fetchData(String id) async {
-    loading.value = true;
-    _api.advertTypeId = id;
-    await _api.getResource().then((value) {
-      advert = value;
-    });
-    loading.value = false;
   }
 
   Future<void> makeCallOrSms(String phoneNumber, String scheme) async {
@@ -61,7 +54,7 @@ class AdvertDetailsViewController extends GetxController {
   Future<bool> sendMessage() async {
     bool success = false;
     isSendingMsg.value = true;
-    await _convertionsApi.securePost(dataToPost: {
+    await _conversationApi.securePost(dataToPost: {
       'message': messageController.text,
       'advert': advert.id,
     }).then((value) {

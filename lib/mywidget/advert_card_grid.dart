@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../config/Environment.dart';
+import '../config/app_routing.dart';
 import '../config/utility.dart';
+import '../home/search/similar_adverts_viewcontroller.dart';
 import '../home/tap_profile/favorite/favorite_view_controller.dart';
 import '../networking/json/advert_minimal_json.dart';
 import '../storage/AccountInfoStorage.dart';
@@ -17,8 +19,11 @@ class AdvertCardGrid extends AbstractAdvertCard {
 
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: () =>
-            Get.toNamed('/adDetails', parameters: {'id': advert.id.toString()}),
+        onTap: () {
+          Get.toNamed(AppRouting.adDetails, parameters: {'id': advert.id.toString()});
+          //TODO: NOTE: dont remove this because we get a lot of shit oc scroll attached to multi views. Until now no way to resolve it without destroying the controller
+          Get.delete<SimilarAdvertsViewController>();
+        },
         child: Card(
             clipBehavior: Clip.antiAlias,
             child: Column(children: [

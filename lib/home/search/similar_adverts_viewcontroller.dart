@@ -1,17 +1,25 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-import '../../Common/abstract_paginated_view_controller.dart';
 import '../../config/settings_app.dart';
 import '../../model/favorite_list.dart';
-import '../../model/filter.dart';
 import '../../networking/api/advert_api.dart';
 import '../../networking/api/advert_details_api.dart';
 import '../../networking/json/advert_details_json.dart';
 import '../../networking/json/advert_list_json.dart';
 import '../../networking/json/advert_minimal_json.dart';
+import '../../storage/AccountInfoStorage.dart';
 
-class SimilarAdvertsViewController
-    extends AbstractPaginatedViewController<AdvertMinimalJson> {
+class SimilarAdvertsViewController extends GetxController {
+  final PagingController<int, AdvertMinimalJson> pagingController =
+      PagingController(firstPageKey: 0);
+  final AdvertApi _api = AdvertApi();
+  AccountInfoStorage accountInfoStorage = Get.find<AccountInfoStorage>();
+  ScrollController scrollController = ScrollController();
+  RxBool isLoadingMore = false.obs;
+  RxBool noMoreResults = false.obs;
+
   AdvertListJson advertListJson;
   RxBool isGrid = true.obs;
   String advertId;
@@ -29,6 +37,12 @@ class SimilarAdvertsViewController
   void onInit() {
     advertId = Get.parameters['id'];
     scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.offset >=
+            scrollController.position.maxScrollExtent) {
+          swipeUp();
+        }
+      }
       isSliverAppBarCollapsed.value = scrollController.hasClients &&
           (scrollController.offset - expandedHeight > 0);
       if (isSliverAppBarCollapsed.value) {
@@ -41,18 +55,38 @@ class SimilarAdvertsViewController
         } else {
           double _w = expandedMaxImgHeight - scrollController.offset;
           double _h = expandedMaxImgHeight - scrollController.offset;
-          if (_w <= 0 || _h <= 0) { // if negative values set 0
+          if (_w <= 0 || _h <= 0) {
+            // if negative values set 0
             _w = _h = 0;
           }
           imgWidth.value = _w;
           imgHeight.value = _h;
         }
       }
-
-      print('Width: ' + imgWidth.value.toString());
-      print('height: ' + imgHeight.value.toString());
     });
     super.onInit();
+  }
+
+  Future<void> fetchPage([String url]) async {
+    try {
+      String _url = (url == null)
+          ? _api.baseApiUrl()
+          : url.startsWith('https://')
+              ? url
+              : SettingsApp.baseUrl + url;
+      if (accountInfoStorage.isLoggedIn()) {
+        await _api.secureGetCollection(_url).then((value) {
+          onFetchApiSuccess(value);
+        });
+      } else {
+        await _api.getCollection(_url).then((value) {
+          onFetchApiSuccess(value);
+        });
+      }
+    } catch (error) {
+      throw error;
+      pagingController.error = error;
+    }
   }
 
   @override
@@ -65,20 +99,27 @@ class SimilarAdvertsViewController
 
   @override
   void dispose() {
+    scrollController.dispose();
+    pagingController.dispose();
     super.dispose();
   }
 
-  @override
-  AdvertApi apiInstance() {
-    if (api == null) {
-      return AdvertApi();
+  Future<void> swipeUp() async {
+    isLoadingMore.value = true;
+    if (!hasNextResults()) {
+      isLoadingMore.value = false;
+      noMoreResults.value = true;
+      return;
+    } else {
+      isLoadingMore.value = false;
     }
-    return api;
   }
 
-  @override
-  Future<void> onSwipeUp() async {
-    await fetchPage(advertListJson.links.nextUrl);
+  Future<void> swipeDown() async {
+    pagingController.itemList?.clear();
+    pagingController.refresh(); //refreshes the UI
+    noMoreResults.value = false;
+    onSwipeDown();
   }
 
   @override

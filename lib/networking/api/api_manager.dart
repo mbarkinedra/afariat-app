@@ -144,6 +144,7 @@ abstract class ApiManager {
       validateResponseStatusCode(value);
       return fromJson(value.data);
     }).catchError((error, stackTrace) {
+      throw error;
       processServerError(error);
     });
   }

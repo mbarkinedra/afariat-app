@@ -39,7 +39,7 @@ class HomeView extends GetWidget<HomeViewController> {
                         child: InkWell(
                           onTap: () => scaffoldKey.currentState.openDrawer(),
                           child: const Icon(
-                            Icons.menu,
+                            Icons.menu_sharp,
                             color: colorGrey,
                             size: 22,
                           ),
@@ -100,7 +100,7 @@ class HomeView extends GetWidget<HomeViewController> {
                 expandedHeight: 60,
                 title: Padding(
                   child: SearchFieldAppbar(
-                      onTaped: () => Get.toNamed(AppRouting.searchForm),
+                      onTaped: () => Get.toNamed(AppRouting.searchForm, parameters: {'source': 'home'}),
                       value: null,
                       hintText: 'Rechercher sur Le coin occasion'),
                   padding: const EdgeInsets.only(

@@ -1,4 +1,5 @@
 import 'package:afariat/config/app_routing.dart';
+import 'package:afariat/networking/json/advert_details_json.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,7 @@ import '../../config/utility.dart';
 import '../../model/advert_option_labels.dart';
 import '../../mywidget/advert_card_grid.dart';
 import '../../mywidget/advert_card_list.dart';
+import '../search/similar_adverts_viewcontroller.dart';
 import 'advert_details_viewcontroller.dart';
 
 class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
@@ -22,6 +24,7 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
+    controller.advertId = Get.parameters['id'];
     return Scaffold(
       // key: controller.key,
       appBar: AppBar(
@@ -44,17 +47,11 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
             }),
       ),
       body: SingleChildScrollView(
-        child: GetBuilder<AdvertDetailsViewController>(builder: (logic) {
-          return Obx(() => logic.loading.isTrue
-              ? SizedBox(
-                  width: _size.width,
-                  height: _size.height * 0.8,
-                  child: const Align(
-                    alignment: Alignment.center,
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-              : Padding(
+        child: FutureBuilder<AdvertDetailsJson>(
+            future: controller.fetchAdvert(),
+            builder: (context, AsyncSnapshot<AdvertDetailsJson> snapshot) {
+              if (snapshot.hasData) {
+                return Padding(
                   padding: const EdgeInsets.all(8),
                   child: Column(
                     children: [
@@ -63,8 +60,14 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
                       _buildRelatedAds(context),
                     ],
                   ),
-                ));
-        }),
+                );
+              } else {
+                return const Align(
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }),
       ),
       bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(top: 5, bottom: 5),
@@ -520,36 +523,44 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemCount: controller.advert.relatedAdverts.length + 1,
-              itemBuilder: (BuildContext context, int index) =>
-                  (index != controller.advert.relatedAdverts.length)
-                      ? SizedBox(
-                          width: 250,
-                          child: AdvertCardGrid(
-                            userInitials: 'LCO',
-                            advert: controller.advert.relatedAdverts[index],
-                          ),
-                        )
-                      : SizedBox(
-                          width: 250,
-                          child: InkWell(
-                            onTap: () => Get.toNamed(AppRouting.similarAds, parameters: {'id': controller.advert.id.toString() }),
-                            child: Card(
-                              clipBehavior: Clip.antiAlias,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(
-                                    Icons.add_circle_outline,
-                                    size: 50,
-                                    color: framColor,
-                                  ),
-                                  Text('Afficher plus d\'annonces', style: TextStyle(fontSize: 18, color: framColor),)
-                                ],
+              itemBuilder: (BuildContext context, int index) => (index !=
+                      controller.advert.relatedAdverts.length)
+                  ? SizedBox(
+                      width: 250,
+                      child: AdvertCardGrid(
+                        userInitials: 'LCO',
+                        advert: controller.advert.relatedAdverts[index],
+                      ),
+                    )
+                  : SizedBox(
+                      width: 250,
+                      child: InkWell(
+                        onTap: () {
+                          Get.toNamed(AppRouting.similarAds, parameters: {
+                            'id': controller.advert.id.toString()
+                          });
+                        },
+                        child: Card(
+                          clipBehavior: Clip.antiAlias,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.add_circle_outline,
+                                size: 50,
+                                color: framColor,
                               ),
-                            ),
+                              Text(
+                                'Afficher plus d\'annonces',
+                                style:
+                                    TextStyle(fontSize: 18, color: framColor),
+                              )
+                            ],
                           ),
                         ),
+                      ),
+                    ),
             ),
           ),
         ],

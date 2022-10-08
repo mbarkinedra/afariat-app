@@ -119,7 +119,10 @@ class SearchFormView extends GetWidget<SearchFormViewController> {
                 Icons.filter_alt_outlined,
               ),
               label: const Text('Plus de critères'),
-              onPressed: () => Get.toNamed(AppRouting.filter, parameters: {'source': 'searchForm'}),
+              onPressed: () => Get.toNamed(AppRouting.filter, parameters: {
+                'source':
+                    controller.source != null ? controller.source : 'searchForm'
+              }),
             ),
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:afariat/config/app_routing.dart';
 import 'package:afariat/home/search/search_viewcontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -47,17 +48,29 @@ class FilterViewController extends GetxController {
   clear(BuildContext context) async {
     Filter.clear();
     Get.find<SearchViewController>().makeSearch();
-    Navigator.pop(context);
-    if(source != null && source=='searchForm'){ //pop again to get back to search view
+    if (source == 'home') {
+      //go to search page
+      Get.toNamed(AppRouting.search);
+    } else {
       Navigator.pop(context);
+      if (source != null && source == 'searchForm') {
+        //pop again to get back to search view
+        Navigator.pop(context);
+      }
     }
   }
 
   search(BuildContext context) async {
     Get.find<SearchViewController>().makeSearch();
-    Navigator.pop(context);
-    if(source != null && source=='searchForm'){ //pop again to get back to search view
+    if (source == 'home') {
+      //go to search page
+      Get.toNamed(AppRouting.search);
+    } else {
       Navigator.pop(context);
+      if (source != null && source == 'searchForm') {
+        //pop again to get back to search view
+        Navigator.pop(context);
+      }
     }
   }
 
