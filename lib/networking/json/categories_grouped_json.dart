@@ -58,4 +58,16 @@ class SubCategoryJson {
     id = json['id'];
     name = json['name'];
   }
+
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    if (id != null) {
+      json['id'] = id;
+    }
+    if (name != null) {
+      json['name'] = name;
+    }
+    return json;
+  }
 }

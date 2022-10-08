@@ -170,7 +170,7 @@ class Filter {
   static remove(k) => rxParameters.value.remove(k);
 
   /// Clear the filter data
-  static void clear() async {
+  static void clear({bool exceptLocalization = false}) async {
     search.value = '';
     onlyPhoto.value = false;
     categoryGroup.value = CategoryGroupedJson();
@@ -179,12 +179,9 @@ class Filter {
     minPrice.value = Referential.priceMinId;
     maxPrice.value = Referential.priceMaxId;
 
-    await Get.find<AccountInfoStorage>().removeLocalization();
-
-    updateLocalizationLabel();
-    rxParameters.value.clear();
+    if(!exceptLocalization) {
+      await Get.find<AccountInfoStorage>().removeLocalization();
+      updateLocalizationLabel();
+    }
   }
-
-  ///Clear all except the given index param
-  static clearExcept(k) => rxParameters.value.clearExcept(k);
 }

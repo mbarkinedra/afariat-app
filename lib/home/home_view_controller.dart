@@ -1,15 +1,18 @@
+import 'package:afariat/config/app_routing.dart';
 import 'package:afariat/home/tap_profile/notification/notification_view_controller.dart';
 import 'package:afariat/model/filter.dart';
 import 'package:get/get.dart';
 
 import '../networking/api/advert_api.dart';
 import '../networking/json/advert_list_json.dart';
+import '../networking/json/categories_grouped_json.dart';
 import '../storage/AccountInfoStorage.dart';
 import 'drawer_view_controller.dart';
 
 class HomeViewController extends GetxController {
   DrawerViewController drawerController = DrawerViewController();
-  NotificationViewController notificationController =  Get.find<NotificationViewController>();
+  NotificationViewController notificationController =
+      Get.find<NotificationViewController>();
   AdvertListJson advertListJson = AdvertListJson();
 
   final AdvertApi _advertApi = AdvertApi();
@@ -34,7 +37,8 @@ class HomeViewController extends GetxController {
   Future<AdvertListJson> fetchLastAds([int limit = 10]) async {
     isLoadingLastAds.value = true;
     try {
-      _advertApi.url = '/api/v1/adverts?onlyPhoto=true&limit=' + limit.toString();
+      _advertApi.url =
+          '/api/v1/adverts?onlyPhoto=true&limit=' + limit.toString();
       await _advertApi.getList().then((value) {
         advertListJson = value;
       });
@@ -46,8 +50,16 @@ class HomeViewController extends GetxController {
   }
 
   selectCategory(id) {
-    Filter.clearExcept(AccountInfoStorage.keyLocalization);
-    Filter.set('category', id);
-    Get.toNamed('/search');
+
+
+    dynamic selectedCategory =
+        topCategories.firstWhereOrNull((element) => element['id'] == id);
+
+    if (selectedCategory != null) {
+      Filter.clear(exceptLocalization: true);
+      Filter.category.value =
+          SubCategoryJson(id: id, name: selectedCategory['label']);
+    }
+    Get.toNamed(AppRouting.search);
   }
 }

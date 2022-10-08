@@ -48,7 +48,7 @@ class SearchFormViewController extends GetxController {
 
   allCategories() async {
     //reset all filters
-    Filter.clearExcept(AccountInfoStorage.keyLocalization);
+    Filter.clear(exceptLocalization: true);
     await _redirectToSource();
   }
 
