@@ -12,6 +12,7 @@ import '../../networking/json/advert_minimal_json.dart';
 
 class SimilarAdvertsView extends GetWidget<SimilarAdvertsViewController> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   SimilarAdvertsView({Key key}) : super(key: key);
 
   @override
@@ -54,6 +55,7 @@ class SimilarAdvertsView extends GetWidget<SimilarAdvertsViewController> {
                           ),
                         ),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
                               height: controller.imgHeight.value,
@@ -86,10 +88,14 @@ class SimilarAdvertsView extends GetWidget<SimilarAdvertsViewController> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: Text(
-                                controller.advert.title.toUpperCase(),
-                                style: const TextStyle(fontSize: 18),
+                              padding: const EdgeInsets.only(
+                                  top: 10, left: 5, right: 5),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  controller.advert.title.toUpperCase(),
+                                  style: const TextStyle(fontSize: 18),
+                                ),
                               ),
                             ),
                           ],
@@ -115,7 +121,7 @@ class SimilarAdvertsView extends GetWidget<SimilarAdvertsViewController> {
                           ),
                         ],
                       ),
-                      centerTitle:! controller.isSliverAppBarCollapsed.value,
+                      centerTitle: !controller.isSliverAppBarCollapsed.value,
                       pinned: true,
                       snap: false,
                       floating: false,

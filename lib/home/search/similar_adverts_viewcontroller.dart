@@ -27,7 +27,7 @@ class SimilarAdvertsViewController extends GetxController {
   final AdvertDetailsApi _advertDetailsApi = AdvertDetailsApi();
   static const double kToolbarHeight = 60;
   static const double expandedHeight = 250;
-  static const double expandedMaxImgHeight = 200;
+  static const double expandedMaxImgHeight = 190;
 
   RxBool isSliverAppBarCollapsed = false.obs;
   RxDouble imgWidth = expandedMaxImgHeight.obs;
@@ -36,6 +36,7 @@ class SimilarAdvertsViewController extends GetxController {
   @override
   void onInit() {
     advertId = Get.parameters['id'];
+
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
         if (scrollController.offset >=
