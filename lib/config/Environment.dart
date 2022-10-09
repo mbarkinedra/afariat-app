@@ -34,4 +34,6 @@ class Environment {
   static String get phonePlaceholder => getParameter('PHONE_PLACEHOLDER');
 
   static String get allCountryLabel => getParameter('ALL_COUNTRY_LABEL');
+
+  static String get localizationSearchHint => getParameter('LOCALIZATION_SEARCH_HINT');
 }

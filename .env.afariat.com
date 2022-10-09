@@ -10,3 +10,4 @@ CITY_LABEL=Gouvernorat
 TOWN_LABEL=Délégation
 ALL_COUNTRY_LABEL=Toute la Tunisie
 PHONE_PLACEHOLDER="98 000 000"
+LOCALIZATION_SEARCH_HINT="Ville, gouvernorat, région, etc"

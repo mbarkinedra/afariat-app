@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+import '../../../config/Environment.dart';
 import '../../../config/utility.dart';
 import '../../../networking/json/localization_json.dart';
 import 'localization_viewcontroller.dart';
@@ -17,7 +18,7 @@ class LocalizationView extends GetWidget<LocalizationViewController> {
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
     controller.source =
-    Get.parameters.containsKey('source') ? Get.parameters['source'] : null;
+        Get.parameters.containsKey('source') ? Get.parameters['source'] : null;
     return Scaffold(
       //key: controller.key,
       appBar: AppBar(
@@ -65,6 +66,7 @@ class LocalizationView extends GetWidget<LocalizationViewController> {
                     hideSuggestionsOnKeyboardHide: false,
                     debounceDuration: const Duration(milliseconds: 500),
                     getImmediateSuggestions: false,
+                    keepSuggestionsOnLoading: false,
                     suggestionsBoxDecoration: SuggestionsBoxDecoration(
                       constraints: BoxConstraints(maxHeight: _size.height * .3),
                     ),
@@ -76,7 +78,7 @@ class LocalizationView extends GetWidget<LocalizationViewController> {
                       decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.search),
                         border: InputBorder.none,
-                        hintText: 'Rechercher une localisation',
+                        hintText: Environment.localizationSearchHint,
                         suffixIcon: IconButton(
                             icon: const Icon(Icons.clear_outlined),
                             onPressed: () {
@@ -99,7 +101,7 @@ class LocalizationView extends GetWidget<LocalizationViewController> {
                     },
                     noItemsFoundBuilder: (context) => const Padding(
                         padding: EdgeInsets.all(16.0),
-                        child: Text('Pas de résultat',
+                        child: Text('Aucune localisation n\'est trouvée',
                             style: TextStyle(fontSize: 16, color: colorGrey))),
                   ),
                 )),
@@ -146,7 +148,7 @@ class LocalizationView extends GetWidget<LocalizationViewController> {
                             .toList()[index]
                             .toString())),
                         onDeleted: () async {
-                         await controller.removeLocalizationAt(index);
+                          await controller.removeLocalizationAt(index);
                           controller.localizationsJsonList.refresh();
                         },
                       ));
