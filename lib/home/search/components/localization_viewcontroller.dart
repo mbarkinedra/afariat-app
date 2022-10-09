@@ -56,13 +56,19 @@ class LocalizationViewController extends GetxController {
     localizationsJsonList.value.add(localizationJson);
   }
 
-  removeLocalization(LocalizationJson localizationJson) {
+  /*removeLocalization(LocalizationJson localizationJson) {
     localizationsJsonList.value.remove(localizationJson);
     localizationsJsonList.refresh();
-  }
+  }*/
 
-  removeLocalizationAt(int index) {
+  removeLocalizationAt(int index) async {
     localizationsJsonList.value.removeAt(index);
+    //update the search list
+    Filter.setLocalizationList(localizationsJsonList.value);
+    await Filter.loadFromStorage();
+    Filter.localization.refresh();
+
+    Get.find<SearchViewController>().makeSearch();
   }
 
   clearSearchField() => searchFiled.clear();

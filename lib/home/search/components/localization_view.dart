@@ -145,9 +145,8 @@ class LocalizationView extends GetWidget<LocalizationViewController> {
                             .localizationsJsonList.value
                             .toList()[index]
                             .toString())),
-                        onDeleted: () {
-                          controller.localizationsJsonList.value
-                              .removeAt(index);
+                        onDeleted: () async {
+                         await controller.removeLocalizationAt(index);
                           controller.localizationsJsonList.refresh();
                         },
                       ));
