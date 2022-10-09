@@ -43,6 +43,22 @@ class FilterView extends GetWidget<FilterViewController> {
               controller.searchFiled.text = suggestionJson.name;
               Filter.search.value = controller.searchFiled.text;
             },
+            noItemsFoundBuilder: (context) => Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: controller.isLoadingSuggestions.isFalse
+                  ? Text('Pas de résultat',
+                      style: TextStyle(fontSize: 16, color: colorGrey))
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          'Recherche...',
+                          style: TextStyle(fontSize: 16, color: colorGrey),
+                        ),
+                        CupertinoActivityIndicator()
+                      ],
+                    ),
+            ),
             onClearText: () => Filter.search.value = null,
           ),
         ),

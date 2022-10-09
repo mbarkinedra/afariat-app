@@ -10,6 +10,7 @@ class AutocompleteSearchField<T> extends StatelessWidget {
   final Function suggestionsCallback;
   final Function itemBuilder;
   final Function onClearText;
+  final Function noItemsFoundBuilder;
   final String value;
   final BuildContext context;
   final String hintText;
@@ -25,7 +26,7 @@ class AutocompleteSearchField<T> extends StatelessWidget {
       this.itemBuilder,
       this.hintText,
       this.autofocus = false,
-      this.onClearText})
+      this.onClearText, this.noItemsFoundBuilder})
       : super(key: key) {
     Future.delayed(const Duration(milliseconds: 500), () {
       controller.text = value;
@@ -81,10 +82,7 @@ class AutocompleteSearchField<T> extends StatelessWidget {
             suggestionsCallback: suggestionsCallback,
             itemBuilder: itemBuilder,
             onSuggestionSelected: onSuggestionSelected,
-            noItemsFoundBuilder: (context) => const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text('Pas de résultat',
-                    style: TextStyle(fontSize: 16, color: colorGrey))),
+            noItemsFoundBuilder: noItemsFoundBuilder,
           ),
         ));
   }

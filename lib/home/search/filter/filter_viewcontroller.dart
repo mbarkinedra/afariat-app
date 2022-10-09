@@ -21,6 +21,8 @@ class FilterViewController extends GetxController {
 
   TextEditingController searchFiled = TextEditingController();
 
+  RxBool isLoadingSuggestions = false.obs;
+
   final AutocompleteSearchSuggestionApi _searchSuggestionApi =
       AutocompleteSearchSuggestionApi();
 
@@ -78,10 +80,12 @@ class FilterViewController extends GetxController {
     if (query.isEmpty) {
       return [];
     }
+    isLoadingSuggestions.value = true;
     SearchSuggestionListJson result =
         await _searchSuggestionApi.getSuggestions(query);
     //add the filled user query as first suggestion
     result.data.insert(0, SearchSuggestionJson(name: query, id: '0'));
+    isLoadingSuggestions.value = false;
     return result.toList();
   }
 }

@@ -13,6 +13,8 @@ class SearchFormViewController extends GetxController {
 
   String source;
 
+  RxBool isLoadingSuggestions = false.obs;
+
   final AutocompleteSearchSuggestionApi _api =
       AutocompleteSearchSuggestionApi();
 
@@ -31,9 +33,11 @@ class SearchFormViewController extends GetxController {
     if (query.isEmpty) {
       return [];
     }
+    isLoadingSuggestions.value = true;
     SearchSuggestionListJson result = await _api.getSuggestions(query);
     //add the filled user query as first suggestion
     result.data.insert(0, SearchSuggestionJson(name: query, id: '0'));
+    isLoadingSuggestions.value = false;
     return result.toList();
   }
 
