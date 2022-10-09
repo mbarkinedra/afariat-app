@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
+import '../../../config/Environment.dart';
 import '../../../model/filter.dart';
 import '../../../mywidget/autocomplete_search_field.dart';
 import '../../../mywidget/custom_button_1.dart';
@@ -255,7 +256,7 @@ class FilterView extends GetWidget<FilterViewController> {
                         )
                       : InkWell(
                           onTap: () => Get.toNamed('/filter/localization'),
-                          child: Text('Toutes la France'),
+                          child: Text(Environment.allCountryLabel),
                         ),
                 ),
                 Expanded(
