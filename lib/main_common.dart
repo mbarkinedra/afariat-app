@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
                   "assets/images/" + appConfig.appName + "/splash.png"),
               nextScreen: const MainView(),
               splashTransition: SplashTransition.slideTransition,
-              backgroundColor: framColor
+              backgroundColor: framColor,
           ),
           getPages: AppRouting.pages,
           //routes: AppRouting.routes,

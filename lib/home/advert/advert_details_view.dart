@@ -13,6 +13,9 @@ import '../../config/utility.dart';
 import '../../model/advert_option_labels.dart';
 import '../../mywidget/advert_card_grid.dart';
 import '../../mywidget/advert_card_list.dart';
+import '../../persistent_tab_manager.dart';
+import '../../storage/AccountInfoStorage.dart';
+import '../main_view.dart';
 import '../search/similar_adverts_viewcontroller.dart';
 import 'advert_details_viewcontroller.dart';
 
@@ -70,74 +73,106 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
             }),
       ),
       bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(top: 5, bottom: 5),
-          child: Obx(() => controller.loading.isTrue
+        padding: const EdgeInsets.only(top: 5, bottom: 5),
+        child: Obx(
+          () => controller.loading.isTrue
               ? const Center(child: CircularProgressIndicator())
-              : controller.advert.showPhoneNumber
+              : Get.find<AccountInfoStorage>().isLoggedIn()
                   ? Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                          Expanded(
-                            flex: 1,
-                            child: OutlinedButton(
-                              child: const Padding(
-                                child: Icon(Icons.call),
-                                padding: EdgeInsets.all(12),
-                              ),
-                              onPressed: () {
-                                controller.makeCallOrSms(
-                                    controller.advert.mobilePhoneNumber, 'tel');
-                              },
-                              style: OutlinedButton.styleFrom(
-                                  shape: const CircleBorder(),
-                                  side: const BorderSide(
-                                      width: 1, color: Colors.grey)),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: FloatingActionButton(
-                              child: const Icon(Icons.chat),
-                              tooltip: 'Envoyer un message',
-                              onPressed: () =>
-                                  _showSendMessageDialogContent(context),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: OutlinedButton(
-                              child: const Padding(
-                                child: Text(
-                                  'SMS',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
+                        controller.advert.showPhoneNumber
+                            ? Expanded(
+                                flex: 1,
+                                child: OutlinedButton(
+                                  child: const Padding(
+                                    child: Icon(Icons.call),
+                                    padding: EdgeInsets.all(12),
+                                  ),
+                                  onPressed: () {
+                                    controller.makeCallOrSms(
+                                        controller.advert.mobilePhoneNumber,
+                                        'tel');
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                      shape: const CircleBorder(),
+                                      side: const BorderSide(
+                                          width: 1, color: Colors.grey)),
                                 ),
-                                padding: EdgeInsets.all(16),
-                              ),
-                              onPressed: () {
-                                controller.makeCallOrSms(
-                                    controller.advert.mobilePhoneNumber, 'sms');
-                              },
-                              style: OutlinedButton.styleFrom(
-                                  shape: const CircleBorder(),
-                                  side: const BorderSide(
-                                      width: 1, color: Colors.grey)),
-                            ),
+                              )
+                            : const SizedBox(),
+                        Expanded(
+                          flex: 1,
+                          child: FloatingActionButton(
+                            child: const Icon(Icons.chat),
+                            tooltip: 'Envoyer un message',
+                            onPressed: () =>
+                                _showSendMessageDialogContent(context),
                           ),
-                        ])
+                        ),
+                        controller.advert.showPhoneNumber
+                            ? Expanded(
+                                flex: 1,
+                                child: OutlinedButton(
+                                  child: const Padding(
+                                    child: Text(
+                                      'SMS',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12),
+                                    ),
+                                    padding: EdgeInsets.all(16),
+                                  ),
+                                  onPressed: () {
+                                    controller.makeCallOrSms(
+                                        controller.advert.mobilePhoneNumber,
+                                        'sms');
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                      shape: const CircleBorder(),
+                                      side: const BorderSide(
+                                          width: 1, color: Colors.grey)),
+                                ),
+                              )
+                            : const SizedBox(),
+                      ],
+                    )
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton.icon(
-                          onPressed: () =>
-                              _showSendMessageDialogContent(context),
-                          label: const Text('Message'),
-                          icon: const Icon(Icons.chat),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.grey.shade200),
+                            foregroundColor: MaterialStateProperty.all<Color>(
+                                Colors.black54),
+                          ),
+                          onPressed: () {
+                            Get.defaultDialog(
+                              title: 'Connexion requise',
+                              titleStyle: TextStyle(color: Colors.black54),
+                              middleText:
+                                  'Veuillez vous connecter pour accéder aux informations de contact de l\'annonceur.',
+                              radius: 5,
+                              textConfirm: '  Je me connecte  ',
+                              confirmTextColor: Colors.white,
+                              onConfirm: () {
+                                Get.back(closeOverlays: true);
+                                PersistentTabManager.gotToHome(context);
+                                PersistentTabManager.changePage(4);
+                              },
+                            );
+                          },
+                          icon: const Icon(Icons
+                              .chat_rounded), //icon data for elevated button
+                          label:
+                              const Text("Contacter l'annonceur"), //label text
                         )
                       ],
-                    ))),
+                    ),
+        ),
+      ),
     );
   }
 

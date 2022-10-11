@@ -6,6 +6,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 import 'config/app_routing.dart';
 import 'home/home_view.dart';
+import 'home/main_view.dart';
 import 'home/tap_chat/tap_chat_scr.dart';
 import 'home/tap_myads/myads_view.dart';
 import 'home/tap_profile/tap_profile_scr.dart';
@@ -49,5 +50,15 @@ class PersistentTabManager {
       isLoggedIn ? TapChatScr() : SignInScr(),
       isLoggedIn ? TapProfileScr() : SignInScr()
     ];
+  }
+
+  /// a custom fucntion to remove evrything and go to home
+  static gotToHome(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MainView(),
+        ),
+        (route) => false);
   }
 }

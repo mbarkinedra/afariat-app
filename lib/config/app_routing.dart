@@ -42,7 +42,6 @@ class AppRouting {
 
   static String settings = '/settings';
 
-  static Map<String, dynamic> routes = {'/': (context) => const MainView()};
   static List<GetPage> pages = [
     GetPage(name: main, page: () => const MainView(), binding: AllBindings()),
     GetPage(name: home, page: () => HomeView(), binding: AllBindings()),
@@ -87,5 +86,15 @@ class AppRouting {
 
   static GetPage getPageByName(String name) {
     return pages.firstWhere((p) => p.name == name);
+  }
+
+  static List<String> getPageNames() {
+    List<String> names = <String>[];
+
+    for (GetPage element in pages) {
+      names.add(element.name);
+    }
+
+    return names;
   }
 }
