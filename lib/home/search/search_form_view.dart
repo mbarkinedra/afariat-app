@@ -84,61 +84,68 @@ class SearchFormView extends GetWidget<SearchFormViewController> {
               Navigator.of(context).pop();
             }),
       ),
-      body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.only(top: 20, left: 8, right: 8, bottom: 8),
-        child: CustomScrollView(
-          //controller: controller.scrollController,
-          physics: const BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics()),
-          slivers: [
-            SliverToBoxAdapter(
-              child: ListTile(
-                contentPadding: const EdgeInsets.all(8),
-                title: const Text(
-                  'Uniquement avec photos',
-                  style: TextStyle(fontSize: 16),
-                ),
-                trailing: Obx(
-                  () => CupertinoSwitch(
-                    value: Filter.onlyPhoto.value,
-                    activeColor: framColor,
-                    onChanged: (v) {
-                      Filter.onlyPhoto.value = v;
-                    },
+      body: GestureDetector(
+        onHorizontalDragEnd: (DragEndDetails details) {
+          if (details.primaryVelocity > 0) {
+            Get.back();
+          }
+        },
+        child: SafeArea(
+            child: Padding(
+          padding: const EdgeInsets.only(top: 20, left: 8, right: 8, bottom: 8),
+          child: CustomScrollView(
+            //controller: controller.scrollController,
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            slivers: [
+              SliverToBoxAdapter(
+                child: ListTile(
+                  contentPadding: const EdgeInsets.all(8),
+                  title: const Text(
+                    'Uniquement avec photos',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  trailing: Obx(
+                    () => CupertinoSwitch(
+                      value: Filter.onlyPhoto.value,
+                      activeColor: framColor,
+                      onChanged: (v) {
+                        Filter.onlyPhoto.value = v;
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SliverToBoxAdapter(
-              child: SizedBox(
-                height: 5,
-              ),
-            ),
-
-            const SliverToBoxAdapter(
-              child: Text(
-                'Mes recherches sauvegardées',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: ListTile(
-                //contentPadding: const EdgeInsets.all(8),
-                title: const Text(
-                  'Toutes catégories',
-                  style: TextStyle(fontSize: 16),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 5,
                 ),
-                leading: const Icon(Icons.all_inclusive_sharp),
-                onTap: () {
-                  controller.allCategories();
-                },
               ),
-            ),
-            // _buildSavedSearchList(),
-          ],
-        ),
-      )),
+
+              const SliverToBoxAdapter(
+                child: Text(
+                  'Mes recherches sauvegardées',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: ListTile(
+                  //contentPadding: const EdgeInsets.all(8),
+                  title: const Text(
+                    'Toutes catégories',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  leading: const Icon(Icons.all_inclusive_sharp),
+                  onTap: () {
+                    controller.allCategories();
+                  },
+                ),
+              ),
+              // _buildSavedSearchList(),
+            ],
+          ),
+        )),
+      ),
       bottomNavigationBar: SizedBox(
         child: Padding(
           padding:

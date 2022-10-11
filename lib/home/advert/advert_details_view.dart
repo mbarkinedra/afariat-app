@@ -12,11 +12,8 @@ import '../../config/Environment.dart';
 import '../../config/utility.dart';
 import '../../model/advert_option_labels.dart';
 import '../../mywidget/advert_card_grid.dart';
-import '../../mywidget/advert_card_list.dart';
 import '../../persistent_tab_manager.dart';
 import '../../storage/AccountInfoStorage.dart';
-import '../main_view.dart';
-import '../search/similar_adverts_viewcontroller.dart';
 import 'advert_details_viewcontroller.dart';
 
 class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
@@ -49,29 +46,37 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
               Get.back();
             }),
       ),
-      body: SingleChildScrollView(
-        child: FutureBuilder<AdvertDetailsJson>(
-            future: controller.fetchAdvert(),
-            builder: (context, AsyncSnapshot<AdvertDetailsJson> snapshot) {
-              if (snapshot.hasData) {
-                return Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    children: [
-                      _buildCarousel(context),
-                      _buildAdvert(),
-                      _buildRelatedAds(context),
-                    ],
-                  ),
-                );
-              } else {
-                return const Align(
-                  alignment: Alignment.center,
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }),
+      body: GestureDetector(
+        onHorizontalDragEnd: (DragEndDetails details) {
+          if (details.primaryVelocity > 0) {
+            Get.back();
+          }
+        },
+        child: SingleChildScrollView(
+          child: FutureBuilder<AdvertDetailsJson>(
+              future: controller.fetchAdvert(),
+              builder: (context, AsyncSnapshot<AdvertDetailsJson> snapshot) {
+                if (snapshot.hasData) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      children: [
+                        _buildCarousel(context),
+                        _buildAdvert(),
+                        _buildRelatedAds(context),
+                      ],
+                    ),
+                  );
+                } else {
+                  return const Align(
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              }),
+        ),
       ),
+
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(top: 5, bottom: 5),
         child: Obx(

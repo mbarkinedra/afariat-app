@@ -37,81 +37,92 @@ class LocalizationView extends GetWidget<LocalizationViewController> {
               Navigator.of(context).pop();
             }),
       ),
-      body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.only(top: 16, bottom: 0, right: 16, left: 16),
-        child: Column(
-          children: [
-            DecoratedBox(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5)),
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(5),
-                        topRight: Radius.circular(5),
-                        bottomLeft: Radius.circular(5),
-                        bottomRight: Radius.circular(5)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: colorGrey,
-                        spreadRadius: 1,
-                        blurRadius: 1,
-                      ),
-                    ],
-                  ),
-                  child: TypeAheadField<LocalizationJson>(
-                    hideSuggestionsOnKeyboardHide: false,
-                    debounceDuration: const Duration(milliseconds: 500),
-                    getImmediateSuggestions: false,
-                    keepSuggestionsOnLoading: false,
-                    suggestionsBoxDecoration: SuggestionsBoxDecoration(
-                      constraints: BoxConstraints(maxHeight: _size.height * .3),
+      body: GestureDetector(
+        onHorizontalDragEnd: (DragEndDetails details) {
+          if (details.primaryVelocity > 0) {
+            Get.back();
+          }
+        },
+        child: SafeArea(
+            child: Padding(
+          padding:
+              const EdgeInsets.only(top: 16, bottom: 0, right: 16, left: 16),
+          child: Column(
+            children: [
+              DecoratedBox(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          topRight: Radius.circular(5),
+                          bottomLeft: Radius.circular(5),
+                          bottomRight: Radius.circular(5)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: colorGrey,
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                        ),
+                      ],
                     ),
-                    autoFlipDirection: true,
-                    textFieldConfiguration: TextFieldConfiguration(
-                      controller: controller.searchFiled,
-                      maxLines: 1,
-                      autofocus: false,
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.search),
-                        border: InputBorder.none,
-                        hintText: Environment.localizationSearchHint,
-                        suffixIcon: IconButton(
-                            icon: const Icon(Icons.clear_outlined),
-                            onPressed: () {
-                              controller.clearSearchField();
-                            }),
+                    child: TypeAheadField<LocalizationJson>(
+                      hideSuggestionsOnKeyboardHide: false,
+                      debounceDuration: const Duration(milliseconds: 500),
+                      getImmediateSuggestions: false,
+                      keepSuggestionsOnLoading: false,
+                      suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                        constraints:
+                            BoxConstraints(maxHeight: _size.height * .3),
                       ),
+                      autoFlipDirection: true,
+                      textFieldConfiguration: TextFieldConfiguration(
+                        controller: controller.searchFiled,
+                        maxLines: 1,
+                        autofocus: false,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.search),
+                          border: InputBorder.none,
+                          hintText: Environment.localizationSearchHint,
+                          suffixIcon: IconButton(
+                              icon: const Icon(Icons.clear_outlined),
+                              onPressed: () {
+                                controller.clearSearchField();
+                              }),
+                        ),
+                      ),
+                      suggestionsCallback: (query) async {
+                        return await controller.getSuggestions(query);
+                      },
+                      itemBuilder: (context, localizationJson) {
+                        return ListTile(
+                          leading: const Icon(Icons.location_on),
+                          title: Text(localizationJson.name),
+                          subtitle: Text(localizationJson.typeLabel),
+                        );
+                      },
+                      onSuggestionSelected: (localizationJson) {
+                        controller.addLocalization(localizationJson);
+                      },
+                      noItemsFoundBuilder: (context) => const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Text('Aucune localisation n\'est trouvée',
+                              style:
+                                  TextStyle(fontSize: 16, color: colorGrey))),
                     ),
-                    suggestionsCallback: (query) async {
-                      return await controller.getSuggestions(query);
-                    },
-                    itemBuilder: (context, localizationJson) {
-                      return ListTile(
-                        leading: const Icon(Icons.location_on),
-                        title: Text(localizationJson.name),
-                        subtitle: Text(localizationJson.typeLabel),
-                      );
-                    },
-                    onSuggestionSelected: (localizationJson) {
-                      controller.addLocalization(localizationJson);
-                    },
-                    noItemsFoundBuilder: (context) => const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Text('Aucune localisation n\'est trouvée',
-                            style: TextStyle(fontSize: 16, color: colorGrey))),
-                  ),
-                )),
-            const SizedBox(
-              height: 10,
-            ),
-            _buildLocalizationChips(context),
-          ],
-        ),
-      )),
+                  )),
+              const SizedBox(
+                height: 10,
+              ),
+              _buildLocalizationChips(context),
+            ],
+          ),
+        )),
+      ),
+
       bottomNavigationBar: Padding(
         padding: MediaQuery.of(context).viewInsets,
         child: CustomButton1(

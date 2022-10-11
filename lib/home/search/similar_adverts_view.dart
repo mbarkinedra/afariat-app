@@ -23,162 +23,170 @@ class SimilarAdvertsView extends GetWidget<SimilarAdvertsViewController> {
     //controller.scrollController = ScrollController();
     return Scaffold(
       key: scaffoldKey,
-      body: SafeArea(
-        child: FutureBuilder(
-          future: controller.fetchInitialData(),
-          builder: (context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              return CustomScrollView(
-                controller: controller.scrollController,
-                physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics()),
-                slivers: [
-                  Obx(
-                    () => SliverAppBar(
-                      pinned: false,
-                      floating: false,
-                      snap: false,
-                      forceElevated: false,
-                      elevation: 0,
-                      expandedHeight:
-                          SimilarAdvertsViewController.expandedHeight,
-                      backgroundColor: Colors.white,
-                      flexibleSpace: Container(
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.center,
-                            colors: [
-                              Color(0xFFFFCCBC),
-                              Colors.white,
-                            ],
+      body: GestureDetector(
+        onHorizontalDragEnd: (DragEndDetails details) {
+          if (details.primaryVelocity > 0) {
+            Get.back();
+          }
+        },
+        child: SafeArea(
+          child: FutureBuilder(
+            future: controller.fetchInitialData(),
+            builder: (context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return CustomScrollView(
+                  controller: controller.scrollController,
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
+                  slivers: [
+                    Obx(
+                      () => SliverAppBar(
+                        pinned: false,
+                        floating: false,
+                        snap: false,
+                        forceElevated: false,
+                        elevation: 0,
+                        expandedHeight:
+                            SimilarAdvertsViewController.expandedHeight,
+                        backgroundColor: Colors.white,
+                        flexibleSpace: Container(
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.center,
+                              colors: [
+                                Color(0xFFFFCCBC),
+                                Colors.white,
+                              ],
+                            ),
                           ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: controller.imgHeight.value,
-                              width: controller.imgWidth.value,
-                              child: Card(
-                                elevation: 20,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(1000),
-                                  side: const BorderSide(
-                                      width: 3, color: Colors.white),
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10000.0),
-                                  child: CachedNetworkImage(
-                                    imageUrl: controller.advert.defaultPhoto,
-                                    progressIndicatorBuilder: (context, url,
-                                            downloadProgress) =>
-                                        const Align(
-                                            alignment: Alignment.center,
-                                            child:
-                                                CupertinoActivityIndicator()),
-                                    errorWidget: (context, url, error) =>
-                                        Image.asset(
-                                      "assets/images/common/no-image.jpg",
-                                      fit: BoxFit.fill,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: controller.imgHeight.value,
+                                width: controller.imgWidth.value,
+                                child: Card(
+                                  elevation: 20,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(1000),
+                                    side: const BorderSide(
+                                        width: 3, color: Colors.white),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.circular(10000.0),
+                                    child: CachedNetworkImage(
+                                      imageUrl: controller.advert.defaultPhoto,
+                                      progressIndicatorBuilder: (context, url,
+                                              downloadProgress) =>
+                                          const Align(
+                                              alignment: Alignment.center,
+                                              child:
+                                                  CupertinoActivityIndicator()),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                        "assets/images/common/no-image.jpg",
+                                        fit: BoxFit.fill,
+                                      ),
+                                      fit: BoxFit.cover,
                                     ),
-                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 10, left: 5, right: 5),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  controller.advert.title.toUpperCase(),
-                                  style: const TextStyle(fontSize: 18),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 10, left: 5, right: 5),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    controller.advert.title.toUpperCase(),
+                                    style: const TextStyle(fontSize: 18),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Obx(
-                    () => SliverAppBar(
-                      // show and hide SliverAppBar Title
-                      title: Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          !controller.isSliverAppBarCollapsed.value
-                              ? const Icon(
-                                  Icons.ad_units_outlined,
-                                  color: Colors.black54,
-                                )
-                              : SizedBox(),
-                          const Text(
-                            'Annonces similaires',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ],
-                      ),
-                      centerTitle: !controller.isSliverAppBarCollapsed.value,
-                      pinned: true,
-                      snap: false,
-                      floating: false,
-                      forceElevated: controller.isSliverAppBarCollapsed.value,
-                      elevation:
-                          controller.isSliverAppBarCollapsed.value ? 20 : 0,
-                      automaticallyImplyLeading:
-                          controller.isSliverAppBarCollapsed.value,
-                      backgroundColor: Colors.white,
-                      leading: controller.isSliverAppBarCollapsed.value
-                          ? IconButton(
-                              icon: const Icon(
-                                //
-                                Icons.arrow_back_ios,
-                                color: framColor,
-                              ),
-                              onPressed: () {
-                                Get.back();
-                              })
-                          : null,
-                    ),
-                  ),
-                  // Next, create a SliverList
-                  const SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 20,
-                    ),
-                  ),
-                  _buildGrid(context),
-                  SliverToBoxAdapter(
-                    child: Obx(() => controller.isLoadingMore.value != false
-                        ? const Center(child: CupertinoActivityIndicator())
-                        : const SizedBox.shrink()),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Obx(() => controller.noMoreResults.value != false
-                        ? const Center(
-                            child: Padding(
-                            padding: EdgeInsets.only(top: 20, bottom: 10),
-                            child: Text(
-                              'Plus d\'annonces similaires. Retourner sur la page de recherche pour plus de résultats',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 18,
-                                  color: colorGrey),
+                    Obx(
+                      () => SliverAppBar(
+                        // show and hide SliverAppBar Title
+                        title: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            !controller.isSliverAppBarCollapsed.value
+                                ? const Icon(
+                                    Icons.ad_units_outlined,
+                                    color: Colors.black54,
+                                  )
+                                : SizedBox(),
+                            const Text(
+                              'Annonces similaires',
+                              style: TextStyle(color: Colors.black),
                             ),
-                          ))
-                        : const SizedBox.shrink()),
-                  ),
-                ],
-              );
-            } else {
-              return const Align(
-                  alignment: Alignment.center,
-                  child: CircularProgressIndicator());
-            }
-          },
+                          ],
+                        ),
+                        centerTitle: !controller.isSliverAppBarCollapsed.value,
+                        pinned: true,
+                        snap: false,
+                        floating: false,
+                        forceElevated: controller.isSliverAppBarCollapsed.value,
+                        elevation:
+                            controller.isSliverAppBarCollapsed.value ? 20 : 0,
+                        automaticallyImplyLeading:
+                            controller.isSliverAppBarCollapsed.value,
+                        backgroundColor: Colors.white,
+                        leading: controller.isSliverAppBarCollapsed.value
+                            ? IconButton(
+                                icon: const Icon(
+                                  //
+                                  Icons.arrow_back_ios,
+                                  color: framColor,
+                                ),
+                                onPressed: () {
+                                  Get.back();
+                                })
+                            : null,
+                      ),
+                    ),
+                    // Next, create a SliverList
+                    const SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 20,
+                      ),
+                    ),
+                    _buildGrid(context),
+                    SliverToBoxAdapter(
+                      child: Obx(() => controller.isLoadingMore.value != false
+                          ? const Center(child: CupertinoActivityIndicator())
+                          : const SizedBox.shrink()),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Obx(() => controller.noMoreResults.value != false
+                          ? const Center(
+                              child: Padding(
+                              padding: EdgeInsets.only(top: 20, bottom: 10),
+                              child: Text(
+                                'Plus d\'annonces similaires. Retourner sur la page de recherche pour plus de résultats',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 18,
+                                    color: colorGrey),
+                              ),
+                            ))
+                          : const SizedBox.shrink()),
+                    ),
+                  ],
+                );
+              } else {
+                return const Align(
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator());
+              }
+            },
+          ),
         ),
       ),
     );
