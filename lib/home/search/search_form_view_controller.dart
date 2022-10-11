@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../config/app_routing.dart';
 import '../../model/filter.dart';
 import '../../networking/api/autocomplete_api.dart';
+import '../../networking/json/categories_grouped_json.dart';
 import '../../networking/json/serach_suggestion.dart';
 import '../../storage/AccountInfoStorage.dart';
 import 'search_viewcontroller.dart';
@@ -35,17 +36,24 @@ class SearchFormViewController extends GetxController {
     }
     isLoadingSuggestions.value = true;
     SearchSuggestionListJson result = await _api.getSuggestions(query);
-    //add the filled user query as first suggestion
-    result.data.insert(0, SearchSuggestionJson(name: query, id: '0'));
+    //add the filled user query as last suggestion
+    result.data.insert(
+        result.data.length, SearchSuggestionJson(text: query, categoryId: 0));
     isLoadingSuggestions.value = false;
     return result.toList();
   }
 
   suggestionSelect(SearchSuggestionJson suggestionJson) async {
-    if (suggestionJson.name != null) {
-      Filter.search.value = suggestionJson.name;
+    if (suggestionJson.text != null) {
+      Filter.search.value = suggestionJson.text;
     } else {
       Filter.search.value = null;
+    }
+    if (suggestionJson.categoryId != null && suggestionJson.categoryId != 0) {
+      Filter.category.value.id = suggestionJson.categoryId;
+      Filter.category.value.name = suggestionJson.categoryName;
+    } else {
+      Filter.category.value = SubCategoryJson();
     }
     _redirectToSource();
   }
@@ -59,7 +67,7 @@ class SearchFormViewController extends GetxController {
   _redirectToSource() async {
     //refresh the search page to get new results
     SearchViewController searchViewController =
-    Get.find<SearchViewController>();
+        Get.find<SearchViewController>();
     await searchViewController.makeSearch();
     //get back to search page
     if (source == AppRouting.search) {

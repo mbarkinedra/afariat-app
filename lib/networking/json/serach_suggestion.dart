@@ -27,29 +27,33 @@ class SearchSuggestionListJson extends AbstractJsonResource {
 }
 
 class SearchSuggestionJson extends AbstractJsonResource {
-  String id;
-  String name;
+  String text;
+  int categoryId;
+  String categoryName;
 
-  SearchSuggestionJson({this.id, this.name});
+  SearchSuggestionJson({this.text, this.categoryId, this.categoryName});
 
   SearchSuggestionJson.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
+    text = json['text'];
+    categoryId = json['category_id'];
+    categoryName = json['category_name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
+    data['text'] = text;
+    data['category_id'] = categoryId;
+    data['category_name'] = categoryName;
     return data;
   }
 
   @override
   String toString() {
-    return name ?? '';
+    return text ?? '';
   }
 
   bool isEqual(SearchSuggestionJson searchSuggestionJson) {
-    return name == searchSuggestionJson.name && id == searchSuggestionJson.id;
+    return text == searchSuggestionJson.text &&
+        categoryId == searchSuggestionJson.categoryId;
   }
 }

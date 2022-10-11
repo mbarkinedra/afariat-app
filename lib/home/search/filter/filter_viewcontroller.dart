@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../config/Environment.dart';
 import '../../../model/filter.dart';
 import '../../../networking/api/autocomplete_api.dart';
+import '../../../networking/json/categories_grouped_json.dart';
 import '../../../networking/json/localization_json.dart';
 import '../../../networking/json/serach_suggestion.dart';
 import '../../../remote_widget/price_range_slider_viewcontroller.dart';
@@ -84,8 +85,25 @@ class FilterViewController extends GetxController {
     SearchSuggestionListJson result =
         await _searchSuggestionApi.getSuggestions(query);
     //add the filled user query as first suggestion
-    result.data.insert(0, SearchSuggestionJson(name: query, id: '0'));
+    result.data.insert(
+        result.data.length, SearchSuggestionJson(text: query, categoryId: 0));
     isLoadingSuggestions.value = false;
     return result.toList();
+  }
+
+  suggestionSelect(SearchSuggestionJson suggestionJson) async {
+    searchFiled.text = suggestionJson.text;
+    if (suggestionJson.text != null) {
+      Filter.search.value = suggestionJson.text;
+    } else {
+      Filter.search.value = null;
+    }
+
+    if (suggestionJson.categoryId != null && suggestionJson.categoryId != 0) {
+      Filter.category.value.id = suggestionJson.categoryId;
+      Filter.category.value.name = suggestionJson.categoryName;
+    } else {
+      Filter.category.value = SubCategoryJson();
+    }
   }
 }

@@ -86,5 +86,5 @@ class SettingsApp {
 
   static String get autocompleteLocalization => baseApiUrl + '/autocomplete/localization';
 
-  static String get autocompleteSearchSuggestion => baseApiUrl + '/autocomplete/search-suggestions';
+  static String get autocompleteSearchSuggestion => baseApiUrl + '/autocomplete/search-suggestions-categories';
 }

@@ -32,7 +32,22 @@ class SearchFormView extends GetWidget<SearchFormViewController> {
             itemBuilder: (context, SearchSuggestionJson suggestionJson) {
               return ListTile(
                 leading: const Icon(Icons.search),
-                title: Text(suggestionJson.name),
+                title: (suggestionJson.categoryId != null &&
+                        suggestionJson.categoryId != 0)
+                    ? Row(
+                        children: [
+                          Text(suggestionJson.text),
+                          const Text(
+                            ' dans ',
+                            style: TextStyle(color: colorGrey),
+                          ),
+                          Text(
+                            suggestionJson.categoryName,
+                            style: const TextStyle(color: framColor),
+                          )
+                        ],
+                      )
+                    : Text(suggestionJson.text),
               );
             },
             onSuggestionSelected: (SearchSuggestionJson suggestionJson) {
