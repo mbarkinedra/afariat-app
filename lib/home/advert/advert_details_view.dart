@@ -156,9 +156,25 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
                           onPressed: () {
                             Get.defaultDialog(
                               title: 'Connexion requise',
-                              titleStyle: TextStyle(color: Colors.black54),
-                              middleText:
-                                  'Veuillez vous connecter pour accéder aux informations de contact de l\'annonceur.',
+                              titleStyle: const TextStyle(color: Colors.black54),
+                              content: Padding(
+                                padding: EdgeInsets.only(top: 20, bottom: 40),
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100),
+                                  child: SizedBox(
+                                    height: 80,
+                                    width: 250,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8),
+                                      child: Text(
+                                        'Vous devez être connecté pour accéder aux informations de contact de l\'annonceur.',
+                                        style: TextStyle(color: Colors.grey.shade800),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                               radius: 5,
                               textConfirm: '  Je me connecte  ',
                               confirmTextColor: Colors.white,
