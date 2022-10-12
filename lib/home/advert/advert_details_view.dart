@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
+import '../../Common/popup.dart';
 import '../../config/Environment.dart';
 import '../../config/utility.dart';
 import '../../model/advert_option_labels.dart';
@@ -55,33 +56,38 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Obx(() =>
-                  controller.loading.isTrue
-                      ? const SizedBox()
-                      : controller.advert != null ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            InkWell(
-                              onTap: () => _onShare(context),
-                              child: Icon(
-                                Icons.share,
-                                color: Colors.grey.shade800,
-                                size: 24.0,
-                                semanticLabel: 'Partager l\'annonce',
-                              ),
-                            ),
-                            AdvertFavoriteIcon(
-                              advertId: int.parse(controller.advertId),
-                              isLoggedIn:
-                                  Get.find<AccountInfoStorage>().isLoggedIn(),
-                              onAdd: () => favController.addAdvertToFavorites(
-                                  int.parse(controller.advertId)),
-                              onDelete: () =>
-                                  favController.removeAdvertFromFavorite(
-                                      int.parse(controller.advertId)),
-                            ),
-                          ],
-                        ) : const SizedBox(),)
+                  Obx(
+                    () => controller.loading.isTrue
+                        ? const SizedBox()
+                        : controller.advert != null
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  InkWell(
+                                    onTap: () => _onShare(context),
+                                    child: Icon(
+                                      Icons.share,
+                                      color: Colors.grey.shade800,
+                                      size: 24.0,
+                                      semanticLabel: 'Partager l\'annonce',
+                                    ),
+                                  ),
+                                  AdvertFavoriteIcon(
+                                    advertId: int.parse(controller.advertId),
+                                    isLoggedIn: Get.find<AccountInfoStorage>()
+                                        .isLoggedIn(),
+                                    onAdd: () =>
+                                        favController.addAdvertToFavorites(
+                                            int.parse(controller.advertId)),
+                                    onDelete: () =>
+                                        favController.removeAdvertFromFavorite(
+                                            int.parse(controller.advertId)),
+                                  ),
+                                ],
+                              )
+                            : const SizedBox(),
+                  )
                 ],
               ),
             ),
@@ -218,40 +224,8 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
                             foregroundColor: MaterialStateProperty.all<Color>(
                                 Colors.black54),
                           ),
-                          onPressed: () {
-                            Get.defaultDialog(
-                              title: 'Connexion requise',
-                              titleStyle:
-                                  const TextStyle(color: Colors.black54),
-                              content: Padding(
-                                padding: EdgeInsets.only(top: 20, bottom: 40),
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey.shade100),
-                                  child: SizedBox(
-                                    height: 80,
-                                    width: 250,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8),
-                                      child: Text(
-                                        'Vous devez être connecté pour accéder aux informations de contact de l\'annonceur.',
-                                        style: TextStyle(
-                                            color: Colors.grey.shade800),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              radius: 5,
-                              textConfirm: '  Je me connecte  ',
-                              confirmTextColor: Colors.white,
-                              onConfirm: () {
-                                Get.back(closeOverlays: true);
-                                PersistentTabManager.gotToHome(context);
-                                PersistentTabManager.changePage(4);
-                              },
-                            );
-                          },
+                          onPressed: () => Popup.showAccessDenied(context,
+                              'Vous devez être connecté pour accéder aux informations de contact de l\'annonceur.'),
                           icon: const Icon(Icons
                               .chat_rounded), //icon data for elevated button
                           label:
@@ -427,17 +401,18 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
         shrinkWrap: true,
         itemCount: controller.advert.options.length(),
         itemBuilder: (context, index) {
+          Map<String, dynamic> optionLabel = AdvertOptionLabels
+              .optionsIds[controller.advert.options.elementAt(index).optionId];
+          String suffix = optionLabel['suffix'] ?? '';
           return ListTile(
-            leading: Icon(AdvertOptionLabels.optionsIds[
-                controller.advert.options.elementAt(index).optionId]['icon']),
+            leading: Icon(optionLabel['icon']),
             minLeadingWidth: 5,
             title: Text(
-              AdvertOptionLabels.optionsIds[
-                  controller.advert.options.elementAt(index).optionId]['label'],
+              optionLabel['label'],
               style: const TextStyle(fontSize: 14, color: Colors.grey),
             ),
             subtitle: Text(
-              controller.advert.options.elementAt(index).value,
+              controller.advert.options.elementAt(index).value + ' ' + suffix,
               style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,

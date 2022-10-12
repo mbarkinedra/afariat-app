@@ -1,7 +1,9 @@
+import 'package:afariat/config/app_routing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
+import '../Common/popup.dart';
 import '../config/Environment.dart';
 import '../config/app_config.dart';
 import '../config/utility.dart';
@@ -68,16 +70,10 @@ class DrawerView extends GetWidget<DrawerViewController> {
                 ),
                 onTap: () {
                   if (Get.find<AccountInfoStorage>().isLoggedIn()) {
-                    Get.toNamed('/account/favorites');
-                    //replace with get/toNamed
-                    /*Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FavoriteScr()),
-                    );*/
+                    Get.toNamed(AppRouting.favorites);
                   } else {
-                    Get.snackbar("Connexion requise",
-                        "Veuillez vous connecter pour accéder à vos favoris",
-                        colorText: Colors.white, backgroundColor: buttonColor);
+                    Popup.showAccessDenied(context,
+                        'Vous devez être connecté pour accéder à vos favoris');
                   }
                 },
               ),

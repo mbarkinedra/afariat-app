@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../Common/popup.dart';
 import '../config/app_routing.dart';
 import '../mywidget/menu_entry.dart';
 import 'notification_settings_view.dart';
@@ -38,16 +39,9 @@ class SettingsView extends GetView<SettingsViewController> {
           MenuEntry(
             icon: Icons.notifications,
             text: "Préférence des notifications",
-            press: () => {
-              if (!Get.find<AccountInfoStorage>().isLoggedIn())
-                {
-                  Get.snackbar("Connexion requise",
-                      "Veuillez vous connecter pour accéder à vos préférences",
-                      colorText: Colors.black)
-                }
-              else
-                {Get.toNamed(AppRouting.preferences)}
-            },
+            press: () => Get.find<AccountInfoStorage>().isLoggedIn()
+                ? Get.toNamed(AppRouting.preferences)
+                : Popup.showAccessDenied(context, 'Vous devez être connecté pour accéder à vos préférences'),
           ),
         ]),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../Common/popup.dart';
 import '../config/utility.dart';
 import '../model/favorite_list.dart';
 
@@ -34,9 +35,7 @@ class AdvertFavoriteIcon extends StatelessWidget {
                 onAdd();
               }
             } else {
-              Get.snackbar("Connexion requise",
-                  "Veuillez vous connecter pour enregistrer cette annonce dans vos favoris",
-                  colorText: Colors.white, backgroundColor: buttonColor);
+              Popup.showAccessDenied(context, 'Vous devez être connecté pour ajouter cette annonce à vos favoris');
             }
           },
           customBorder: const CircleBorder(),

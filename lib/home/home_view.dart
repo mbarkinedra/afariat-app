@@ -2,6 +2,7 @@ import 'package:afariat/model/filter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../Common/popup.dart';
 import '../config/app_config.dart';
 import '../config/app_routing.dart';
 import '../config/utility.dart';
@@ -9,6 +10,7 @@ import '../mywidget/custom_button_1.dart';
 import '../mywidget/search_field_appbar.dart';
 import '../networking/json/advert_list_json.dart';
 import '../networking/network.dart';
+import '../storage/AccountInfoStorage.dart';
 import 'drawer_view.dart';
 import 'home_view_controller.dart';
 import '../../mywidget/advert_card_grid.dart';
@@ -39,7 +41,7 @@ class HomeView extends GetWidget<HomeViewController> {
                         child: InkWell(
                           onTap: () => scaffoldKey.currentState.openDrawer(),
                           child: const Icon(
-                            Icons.menu_sharp,
+                            Icons.menu_rounded,
                             color: colorGrey,
                             size: 22,
                           ),
@@ -58,9 +60,10 @@ class HomeView extends GetWidget<HomeViewController> {
                       Expanded(
                         flex: 2,
                         child: InkWell(
-                          onTap: () {
-                            Get.toNamed(AppRouting.notifications);
-                          },
+                          onTap: () =>
+                              Get.find<AccountInfoStorage>().isLoggedIn()
+                                  ? Get.toNamed(AppRouting.notifications)
+                                  : Popup.showAccessDenied(context, 'Vous devez être connecté pour consulter vos notifications.'),
                           child: _buildNotifications(),
                         ),
                       ),
@@ -100,7 +103,8 @@ class HomeView extends GetWidget<HomeViewController> {
                 expandedHeight: 60,
                 title: Padding(
                   child: SearchFieldAppbar(
-                      onTaped: () => Get.toNamed(AppRouting.searchForm, parameters: {'source': 'home'}),
+                      onTaped: () => Get.toNamed(AppRouting.searchForm,
+                          parameters: {'source': 'home'}),
                       value: null,
                       hintText: 'Rechercher sur Le coin occasion'),
                   padding: const EdgeInsets.only(

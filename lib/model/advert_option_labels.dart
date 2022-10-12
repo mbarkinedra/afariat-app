@@ -13,6 +13,6 @@ class AdvertOptionLabels {
       'label': 'Nombre de pièces',
       'icon': Icons.grid_on_outlined
     },
-    'area': {'label': 'Superficie', 'icon':Icons.border_outer_sharp},
+    'area': {'label': 'Superficie', 'icon':Icons.border_outer_sharp, 'suffix': 'm²'},
   };
 }

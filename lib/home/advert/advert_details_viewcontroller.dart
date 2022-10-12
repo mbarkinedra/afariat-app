@@ -25,7 +25,8 @@ class AdvertDetailsViewController extends GetxController {
   }
 
   Future<AdvertDetailsJson> fetchAdvert() async {
-    loading.value = true;
+    //DUE to bug when simple affecting true, i reaffect the obs value
+    loading = true.obs;
     await _api.getAdvert(advertId).then((value) {
       advert = value;
     });
