@@ -13,14 +13,17 @@ import '../../config/Environment.dart';
 import '../../config/utility.dart';
 import '../../model/advert_option_labels.dart';
 import '../../mywidget/advert_card_grid.dart';
+import '../../mywidget/favorite_icon.dart';
 import '../../persistent_tab_manager.dart';
 import '../../storage/AccountInfoStorage.dart';
+import '../tap_profile/favorite/favorite_view_controller.dart';
 import 'advert_details_viewcontroller.dart';
 
 class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
   AdvertDetailsView({Key key}) : super(key: key);
   final numberFormat = NumberFormat("###,##0", Environment.locale);
   final _sendMsgFormKey = GlobalKey<FormState>();
+  FavoriteViewController favController = Get.find<FavoriteViewController>();
 
   @override
   Widget build(BuildContext context) {
@@ -52,26 +55,33 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      InkWell(
-                        onTap: () => _onShare(context),
-                        child: Icon(
-                          Icons.share,
-                          color: Colors.grey,
-                          size: 24.0,
-                          semanticLabel: 'Partager l\'annonce',
-                        ),
-                      ),
-                      Icon(
-                        Icons.favorite_outline_rounded,
-                        color: Colors.grey,
-                        size: 24.0,
-                        semanticLabel: 'Ajouter à mes favoris',
-                      ),
-                    ],
-                  ),
+                  Obx(() =>
+                  controller.loading.isTrue
+                      ? const SizedBox()
+                      : controller.advert != null ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            InkWell(
+                              onTap: () => _onShare(context),
+                              child: Icon(
+                                Icons.share,
+                                color: Colors.grey.shade800,
+                                size: 24.0,
+                                semanticLabel: 'Partager l\'annonce',
+                              ),
+                            ),
+                            AdvertFavoriteIcon(
+                              advertId: int.parse(controller.advertId),
+                              isLoggedIn:
+                                  Get.find<AccountInfoStorage>().isLoggedIn(),
+                              onAdd: () => favController.addAdvertToFavorites(
+                                  int.parse(controller.advertId)),
+                              onDelete: () =>
+                                  favController.removeAdvertFromFavorite(
+                                      int.parse(controller.advertId)),
+                            ),
+                          ],
+                        ) : const SizedBox(),)
                 ],
               ),
             ),

@@ -25,6 +25,7 @@ class AdvertDetailsViewController extends GetxController {
   }
 
   Future<AdvertDetailsJson> fetchAdvert() async {
+    loading.value = true;
     await _api.getAdvert(advertId).then((value) {
       advert = value;
     });
