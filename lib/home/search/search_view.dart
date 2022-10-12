@@ -44,12 +44,12 @@ class SearchView extends GetWidget<SearchViewController> {
               // Next, create a SliverList
               _buildGrid(context),
               SliverToBoxAdapter(
-                child: Obx(() => controller.isLoadingMore.value != false
+                child: Obx(() => controller.isLoadingMore.isTrue
                     ? const Center(child: CupertinoActivityIndicator())
                     : const SizedBox.shrink()),
               ),
               SliverToBoxAdapter(
-                child: Obx(() => controller.noMoreResults.value != false
+                child: Obx(() => controller.noMoreResults.isTrue
                     ? const Center(
                         child: Padding(
                         padding: EdgeInsets.only(top: 20, bottom: 10),

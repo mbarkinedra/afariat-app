@@ -10,7 +10,7 @@ import '../../networking/json/advert_minimal_json.dart';
 class SearchViewController
     extends AbstractPaginatedViewController<AdvertMinimalJson> {
   AdvertListJson advertListJson;
-  RxBool isGrid = false.obs;
+  RxBool isGrid = true.obs;
 
   @override
   void onInit() {

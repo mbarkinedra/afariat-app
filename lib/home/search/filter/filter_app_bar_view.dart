@@ -12,8 +12,8 @@ class FilterAppBarView extends GetWidget<FilterAppBarViewController> {
   @override
   Widget build(BuildContext context) {
     RxList _isSelected = <bool>[
-      true,
       false,
+      true,
     ].obs;
     return SliverAppBar(
       floating: true,

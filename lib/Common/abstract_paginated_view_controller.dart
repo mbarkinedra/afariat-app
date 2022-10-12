@@ -70,7 +70,7 @@ abstract class AbstractPaginatedViewController<T> extends GetxController {
       noMoreResults.value = true;
       return;
     } else {
-      onSwipeUp();
+      await onSwipeUp();
       isLoadingMore.value = false;
     }
   }
