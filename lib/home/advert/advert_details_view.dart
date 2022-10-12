@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import '../../config/Environment.dart';
@@ -32,9 +33,63 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
           color: framColor,
         ),
         backgroundColor: Colors.white,
-        title: const Text(
-          "Annonce détaillée",
-          style: TextStyle(color: colorText, fontSize: 20),
+        title: Row(
+          children: [
+            Expanded(
+              flex: 6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    "Annonce détaillée",
+                    style: TextStyle(color: colorText, fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        onTap: () => _onShare(context),
+                        child: Icon(
+                          Icons.share,
+                          color: Colors.grey,
+                          size: 24.0,
+                          semanticLabel: 'Partager l\'annonce',
+                        ),
+                      ),
+                      Icon(
+                        Icons.favorite_outline_rounded,
+                        color: Colors.grey,
+                        size: 24.0,
+                        semanticLabel: 'Ajouter à mes favoris',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(
+                    Icons.more_vert,
+                    color: Colors.grey,
+                    size: 24.0,
+                    semanticLabel: 'Ajouter à mes favoris',
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
         leading: IconButton(
             icon: const Icon(
@@ -156,7 +211,8 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
                           onPressed: () {
                             Get.defaultDialog(
                               title: 'Connexion requise',
-                              titleStyle: const TextStyle(color: Colors.black54),
+                              titleStyle:
+                                  const TextStyle(color: Colors.black54),
                               content: Padding(
                                 padding: EdgeInsets.only(top: 20, bottom: 40),
                                 child: DecoratedBox(
@@ -169,7 +225,8 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
                                       padding: EdgeInsets.all(8),
                                       child: Text(
                                         'Vous devez être connecté pour accéder aux informations de contact de l\'annonceur.',
-                                        style: TextStyle(color: Colors.grey.shade800),
+                                        style: TextStyle(
+                                            color: Colors.grey.shade800),
                                       ),
                                     ),
                                   ),
@@ -626,5 +683,18 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
         child: Text('Nothing'),
       );
     }
+  }
+
+  _onShare(BuildContext context) async {
+    final box = context.findRenderObject() as RenderBox;
+    String text =
+        'J\'ai trouvé une annonce qui devrait vous intéresser sur Lecoinoccasion : ' +
+            controller.advert.shortUrl;
+    await Share.share(
+      text,
+      subject: controller.advert.title,
+      sharePositionOrigin:
+          box != null ? box.localToGlobal(Offset.zero) & box.size : null,
+    );
   }
 }

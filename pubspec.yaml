@@ -64,6 +64,7 @@ dependencies:
   flutter_typeahead: ^3.2.4
   font_awesome_flutter: ^10.2.1
   cached_network_image: ^3.2.2
+  share_plus: ^5.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
