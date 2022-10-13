@@ -11,6 +11,7 @@ class CustomTextFiled extends StatelessWidget {
   final double padding;
   final int maxLines;
   final int maxLength;
+  final Widget suffixIcon;
 
   CustomTextFiled({
     @required this.textEditingController,
@@ -22,7 +23,7 @@ class CustomTextFiled extends StatelessWidget {
     this.validator,
     this.maxLines,
     this.maxLength,
-    this.obscureText = false,
+    this.obscureText = false, this.suffixIcon,
   });
 
   @override
@@ -40,6 +41,8 @@ class CustomTextFiled extends StatelessWidget {
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: hintText,
+            suffixIcon: suffixIcon,
+
           ),
           maxLength: maxLength,
         ),

@@ -85,121 +85,110 @@ class FilterView extends GetWidget<FilterViewController> {
               Navigator.of(context).pop();
             }),
       ),
-      body: GestureDetector(
-        onHorizontalDragEnd: (DragEndDetails details) {
-          if (details.primaryVelocity > 0) {
-            Get.back();
-          }
-        },
-        child: SafeArea(
-          child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      "Catégorie",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                    DecoratedBox(
-                      decoration: const BoxDecoration(
-                          border: Border(
-                        bottom: BorderSide(width: 0.5, color: colorGrey),
-                      )),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: buttonColor,
-                          padding: const EdgeInsets.only(
-                              top: 20, bottom: 20, right: 0, left: 0),
-                        ),
-                        onPressed: () {
-                          Get.toNamed('/filter/category');
-                        },
-                        child: Row(
-                          children: [
-                            Expanded(
-                                flex: 9,
-                                child: Obx(() => Text(
-                                      (Filter.category.value != null &&
-                                              Filter.category.value.id != null)
-                                          ? Filter.category.value.name
-                                          : ((Filter.categoryGroup.value !=
-                                                      null &&
-                                                  Filter.categoryGroup.value
-                                                          .id !=
-                                                      null)
-                                              ? Filter.categoryGroup.value.name
-                                              : 'Toutes les catégories'),
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.normal),
-                                    ))),
-                            const Expanded(
-                              flex: 1,
-                              child: Icon(
-                                Icons.arrow_forward_ios,
-                                color: colorGrey,
-                              ),
+      body: SafeArea(
+        child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    "Catégorie",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  DecoratedBox(
+                    decoration: const BoxDecoration(
+                        border: Border(
+                      bottom: BorderSide(width: 0.5, color: colorGrey),
+                    )),
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: buttonColor,
+                        padding: const EdgeInsets.only(
+                            top: 20, bottom: 20, right: 0, left: 0),
+                      ),
+                      onPressed: () {
+                        Get.toNamed('/filter/category');
+                      },
+                      child: Row(
+                        children: [
+                          Expanded(
+                              flex: 9,
+                              child: Obx(() => Text(
+                                    (Filter.category.value != null &&
+                                            Filter.category.value.id != null)
+                                        ? Filter.category.value.name
+                                        : ((Filter.categoryGroup.value !=
+                                                    null &&
+                                                Filter.categoryGroup.value.id !=
+                                                    null)
+                                            ? Filter.categoryGroup.value.name
+                                            : 'Toutes les catégories'),
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.normal),
+                                  ))),
+                          const Expanded(
+                            flex: 1,
+                            child: Icon(
+                              Icons.arrow_forward_ios,
+                              color: colorGrey,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    "Localisation",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: _buildLocalizationChips(context),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    "Prix",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: PriceRangeSlider(
+                        controller: controller.priceRangeSliderViewController,
+                        onChange: (SfRangeValues values) {
+                          Filter.minPrice.value = values.start.toInt();
+                          Filter.maxPrice.value = values.end.toInt();
+                          //print(Filter.maxPrice.value);
+                        }),
+                  ),
+                  ListTile(
+                    contentPadding: const EdgeInsets.all(8),
+                    title: const Text(
+                      'Uniquement avec photos',
+                      style: TextStyle(fontSize: 16),
                     ),
-                    const Text(
-                      "Localisation",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: _buildLocalizationChips(context),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      "Prix",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: PriceRangeSlider(
-                          controller: controller.priceRangeSliderViewController,
-                          onChange: (SfRangeValues values) {
-                            Filter.minPrice.value = values.start.toInt();
-                            Filter.maxPrice.value = values.end.toInt();
-                            //print(Filter.maxPrice.value);
-                          }),
-                    ),
-                    ListTile(
-                      contentPadding: const EdgeInsets.all(8),
-                      title: const Text(
-                        'Uniquement avec photos',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      trailing: Obx(
-                        () => CupertinoSwitch(
-                          value: Filter.onlyPhoto.value,
-                          activeColor: framColor,
-                          onChanged: (v) {
-                            Filter.onlyPhoto.value = v;
-                          },
-                        ),
+                    trailing: Obx(
+                      () => CupertinoSwitch(
+                        value: Filter.onlyPhoto.value,
+                        activeColor: framColor,
+                        onChanged: (v) {
+                          Filter.onlyPhoto.value = v;
+                        },
                       ),
                     ),
-                  ],
-                ),
-              )),
-        ),
+                  ),
+                ],
+              ),
+            )),
       ),
 
       bottomNavigationBar: Padding(

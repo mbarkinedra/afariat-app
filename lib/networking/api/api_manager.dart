@@ -43,12 +43,7 @@ abstract class ApiManager {
         //success
         break;
       case 400:
-        Get.snackbar(
-          'Erreur serveur 400',
-          'Veuillez mettre à jour l\'application',
-          /*colorText: Colors.white,
-          backgroundColor: Colors.red,*/
-        );
+        //do nothing as 400 error is used by forms
         break;
       case 401:
       case 403:
@@ -81,7 +76,7 @@ abstract class ApiManager {
     } else {
       switch (error.response.statusCode) {
         case 405:
-          message = 'Merci de contacter le service client. Code: 405';
+          message = 'Veuillez mettre à jour l\'application. Code: 405';
           break;
 
         case 500:
@@ -112,6 +107,9 @@ abstract class ApiManager {
         .get(
       url,
       queryParameters: filters,
+      options: Options(headers: defaultHeaders, validateStatus: (status) {
+        return status < 405;
+      }),
     )
         .then((value) {
       validateResponseStatusCode(value);
@@ -160,14 +158,29 @@ abstract class ApiManager {
   }
 
   /// POST DATA TO SERVER
-  Future<Response<dynamic>> postToUrl({String url, dataToPost}) async {
-    String wsse = Wsse.generateWsseFromStorage();
-    Options options = Options(headers: {
-      "Accept": "application/json",
-      'apikey': Environment.apikey,
-      'Content-Type': 'application/json',
-      'X-WSSE': wsse,
-    });
+  Future<Response<dynamic>> postToUrl({
+    String url,
+    Map<String, dynamic> dataToPost,
+    bool secure = false,
+  }) async {
+    Map<String, dynamic> headers = defaultHeaders;
+    if (secure) {
+      String wsse = Wsse.generateWsseFromStorage();
+      headers = {
+        ...defaultHeaders,
+        ...{'X-WSSE': wsse},
+      };
+    }
+    Options options = Options(
+        headers: headers,
+        validateStatus: (status) {
+          return status < 405;
+        });
+
+    if (kDebugMode) {
+      print('calling: $url');
+      print('data: ' + dataToPost.toString());
+    }
     return dioSingleton.dio
         .post(
       url,
@@ -179,6 +192,10 @@ abstract class ApiManager {
       return value;
     }).catchError((error, stackTrace) {
       processServerError(error);
+      if (kDebugMode) {
+        print(error);
+        throw error;
+      }
     });
   }
 

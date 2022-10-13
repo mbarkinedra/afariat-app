@@ -47,7 +47,7 @@ class FavoriteApi extends ResourceApi {
   /// Add Advert to user's favorite's list
   Future<Response<dynamic>> addAdvert(int id) async {
     String url = SettingsApp.favorite;
-    return postToUrl(url: url, dataToPost: {'id': id});
+    return postToUrl(url: url, dataToPost: {'id': id}, secure: true);
   }
 
   @override

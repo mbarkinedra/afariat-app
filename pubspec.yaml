@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 #Note (SKONSOFT): The version code (eg: +15) should be always higher than the previous version.
-version: 2.0.0+20
+version: 2.0.0+21
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -65,6 +65,7 @@ dependencies:
   font_awesome_flutter: ^10.2.1
   cached_network_image: ^3.2.2
   share_plus: ^5.0.0
+  open_mail_app: ^0.4.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

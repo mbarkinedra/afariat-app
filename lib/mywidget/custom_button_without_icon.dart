@@ -23,16 +23,26 @@ class CustomButtonWithoutIcon extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Container(
           child: Center(
-            child: Text(
-              label,
-              style: TextStyle(
-                  color: labColor, fontSize: fontSize, fontWeight: fontWeight),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, color: iconColor),
+                const SizedBox(width: 10),
+                Text(
+                  label,
+                  style: TextStyle(
+                      color: labColor,
+                      fontSize: fontSize,
+                      fontWeight: fontWeight),
+                ),
+              ],
             ),
           ),
           width: width,
           height: height,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.0),border: Border.all(color: framColor, width: 2),
+            borderRadius: BorderRadius.circular(15.0),
+            border: Border.all(color: framColor, width: 2),
             color: btColor,
             boxShadow: [
               BoxShadow(
