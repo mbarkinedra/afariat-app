@@ -26,8 +26,8 @@ class AccountInfoStorage extends GetxController {
     _secureStorage.writeSecureData(_keyEmail, email);
   }
 
-  saveHashedPassword(String hashedPassword) {
-    _secureStorage.writeSecureData(_keyHashedPassword, hashedPassword);
+  saveHashedPassword(String hashedPassword) async {
+    await _secureStorage.writeSecureData(_keyHashedPassword, hashedPassword);
   }
 
   savePassword(String password) {

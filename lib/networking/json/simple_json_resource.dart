@@ -1,14 +1,15 @@
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 
-class ErrorJsonResource extends AbstractJsonResource {
+/// this Class is used to describe simple json responses that have code and message in body.
+class SimpleJsonResource extends AbstractJsonResource {
   int code;
   String message;
 
-  ErrorJsonResource({this.code, this.message});
+  SimpleJsonResource({this.code, this.message});
 
-  ErrorJsonResource.fromJson(Map<String, dynamic> json) {
+  SimpleJsonResource.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    message = json['message'];
+    message = json['message'].toString();
   }
 
   Map<String, dynamic> toJson() {

@@ -18,8 +18,8 @@ class SecureStorage extends GetxController {
     await box.remove(key);
   }
 
-  writeSecureData(String key, String value) {
-    var writeData = box.write(key, value);
+  writeSecureData(String key, String value) async {
+    var writeData = await box.write(key, value);
     return writeData;
   }
 

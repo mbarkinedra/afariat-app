@@ -36,8 +36,8 @@ class ChatUser extends StatelessWidget {
                 ListTile(
                   title: Text(
                     conversation.to.username == email
-                        ? conversation.from.username
-                        : conversation.to.username,
+                        ? conversation.from.name
+                        : conversation.to.name,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(

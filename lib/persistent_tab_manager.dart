@@ -43,6 +43,7 @@ class PersistentTabManager {
 
   static List<Widget> buildScreens() {
     bool isLoggedIn = Get.find<AccountInfoStorage>().isLoggedIn();
+    print('is loggedIn: '+isLoggedIn.toString());
     return [
       HomeView(),
       isLoggedIn ? MyAdsView() : SignInScr(),
@@ -53,7 +54,7 @@ class PersistentTabManager {
   }
 
   /// a custom fucntion to remove evrything and go to home
-  static gotToHome(BuildContext context) {
+  static goToHome(BuildContext context) {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(

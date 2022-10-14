@@ -12,6 +12,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../config/Environment.dart';
 import '../../storage/AccountInfoStorage.dart';
 import '../../validator/validate_server.dart';
+import '../json/simple_json_resource.dart';
 
 abstract class ApiManager {
   final DioSingleton dioSingleton = DioSingleton();
@@ -58,12 +59,27 @@ abstract class ApiManager {
         );
         break;
       case 404:
-        Get.snackbar(
-          'Erreur',
-          'Not found',
-          colorText: Colors.white,
-          backgroundColor: Colors.red,
-        );
+        if (kDebugMode) {
+          print('Erreur 404: ' +
+              response.requestOptions.method +
+              ' ' +
+              response.realUri.toString());
+          print('request Body of 404: ' + response.requestOptions.data);
+          print(response.data);
+        }
+        //check the business error. if 404, than it's a business error, let the controller do the trick, else, it's a server error. so notify user.
+        if (response.data != null) {
+          SimpleJsonResource error = SimpleJsonResource.fromJson(response.data);
+          if (error.code != 404) {
+            //it's a 404 server error not business.
+            Get.snackbar(
+              'Erreur',
+              'Veuillez mettre à joru votre application. Si le problème persiste, veuillez nous contacter avec le code 404',
+              colorText: Colors.white,
+              backgroundColor: Colors.red,
+            );
+          }
+        }
         break;
     }
     return response.statusCode;
@@ -107,9 +123,11 @@ abstract class ApiManager {
         .get(
       url,
       queryParameters: filters,
-      options: Options(headers: defaultHeaders, validateStatus: (status) {
-        return status < 405;
-      }),
+      options: Options(
+          headers: defaultHeaders,
+          validateStatus: (status) {
+            return status < 405;
+          }),
     )
         .then((value) {
       validateResponseStatusCode(value);

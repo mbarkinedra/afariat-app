@@ -9,8 +9,9 @@ class ValidatorSignIn {
 
   String validateEmail(String value) {
     if (!validationType) {
+      if (value.isEmpty) return "Veuillez saisir votre adresse email.";
       if (!GetUtils.isEmail(value)) {
-        return "Veuillez saisir votre email";
+        return "Veuillez saisir une adresse email valide";
       }
     } else {
       return validatorServer.validate(value, 'email');
@@ -20,9 +21,9 @@ class ValidatorSignIn {
 
   String validatePassword(String value) {
     if (!validationType) {
-      if (value.isEmpty || value.length < 5) {
-        return "Veuillez saisir  votre mot de passe";
-      }
+      if (value.isEmpty) return "Veuillez saisir  votre mot de passe";
+      if (value.length < 6)
+        return "Le mot de passe doit faire au min 6 caractères";
     } else {
       return validatorServer.validate(value, "password");
     }

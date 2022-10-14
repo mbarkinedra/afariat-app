@@ -7,19 +7,21 @@ import 'package:afariat/validator/validator_signIn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../config/app_routing.dart';
 import '../home/main_view_controller.dart';
-import '../networking/json/error_json_resource.dart';
+import '../networking/json/simple_json_resource.dart';
 import '../persistent_tab_manager.dart';
 
 class SignInViewController extends GetxController {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  GetSaltApi _getSalt = GetSaltApi();
-  SignInApi _signInApi = SignInApi();
+  final UserAPi _userApi = UserAPi();
   bool isVisiblePassword = true;
-  GlobalKey<FormState> signInFormKey = GlobalKey<FormState>();
-  bool buttonLogin = false;
+  GlobalKey<FormState> signInFormKey;
+  RxBool isLoading = false.obs;
   ValidatorSignIn validator = ValidatorSignIn();
+
+  RxString error = ''.obs;
 
   void showHidePassword() {
     isVisiblePassword = !isVisiblePassword;
@@ -27,57 +29,22 @@ class SignInViewController extends GetxController {
   }
 
   login() async {
-    //GET the user
-    buttonLogin = true;
-    update();
-    await _getSalt.post({"login": "${email.text}"}).then((value) {
-      if (value == null) {
-        //a 500 error perhaps. No need to continue validating the server response
-        return;
+    error.value = '';
+    isLoading.value = true;
+    try {
+      SimpleJsonResource jsonResource =
+          await _userApi.login(email.text, password.text);
+      isLoading.value = false;
+      if (jsonResource != null) {
+        if (jsonResource.code == 200) {
+          Get.toNamed(AppRouting.loginSuccess);
+        } else {
+          error.value = jsonResource.message;
+        }
       }
-      validator.validatorServer.validateServer(
-          success: () {
-            //Try to login user
-            String hashedPassword =
-                Wsse.hashPassword(password.text, value.data["salt"]);
-
-            _signInApi.login(email.text, hashedPassword).then((value) {
-              validator.validatorServer.validateServer(
-                  value: value,
-                  success: () async {
-                    //save user info to local storage
-                    Get.find<AccountInfoStorage>().saveEmail(email.text);
-                    Get.find<AccountInfoStorage>()
-                        .saveHashedPassword(hashedPassword);
-                    Get.find<AccountInfoStorage>()
-                        .saveUserId(value.data["user_id"].toString());
-
-                    //await Get.find<FavoriteViewController>().getFavorite();
-
-                    PersistentTabManager.changePage(0);
-                    PersistentTabManager.updateScreens();
-                    Get.find<AccountViewController>().getUserData();
-                    Get.find<NotificationViewController>().getAllNotification();
-                    email.clear();
-                    password.clear();
-                  },
-                  authFailure: () {
-                    ErrorJsonResource response =
-                    ErrorJsonResource.fromJson(value.data);
-                    Get.snackbar("Erreur", response.message);
-                  });
-            }).catchError((e) {
-              Get.snackbar("Erreur", "Votre password est incorrect");
-            });
-          },
-          value: value,
-          notFound: () {
-            Get.snackbar("Erreur", "Utilisateur introuvable");
-          });
-    }).catchError((e) {
-      Get.snackbar("Erreur", "Oups ! une erreur s'est produite.");
-    });
-    buttonLogin = false;
-    update();
+    } catch (e) {
+      isLoading.value = false;
+      throw e;
+    }
   }
 }

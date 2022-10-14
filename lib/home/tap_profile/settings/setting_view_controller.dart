@@ -21,7 +21,6 @@ class SettingViewController extends GetxController {
   bool tham = false;
   ChangePasswordApi changePasswordApi = ChangePasswordApi();
   ValidatorPassword validator = ValidatorPassword();
-  final GetSaltApi _getSalt = GetSaltApi();
   AccountInfoStorage accountInfoStorage = AccountInfoStorage();
   final UserApi _userApi = UserApi();
   ParameterBag userData = ParameterBag();
@@ -55,7 +54,7 @@ class SettingViewController extends GetxController {
       validator.validatorServer.validateServer(
           value: value,
           success: () {
-            _getSalt.post({"login": "${accountInfoStorage.readEmail()}"}).then(
+            _userApi.post({"login": "${accountInfoStorage.readEmail()}"}).then(
                 (value) {
               String hashedPassword =
                   Wsse.hashPassword(newPassword.text, value.data["salt"]);

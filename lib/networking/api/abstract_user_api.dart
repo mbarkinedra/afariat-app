@@ -3,36 +3,48 @@ import 'dart:convert';
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/api/api_manager.dart';
 import 'package:afariat/networking/json/user_json.dart';
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as DIO;
+import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 
-import '../../config/Environment.dart';
 import '../../model/device_info_model.dart';
+import '../../model/filter.dart';
+import '../../storage/AccountInfoStorage.dart';
 import '../../utils/utils.dart';
+import '../json/simple_json_resource.dart';
 import '../security/wsse.dart';
 
-abstract class AbstractUserAPi extends ApiManager {
+class UserAPi extends ApiManager {
   @override
   fromJson(data) {
     return UserJson.fromJson(data);
   }
-}
 
-class SignInApi extends AbstractUserAPi {
-  @override
-  String apiUrl() {
-    return SettingsApp.loginUrl;
+  ///Get the user salt
+  Future<DIO.Response<dynamic>> getSalt(String username) async {
+    ParameterBag dataToPost = ParameterBag();
+    dataToPost.set('login', username);
+    return await postToUrl(
+        url: SettingsApp.getSaltUrl, dataToPost: dataToPost.data);
   }
 
-  Future login(String username, String hashedPassword) async {
+  Future<SimpleJsonResource> login(String username, String password) async {
+    DIO.Response response = await getSalt(username);
+
+    SimpleJsonResource json = SimpleJsonResource.fromJson(response.data);
+    if (json.code != 200) {
+      //User not found
+      return json;
+    }
+    String hashedPassword = Wsse.hashPassword(password, json.message);
     String wsse = Wsse.generateWsseHeader(username, hashedPassword);
     DeviceInfoModel info = await DeviceInfo.commonInfo();
     String jsonInfo = info.toJson();
     String base64Info = base64.encode(utf8.encode(jsonInfo));
-
-    return dioSingleton.dio
+    return await dioSingleton.dio
         .get(
-      apiUrl(),
-      options: Options(
+      SettingsApp.loginUrl,
+      options: DIO.Options(
           headers: {
             ...defaultHeaders,
             ...{'X-WSSE': wsse},
@@ -43,20 +55,40 @@ class SignInApi extends AbstractUserAPi {
             return status < 405;
           }),
     )
-        .then((value) {
-      return value;
+        .then((value) async {
+      validateResponseStatusCode(value);
+      SimpleJsonResource jsonLogin = SimpleJsonResource.fromJson(value.data);
+      await _saveUserInfo(username, hashedPassword, jsonLogin.message);
+      return jsonLogin;
     }).catchError((error, stackTrace) {
       processServerError(error);
+      if (kDebugMode) {
+        print(error);
+        print(stackTrace);
+      }
     });
+  }
+
+  _saveUserInfo(String email, String hashedPassword, String userId) async {
+    AccountInfoStorage infoStorage = Get.find<AccountInfoStorage>();
+    infoStorage.saveEmail(email);
+    await infoStorage.saveHashedPassword(hashedPassword);
+    infoStorage.saveUserId(userId.toString());
   }
 
   @override
   String baseApiUrl() {
-    return SettingsApp.loginUrl;
+    return SettingsApp.userUrl;
+  }
+
+  @override
+  @deprecated
+  String apiUrl() {
+    return baseApiUrl();
   }
 }
 
-class LogoutApi extends AbstractUserAPi {
+class LogoutApi extends UserAPi {
   @override
   String apiUrl() {
     return SettingsApp.logoutUrl;
@@ -71,7 +103,7 @@ class LogoutApi extends AbstractUserAPi {
     return dioSingleton.dio
         .get(
       apiUrl(),
-      options: Options(
+      options: DIO.Options(
           headers: {
             ...defaultHeaders,
             ...{'X-WSSE': wsse},
@@ -95,7 +127,7 @@ class LogoutApi extends AbstractUserAPi {
   }
 }
 
-class SignUpApi extends AbstractUserAPi {
+class SignUpApi extends UserAPi {
   @override
   String apiUrl() {
     return SettingsApp.registerUrl;
@@ -107,14 +139,23 @@ class SignUpApi extends AbstractUserAPi {
   }
 }
 
-class GetSaltApi extends AbstractUserAPi {
+/*
+class SaltApi extends UserAPi {
   @override
+  @deprecated
   String apiUrl() {
-    return SettingsApp.getSaltUrl;
+    return baseApiUrl();
   }
 
   @override
   String baseApiUrl() {
     return SettingsApp.getSaltUrl;
   }
-}
+
+  Future<Response<dynamic>> getSalt(String username) async {
+    ParameterBag dataToPost = ParameterBag();
+    dataToPost.set('login', username);
+    return await postToUrl(url: baseApiUrl(), dataToPost: dataToPost.data);
+  }
+
+}*/

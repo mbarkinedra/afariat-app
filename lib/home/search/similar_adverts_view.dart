@@ -66,7 +66,8 @@ class SimilarAdvertsView extends GetWidget<SimilarAdvertsViewController> {
                               SizedBox(
                                 height: controller.imgHeight.value,
                                 width: controller.imgWidth.value,
-                                child: Card(
+                                child:
+                                Card(
                                   elevation: 20,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(1000),

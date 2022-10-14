@@ -32,12 +32,13 @@ import '../home/search/components/search_app_bar_viewcontroller.dart';
 import '../home/tap_profile/favorite/favorite_view_controller.dart';
 import '../remote_widget/city_dropdown_viewcontroller.dart';
 import '../remote_widget/price_range_slider_viewcontroller.dart';
+import '../sign_in/login_success_view_controller.dart';
 
 class AllBindings extends Bindings {
   @override
   void dependencies() async {
     Get.lazyPut(() => SecureStorage());
-    Get.put( AccountInfoStorage());
+    Get.put(AccountInfoStorage());
 
     Get.lazyPut(() => AccountViewController());
     Get.lazyPut(() => MainViewController(), fenix: true);
@@ -60,6 +61,7 @@ class AllBindings extends Bindings {
     Get.put(LocController());
     Get.lazyPut(() => SignUpViewController());
     Get.lazyPut(() => SignInViewController());
+    Get.lazyPut(() => LoginSuccessViewController(), fenix: true);
     Get.lazyPut(() => MyAdsViewController(), fenix: true);
     Get.lazyPut(() => TapProfileViewController());
     Get.lazyPut(() => AdvertDetailsViewController());

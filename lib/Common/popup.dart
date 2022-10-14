@@ -31,7 +31,7 @@ class Popup {
       confirmTextColor: Colors.white,
       onConfirm: () {
         Get.back(closeOverlays: true);
-        PersistentTabManager.gotToHome(context);
+        PersistentTabManager.goToHome(context);
         PersistentTabManager.changePage(4);
       },
     );
