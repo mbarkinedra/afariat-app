@@ -43,7 +43,6 @@ class PersistentTabManager {
 
   static List<Widget> buildScreens() {
     bool isLoggedIn = Get.find<AccountInfoStorage>().isLoggedIn();
-    print('is loggedIn: '+isLoggedIn.toString());
     return [
       HomeView(),
       isLoggedIn ? MyAdsView() : SignInScr(),

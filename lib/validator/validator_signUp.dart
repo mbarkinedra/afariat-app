@@ -2,18 +2,32 @@ import 'package:afariat/validator/validate_server.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'form_validator.dart';
+
 class ValidatorSignUp {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   bool validationType = false;
-  ServerValidator validatorServer = ServerValidator();
+  FormValidator formValidator = FormValidator();
 
-  String validateName(String value) {
+  String validateFirstName(String value) {
+    if (!validationType) {
+      if (value.isEmpty) {
+        return "Veuillez saisir votre prénom ou le nom de votre société";
+      }
+    } else {
+      formValidator.validate(value, 'firstName');
+    }
+
+    return null;
+  }
+  
+  String validateLastName(String value) {
     if (!validationType) {
       if (value.isEmpty) {
         return "Veuillez saisir votre nom";
       }
     } else {
-      validatorServer.validate(value, 'name');
+      formValidator.validate(value, 'lastName');
     }
 
     return null;
@@ -26,7 +40,7 @@ class ValidatorSignUp {
       }
     } else {
       //server
-      return validatorServer.validate(value, 'phone');
+      return formValidator.validate(value, 'phone');
     }
     return null;
   }
@@ -39,7 +53,7 @@ class ValidatorSignUp {
       }
     } else {
       //server
-      return validatorServer.validate(value, 'email');
+      return formValidator.validate(value, 'email');
     }
     return null;
   }

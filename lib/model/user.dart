@@ -1,5 +1,6 @@
 class User {
-  String name;
+  String firstName;
+  String lastName;
   int city;
   int type;
   String phone;
@@ -8,7 +9,8 @@ class User {
   String second;
 
   User(
-      {this.name,
+      {this.firstName,
+      this.lastName,
       this.city,
       this.type,
       this.phone,
@@ -19,7 +21,8 @@ class User {
   Map<String, dynamic> toJson() => {
         "email": email,
         "plainPassword": {'first': first, 'second': second},
-        "name": name,
+        "firstName": firstName,
+        "lastName": firstName,
         "type": type,
         "phone": phone,
         "city": city,

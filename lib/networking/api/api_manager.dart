@@ -44,19 +44,27 @@ abstract class ApiManager {
         //success
         break;
       case 400:
-        //do nothing as 400 error is used by forms
+        Get.snackbar(
+          'Important',
+          'Une erreur majeur s\'est produite . Veuillez mettre à jour l\'application. Si le problème persiste, veuillez contacter notre service client.',
+          colorText: Colors.white,
+          backgroundColor: Colors.red,
+        );
         break;
       case 401:
       case 403:
         //problem happens with auth: bad app key for 403 or 401 for bad credentials
         //Force the logout the user to be sure that he will login with the right credentials
-        Get.find<AccountInfoStorage>().logout();
-        Get.snackbar(
-          'Important',
-          'Vous êtes déconnecté. Veuillez vous connecter de nouveau.',
-          colorText: Colors.white,
-          backgroundColor: Colors.red,
-        );
+        if (Get.find<AccountInfoStorage>().isLoggedIn()) {
+          Get.find<AccountInfoStorage>().logout();
+
+          Get.snackbar(
+            'Important',
+            'Vous êtes déconnecté. Veuillez vous connecter de nouveau.',
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+          );
+        }
         break;
       case 404:
         if (kDebugMode) {

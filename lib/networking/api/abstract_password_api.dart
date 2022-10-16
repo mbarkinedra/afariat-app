@@ -4,6 +4,7 @@ import 'package:afariat/networking/json/forgot_password_json.dart';
 import 'package:dio/dio.dart';
 
 import '../../model/filter.dart';
+import '../json/post_json_response.dart';
 
 abstract class AbstractPasswordApi extends ApiManager {
   @override
@@ -37,9 +38,11 @@ class ForgotPasswordApi extends AbstractPasswordApi {
     return SettingsApp.resetPasswordUrl;
   }
 
-  Future<Response<dynamic>> requestResetPassword(String email) async {
+  Future<PostJsonResponse> requestResetPassword(String email) async {
     ParameterBag dataToPost = ParameterBag();
     dataToPost.set('username', email);
-    return await postToUrl(url: baseApiUrl(), dataToPost: dataToPost.data);
+    Response<dynamic> response =
+        await postToUrl(url: baseApiUrl(), dataToPost: dataToPost.data);
+    return PostJsonResponse.fromJson(response.data);
   }
 }

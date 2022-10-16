@@ -33,6 +33,7 @@ import '../home/tap_profile/favorite/favorite_view_controller.dart';
 import '../remote_widget/city_dropdown_viewcontroller.dart';
 import '../remote_widget/price_range_slider_viewcontroller.dart';
 import '../sign_in/login_success_view_controller.dart';
+import '../sign_up/signup_success_view_controller.dart';
 
 class AllBindings extends Bindings {
   @override
@@ -60,6 +61,7 @@ class AllBindings extends Bindings {
     Get.put(CategoryAndSubcategory());
     Get.put(LocController());
     Get.lazyPut(() => SignUpViewController());
+    Get.lazyPut(() => SignupSuccessViewController());
     Get.lazyPut(() => SignInViewController());
     Get.lazyPut(() => LoginSuccessViewController(), fenix: true);
     Get.lazyPut(() => MyAdsViewController(), fenix: true);

@@ -13,8 +13,8 @@ import '../networking/json/simple_json_resource.dart';
 import '../persistent_tab_manager.dart';
 
 class SignInViewController extends GetxController {
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   final UserAPi _userApi = UserAPi();
   bool isVisiblePassword = true;
   GlobalKey<FormState> signInFormKey;
@@ -33,7 +33,7 @@ class SignInViewController extends GetxController {
     isLoading.value = true;
     try {
       SimpleJsonResource jsonResource =
-          await _userApi.login(email.text, password.text);
+          await _userApi.login(emailController.text, passwordController.text);
       isLoading.value = false;
       if (jsonResource != null) {
         if (jsonResource.code == 200) {

@@ -19,6 +19,8 @@ import '../home/tap_publish/tap_publish_scr.dart';
 import '../settings/notification_settings_view.dart';
 import '../settings/settings_view.dart';
 import '../sign_in/login_success_view.dart';
+import '../sign_up/sign_up_scr.dart';
+import '../sign_up/sign_up_succes_view.dart';
 
 class AppRouting {
   static String main = '/';
@@ -40,6 +42,7 @@ class AppRouting {
   static String login = '/login';
   static String loginSuccess = '/login/success';
   static String signUp = '/sign-up';
+  static String signUpSuccess = '/sign-up/success';
   static String passwordForgot = '/password-forgot';
 
   static String settings = '/settings';
@@ -84,7 +87,9 @@ class AppRouting {
         name: preferences,
         page: () => NotificationSettingsView(),
         binding: AllBindings()),
-    GetPage(name: loginSuccess, page: () => LoginSuccessView(), binding: AllBindings()),
+    GetPage(name: loginSuccess, page: () => const LoginSuccessView(), binding: AllBindings()),
+    GetPage(name: signUp, page: () => SignUpScr(), binding: AllBindings()),
+    GetPage(name: signUpSuccess, page: () => SignupSuccessView(), binding: AllBindings()),
   ];
 
   static GetPage getPageByName(String name) {

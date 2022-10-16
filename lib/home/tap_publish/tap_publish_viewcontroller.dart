@@ -323,7 +323,7 @@ class TapPublishViewController extends GetxController {
   updateEnergie(newValue) {
     energie = newValue;
     myAds["energy"] = newValue.id;
-    myAdsView["energie:"] = newValue.name;
+    myAdsView["energie:"] = newValue.firstName;
 
     //set filter if we are in context filter
     if (isFilterContext == true) {
@@ -336,7 +336,7 @@ class TapPublishViewController extends GetxController {
   updateNombrePieces(newValue) {
     nombrePiece = newValue;
     myAds["roomsNumber"] = newValue.id;
-    myAdsView["Nombre de pièces"] = newValue.name;
+    myAdsView["Nombre de pièces"] = newValue.firstName;
 
     //set filter if we are in context filter
     if (isFilterContext == true) {

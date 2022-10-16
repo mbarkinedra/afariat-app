@@ -4,10 +4,13 @@ import 'package:afariat/validator/validate_server.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../networking/json/post_json_response.dart';
+import '../../validator/form_validator.dart';
+
 class ForgotPasswordViewController extends GetxController {
   TextEditingController usernameController = TextEditingController();
   final ForgotPasswordApi _api = ForgotPasswordApi();
-  ServerValidator validateServer = ServerValidator();
+  final FormValidator _formValidator = FormValidator();
 
   RxBool isSending = false.obs;
 
@@ -18,32 +21,38 @@ class ForgotPasswordViewController extends GetxController {
   }
 
   RxBool success = false.obs;
+  RxString error = ''.obs;
 
   forgotPassword() async {
-    if (usernameController.text.isEmpty) {
-      Get.snackbar("Erreur", 'Veuillez saisir votre adresse email');
+    String username = usernameController.text.trim();
+    error.value = '';
+    if (username.isEmpty) {
+      error.value = 'Veuillez saisir votre adresse email';
       return;
     }
+
     isSending.value = true;
-    await _api.requestResetPassword(usernameController.text).then((value) {
-      if (value == null) {
-        //a 500 error perhaps. No need to continue validating the server response
-        isSending.value = false;
-        return;
+
+    PostJsonResponse jsonResponse =
+        await _api.requestResetPassword(username);
+    print(jsonResponse.toJson());
+    if (jsonResponse == null) {
+      //probably it's a 500 error. TODO: FIX this in api_manager
+      return;
+    }
+
+    _formValidator.validateServer(
+      postJsonResponse: jsonResponse,
+      success: () {
+        success.value = true;
+      },
+      failure: () {
+        error.value = jsonResponse.message;
+      },
+      authFailure: (){
+        error.value = jsonResponse.message;
       }
-      validateServer.validateServer(
-        success: () {
-          success.value = true;
-        },
-        failure: () {
-          Get.snackbar("Message", value.data["message"]);
-        },
-        value: value,
-      );
-    }).catchError((error) {
-      print(error);
-      throw error;
-    });
+    );
 
     isSending.value = false;
   }

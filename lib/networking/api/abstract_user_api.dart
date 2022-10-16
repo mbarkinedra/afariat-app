@@ -9,8 +9,10 @@ import 'package:get/get.dart';
 
 import '../../model/device_info_model.dart';
 import '../../model/filter.dart';
+import '../../model/user.dart';
 import '../../storage/AccountInfoStorage.dart';
 import '../../utils/utils.dart';
+import '../json/post_json_response.dart';
 import '../json/simple_json_resource.dart';
 import '../security/wsse.dart';
 
@@ -30,7 +32,6 @@ class UserAPi extends ApiManager {
 
   Future<SimpleJsonResource> login(String username, String password) async {
     DIO.Response response = await getSalt(username);
-
     SimpleJsonResource json = SimpleJsonResource.fromJson(response.data);
     if (json.code != 200) {
       //User not found
@@ -58,7 +59,9 @@ class UserAPi extends ApiManager {
         .then((value) async {
       validateResponseStatusCode(value);
       SimpleJsonResource jsonLogin = SimpleJsonResource.fromJson(value.data);
-      await _saveUserInfo(username, hashedPassword, jsonLogin.message);
+      if(jsonLogin.code == 200) {
+        await _saveUserInfo(username, hashedPassword, jsonLogin.message);
+      }
       return jsonLogin;
     }).catchError((error, stackTrace) {
       processServerError(error);
@@ -67,6 +70,12 @@ class UserAPi extends ApiManager {
         print(stackTrace);
       }
     });
+  }
+
+  Future<PostJsonResponse> register(User user) async {
+    DIO.Response<dynamic> response =
+        await postToUrl(url: baseApiUrl(), dataToPost: user.toJson());
+    return PostJsonResponse.fromJson(response.data);
   }
 
   _saveUserInfo(String email, String hashedPassword, String userId) async {

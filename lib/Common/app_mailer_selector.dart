@@ -37,12 +37,12 @@ class AppMailerSelector {
           content: DecoratedBox(
             decoration: BoxDecoration(color: Colors.grey.shade100),
             child: SizedBox(
-              height: 200,
+              height: 230,
               width: 250,
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  "Aucune application email n'est installée. \n\n" +
+                  "Nous n'avons détecter aucune application Email installée sur votre équippement. \n\n" +
                       "Veuillez installer une application email: Gmail, Outlook, Yahoo,...etc.\n\n" +
                       " Vous pouvez aussi utiliser votre navigateur pour accéder à votre boite email.",
                   style: TextStyle(color: Colors.grey.shade900),

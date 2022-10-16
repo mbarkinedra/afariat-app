@@ -29,28 +29,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var appConfig = AppConfig.of(context);
     return GestureDetector(
-        onTap: () {
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
-        child: GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          initialBinding: AllBindings(),
-          theme: ThemeData(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialBinding: AllBindings(),
+        theme: ThemeData(
             primaryColor: Colors.deepOrange,
             primarySwatch: Colors.deepOrange,
-          ),
-          home: AnimatedSplashScreen(
-              duration: 3000,
-              splashIconSize: 130,
-              splash: Image.asset(
-                  "assets/images/" + appConfig.appName + "/splash.png"),
-              nextScreen: const MainView(),
-              splashTransition: SplashTransition.slideTransition,
-              backgroundColor: framColor,
-          ),
-          getPages: AppRouting.pages,
-          //routes: AppRouting.routes,
+            errorColor: Colors.redAccent),
+        home: AnimatedSplashScreen(
+          duration: 3000,
+          splashIconSize: 130,
+          splash:
+              Image.asset("assets/images/" + appConfig.appName + "/splash.png"),
+          nextScreen: const MainView(),
+          splashTransition: SplashTransition.slideTransition,
+          backgroundColor: framColor,
         ),
+        getPages: AppRouting.pages,
+        //routes: AppRouting.routes,
+      ),
     );
   }
 }

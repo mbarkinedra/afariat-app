@@ -2,12 +2,11 @@ import 'package:afariat/config/utility.dart';
 import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:afariat/mywidget/log_in_item.dart';
 import 'package:afariat/sign_in/sign_in_viewcontroller.dart';
-import 'package:afariat/sign_up/sign_up_scr.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../config/app_config.dart';
+import '../config/app_routing.dart';
 import '../networking/json/simple_json_resource.dart';
-import '../persistent_tab_manager.dart';
 import 'forgotPassword/forgot_Password_scr.dart';
 
 class SignInScr extends GetWidget<SignInViewController> {
@@ -107,11 +106,18 @@ class SignInScr extends GetWidget<SignInViewController> {
                             label: "Email",
                             hint: "Votre e-mail",
                             icon: Icons.email,
-                            textEditingController: controller.email,
+                            textEditingController: controller.emailController,
                             validator: controller.validator.validateEmail,
                             onChanged: (text) {
                               controller.error.value = '';
                             },
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.clear_outlined),
+                              onPressed: () {
+                                controller.emailController.clear();
+                              },
+                            ),
+                            clearText: true,
                           ),
                         ),
                         SizedBox(
@@ -126,7 +132,7 @@ class SignInScr extends GetWidget<SignInViewController> {
                               icon: Icons.lock_outline,
                               //Ajouter
                               obscureText: logic.isVisiblePassword,
-                              textEditingController: controller.password,
+                              textEditingController: controller.passwordController,
                               validator: controller.validator.validatePassword,
                               suffixIcon: IconButton(
                                 onPressed: controller.showHidePassword,
@@ -177,11 +183,7 @@ class SignInScr extends GetWidget<SignInViewController> {
                         Center(
                           child: InkWell(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignUpScr()),
-                              );
+                              Get.toNamed(AppRouting.signUp);
                             },
                             child: RichText(
                               text: TextSpan(
