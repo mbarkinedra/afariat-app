@@ -2,10 +2,11 @@ import 'package:afariat/validator/validate_server.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'form_validator.dart';
+
 class ValidatorPassword {
-  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   bool validationType = false;
-  ServerValidator validatorServer = ServerValidator();
+  FormValidator formValidator = FormValidator();
 
   String validateCurrentPassword(String value) {
     if (!validationType) {
@@ -13,7 +14,7 @@ class ValidatorPassword {
         return "Veuillez saisir votre mot de passe actuel";
       }
     } else {
-      validatorServer.validate(value, 'currentPassword');
+      return formValidator.validate(value, 'currentPassword');
     }
 
     return null;
@@ -21,12 +22,15 @@ class ValidatorPassword {
 
   String validatePlainPassword(String value) {
     if (!validationType) {
-      if (value.isEmpty || value.length < 8) {
+      if (value.isEmpty) {
         return "Veuillez saisir le nouveau mot de passe";
+      }
+      if (value.length < 6) {
+        return "Le nouveau mot de passe doit faire au min 6 lettres";
       }
     } else {
       //server
-      return validatorServer.validate(value, 'plainPassword');
+      return formValidator.validate(value, 'plainPassword');
     }
     return null;
   }

@@ -41,7 +41,7 @@ class FormValidator {
       case 401:
       case 403:
         //Force the logout the user to be sure that he will login with the right credentials
-        if(Get.find<AccountInfoStorage>().isLoggedIn()) {
+        if (Get.find<AccountInfoStorage>().isLoggedIn()) {
           Get.find<AccountInfoStorage>().logout();
         }
         authFailure();

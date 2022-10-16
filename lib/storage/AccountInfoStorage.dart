@@ -30,9 +30,6 @@ class AccountInfoStorage extends GetxController {
     await _secureStorage.writeSecureData(_keyHashedPassword, hashedPassword);
   }
 
-  savePassword(String password) {
-    _secureStorage.writeSecureData(_keyPassword, password);
-  }
 
   saveUserId(String userId) {
     _secureStorage.writeSecureData(_keyUserId, userId);
@@ -70,10 +67,6 @@ class AccountInfoStorage extends GetxController {
 
   String readIntro() {
     return _secureStorage.readSecureData(_keyIntro);
-  }
-
-  String readPassword() {
-    return _secureStorage.readSecureData(_keyPassword);
   }
 
   String readPhone() {

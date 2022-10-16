@@ -4,11 +4,12 @@ import 'package:afariat/mywidget/profile_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../config/app_config.dart';
+import '../../config/app_routing.dart';
 import '../../persistent_tab_manager.dart';
 import '../main_view_controller.dart';
 import 'account/account_scr.dart';
 import 'notification/notification_view_controller.dart';
-import 'settings/setting_scr.dart';
+import 'settings/change_password_view.dart';
 import 'tap_profile_viewcontroller.dart';
 
 class TapProfileScr extends GetWidget<TapProfileViewController> {
@@ -65,11 +66,7 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
               iconProfile: Icons.lock_rounded,
               text: "Changer votre mot de passe",
               press: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (
-                  context,
-                ) =>
-                        Setting()));
+                Get.toNamed(AppRouting.changePassword);
               },
             ),
             ProfileMenu(

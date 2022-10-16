@@ -225,6 +225,48 @@ abstract class ApiManager {
     });
   }
 
+  /// PUT DATA TO SERVER
+  Future<Response<dynamic>> putToUrl({
+    String url,
+    Map<String, dynamic> dataToSend,
+    bool secure = false,
+  }) async {
+    Map<String, dynamic> headers = defaultHeaders;
+    if (secure) {
+      String wsse = Wsse.generateWsseFromStorage();
+      headers = {
+        ...defaultHeaders,
+        ...{'X-WSSE': wsse},
+      };
+    }
+    Options options = Options(
+        headers: headers,
+        validateStatus: (status) {
+          return status < 405;
+        });
+
+    if (kDebugMode) {
+      print('calling: PUT $url');
+      print('data: ' + dataToSend.toString());
+    }
+    return dioSingleton.dio
+        .put(
+      url,
+      options: options,
+      data: jsonEncode(dataToSend),
+    )
+        .then((value) {
+      validateResponseStatusCode(value);
+      return value;
+    }).catchError((error, stackTrace) {
+      processServerError(error);
+      if (kDebugMode) {
+        print(error);
+        throw error;
+      }
+    });
+  }
+
   //Delete a resource(s) by calling the given url
   Future<Response<dynamic>> delete(String url) async {
     String wsse = Wsse.generateWsseFromStorage();
@@ -373,6 +415,7 @@ abstract class ApiManager {
     });
   }
 
+  @Deprecated('Use putToUrl instead')
   Future<Response<dynamic>> putData({dataToPost}) async {
     //generer le wsse
     String wsse = Wsse.generateWsseFromStorage();

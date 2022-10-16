@@ -61,4 +61,9 @@ class PersistentTabManager {
         ),
         (route) => false);
   }
+
+  static goToLoginPage(BuildContext context){
+    goToHome(context);
+    changePage(4);
+  }
 }

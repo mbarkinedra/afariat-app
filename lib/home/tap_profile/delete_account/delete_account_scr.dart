@@ -1,5 +1,5 @@
 import 'package:afariat/config/utility.dart';
-import 'package:afariat/home/tap_profile/settings/setting_view_controller.dart';
+import 'package:afariat/home/tap_profile/settings/change_password_view_controller.dart';
 import 'package:afariat/mywidget/custom_button_1.dart';
 import 'package:afariat/mywidget/custom_dialogue_delete.dart';
 import 'package:flutter/material.dart';
@@ -144,7 +144,7 @@ class DeleteAccountScr extends GetWidget<DeleteAccountViewController> {
                                       "Êtes-vous sûr de  vouloir supprimer votre compte ?",
                                   buttonText: "Ok",
                                   phone: false,
-                                  okFunction: Get.find<SettingViewController>()
+                                  okFunction: Get.find<ChangePasswordViewController>()
                                       .deleteUser,
                                 );
                               });

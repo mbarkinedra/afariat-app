@@ -12,7 +12,7 @@ import 'package:afariat/home/tap_chat/tap_chat_viewcontroller.dart';
 import 'package:afariat/home/tap_myads/myads_view_controller.dart';
 import 'package:afariat/home/tap_profile/account/account_view_controller.dart';
 import 'package:afariat/home/tap_profile/notification/notification_view_controller.dart';
-import 'package:afariat/home/tap_profile/settings/setting_view_controller.dart';
+import 'package:afariat/home/tap_profile/settings/change_password_view_controller.dart';
 import 'package:afariat/home/tap_profile/tap_profile_viewcontroller.dart';
 import 'package:afariat/home/tap_publish/tap_publish_viewcontroller.dart';
 import 'package:afariat/sign_in/forgotPassword/forgotpassword_view_controller.dart';
@@ -69,7 +69,7 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => AdvertDetailsViewController());
     Get.lazyPut(() => TapPublishViewController(), fenix: true);
     Get.lazyPut(() => ForgotPasswordViewController());
-    Get.lazyPut(() => SettingViewController());
+    Get.lazyPut(() => ChangePasswordViewController());
     Get.lazyPut(() => NotificationViewController(), fenix: true);
     Get.lazyPut(() => ChatUserViewController());
     Get.lazyPut(() => CityDropdownViewController());

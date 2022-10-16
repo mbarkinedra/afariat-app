@@ -15,7 +15,7 @@ import '../persistent_tab_manager.dart';
 class SignInViewController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final UserAPi _userApi = UserAPi();
+  final UserApi _userApi = UserApi();
   bool isVisiblePassword = true;
   GlobalKey<FormState> signInFormKey;
   RxBool isLoading = false.obs;

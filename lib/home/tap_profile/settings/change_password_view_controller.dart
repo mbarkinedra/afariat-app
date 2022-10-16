@@ -1,28 +1,30 @@
-import 'package:afariat/networking/api/user.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/model/filter.dart';
-import 'package:afariat/networking/security/wsse.dart';
-import 'package:afariat/validator/validate_server.dart';
-import 'package:afariat/networking/api/abstract_password_api.dart';
-import 'package:afariat/networking/api/abstract_user_api.dart';
 import 'package:afariat/validator/validator_password.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../main_view_controller.dart';
+import '../../../networking/api/abstract_user_api.dart';
+import '../../../networking/json/post_json_response.dart';
+import '../../../persistent_tab_manager.dart';
 
-class SettingViewController extends GetxController {
-  final registerFormKey = GlobalKey<FormState>();
-  TextEditingController newPassword = TextEditingController();
-  TextEditingController oldPassword = TextEditingController();
-  bool updateData = false;
+class ChangePasswordViewController extends GetxController {
+  final changePasswordFormKey = GlobalKey<FormState>();
+  TextEditingController currentPassword = TextEditingController();
+  TextEditingController plainPassword = TextEditingController();
+
+  RxBool isLoading = false.obs;
+  RxString error = ''.obs;
+  RxString success = ''.obs;
+
   bool isVisiblePassword1 = true;
   bool isVisiblePassword2 = true;
-  bool tham = false;
-  ChangePasswordApi changePasswordApi = ChangePasswordApi();
+  final UserApi _userApi = UserApi();
   ValidatorPassword validator = ValidatorPassword();
   AccountInfoStorage accountInfoStorage = AccountInfoStorage();
-  final UserApi _userApi = UserApi();
+
+  //final UserApi _userApi = UserApi();
   ParameterBag userData = ParameterBag();
 
   void showHidePassword1() {
@@ -37,16 +39,50 @@ class SettingViewController extends GetxController {
     update();
   }
 
-  changePassword() async {
-    updateData = true;
-    update();
-    userData.data = {
-      "currentPassword": oldPassword.text.toString(),
-      "plainPassword": newPassword.text.toString(),
-    };
+  changePassword(BuildContext context) async {
+    if (!accountInfoStorage.isLoggedIn()) {
+      // be sure that user is logged in before making request
+      PersistentTabManager.goToLoginPage(context);
+    }
+    isLoading.value = true;
+    try {
+      PostJsonResponse jsonResponse = await _userApi.changePassword(
+          currentPassword.text.toString(), plainPassword.text.toString());
+      isLoading.value = false;
 
-    await changePasswordApi.putData(dataToPost: userData.data).then((value) {
-      updateData = false;
+      print(jsonResponse.toJson());
+      if (jsonResponse == null) {
+        //probably it's a 500 error. TODO: FIX this in api_manager
+        return;
+      }
+
+      if (jsonResponse.hasErrors() &&
+          jsonResponse.errors.globalErrors.isNotEmpty) {
+        error.value = jsonResponse.errors.globalErrors.first;
+      }
+
+      validator.formValidator.validateServer(
+          postJsonResponse: jsonResponse,
+          success: () {
+            success.value = jsonResponse.message;
+            update();
+          },
+          failure: () {
+            //validate server errors and show them in the form
+            changePasswordFormKey.currentState.validate();
+            success.value = '';
+            update();
+          });
+    } catch (e) {
+      isLoading.value = false;
+      if (kDebugMode) {
+        print(e);
+        throw e;
+      }
+    }
+
+    /*await changePasswordApi.putData(dataToPost: userData.data).then((value) {
+      isSending = false;
       if (value == null) {
         //a 500 error perhaps. No need to continue validating the server response
         return;
@@ -83,17 +119,18 @@ class SettingViewController extends GetxController {
             );
             update();
           });
-    });
+    });*/
   }
 
   deleteUser() {
-    _userApi.id = Get.find<AccountInfoStorage>().readUserId();
+    throw UnimplementedError;
+    /*_userApi.id = Get.find<AccountInfoStorage>().readUserId();
     _userApi
         .deleteResource(Get.find<AccountInfoStorage>().readUserId())
         .then((value) {
       Get.find<AccountInfoStorage>().logout();
     //  Get.find<MainViewController>().changeItemFilter(0);
       Get.back();
-    });
+    });*/
   }
 }

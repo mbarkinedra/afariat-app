@@ -5,8 +5,6 @@ class PostJsonResponse {
   PostJsonResponseErrors _errors = PostJsonResponseErrors();
 
   PostJsonResponse.fromJson(Map<String, dynamic> json) {
-    print('Response: ');
-    //print(json);
     _code = json['code'];
     if (json['message'] != null) {
       if (json['message'] is String) {
@@ -15,7 +13,6 @@ class PostJsonResponse {
         _errors = PostJsonResponseErrors.fromJson(json['message']);
       }
     }
-    print(toJson());
   }
 
   Map<String, dynamic> toJson() {

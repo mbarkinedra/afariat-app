@@ -14,6 +14,7 @@ import '../home/search/components/localization_view.dart';
 import '../home/search/search_view.dart';
 import '../home/tap_myads/myads_view.dart';
 import '../home/tap_profile/notification/notification_view.dart';
+import '../home/tap_profile/settings/change_password_view.dart';
 import '../home/tap_profile/tap_profile_scr.dart';
 import '../home/tap_publish/tap_publish_scr.dart';
 import '../settings/notification_settings_view.dart';
@@ -39,6 +40,7 @@ class AppRouting {
   static String favorites = '/account/favorites';
   static String preferences = '/account/preferences';
   static String notifications = '/account/notifications';
+  static String changePassword = '/account/change-password';
   static String login = '/login';
   static String loginSuccess = '/login/success';
   static String signUp = '/sign-up';
@@ -78,6 +80,7 @@ class AppRouting {
         name: favorites, page: () => FavoriteView(), binding: AllBindings()),
     GetPage(name: profile, page: () => TapProfileScr(), binding: AllBindings()),
     GetPage(name: settings, page: () => SettingsView(), binding: AllBindings()),
+    GetPage(name: changePassword, page: () => ChangePasswordView(), binding: AllBindings()),
     GetPage(name: messages, page: () => TapChatScr(), binding: AllBindings()),
     GetPage(
         name: notifications,

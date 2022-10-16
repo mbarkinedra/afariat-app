@@ -16,7 +16,7 @@ import '../json/post_json_response.dart';
 import '../json/simple_json_resource.dart';
 import '../security/wsse.dart';
 
-class UserAPi extends ApiManager {
+class UserApi extends ApiManager {
   @override
   fromJson(data) {
     return UserJson.fromJson(data);
@@ -30,6 +30,7 @@ class UserAPi extends ApiManager {
         url: SettingsApp.getSaltUrl, dataToPost: dataToPost.data);
   }
 
+  ///Login a user
   Future<SimpleJsonResource> login(String username, String password) async {
     DIO.Response response = await getSalt(username);
     SimpleJsonResource json = SimpleJsonResource.fromJson(response.data);
@@ -59,7 +60,7 @@ class UserAPi extends ApiManager {
         .then((value) async {
       validateResponseStatusCode(value);
       SimpleJsonResource jsonLogin = SimpleJsonResource.fromJson(value.data);
-      if(jsonLogin.code == 200) {
+      if (jsonLogin.code == 200) {
         await _saveUserInfo(username, hashedPassword, jsonLogin.message);
       }
       return jsonLogin;
@@ -72,10 +73,42 @@ class UserAPi extends ApiManager {
     });
   }
 
+  ///Register a user
   Future<PostJsonResponse> register(User user) async {
     DIO.Response<dynamic> response =
         await postToUrl(url: baseApiUrl(), dataToPost: user.toJson());
     return PostJsonResponse.fromJson(response.data);
+  }
+
+  /// Update the password of the current loggedIn user
+  Future<PostJsonResponse> changePassword(
+      String currentPassword, String plainPassword) async {
+    ParameterBag dataToSend = ParameterBag();
+    dataToSend.set('currentPassword', currentPassword);
+    dataToSend.set('plainPassword', plainPassword);
+
+    DIO.Response<dynamic> response = await putToUrl(
+        url: SettingsApp.changePasswordUrl,
+        dataToSend: dataToSend.data,
+        secure: true);
+
+    PostJsonResponse postJsonResponse =
+        PostJsonResponse.fromJson(response.data);
+    //if updated success, update the hashed password in local storage
+    //Retrieve the new salt and generate the new hash password.
+    if (postJsonResponse.code == 200) {
+      String username = accountInfoStorage.readEmail();
+      DIO.Response response = await getSalt(username);
+      SimpleJsonResource json = SimpleJsonResource.fromJson(response.data);
+      if (json.code != 200) {
+        //Important: Error happen and hashed password is no longer valid. force the user to logout/login
+        await accountInfoStorage.logout();
+      } else {
+        String hashedPassword = Wsse.hashPassword(plainPassword, json.message);
+        await accountInfoStorage.saveHashedPassword(hashedPassword);
+      }
+    }
+    return postJsonResponse;
   }
 
   _saveUserInfo(String email, String hashedPassword, String userId) async {
@@ -97,7 +130,7 @@ class UserAPi extends ApiManager {
   }
 }
 
-class LogoutApi extends UserAPi {
+class LogoutApi extends UserApi {
   @override
   String apiUrl() {
     return SettingsApp.logoutUrl;
@@ -136,7 +169,7 @@ class LogoutApi extends UserAPi {
   }
 }
 
-class SignUpApi extends UserAPi {
+class SignUpApi extends UserApi {
   @override
   String apiUrl() {
     return SettingsApp.registerUrl;
