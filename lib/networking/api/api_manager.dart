@@ -268,7 +268,7 @@ abstract class ApiManager {
   }
 
   //Delete a resource(s) by calling the given url
-  Future<Response<dynamic>> delete(String url) async {
+  Future<Response<dynamic>> delete({String url}) async {
     String wsse = Wsse.generateWsseFromStorage();
     Options options = Options(headers: {
       "Accept": "application/json",
@@ -277,6 +277,7 @@ abstract class ApiManager {
       'X-WSSE': wsse,
     });
     return dioSingleton.dio.delete(url, options: options).then((value) {
+      validateResponseStatusCode(value);
       return value;
     }).catchError((error, stackTrace) {
       processServerError(error);

@@ -50,7 +50,6 @@ class ChangePasswordViewController extends GetxController {
           currentPassword.text.toString(), plainPassword.text.toString());
       isLoading.value = false;
 
-      print(jsonResponse.toJson());
       if (jsonResponse == null) {
         //probably it's a 500 error. TODO: FIX this in api_manager
         return;

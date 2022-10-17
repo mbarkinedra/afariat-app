@@ -1,12 +1,15 @@
-import 'package:afariat/validator/validate_server.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:dio/dio.dart' as DIO;
+import '../networking/api/abstract_user_api.dart';
+import '../networking/json/simple_json_resource.dart';
+import '../networking/security/wsse.dart';
+import '../storage/AccountInfoStorage.dart';
 import 'form_validator.dart';
 
 class ValidatorPassword {
   bool validationType = false;
   FormValidator formValidator = FormValidator();
+  UserApi _userApi = UserApi();
 
   String validateCurrentPassword(String value) {
     if (!validationType) {
@@ -32,6 +35,31 @@ class ValidatorPassword {
       //server
       return formValidator.validate(value, 'plainPassword');
     }
+    return null;
+  }
+
+  Future<String> validateRegistredPassword(String value) async {
+    if (value.isEmpty) {
+      return "Veuillez saisir le nouveau mot de passe";
+    }
+
+    AccountInfoStorage _accountInfoStorage = Get.find<AccountInfoStorage>();
+    String username = _accountInfoStorage.readEmail();
+    DIO.Response<dynamic> response = await _userApi.getSalt(username);
+
+    SimpleJsonResource json = SimpleJsonResource.fromJson(response.data);
+    if (json.code != 200) {
+      //user not found.
+      await _accountInfoStorage.logout();
+      return 'Un problème est survenu. Vous êtes déconnecté. Veuillez vous reconnecter.';
+    } else {
+      String hashedPassword =
+          Wsse.hashPassword(value, json.message); // compare the passwords
+      if (hashedPassword != _accountInfoStorage.readHashedPassword()) {
+        return 'Mot de passe invalide';
+      }
+    }
+
     return null;
   }
 }

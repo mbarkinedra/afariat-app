@@ -1,4 +1,4 @@
-import 'package:afariat/home/tap_profile/delete_account/delete_account_scr.dart';
+import 'package:afariat/home/tap_profile/delete_account/delete_account_view.dart';
 import 'package:afariat/storage/AccountInfoStorage.dart';
 import 'package:afariat/mywidget/profile_menu.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +14,7 @@ import 'tap_profile_viewcontroller.dart';
 
 class TapProfileScr extends GetWidget<TapProfileViewController> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     var appConfig = AppConfig.of(context);
@@ -22,11 +23,11 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-           SizedBox(height: 40),
+            SizedBox(height: 40),
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image.asset(
-                "assets/images/"+appConfig.appName+"/logo.png",
+                "assets/images/" + appConfig.appName + "/logo.png",
                 width: 200,
                 height: 120,
               ),
@@ -73,11 +74,7 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
               iconProfile: Icons.delete_outline_sharp,
               text: "Supprimer le compte",
               press: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (
-                        context,
-                        ) =>
-                        DeleteAccountScr()));
+                Get.toNamed(AppRouting.deleteAccount);
               },
             ),
             ProfileMenu(
@@ -89,7 +86,7 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
                     false;
                 Get.find<NotificationViewController>().clearList();
 
-              //  Get.find<TapHomeViewController>().setUserName("");
+                //  Get.find<TapHomeViewController>().setUserName("");
               },
             ),
           ],

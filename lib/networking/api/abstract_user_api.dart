@@ -111,6 +111,18 @@ class UserApi extends ApiManager {
     return postJsonResponse;
   }
 
+  ///Register a user
+  Future<PostJsonResponse> deleteUserById(int id) async {
+    String url = baseApiUrl() + "/" + id.toString();
+    DIO.Response<dynamic> response = await delete(url: url);
+    PostJsonResponse jsonResponse = PostJsonResponse.fromJson(response.data);
+    //if delete success. logout the user
+    if (jsonResponse.code == 200) {
+      await accountInfoStorage.logout();
+    }
+    return jsonResponse;
+  }
+
   _saveUserInfo(String email, String hashedPassword, String userId) async {
     AccountInfoStorage infoStorage = Get.find<AccountInfoStorage>();
     infoStorage.saveEmail(email);

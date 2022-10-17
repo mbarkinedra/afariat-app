@@ -9,6 +9,8 @@ import '../home/search/search_form_view.dart';
 import '../home/search/similar_adverts_view.dart';
 import '../home/tap_chat/tap_chat_scr.dart';
 import '../home/search/filter/category_group_view.dart';
+import '../home/tap_profile/delete_account/delete_account_view.dart';
+import '../home/tap_profile/delete_account/delete_succes_view.dart';
 import '../home/tap_profile/favorite/favorite_view.dart';
 import '../home/search/components/localization_view.dart';
 import '../home/search/search_view.dart';
@@ -41,6 +43,8 @@ class AppRouting {
   static String preferences = '/account/preferences';
   static String notifications = '/account/notifications';
   static String changePassword = '/account/change-password';
+  static String deleteAccount = '/account/delete-account';
+  static String deleteAccountSuccess = '/account/delete-account/success';
   static String login = '/login';
   static String loginSuccess = '/login/success';
   static String signUp = '/sign-up';
@@ -80,7 +84,10 @@ class AppRouting {
         name: favorites, page: () => FavoriteView(), binding: AllBindings()),
     GetPage(name: profile, page: () => TapProfileScr(), binding: AllBindings()),
     GetPage(name: settings, page: () => SettingsView(), binding: AllBindings()),
-    GetPage(name: changePassword, page: () => ChangePasswordView(), binding: AllBindings()),
+    GetPage(
+        name: changePassword,
+        page: () => ChangePasswordView(),
+        binding: AllBindings()),
     GetPage(name: messages, page: () => TapChatScr(), binding: AllBindings()),
     GetPage(
         name: notifications,
@@ -90,9 +97,23 @@ class AppRouting {
         name: preferences,
         page: () => NotificationSettingsView(),
         binding: AllBindings()),
-    GetPage(name: loginSuccess, page: () => const LoginSuccessView(), binding: AllBindings()),
+    GetPage(
+        name: loginSuccess,
+        page: () => const LoginSuccessView(),
+        binding: AllBindings()),
     GetPage(name: signUp, page: () => SignUpScr(), binding: AllBindings()),
-    GetPage(name: signUpSuccess, page: () => SignupSuccessView(), binding: AllBindings()),
+    GetPage(
+        name: signUpSuccess,
+        page: () => SignupSuccessView(),
+        binding: AllBindings()),
+    GetPage(
+        name: deleteAccount,
+        page: () => DeleteAccountView(),
+        binding: AllBindings()),
+    GetPage(
+        name: deleteAccountSuccess,
+        page: () => DeleteAccountSuccessView(),
+        binding: AllBindings()),
   ];
 
   static GetPage getPageByName(String name) {

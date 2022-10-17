@@ -41,7 +41,7 @@ class FavoriteApi extends ResourceApi {
   /// Delete Favorite from list Advert
   Future<Response<dynamic>> deleteByAdvertId(int id) async {
     String url = SettingsApp.deleteFavoriteByAdvert + "/" + id.toString();
-    return delete(url);
+    return delete(url: url);
   }
 
   /// Add Advert to user's favorite's list
