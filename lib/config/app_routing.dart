@@ -9,6 +9,7 @@ import '../home/search/search_form_view.dart';
 import '../home/search/similar_adverts_view.dart';
 import '../home/tap_chat/tap_chat_scr.dart';
 import '../home/search/filter/category_group_view.dart';
+import '../home/tap_profile/account/account_view.dart';
 import '../home/tap_profile/delete_account/delete_account_view.dart';
 import '../home/tap_profile/delete_account/delete_succes_view.dart';
 import '../home/tap_profile/favorite/favorite_view.dart';
@@ -37,8 +38,9 @@ class AppRouting {
   static String similarAds = '/similar-ads';
   static String newAd = '/new-ad';
   static String myAds = '/my-ads';
-  static String messages = '/account/messages';
+  static String account = '/account';
   static String profile = '/account/profile';
+  static String messages = '/account/messages';
   static String favorites = '/account/favorites';
   static String preferences = '/account/preferences';
   static String notifications = '/account/notifications';
@@ -82,7 +84,8 @@ class AppRouting {
     GetPage(name: newAd, page: () => TapPublishScr(), binding: AllBindings()),
     GetPage(
         name: favorites, page: () => FavoriteView(), binding: AllBindings()),
-    GetPage(name: profile, page: () => TapProfileScr(), binding: AllBindings()),
+    GetPage(name: account, page: () => TapProfileScr(), binding: AllBindings()),
+    GetPage(name: profile, page: () => AccountView(), binding: AllBindings()),
     GetPage(name: settings, page: () => SettingsView(), binding: AllBindings()),
     GetPage(
         name: changePassword,

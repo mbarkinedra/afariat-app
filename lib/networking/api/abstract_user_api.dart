@@ -23,6 +23,13 @@ class UserApi extends ApiManager {
   }
 
   ///Get the user salt
+  Future<SimpleJsonResource> getUser(int id) async {
+    String url = baseApiUrl() + "/" + id.toString();
+    DIO.Response<dynamic> response = await securedGet(url, toJson: false);
+    return SimpleJsonResource.fromJson(response.data);
+  }
+
+  ///Get the user salt
   Future<DIO.Response<dynamic>> getSalt(String username) async {
     ParameterBag dataToPost = ParameterBag();
     dataToPost.set('login', username);
@@ -59,9 +66,10 @@ class UserApi extends ApiManager {
     )
         .then((value) async {
       validateResponseStatusCode(value);
+
       SimpleJsonResource jsonLogin = SimpleJsonResource.fromJson(value.data);
       if (jsonLogin.code == 200) {
-        await _saveUserInfo(username, hashedPassword, jsonLogin.message);
+        await _saveUserInfo(username, hashedPassword, jsonLogin.message.toString());
       }
       return jsonLogin;
     }).catchError((error, stackTrace) {
@@ -77,6 +85,14 @@ class UserApi extends ApiManager {
   Future<PostJsonResponse> register(User user) async {
     DIO.Response<dynamic> response =
         await postToUrl(url: baseApiUrl(), dataToPost: user.toJson());
+    return PostJsonResponse.fromJson(response.data);
+  }
+
+  ///Register a user
+  Future<PostJsonResponse> update(UserJson user) async {
+    String url = baseApiUrl() + "/" + user.id.toString();
+    DIO.Response<dynamic> response =
+        await putToUrl(url: url, dataToSend: user.toJson(form: true), secure: true);
     return PostJsonResponse.fromJson(response.data);
   }
 
@@ -181,7 +197,7 @@ class LogoutApi extends UserApi {
   }
 }
 
-class SignUpApi extends UserApi {
+/*class SignUpApi extends UserApi {
   @override
   String apiUrl() {
     return SettingsApp.registerUrl;
@@ -193,7 +209,7 @@ class SignUpApi extends UserApi {
   }
 }
 
-/*
+
 class SaltApi extends UserAPi {
   @override
   @deprecated

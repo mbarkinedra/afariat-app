@@ -18,7 +18,6 @@ class FormValidator {
     }
 
     PostJsonFieldError jsonFieldError = jsonResponse.errors.getField(field);
-
     return jsonFieldError?.first();
   }
 

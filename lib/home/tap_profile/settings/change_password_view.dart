@@ -101,7 +101,8 @@ class ChangePasswordView extends GetWidget<ChangePasswordViewController> {
                     ),
                     Obx(
                       () => controller.success.isNotEmpty
-                          ? Card(
+                          ?
+                      Card(
                               color: Colors.teal,
                               elevation: 1,
                               child: SizedBox(

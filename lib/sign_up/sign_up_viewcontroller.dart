@@ -22,7 +22,7 @@ class SignUpViewController extends GetxController {
   CityDropdownViewController cityDropdownViewController =
       CityDropdownViewController();
   ValidatorSignUp validator = ValidatorSignUp();
-  final SignUpApi _userApi = SignUpApi();
+  final UserApi _userApi = UserApi();
   bool isVisiblePassword = true;
   List<TypeRegister> typeList = [
     TypeRegister(name: "Particulier", id: 0),

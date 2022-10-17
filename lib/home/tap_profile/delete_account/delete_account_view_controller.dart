@@ -38,7 +38,6 @@ class DeleteAccountViewController extends GetxController {
     error.value = 'Suppression de compte..';
     int userId = int.parse(accountInfoStorage.readUserId());
     PostJsonResponse jsonResponse = await _userApi.deleteUserById(userId);
-    print(jsonResponse.toJson());
     if (jsonResponse == null) {
       //probably it's a 500 error. TODO: FIX this in api_manager
       return;

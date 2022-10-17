@@ -14,7 +14,8 @@ abstract class RefDropdown<GetLifeCycleBase>
 
   final Function validator;
 
-  RefDropdown(this.controller, this.label, this.validator, {Key key}) : super(key: key);
+  RefDropdown(this.controller, this.label, this.validator, {Key key})
+      : super(key: key);
 
   //GetLifeCycleBase controller = RefDropdownViewController;
 
@@ -38,7 +39,9 @@ abstract class RefDropdown<GetLifeCycleBase>
               validator: validator,
             );
           } else {
-            return const CircularProgressIndicator();
+            return const Align(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator());
           }
         });
   }

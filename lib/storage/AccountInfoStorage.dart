@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../networking/api/abstract_user_api.dart';
 import '../networking/json/preference_json.dart';
+import '../networking/json/user_json.dart';
 import '../persistent_tab_manager.dart';
 
 @deprecated
@@ -13,10 +14,11 @@ class AccountInfoStorage extends GetxController {
   static const _keyEmail = 'username';
   static const _keyHashedPassword = 'hashedPassword';
   static const _keyUserId = 'user_id';
-  static const _keyName = 'name';
-  static const _keyPassword = 'password';
+  static const _keyFirstName = 'firstName';
+  static const _keyLastName = 'lastName';
   static const _keyIntro = 'intro';
   static const _keyPhone = 'phone';
+  static const _keyUser = 'user';
   static const _keyPreference = 'preference';
   static const keyLocalization = 'localisation';
 
@@ -30,13 +32,16 @@ class AccountInfoStorage extends GetxController {
     await _secureStorage.writeSecureData(_keyHashedPassword, hashedPassword);
   }
 
-
   saveUserId(String userId) {
     _secureStorage.writeSecureData(_keyUserId, userId);
   }
 
-  saveName(String name) {
-    _secureStorage.writeSecureData(_keyName, name);
+  saveFirstName(String firstName) {
+    _secureStorage.writeSecureData(_keyFirstName, firstName);
+  }
+
+  saveLastName(String lastName) {
+    _secureStorage.writeSecureData(_keyLastName, lastName);
   }
 
   savePhone(String phone) {
@@ -45,6 +50,10 @@ class AccountInfoStorage extends GetxController {
 
   saveIntro(String intro) {
     _secureStorage.writeSecureData(_keyIntro, intro);
+  }
+
+  saveUser(UserJson user) async {
+    await _secureStorage.write(_keyUser, user);
   }
 
   savePreference(PreferenceJson preference) async {
@@ -61,8 +70,12 @@ class AccountInfoStorage extends GetxController {
     return email;
   }
 
-  String readName() {
-    return _secureStorage.readSecureData(_keyName);
+  String readFirstName() {
+    return _secureStorage.readSecureData(_keyFirstName);
+  }
+
+  String readLastName() {
+    return _secureStorage.readSecureData(_keyLastName);
   }
 
   String readIntro() {
@@ -79,6 +92,10 @@ class AccountInfoStorage extends GetxController {
 
   String readUserId() {
     return _secureStorage.readSecureData(_keyUserId);
+  }
+
+  Future<dynamic> readUser() async {
+    return await _secureStorage.read(_keyUser);
   }
 
   Future<dynamic> readPreference() async {
@@ -121,8 +138,8 @@ class AccountInfoStorage extends GetxController {
     _secureStorage.deleteSecureData(_keyEmail);
     _secureStorage.deleteSecureData(_keyPhone);
     _secureStorage.deleteSecureData(_keyUserId);
-    _secureStorage.deleteSecureData(_keyName);
-    _secureStorage.deleteSecureData(_keyPassword);
+    _secureStorage.deleteSecureData(_keyFirstName);
+    _secureStorage.deleteSecureData(_keyLastName);
     _secureStorage.deleteSecureData(_keyHashedPassword);
     _secureStorage.deleteSecureData(_keyPreference);
   }

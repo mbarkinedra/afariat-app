@@ -32,11 +32,11 @@ class AdvertDetailsApi extends ApiManager {
   }
 
   @override
-  Future<dynamic> get(String url,  {Map<String, dynamic> filters}) async {
+  Future<dynamic> get(String url,  {Map<String, dynamic> filters, bool toJson = true}) async {
     if (accountInfoStorage.isLoggedIn()) {
-      return await securedGet(url);
+      return await securedGet(url, toJson: toJson);
     }
-    return await super.get(url);
+    return await super.get(url, toJson: toJson);
   }
 
   Future<dynamic> getAdvert(String advertId) async {

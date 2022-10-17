@@ -22,7 +22,6 @@ class MainViewController extends GetxController {
     PersistentTabManager.buildScreens();
     super.onInit();
     Get.routing.current = '/home';
-    print('current route: '+Get.routing.current);
   }
 
   RouteAndNavigatorSettings routeAndNavigatorSettings() {

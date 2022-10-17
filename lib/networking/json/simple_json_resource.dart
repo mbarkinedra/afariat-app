@@ -3,13 +3,13 @@ import 'package:afariat/networking/json/abstract_json_resource.dart';
 /// this Class is used to describe simple json responses that have code and message in body.
 class SimpleJsonResource extends AbstractJsonResource {
   int code;
-  String message;
+  dynamic message;
 
   SimpleJsonResource({this.code, this.message});
 
   SimpleJsonResource.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    message = json['message'].toString();
+    message = json['message'];
   }
 
   Map<String, dynamic> toJson() {

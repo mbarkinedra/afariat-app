@@ -5,7 +5,8 @@ class UserJson extends AbstractJsonResource {
   String username;
   String email;
   String salt;
-  String name;
+  String firstName;
+  String lastName;
   String slug;
   String phone;
   int type;
@@ -19,7 +20,8 @@ class UserJson extends AbstractJsonResource {
       this.username,
       this.email,
       this.salt,
-      this.name,
+      this.firstName,
+      this.lastName,
       this.slug,
       this.phone,
       this.type,
@@ -33,7 +35,8 @@ class UserJson extends AbstractJsonResource {
     username = json['username'];
     email = json['email'];
     salt = json['salt'];
-    name = json['name'];
+    firstName = json['firstName'];
+    lastName = json['lastName'];
     slug = json['slug'];
     phone = json['phone'];
     type = json['type'];
@@ -45,27 +48,28 @@ class UserJson extends AbstractJsonResource {
 
   /// form: if set to true, only needed fields for update will be serialized, otherwise, all fields.
   Map<String, dynamic> toJson({form = false}) {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (form != true) {
-      data['id'] = this.id;
-      data['username'] = this.username;
-      data['email'] = this.email;
-      data['slug'] = this.slug;
-      data['autopublish'] = this.autopublish;
-      data['updated_at'] = this.updatedAt;
-      data['created_at'] = this.createddAt;
-      data['salt'] = this.salt;
+      data['id'] = id;
+      data['username'] = username;
+      data['email'] = email;
+      data['slug'] = slug;
+      data['autopublish'] = autopublish;
+      data['updated_at'] = updatedAt;
+      data['created_at'] = createddAt;
+      data['salt'] = salt;
     }
 
-    data['name'] = this.name;
-    data['phone'] = this.phone;
-    data['type'] = this.type;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['phone'] = phone;
+    data['type'] = type;
 
-    if (this.city != null) {
+    if (city != null) {
       if (form != true) {
-        data['city'] = this.city.toJson();
+        data['city'] = city.toJson();
       } else {
-        data['city'] = this.city.id;
+        data['city'] = city.id;
       }
     }
     return data;

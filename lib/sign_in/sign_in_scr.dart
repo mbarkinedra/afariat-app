@@ -87,19 +87,21 @@ class SignInScr extends GetWidget<SignInViewController> {
                         SizedBox(
                           height: _size.height * .05,
                         ),
-                        Obx(() => controller.error.isNotEmpty
-                            ? Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 10, bottom: 25),
-                                child: Text(
-                                  controller.error.value,
-                                  style: const TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            : SizedBox()),
+                        Obx(
+                          () => controller.error.isNotEmpty
+                              ? Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, bottom: 25),
+                                  child: Text(
+                                    controller.error.value,
+                                    style: const TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              : const SizedBox(),
+                        ),
                         Padding(
                           padding: EdgeInsets.only(right: 8),
                           child: LogInItem(
@@ -132,7 +134,8 @@ class SignInScr extends GetWidget<SignInViewController> {
                               icon: Icons.lock_outline,
                               //Ajouter
                               obscureText: logic.isVisiblePassword,
-                              textEditingController: controller.passwordController,
+                              textEditingController:
+                                  controller.passwordController,
                               validator: controller.validator.validatePassword,
                               suffixIcon: IconButton(
                                 onPressed: controller.showHidePassword,

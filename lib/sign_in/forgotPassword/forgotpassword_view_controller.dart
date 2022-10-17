@@ -35,7 +35,6 @@ class ForgotPasswordViewController extends GetxController {
 
     PostJsonResponse jsonResponse =
         await _api.requestResetPassword(username);
-    print(jsonResponse.toJson());
     if (jsonResponse == null) {
       //probably it's a 500 error. TODO: FIX this in api_manager
       return;

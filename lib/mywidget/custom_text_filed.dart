@@ -11,6 +11,7 @@ class CustomTextFiled extends StatelessWidget {
   final double padding;
   final int maxLines;
   final int maxLength;
+  final IconData icon;
   final Widget suffixIcon;
 
   CustomTextFiled({
@@ -23,13 +24,15 @@ class CustomTextFiled extends StatelessWidget {
     this.validator,
     this.maxLines,
     this.maxLength,
-    this.obscureText = false, this.suffixIcon,
+    this.obscureText = false,
+    this.icon,
+    this.suffixIcon,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-       width: width,
+      width: width,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
@@ -39,10 +42,11 @@ class CustomTextFiled extends StatelessWidget {
           validator: validator,
           controller: textEditingController,
           decoration: InputDecoration(
+            icon: icon != null ? Icon(icon) : null,
+            errorMaxLines: 3,
             border: InputBorder.none,
             hintText: hintText,
             suffixIcon: suffixIcon,
-
           ),
           maxLength: maxLength,
         ),

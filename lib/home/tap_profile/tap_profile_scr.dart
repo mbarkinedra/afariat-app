@@ -7,7 +7,7 @@ import '../../config/app_config.dart';
 import '../../config/app_routing.dart';
 import '../../persistent_tab_manager.dart';
 import '../main_view_controller.dart';
-import 'account/account_scr.dart';
+import 'account/account_view.dart';
 import 'notification/notification_view_controller.dart';
 import 'settings/change_password_view.dart';
 import 'tap_profile_viewcontroller.dart';
@@ -37,11 +37,7 @@ class TapProfileScr extends GetWidget<TapProfileViewController> {
               iconProfile: Icons.person,
               text: "Mes informations personnelles",
               press: () => {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (
-                  context,
-                ) =>
-                        Account())),
+                Get.toNamed(AppRouting.profile)
               },
             ),
             // Obx(() {

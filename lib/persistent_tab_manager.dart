@@ -25,7 +25,7 @@ class PersistentTabManager {
     AppRouting.myAds,
     AppRouting.newAd,
     AppRouting.messages,
-    AppRouting.profile
+    AppRouting.account
   ];
 
   static void changePage(int index) {
