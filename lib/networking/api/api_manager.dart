@@ -129,7 +129,7 @@ abstract class ApiManager {
     if (kDebugMode) {
       print('calling: $url');
     }
-    await dioSingleton.dio
+    return await dioSingleton.dio
         .get(
       url,
       queryParameters: filters,

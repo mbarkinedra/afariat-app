@@ -28,7 +28,7 @@ class AccountViewController extends GetxController {
 
   AccountInfoStorage _storage = AccountInfoStorage();
 
-  UserApi _userApi = UserApi();
+  final UserApi _userApi = UserApi();
   UserJson user = UserJson();
 
   RxString error = ''.obs;
@@ -42,7 +42,12 @@ class AccountViewController extends GetxController {
   }
 
   loadDataFromStorage() async {
-    user = await _storage.readUser();
+    var _user = await _storage.readUser();
+    if(_user is Map){
+      user = UserJson.fromJson(_user);
+    }else {
+      user = user;
+    }
   }
 
   _updateUser() {
@@ -54,6 +59,7 @@ class AccountViewController extends GetxController {
       if (user.city != null) {
         cityDropdownViewController.selectedItem =
             RefJson(id: user.city.id, name: user.city.name);
+        cityDropdownViewController.update();
       }
     }
   }
