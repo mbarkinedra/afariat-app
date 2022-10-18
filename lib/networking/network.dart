@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class Network {
@@ -17,8 +18,10 @@ class Network {
       });
 
     } catch (e) {
-      print('Connection error: ');
-      print(e);
+      if (kDebugMode) {
+        print('Connection error: ');
+        print(e);
+      }
     }
   }
 

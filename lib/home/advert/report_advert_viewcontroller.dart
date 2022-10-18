@@ -94,7 +94,6 @@ class ReportAdvertViewController extends GetxController {
             );
           },
           failure: () {
-            print(jsonResponse.toJson());
             //validate server errors and show them in the form
             reportAbuseFormKey.currentState.validate();
           });

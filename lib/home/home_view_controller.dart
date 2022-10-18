@@ -1,6 +1,7 @@
 import 'package:afariat/config/app_routing.dart';
 import 'package:afariat/home/tap_profile/notification/notification_view_controller.dart';
 import 'package:afariat/model/filter.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../networking/api/advert_api.dart';
@@ -43,7 +44,9 @@ class HomeViewController extends GetxController {
         advertListJson = value;
       });
     } catch (error) {
-      print(error);
+      if (kDebugMode) {
+        print(error);
+      }
     }
     isLoadingLastAds.value = false;
     return advertListJson;

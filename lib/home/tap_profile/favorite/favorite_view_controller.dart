@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import '../../../Common/abstract_paginated_view_controller.dart';
 import '../../../model/favorite_list.dart';
@@ -59,7 +60,9 @@ class FavoriteViewController
         pagingController.appendLastPage(favoriteListJson.favorites());
       });
     } catch (error) {
-      print(error);
+      if (kDebugMode) {
+        print(error);
+      }
     }
     deleteStatusList[index] = false;
   }
@@ -71,7 +74,9 @@ class FavoriteViewController
         swipeDown();
       });
     } catch (error) {
-      print(error);
+      if (kDebugMode) {
+        print(error);
+      }
     }
   }
 
@@ -82,7 +87,9 @@ class FavoriteViewController
         swipeDown();
       });
     } catch (error) {
-      print(error);
+      if (kDebugMode) {
+        print(error);
+      }
     }
   }
 }
