@@ -4,6 +4,8 @@ import 'package:afariat/home/search/filter/filter_view.dart';
 import 'package:get/get.dart';
 
 import '../bindings/bindings.dart';
+import '../home/advert/report_advert_view.dart';
+import '../home/advert/report_succes_view.dart';
 import '../home/main_view.dart';
 import '../home/search/search_form_view.dart';
 import '../home/search/similar_adverts_view.dart';
@@ -35,6 +37,8 @@ class AppRouting {
   static String localization = '/filter/localization';
   static String category = '/filter/category';
   static String adDetails = '/adDetails';
+  static String adReport = '/report-ad';
+  static String adReportSuccess = '/report-ad/success';
   static String similarAds = '/similar-ads';
   static String newAd = '/new-ad';
   static String myAds = '/my-ads';
@@ -69,21 +73,37 @@ class AppRouting {
         page: () => const LocalizationView(),
         binding: AllBindings()),
     GetPage(
-        name: category,
-        page: () => const CategoryGroupView(),
-        binding: AllBindings()),
+      name: category,
+      page: () => const CategoryGroupView(),
+      binding: AllBindings(),
+    ),
     GetPage(
-        name: adDetails,
-        page: () => AdvertDetailsView(),
-        binding: AllBindings()),
+      name: adDetails,
+      page: () => AdvertDetailsView(),
+      binding: AllBindings(),
+    ),
     GetPage(
-        name: similarAds,
-        page: () => SimilarAdvertsView(),
-        binding: AllBindings()),
+      name: adReport,
+      page: () => ReportAdvertView(),
+      binding: AllBindings(),
+    ),
+    GetPage(
+      name: adReportSuccess,
+      page: () => ReportSuccessView(),
+      binding: AllBindings(),
+    ),
+    GetPage(
+      name: similarAds,
+      page: () => SimilarAdvertsView(),
+      binding: AllBindings(),
+    ),
     GetPage(name: myAds, page: () => MyAdsView(), binding: AllBindings()),
     GetPage(name: newAd, page: () => TapPublishScr(), binding: AllBindings()),
     GetPage(
-        name: favorites, page: () => FavoriteView(), binding: AllBindings()),
+      name: favorites,
+      page: () => FavoriteView(),
+      binding: AllBindings(),
+    ),
     GetPage(name: account, page: () => TapProfileScr(), binding: AllBindings()),
     GetPage(name: profile, page: () => AccountView(), binding: AllBindings()),
     GetPage(name: settings, page: () => SettingsView(), binding: AllBindings()),

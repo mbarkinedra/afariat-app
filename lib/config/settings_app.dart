@@ -8,6 +8,7 @@ class SettingsApp {
   static String get baseApiUrl => baseUrl + apiPrefix;
 
   static String get loginUrl => baseApiUrl + '/users/login';
+
   static String get logoutUrl => baseApiUrl + '/users/logout';
 
   static String get registerUrl => baseApiUrl + '/users';
@@ -53,6 +54,10 @@ class SettingsApp {
 
   static String get yearsModelsUrl => baseApiUrl + '/simple/year-models';
 
+  static String get categoryAbuseUrl => baseApiUrl + '/simple/abuse-categories';
+
+  static String get abuse => baseApiUrl + '/abuses';
+
   static String get advertTypesUrl =>
       baseApiUrl + '/simple/category/advert-types/';
 
@@ -84,7 +89,9 @@ class SettingsApp {
 
   static String get preference => baseApiUrl + '/preference';
 
-  static String get autocompleteLocalization => baseApiUrl + '/autocomplete/localization';
+  static String get autocompleteLocalization =>
+      baseApiUrl + '/autocomplete/localization';
 
-  static String get autocompleteSearchSuggestion => baseApiUrl + '/autocomplete/search-suggestions-categories';
+  static String get autocompleteSearchSuggestion =>
+      baseApiUrl + '/autocomplete/search-suggestions-categories';
 }

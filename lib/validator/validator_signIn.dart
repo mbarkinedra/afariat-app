@@ -1,11 +1,8 @@
-import 'package:afariat/validator/validate_server.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'form_validator.dart';
 
 class ValidatorSignIn {
-  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   bool validationType = false;
   FormValidator formValidator = FormValidator();
 

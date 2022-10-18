@@ -184,13 +184,13 @@ abstract class ApiManager {
   }
 
   Future<dynamic> getCollection(String url,
-      {Map<String, dynamic> filters}) async {
-    return await get(url, filters: filters);
+      {Map<String, dynamic> filters, bool toJson = true}) async {
+    return await get(url, filters: filters, toJson: toJson);
   }
 
   Future<dynamic> secureGetCollection(String url,
       {Map<String, dynamic> filters, bool toJson = true}) async {
-    return await securedGet(url, filters: filters);
+    return await securedGet(url, filters: filters, toJson: toJson);
   }
 
   /// POST DATA TO SERVER

@@ -22,13 +22,13 @@ class AdvertApi extends ResourceApi {
 
   @override
   Future<dynamic> getCollection(String url,
-      {Map<String, dynamic> filters}) async {
+      {Map<String, dynamic> filters, bool toJson = true}) async {
     //if user is logged in, use the secure call.
 
     if (accountInfoStorage.isLoggedIn()) {
-      return await secureGetCollection(url, filters: filters);
+      return await secureGetCollection(url, filters: filters, toJson: toJson);
     }
-    return await super.getCollection(url, filters: filters);
+    return await super.getCollection(url, filters: filters, toJson: toJson);
   }
 
   @override

@@ -2,11 +2,19 @@ import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/api/api_manager.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
 import 'package:afariat/networking/json/ref_json.dart';
+import 'package:dio/dio.dart';
+
+import '../json/get_json_response.dart';
 
 abstract class RefApi extends ApiManager {
   @override
   AbstractJsonResource fromJson(data) {
     return RefListJson.fromJson(data);
+  }
+
+  Future<GetJsonResponse> getJsonResponse() async {
+    Response res = await getCollection(baseApiUrl(), toJson: false);
+    return GetJsonResponse.fromJson(res.data);
   }
 }
 
@@ -23,6 +31,7 @@ class TownApi extends RefApi {
   String cityId;
 
   @override
+  @deprecated
   String apiUrl() => SettingsApp.townUrl + "/" + cityId;
 
   @override
@@ -32,6 +41,7 @@ class TownApi extends RefApi {
 //Refs
 class PriceApi extends RefApi {
   @override
+  @deprecated
   String apiUrl() => SettingsApp.priceUrl;
 
   @override
@@ -40,6 +50,7 @@ class PriceApi extends RefApi {
 
 class VehicleBrandsApi extends RefApi {
   @override
+  @deprecated
   String apiUrl() => SettingsApp.vehicleBrandsUrl;
 
   @override
@@ -48,6 +59,7 @@ class VehicleBrandsApi extends RefApi {
 
 class RoomsNumberApi extends RefApi {
   @override
+  @deprecated
   String apiUrl() => SettingsApp.roomsNumberUrl;
 
   @override
@@ -56,9 +68,11 @@ class RoomsNumberApi extends RefApi {
 
 class EnergieApi extends RefApi {
   @override
+  @deprecated
   String apiUrl() => SettingsApp.energiesUrl;
 
   @override
+  @deprecated
   String baseApiUrl() => SettingsApp.energiesUrl;
 }
 
@@ -66,6 +80,7 @@ class VehicleModelApi extends RefApi {
   int vehicleModelId;
 
   @override
+  @deprecated
   String apiUrl() =>
       SettingsApp.vehiculeModelUrl + "/" + vehicleModelId.toString();
 
@@ -106,4 +121,13 @@ class AdvertTypesApi extends RefApi {
 
   @override
   String baseApiUrl() => SettingsApp.advertTypesUrl;
+}
+
+class CategoryAbuseApi extends RefApi {
+  @override
+  @deprecated
+  String apiUrl() => baseApiUrl();
+
+  @override
+  String baseApiUrl() => SettingsApp.categoryAbuseUrl;
 }

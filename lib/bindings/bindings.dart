@@ -20,6 +20,8 @@ import 'package:afariat/sign_in/sign_in_viewcontroller.dart';
 import 'package:afariat/sign_up/sign_up_viewcontroller.dart';
 import 'package:get/get.dart';
 
+import '../home/advert/report_advert_viewcontroller.dart';
+import '../home/advert/report_success_view_controller.dart';
 import '../home/drawer_view_controller.dart';
 import '../home/home_view_controller.dart';
 import '../home/search/search_form_view_controller.dart';
@@ -54,12 +56,14 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => FilterAppBarViewController(), fenix: true);
     Get.lazyPut(() => LocalizationViewController(), fenix: true);
     Get.lazyPut(() => CategoryGroupViewController(), fenix: true);
-    Get.lazyPut(() => AdvertDetailsViewController(), fenix: true);
+    Get.lazyPut(() => AdvertDetailsViewController());
+    Get.lazyPut(() => ReportAdvertViewController());
+    Get.lazyPut(() => ReportSuccessViewController());
     Get.lazyPut(() => SimilarAdvertsViewController(), fenix: true);
     Get.lazyPut(() => SettingsViewController(), fenix: true);
     Get.lazyPut(() => FavoriteViewController(), fenix: true);
     Get.lazyPut(() => NotificationSettingsViewController(), fenix: true);
-    Get.put(TapPublishViewController());
+    Get.lazyPut(() => TapPublishViewController(), fenix: true);
     Get.put(CategoryAndSubcategory());
     Get.put(LocController());
     Get.lazyPut(() => SignUpViewController());
@@ -70,8 +74,7 @@ class AllBindings extends Bindings {
     Get.lazyPut(() => TapProfileViewController());
     Get.lazyPut(() => DeleteAccountViewController());
     Get.lazyPut(() => DeleteAccountSuccessViewController());
-    Get.lazyPut(() => AdvertDetailsViewController());
-    Get.lazyPut(() => TapPublishViewController(), fenix: true);
+
     Get.lazyPut(() => ForgotPasswordViewController());
     Get.lazyPut(() => ChangePasswordViewController());
     Get.lazyPut(() => NotificationViewController(), fenix: true);

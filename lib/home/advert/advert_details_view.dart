@@ -1,4 +1,5 @@
 import 'package:afariat/config/app_routing.dart';
+import 'package:afariat/home/advert/report_advert_viewcontroller.dart';
 import 'package:afariat/networking/json/advert_details_json.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -96,12 +97,7 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Icon(
-                    Icons.more_vert,
-                    color: Colors.grey,
-                    size: 24.0,
-                    semanticLabel: 'Ajouter à mes favoris',
-                  ),
+                  _buildMoreMenuAction(context),
                 ],
               ),
             ),
@@ -680,6 +676,29 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
       subject: controller.advert.title,
       sharePositionOrigin:
           box != null ? box.localToGlobal(Offset.zero) & box.size : null,
+    );
+  }
+
+  _buildMoreMenuAction(BuildContext context) {
+    List<PopupMenuItem<String>> menuItems = [
+      PopupMenuItem(
+        child: ListTile(
+          title: const Text('Signaler cette annonce'),
+          leading: const Icon(Icons.report),
+          contentPadding: EdgeInsets.all(0),
+          onTap: () {
+            Navigator.pop(context);
+            //set the advert in the report ad controller before showing the report view
+            Get.find<ReportAdvertViewController>().advert = controller.advert;
+            Get.toNamed(AppRouting.adReport);
+          },
+        ),
+      ),
+    ];
+
+    return PopupMenuButton(
+      padding: const EdgeInsets.all(0),
+      itemBuilder: (context) => menuItems,
     );
   }
 }
