@@ -6,7 +6,8 @@ class ChatUser extends StatelessWidget {
   final bool hasConversaton;
   final String email;
 
-  ChatUser({this.conversation, this.hasConversaton = false, this.email});
+  ChatUser({this.conversation, this.hasConversaton = false, this.email}){
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +37,8 @@ class ChatUser extends StatelessWidget {
                 ListTile(
                   title: Text(
                     conversation.to.username == email
-                        ? conversation.from.name
-                        : conversation.to.name,
+                        ? conversation.from.firstName
+                        : conversation.to.firstName,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(

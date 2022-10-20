@@ -86,9 +86,12 @@ abstract class ResourceApi extends ApiManager {
       data: jsonEncode(dataToPost),
     )
         .then((value) {
+          print('TOTOTO');
+          print(value);
       validateResponseStatusCode(value);
       return value;
     }).catchError((error, stackTrace) {
+      throw error;
       processServerError(error);
     });
   }

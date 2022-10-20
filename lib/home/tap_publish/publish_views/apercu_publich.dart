@@ -18,6 +18,9 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
   final locController = Get.find<LocController>();
   final numberFormat = NumberFormat("###,##0", Environment.locale);
 
+  RxBool isCguAccepted = false.obs;
+  RxBool error = false.obs;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -28,7 +31,7 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              children: [
+              children: const [
                 SizedBox(
                   width: 130,
                 ),
@@ -68,11 +71,11 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
               data: controller.myAdsView["description"],
             ),
             CustomApercu(
-              label: Environment.townLabel+":",
+              label: Environment.townLabel + ":",
               data: controller.myAdsView["town"],
             ),
             CustomApercu(
-              label: Environment.cityLabel+" :",
+              label: Environment.cityLabel + " :",
               data: controller.myAdsView["city"],
             ),
             ListTile(
@@ -117,83 +120,81 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
               padding: const EdgeInsets.all(8.0),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child:   GetBuilder<TapPublishViewController>(builder: (logic) {
-
+                child: GetBuilder<TapPublishViewController>(builder: (logic) {
                   List<Widget> list = controller.editAdsImages
                       .map((e) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: framColor),
-                              borderRadius: BorderRadius.circular(10)),
-                          width: size.width * .3,
-                          height: size.height * .2,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              e,
-                              fit: BoxFit.fill,
+                            padding: const EdgeInsets.all(8.0),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: framColor),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  width: size.width * .3,
+                                  height: size.height * .2,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.network(
+                                      e,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  child: InkWell(
+                                      onTap: () {
+                                        controller.delEditImage(e);
+                                      },
+                                      child: Icon(
+                                        Icons.clear,
+                                        size: 30,
+                                        color: framColor,
+                                      )),
+                                ),
+                              ],
                             ),
-                          ),
-                        ),
-                        Positioned(
-                          right: 0,
-                          child: InkWell(
-                              onTap: () {
-                                controller.delEditImage(e);
-                              },
-                              child: Icon(
-                                Icons.clear,
-                                size: 30,
-                                color: framColor,
-                              )),
-                        ),
-                      ],
-                    ),
-                  ))
+                          ))
                       .toList();
                   List<Widget> list2 = controller.images
                       .map((e) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: framColor),
-                              borderRadius: BorderRadius.circular(10)),
-                          width: size.width * .3,
-                          height: size.height * .2,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.file(
-                              e,
-                              fit: BoxFit.fill,
+                            padding: const EdgeInsets.all(8.0),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: framColor),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  width: size.width * .3,
+                                  height: size.height * .2,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.file(
+                                      e,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  child: InkWell(
+                                      onTap: () {
+                                        controller.deleteImage(e);
+                                      },
+                                      child: Icon(
+                                        Icons.clear,
+                                        size: 30,
+                                        color: framColor,
+                                      )),
+                                ),
+                              ],
                             ),
-                          ),
-                        ),
-                        Positioned(
-                          right: 0,
-                          child: InkWell(
-                              onTap: () {
-                                controller.deleteImage(e);
-                              },
-                              child: Icon(
-                                Icons.clear,
-                                size: 30,
-                                color: framColor,
-                              )),
-                        ),
-                      ],
-                    ),
-                  ))
+                          ))
                       .toList();
-                    return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [...list2, ...list]);
-                  }
-                ),
+                  return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [...list2, ...list]);
+                }),
               ),
             ),
             Padding(
@@ -203,34 +204,69 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                 height: 3,
               ),
             ),
+            SizedBox(
+              height: 30,
+            ),
+            Obx(
+              () => CheckboxListTile(
+                title: const Text(
+                  "J'accepte les conditions générales de lecoinoccasion.fr",
+                  style: TextStyle(fontSize: 18),
+                ),
+                value: isCguAccepted.value,
+                onChanged: (bool value) {
+                  isCguAccepted.value = value;
+                  error.value = value == false;
+                },
+                controlAffinity: ListTileControlAffinity.leading,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5.0),
+                  ),
+                ),
+              ),
+            ),
+            Obx(() => error.isTrue
+                ? Padding(
+                    padding: EdgeInsets.only(left: 8, right: 8),
+                    child: Text(
+                      'Veuillez accepter nos conditions générales pour publier votre annonce',
+                      style: TextStyle(color: Colors.redAccent, fontSize: 12),
+                    ),
+                  )
+                : const SizedBox()),
+            const SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: const EdgeInsets.only(
-                  top: 8.0, bottom: 40, right: 8, left: 8),
+                top: 8.0,
+                bottom: 40,
+              ),
               child: Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomButtonWithoutIcon(
-                      width: MediaQuery.of(context).size.width * .25,
-                      height: 40,
-                      label: "Modifier",
-                      labColor: buttonColor,
-                      btColor: Colors.white,
-                      function: () {
+                    ElevatedButton.icon(
+                      onPressed: () {
                         int count = 0;
 
                         Navigator.popUntil(context, (route) {
                           return count++ == 2;
                         });
                       },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey.shade100,
+                          foregroundColor: Colors.black54),
+                      icon: const Icon(Icons.edit),
+                      //icon data for elevated button
+                      label: Text("Modifier"), //label text
                     ),
-                    CustomButtonWithoutIcon(
-                      width: MediaQuery.of(context).size.width * .25,
-                      height: 40,
-                      label: "Supprimer",
-                      labColor: buttonColor,
-                      btColor: Colors.white,
-                      function: () {
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () {
                         controller.images.clear();
                         controller.updateCategoryToNull();
                         controller.updateSubcategoryToNull();
@@ -252,23 +288,39 @@ class ApercuPublich extends GetWidget<TapPublishViewController> {
                           return count++ == 2;
                         });
                       },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey.shade100,
+                          foregroundColor: Colors.black54),
+                      icon: const Icon(Icons.restore_from_trash_rounded),
+                      //icon data for elevated button
+                      label: Text("Supprimer"), //label text
+                    ),
+                    const SizedBox(
+                      width: 10,
                     ),
                     Obx(() {
                       return controller.buttonPublier.value
-                          ? CircularProgressIndicator()
-                          : CustomButtonWithoutIcon(
-                              width: MediaQuery.of(context).size.width * .25,
-                              height: 40,
-                              label: "Publier",
-                              labColor: Colors.white,
-                              btColor: buttonColor,
-                              function: () {
-                                controller.context = context;
-                                Get.find<TapPublishViewController>()
-                                    .modifAds
-                                    .value = false;
-                                controller.postData(context);
-                              });
+                          ? const CircularProgressIndicator()
+                          : ElevatedButton.icon(
+                              onPressed: () {
+                                if (isCguAccepted.isFalse) {
+                                  error.value = true;
+                                } else {
+                                  error.value = false;
+                                  controller.context = context;
+                                  Get.find<TapPublishViewController>()
+                                      .modifAds
+                                      .value = false;
+                                  controller.postData(context);
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: buttonColor,
+                                  foregroundColor: Colors.white),
+                              icon: const Icon(Icons.check_circle),
+                              //icon data for elevated button
+                              label: Text("Publier"), //label text
+                            );
                     })
                   ],
                 ),

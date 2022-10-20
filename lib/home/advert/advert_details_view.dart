@@ -291,7 +291,6 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
               enlargeCenterPage: true,
               autoPlay: true,
               disableCenter: false,
-              autoPlayCurve: Curve()
             ),
             items: controller.advert.photos
                 .map(
