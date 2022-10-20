@@ -179,6 +179,10 @@ abstract class ApiManager {
       }
       return value;
     }).catchError((error, stackTrace) {
+      if (kDebugMode) {
+        print(error);
+        print(stackTrace);
+      }
       processServerError(error);
     });
   }

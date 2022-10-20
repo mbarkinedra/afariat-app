@@ -73,7 +73,7 @@ class ChatUserViewController extends GetxController {
         final textMessage = types.TextMessage(
             author: types.User(
               id: _accountInfoStorage.readUserId(),
-              firstName: element.from.name,
+              firstName: element.from.firstName,
             ),
             id: element.from.id.toString(),
             text: element.message,

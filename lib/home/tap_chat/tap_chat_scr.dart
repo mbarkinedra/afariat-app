@@ -100,12 +100,12 @@ class TapChatScr extends GetWidget<TapChatViewController> {
                                                           .conversations[
                                                               position]
                                                           .from
-                                                          .name
+                                                          .firstName
                                                       : logic
                                                           .conversations[
                                                               position]
                                                           .to
-                                                          .name;
+                                                          .firstName;
                                                   Get.find<ChatUserViewController>()
                                                           .id =
                                                       logic

@@ -164,21 +164,21 @@ class Conversation {
 class From {
   String username;
   int id;
-  String name;
+  String firstName;
 
-  From({this.username, this.id, this.name});
+  From({this.username, this.id, this.firstName});
 
   From.fromJson(Map<String, dynamic> json) {
     username = json['username'];
     id = json['id'];
-    name = json['name'];
+    firstName = json['firstName'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['username'] = username;
     data['id'] = id;
-    data['name'] = name;
+    data['firstName'] = firstName;
     return data;
   }
 }

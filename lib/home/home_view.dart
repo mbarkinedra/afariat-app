@@ -60,10 +60,11 @@ class HomeView extends GetWidget<HomeViewController> {
                       Expanded(
                         flex: 2,
                         child: InkWell(
-                          onTap: () =>
-                              Get.find<AccountInfoStorage>().isLoggedIn()
-                                  ? Get.toNamed(AppRouting.notifications)
-                                  : Popup.showAccessDenied(context, 'Vous devez être connecté pour consulter vos notifications.'),
+                          onTap: () => Get.find<AccountInfoStorage>()
+                                  .isLoggedIn()
+                              ? Get.toNamed(AppRouting.notifications)
+                              : Popup.showAccessDenied(context,
+                                  'Vous devez être connecté pour consulter vos notifications.'),
                           child: _buildNotifications(),
                         ),
                       ),
@@ -256,13 +257,16 @@ class HomeView extends GetWidget<HomeViewController> {
                       itemCount: controller.advertListJson.adverts().length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                              childAspectRatio: 0.6,
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 4.0,
-                              mainAxisSpacing: 4.0),
+                        childAspectRatio: 0.6,
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 4.0,
+                        mainAxisSpacing: 4.0,
+                        mainAxisExtent: 360,
+                      ),
                       itemBuilder: (context, index) => AdvertCardGrid(
                         advert: controller.advertListJson.adverts()[index],
-                        userInitials: 'LCO',
+                        imageHeight: 200,
+                        imageWidth: 200 ,
                       ),
                       //scrollDirection: Axis.vertical,
                       shrinkWrap: true,

@@ -16,6 +16,8 @@ import '../../config/utility.dart';
 import '../../model/advert_option_labels.dart';
 import '../../mywidget/advert_card_grid.dart';
 import '../../mywidget/favorite_icon.dart';
+import '../../mywidget/horizontal_ads_list.dart';
+import '../../mywidget/user_advert_widget.dart';
 import '../../persistent_tab_manager.dart';
 import '../../storage/AccountInfoStorage.dart';
 import '../tap_profile/favorite/favorite_view_controller.dart';
@@ -75,6 +77,11 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
                                     ),
                                   ),
                                   AdvertFavoriteIcon(
+                                    iconShadow: false,
+                                    offIconColor: Colors.grey,
+                                    onIconColor: Colors.black87,
+                                    onLikedIconColor: Colors.pink,
+                                    iconSize: 28,
                                     advertId: int.parse(controller.advertId),
                                     isLoggedIn: Get.find<AccountInfoStorage>()
                                         .isLoggedIn(),
@@ -130,7 +137,42 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
                       children: [
                         _buildCarousel(context),
                         _buildAdvert(),
-                        _buildRelatedAds(context),
+                        const Divider(
+                          height: 30,
+                          thickness: 0.5,
+                          color: Colors.grey,
+                        ),
+                        _buildUser(),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        (controller.advert.userSameAdverts != null &&
+                                controller.advert.userSameAdverts.isNotEmpty)
+                            ? HorizontalAdsList(
+                                title: 'Autres annonces de ' +
+                                    controller.advert.user.firstName,
+                                advertsList: controller.advert.userSameAdverts,
+                              )
+                            : const SizedBox(),
+                        const Divider(
+                          height: 60,
+                          thickness: 0.5,
+                          color: Colors.grey,
+                        ),
+                        (controller.advert.relatedAdverts != null &&
+                                controller.advert.relatedAdverts.isNotEmpty)
+                            ? HorizontalAdsList(
+                                title: 'Ces annonces peuvent vous intéresser',
+                                advertsList: controller.advert.relatedAdverts,
+                                showPlusTitle: 'Afficher plus d\'annonces',
+                                onTapShowPlus: () => Get.toNamed(
+                                  AppRouting.similarAds,
+                                  parameters: {
+                                    'id': controller.advert.id.toString(),
+                                  },
+                                ),
+                              )
+                            : const SizedBox(),
                       ],
                     ),
                   );
@@ -248,9 +290,11 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
               aspectRatio: 9 / 12,
               enlargeCenterPage: true,
               autoPlay: true,
+              disableCenter: false,
             ),
             items: controller.advert.photos
-                .map((item) => InkWell(
+                .map(
+                  (item) => InkWell(
                     onTap: () {
                       _showGallery(context);
                     },
@@ -258,13 +302,17 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
                       imageUrl: item.path,
                       progressIndicatorBuilder:
                           (context, url, downloadProgress) => const Align(
-                              alignment: Alignment.center,
-                              child: CupertinoActivityIndicator()),
+                        alignment: Alignment.center,
+                        child: CupertinoActivityIndicator(),
+                      ),
                       errorWidget: (context, url, error) => Image.asset(
                         "assets/images/common/no-image.jpg",
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
-                    )))
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )
                 .toList(),
           )
         : controller.advert.photos.isNotEmpty
@@ -371,8 +419,20 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
             style: const TextStyle(
               fontSize: 16,
             )),
-        SizedBox(
+        const SizedBox(
           height: 20,
+        ),
+      ],
+    );
+  }
+
+  _buildUser() {
+    //TODO: if not registered
+
+    return Column(
+      children: [
+        UserAdvertWidget(
+          user: controller.advert.user,
         ),
       ],
     );
@@ -587,83 +647,6 @@ class AdvertDetailsView extends GetWidget<AdvertDetailsViewController> {
         ],
       ),
     );
-  }
-
-  _buildRelatedAds(BuildContext context) {
-    if (controller.advert.relatedAdverts != null &&
-        controller.advert.relatedAdverts.isNotEmpty) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const Divider(
-            height: 30,
-            thickness: 0.5,
-            color: Colors.grey,
-          ),
-          const Padding(
-            padding: EdgeInsets.only(bottom: 20, top: 10, left: 8, right: 8),
-            child: Text(
-              'Ces annonces peuvent vous intéresser',
-              style: TextStyle(
-                fontSize: 21,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 400,
-            width: double.infinity,
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: controller.advert.relatedAdverts.length + 1,
-              itemBuilder: (BuildContext context, int index) => (index !=
-                      controller.advert.relatedAdverts.length)
-                  ? SizedBox(
-                      width: 250,
-                      child: AdvertCardGrid(
-                        userInitials: 'LCO',
-                        advert: controller.advert.relatedAdverts[index],
-                      ),
-                    )
-                  : SizedBox(
-                      width: 250,
-                      child: InkWell(
-                        onTap: () {
-                          Get.toNamed(AppRouting.similarAds, parameters: {
-                            'id': controller.advert.id.toString()
-                          });
-                        },
-                        child: Card(
-                          clipBehavior: Clip.antiAlias,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.add_circle_outline,
-                                size: 50,
-                                color: framColor,
-                              ),
-                              Text(
-                                'Afficher plus d\'annonces',
-                                style:
-                                    TextStyle(fontSize: 18, color: framColor),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-            ),
-          ),
-        ],
-      );
-    } else {
-      return const SizedBox(
-        child: Text('Nothing'),
-      );
-    }
   }
 
   _onShare(BuildContext context) async {

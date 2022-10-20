@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:afariat/config/settings_app.dart';
 import 'package:afariat/networking/json/abstract_json_resource.dart';
+import 'package:afariat/networking/json/user_minimal_json.dart';
 
 import '../../model/abstract_collection_list.dart';
 import '../../model/advert_option_labels.dart';
@@ -46,7 +47,9 @@ class AdvertDetailsJson extends AbstractJsonResource {
   String username;
   String mobilePhoneNumber;
   bool isFavorite;
+  UserMinimalJson user;
   List<AdvertMinimalJson> relatedAdverts = <AdvertMinimalJson>[];
+  List<AdvertMinimalJson> userSameAdverts = <AdvertMinimalJson>[];
 
   AdvertDetailsJson({
     this.id,
@@ -74,61 +77,81 @@ class AdvertDetailsJson extends AbstractJsonResource {
     this.username,
     this.mobilePhoneNumber,
     this.isFavorite,
+    this.user,
     this.relatedAdverts,
+    this.userSameAdverts,
   });
 
-  AdvertDetailsJson.fromJson(Map<String, dynamic> json) {
-    userId = json['userId'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    modifiedAt = json['modified_at'];
-    id = json['id'];
-    isFavorite = json['is_favorite'];
+  AdvertDetailsJson.fromJson(Map<String, dynamic> jsonAdvert) {
+    userId = jsonAdvert['userId'];
+    createdAt = jsonAdvert['created_at'];
+    updatedAt = jsonAdvert['updated_at'];
+    modifiedAt = jsonAdvert['modified_at'];
+    id = jsonAdvert['id'];
+    isFavorite = jsonAdvert['is_favorite'];
 
-    username = json['username'];
-    mobilePhoneNumber = json['mobilePhoneNumber'];
-    title = json['title'];
-    slug = json['slug'];
-    description = json['description'];
-    price = json['price'];
-    showPhoneNumber = json['show_phone_number'];
-    isRegistredUser = json['isRegistredUser'];
+    username = jsonAdvert['username'];
+    mobilePhoneNumber = jsonAdvert['mobilePhoneNumber'];
+    title = jsonAdvert['title'];
+    slug = jsonAdvert['slug'];
+    description = jsonAdvert['description'];
+    price = jsonAdvert['price'];
+    showPhoneNumber = jsonAdvert['show_phone_number'];
+    isRegistredUser = jsonAdvert['isRegistredUser'];
 
-    defaultPhoto = json['photo'] != null
-        ? SettingsApp.baseUrl + "/" + json['photo']
+    defaultPhoto = jsonAdvert['photo'] != null
+        ? SettingsApp.baseUrl + "/" + jsonAdvert['photo']
         : null;
 
-    advertType = json['advert_type'] != null
-        ? AdvertTypeEntity.fromJson(json['advert_type'])
+    advertType = jsonAdvert['advert_type'] != null
+        ? AdvertTypeEntity.fromJson(jsonAdvert['advert_type'])
         : null;
-    category = json['category'] != null
-        ? CategoryEntity.fromJson(json['category'])
+    category = jsonAdvert['category'] != null
+        ? CategoryEntity.fromJson(jsonAdvert['category'])
         : null;
-    region =
-        json['region'] != null ? RegionEntity.fromJson(json['region']) : null;
-    city = json['city'] != null ? CityEntity.fromJson(json['city']) : null;
-    town = json['town'] != null ? TownEntity.fromJson(json['town']) : null;
+    region = jsonAdvert['region'] != null
+        ? RegionEntity.fromJson(jsonAdvert['region'])
+        : null;
+    city = jsonAdvert['city'] != null
+        ? CityEntity.fromJson(jsonAdvert['city'])
+        : null;
+    town = jsonAdvert['town'] != null
+        ? TownEntity.fromJson(jsonAdvert['town'])
+        : null;
 
     for (String optionId in AdvertOptionLabels.optionsIds.keys) {
-      if (json.containsKey(optionId)) {
-        json[optionId] is Map
-            ? options.add(AdvertOption.fromJson(optionId, json[optionId]))
+      if (jsonAdvert.containsKey(optionId)) {
+        jsonAdvert[optionId] is Map
+            ? options.add(AdvertOption.fromJson(optionId, jsonAdvert[optionId]))
             : options.add(AdvertOption(
-                optionId: optionId, value: json[optionId].toString()));
+                optionId: optionId, value: jsonAdvert[optionId].toString()));
       }
     }
-    status = json['status'];
-    if (json['photos'] != null) {
-      json['photos'].forEach((v) {
+    status = jsonAdvert['status'];
+    if (jsonAdvert['photos'] != null) {
+      jsonAdvert['photos'].forEach((v) {
         photos.add(Photos.fromJson(v));
       });
     }
-    shortUrl = json['short_url'];
-    links = json['_links'] != null ? Links.fromJson(json['_links']) : null;
-    if(json['json_related_adverts'] != null) {
-      List<dynamic> related = jsonDecode(json['json_related_adverts']);
+    shortUrl = jsonAdvert['short_url'];
+    links = jsonAdvert['_links'] != null
+        ? Links.fromJson(jsonAdvert['_links'])
+        : null;
+    user = jsonAdvert['user'] != null
+        ? UserMinimalJson.fromJson(jsonAdvert['user'])
+        : null;
+    if (jsonAdvert['json_related_adverts'] != null &&
+        jsonAdvert['json_related_adverts'].toString().isNotEmpty) {
+      List<dynamic> related = jsonDecode(jsonAdvert['json_related_adverts']);
       for (var element in related) {
         relatedAdverts.add(AdvertMinimalJson.fromJson(element));
+      }
+    }
+    if (jsonAdvert['json_same_user_adverts'] != null &&
+        jsonAdvert['json_same_user_adverts'].toString().isNotEmpty) {
+      List<dynamic> sameAds = jsonDecode(jsonAdvert['json_same_user_adverts']);
+      for (var element in sameAds) {
+        userSameAdverts.add(AdvertMinimalJson.fromJson(element));
       }
     }
   }
@@ -154,6 +177,9 @@ class AdvertDetailsJson extends AbstractJsonResource {
     if (advertType != null) {
       json['advert_type'] = advertType.toJson();
     }
+    if (user != null) {
+      json['user'] = user.toJson();
+    }
     if (category != null) {
       json['category'] = category.toJson();
     }
@@ -170,7 +196,12 @@ class AdvertDetailsJson extends AbstractJsonResource {
       json['photos'] = photos.map((v) => v.toJson()).toList();
     }
     if (relatedAdverts != null) {
-      json['json_related_adverts'] = relatedAdverts.map((v) => v.toJson()).toList();
+      json['json_related_adverts'] =
+          relatedAdverts.map((v) => v.toJson()).toList();
+    }
+    if (userSameAdverts != null) {
+      json['json_same_user_adverts'] =
+          userSameAdverts.map((v) => v.toJson()).toList();
     }
     json['short_url'] = shortUrl;
     if (links != null) {
