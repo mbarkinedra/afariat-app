@@ -13,76 +13,103 @@ import '../storage/AccountInfoStorage.dart';
 import 'favorite_icon.dart';
 
 class AdvertCardGrid extends AbstractAdvertCard {
-  AdvertCardGrid({Key key, AdvertMinimalJson advert, String userInitials})
-      : super(key: key, advert: advert, userInitials: userInitials);
+  AdvertCardGrid(
+      {Key key,
+      AdvertMinimalJson advert,
+      double imageHeight,
+      double imageWidth})
+      : super(
+          key: key,
+          advert: advert,
+          imageWidth: imageWidth,
+          imageHeight: imageHeight,
+        );
   FavoriteViewController favController = Get.find<FavoriteViewController>();
 
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: () {
-          Get.toNamed(AppRouting.adDetails, parameters: {'id': advert.id.toString()});
-          //TODO: NOTE: dont remove this because we get a lot of shit oc scroll attached to multi views. Until now no way to resolve it without destroying the controller
-          Get.delete<SimilarAdvertsViewController>();
-        },
-        child: Card(
-            clipBehavior: Clip.antiAlias,
-            child: Column(children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  //height: size.height * .2,
-                  child: advert.photo != null
+      onTap: () {
+        Get.toNamed(AppRouting.adDetails,
+            parameters: {'id': advert.id.toString()});
+        //TODO: NOTE: dont remove this because we get a lot of shit oc scroll attached to multi views. Until now no way to resolve it without destroying the controller
+        Get.delete<SimilarAdvertsViewController>();
+      },
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: <Widget>[
+                Container(
+                  height: imageHeight,
+                  width: imageWidth,
+                  child: (advert.photo != null)
                       ? CachedNetworkImage(
                           imageUrl: advert.photo,
                           progressIndicatorBuilder:
                               (context, url, downloadProgress) => const Align(
-                                  alignment: Alignment.center,
-                                  child: CupertinoActivityIndicator()),
+                            alignment: Alignment.center,
+                            child: CupertinoActivityIndicator(),
+                          ),
                           errorWidget: (context, url, error) => Image.asset(
                             "assets/images/common/no-image.jpg",
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                           ),
+                          fit: BoxFit.cover,
                         )
                       : Image.asset(
                           "assets/images/common/no-image.jpg",
                           fit: BoxFit.fill,
                         ),
                 ),
-              ),
-              ListTile(
-                minLeadingWidth: 10,
-                leading: CircleAvatar(
-                  maxRadius: 12,
-                  backgroundColor: Colors.blueGrey.shade50,
-                  child: Text(
-                    userInitials,
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blueGrey.shade900),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: AdvertFavoriteIcon(
+                    advertId: advert.id,
+                    isLoggedIn: Get.find<AccountInfoStorage>().isLoggedIn(),
+                    onAdd: () => favController.addAdvertToFavorites(advert.id),
+                    onDelete: () =>
+                        favController.removeAdvertFromFavorite(advert.id),
                   ),
-                ),
-                title: Text(
-                  advert.title,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-                ),
-              ),
-              Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Row(
+                )
+              ],
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 10, right: 5, bottom: 0, left: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    advert.title,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 13),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
                     children: [
                       const Icon(
                         Icons.location_on,
                         color: Colors.grey,
-                        size: 14,
+                        size: 16,
                       ),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(left: 4),
                           child: Text(
-                            advert.town.name,
+                            advert.town.name +
+                                (advert.town.zipCode != null
+                                    ? ' ' + advert.town.zipCode
+                                    : ''),
                             softWrap: true,
                             style:
                                 TextStyle(color: Colors.black.withOpacity(0.6)),
@@ -92,13 +119,11 @@ class AdvertCardGrid extends AbstractAdvertCard {
                         ),
                       ),
                     ],
-                  )),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Row(
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
                     children: [
                       const Icon(
                         Icons.access_time_rounded,
@@ -119,42 +144,27 @@ class AdvertCardGrid extends AbstractAdvertCard {
                         ),
                       ),
                     ],
-                  )),
-              const SizedBox(
-                height: 10,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    numberFormat.format(advert.price) +
+                        ' ' +
+                        Environment.currencySymbol,
+                    style: const TextStyle(
+                        color: framColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                    softWrap: true,
+                    overflow: TextOverflow.fade,
+                  )
+                ],
               ),
-              //const Divider(thickness: 0.5),
-              Row(children: [
-                Expanded(
-                  flex: 8,
-                  child: Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Text(
-                        numberFormat.format(advert.price) +
-                            ' ' +
-                            Environment.currencySymbol,
-                        style: const TextStyle(
-                            color: framColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
-                        softWrap: true,
-                        overflow: TextOverflow.fade,
-                      )),
-                ),
-                Expanded(
-                    flex: 2,
-                    child: AdvertFavoriteIcon(
-                      advertId: advert.id,
-                      isLoggedIn: Get.find<AccountInfoStorage>().isLoggedIn(),
-                      onAdd: () =>
-                          favController.addAdvertToFavorites(advert.id),
-                      onDelete: () =>
-                          favController.removeAdvertFromFavorite(advert.id),
-                    ))
-              ]),
-              const SizedBox(
-                height: 10,
-              ),
-            ])));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

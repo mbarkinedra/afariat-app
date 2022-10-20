@@ -80,12 +80,14 @@ class SearchView extends GetWidget<SearchViewController> {
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
               crossAxisCount: 2,
+              mainAxisExtent: 320,
             ),
             builderDelegate: PagedChildBuilderDelegate<AdvertMinimalJson>(
               animateTransitions: true,
               itemBuilder: (context, item, index) => AdvertCardGrid(
                 advert: item,
-                userInitials: 'LCO',
+                imageHeight: 150,
+                imageWidth: 200,
               ),
             ),
           )

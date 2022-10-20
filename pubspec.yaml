@@ -24,6 +24,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   get: ^4.6.5
   get_storage: ^2.0.3
@@ -91,6 +93,7 @@ flutter:
   assets:
     - assets/images/common/placeholder.png
     - assets/images/common/no-image.jpg
+    - assets/images/common/no-user-photo.webp
     - assets/images/afariat.com/drawer.jpg
     - assets/images/afariat.com/logo.png
     - assets/images/afariat.com/splash.png
